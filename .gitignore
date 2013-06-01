@@ -1,0 +1,8 @@
+.classpath
+.project
+.springBeans
+.settings
+.DS_Store?
+*.swp
+bin/**/*
+target/**/*
