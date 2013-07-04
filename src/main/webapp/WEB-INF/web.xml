@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	id="flockspring" version="2.4">
 
-	<display-name>Smarter Digs</display-name>
+	<display-name>Flock Spring</display-name>
 
 	<context-param>
 		<param-name>contextConfigLocation</param-name>

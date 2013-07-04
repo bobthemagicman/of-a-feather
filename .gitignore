@@ -2,7 +2,8 @@
 .project
 .springBeans
 .settings
-.DS_Store?
+.DS_Store
 *.swp
+*.war
 bin/**/*
 target/**/*

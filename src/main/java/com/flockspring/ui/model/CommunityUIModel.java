@@ -5,6 +5,8 @@ package com.flockspring.ui.model;
 
 import java.util.List;
 
+import com.flockspring.domain.types.Organization;
+import com.flockspring.domain.types.MusicStyle;
 import com.lehman.technology.group.common.web.ui.model.AddressUIModel;
 import com.lehman.technology.group.common.web.ui.model.DayUIModel;
 import com.lehman.technology.group.common.web.ui.model.FormattedTimeUIModel;
@@ -21,7 +23,7 @@ import com.lehman.technology.group.common.web.ui.model.LanguageUIModel;
 public class CommunityUIModel {
 
     private final AddressUIModel address;
-    private final UIMusicStyle musicStyle;
+    private final MusicStyle musicStyle;
     private FormattedTimeUIModel yearFounded;
 
     private final List<FormattedTimeUIModel> serviceTimes;
@@ -42,13 +44,13 @@ public class CommunityUIModel {
     private final String websiteUrl;
     private final String facebookUrl;
     
-    private int averageServiceCongregationSize;
+    private final int averageServiceCongregationSize;
     
     private final boolean envFriendly;
     private final boolean parkingLot;
     private final boolean gayAffirming;
   
-    public CommunityUIModel(AddressUIModel address, UIMusicStyle musicStyle, FormattedTimeUIModel yearFounded,
+    public CommunityUIModel(AddressUIModel address, MusicStyle musicStyle, FormattedTimeUIModel yearFounded,
             List<FormattedTimeUIModel> serviceTimes, List<LanguageUIModel> languages, List<DayUIModel> serviceDays, List<ImageUIModel> images,
             String communityCategory, String denomination, String subDenomination, String name, String programsOffered, String ageDemographics,
             String ethnicDemographics, String srLdrBiography, String description, String websiteUrl, String facebookUrl,
@@ -80,4 +82,5 @@ public class CommunityUIModel {
         this.gayAffirming = gayAffirming;
         this.leadershipTeam = leadershipTeam;
     }
+
 }

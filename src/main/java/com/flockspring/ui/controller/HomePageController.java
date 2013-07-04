@@ -24,7 +24,7 @@ public class HomePageController {
 	@RequestMapping("/")
 	public ModelAndView renderDefaultHomePage() {
 
-	    ModelAndView mav = new ModelAndView("home");
+	    ModelAndView mav = new ModelAndView("homePage");
 	    
 		List<ReligionUIModel> religions = new ArrayList<ReligionUIModel>();
 		

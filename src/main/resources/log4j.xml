@@ -11,7 +11,7 @@
     	</layout>
   	</appender> 
   	
-	<category name="com.smarterdigs" additivity="false">
+	<category name="com.flockspring" additivity="false">
     	<priority value="warn" />
     	<appender-ref ref="console" />
   	</category>

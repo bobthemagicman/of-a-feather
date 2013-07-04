@@ -1,4 +1,4 @@
-<%@ page import="com.flockspring.ui.model.UIMusicStyle"%>
+<%@ page import="com.flockspring.domain.types.MusicStyle"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ include file="/WEB-INF/jsp/init.jsp" %>
 
@@ -29,7 +29,7 @@
 				
 				<select id="fs_musicType">
 					<option>Select Music Style</option>
-					<c:forEach items="<%= UIMusicStyle.values() %>" var="type">
+					<c:forEach items="<%=MusicStyle.values()%>" var="type">
 						<option value="${type}">${type}</option>
 					</c:forEach>
 				</select>

@@ -1,3 +1,5 @@
+<%@ page language="java" import="javax.servlet.jsp.PageContext" contentType="text/html; charset=ISO-8859-1"pageEncoding="ISO-8859-1"%>
+
 <%@ tag dynamic-attributes="attributes" isELIgnored="false" body-content="empty" %>
 <%@ include file="init.jsp" %>
 <%@ attribute name="path" required="true" %>
