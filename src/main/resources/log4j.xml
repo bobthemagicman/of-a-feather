@@ -12,22 +12,22 @@
   	</appender> 
   	
 	<category name="com.flockspring" additivity="false">
-    	<priority value="warn" />
+    	<priority value="WARN" />
     	<appender-ref ref="console" />
   	</category>
 
   	<category name="org.hibernate" additivity="false">
-    	<priority value="warn" />
+    	<priority value="WARN" />
     	<appender-ref ref="console" />
   	</category>
 
   	<category name="org.springframework" additivity="false">
-    	<priority value="warn" />
+    	<priority value="WARN" />
     	<appender-ref ref="console" />
   	</category>
-
+		
   	<root>
-    	<priority value="warn" />
+    	<priority value="WARN" />
     	<appender-ref ref="console" />
   	</root>
 

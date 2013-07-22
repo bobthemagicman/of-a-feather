@@ -3,8 +3,6 @@
  */
 package com.flockspring.domain.types.impl;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,10 +10,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 import com.flockspring.domain.types.Leader;
-import com.lehman.technology.group.common.domain.types.Image;
 import com.lehman.technology.group.common.domain.types.impl.JpaImageImpl;
 
 /**
@@ -27,7 +28,7 @@ import com.lehman.technology.group.common.domain.types.impl.JpaImageImpl;
  */
 @Entity
 @Table(name="LEADER")
-public class LeaderImpl implements Leader, Serializable
+public class LeaderImpl implements Leader
 {
     
     private static final long serialVersionUID = -2486392800486198793L;
@@ -56,7 +57,7 @@ public class LeaderImpl implements Leader, Serializable
     private boolean primaryLeader;
 
     @ManyToOne
-    @JoinColumn(name="ORGANIZATION_ID")
+    @JoinColumn(name="ORGANIZATION_ID", nullable=false)
     private OrganizationImpl organization;
 
     @Override
@@ -150,65 +151,12 @@ public class LeaderImpl implements Leader, Serializable
     @Override
     public int hashCode()
     {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((bio == null) ? 0 : bio.hashCode());
-        result = prime * result + (int) (id ^ (id >>> 32));
-        result = prime * result + ((image == null) ? 0 : image.hashCode());
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((organization == null) ? 0 : organization.hashCode());
-        result = prime * result + (primaryContact ? 1231 : 1237);
-        result = prime * result + (primaryLeader ? 1231 : 1237);
-        result = prime * result + ((title == null) ? 0 : title.hashCode());
-        return result;
+        return HashCodeBuilder.reflectionHashCode(this);
     }
 
     @Override
     public boolean equals(Object obj)
     {
-        if (this == obj)
-            return true;
-        if (obj == null)
-            return false;
-        if (getClass() != obj.getClass())
-            return false;
-        LeaderImpl other = (LeaderImpl) obj;
-        if (bio == null)
-        {
-            if (other.bio != null)
-                return false;
-        } else if (!bio.equals(other.bio))
-            return false;
-        if (id != other.id)
-            return false;
-        if (image == null)
-        {
-            if (other.image != null)
-                return false;
-        } else if (!image.equals(other.image))
-            return false;
-        if (name == null)
-        {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-        if (organization == null)
-        {
-            if (other.organization != null)
-                return false;
-        } else if (!organization.equals(other.organization))
-            return false;
-        if (primaryContact != other.primaryContact)
-            return false;
-        if (primaryLeader != other.primaryLeader)
-            return false;
-        if (title == null)
-        {
-            if (other.title != null)
-                return false;
-        } else if (!title.equals(other.title))
-            return false;
-        return true;
+        return EqualsBuilder.reflectionEquals(this, obj);
     }
 }

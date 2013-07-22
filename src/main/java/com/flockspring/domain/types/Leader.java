@@ -3,6 +3,8 @@
  */
 package com.flockspring.domain.types;
 
+import java.io.Serializable;
+
 import com.flockspring.domain.types.impl.OrganizationImpl;
 import com.lehman.technology.group.common.domain.types.Image;
 
@@ -13,7 +15,7 @@ import com.lehman.technology.group.common.domain.types.Image;
  * @date Jun 12, 2013
  * 
  */
-public interface Leader
+public interface Leader extends Serializable
 {
 
     String getName();

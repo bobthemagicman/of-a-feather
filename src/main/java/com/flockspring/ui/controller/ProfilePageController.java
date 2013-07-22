@@ -5,93 +5,121 @@ package com.flockspring.ui.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.flockspring.domain.service.OrganizationDiscoveryService;
 import com.flockspring.domain.types.Organization;
-import com.flockspring.ui.model.CommunityUIModel;
-import com.lehman.technology.group.common.domain.types.GlobalRegion;
+import com.flockspring.domain.types.Region;
+import com.flockspring.ui.mapper.OrganizationUIModelMapper;
+import com.flockspring.ui.model.OrganizationUIModel;
+import com.lehman.technology.group.common.domain.types.GlobalRegionType;
 
 @Controller
-@SessionAttributes("organization")
 @RequestMapping("/communities")
 public class ProfilePageController
 {
     private static final String VIEW_NAME = "profilePage";
 
     private final OrganizationDiscoveryService organizationDiscoveryService;
+    private OrganizationUIModelMapper organizationUIModelMapper;
 
     @Autowired
-    public ProfilePageController(final OrganizationDiscoveryService organizationDiscoveryService)
+    public ProfilePageController(final OrganizationDiscoveryService organizationDiscoveryService, OrganizationUIModelMapper organizationUIModelMapper)
     {
         super();
 
+        this.organizationUIModelMapper = organizationUIModelMapper;
         this.organizationDiscoveryService = organizationDiscoveryService;
     }
 
     @RequestMapping("/{statRegionName}/{cityRegionName}/{neighborhoodRegionName}/{organizationName}")
-    public ModelAndView renderOrganizationProfileByName(@ModelAttribute Organization organization, @PathVariable String organizationName, 
-            @PathVariable String stateRegionName, @PathVariable String cityRegionName, @PathVariable String neighborhoodRegionName)
+    public ModelAndView renderOrganizationProfileByName(@PathVariable String organizationName, @PathVariable String stateRegionName,
+            @PathVariable String cityRegionName, @PathVariable String neighborhoodRegionName)
     {
         // TODO: sanitize organizationId
-        if(organization == null)
-        {
-            organization = getOrganizationFromPathParameters(organizationName, stateRegionName, cityRegionName, neighborhoodRegionName);
-        }
+        Organization organization = organizationDiscoveryService.getOrganizationByRegionAndOrganizationNames(organizationName, stateRegionName,
+                cityRegionName, neighborhoodRegionName);
 
         return buildModelAndView(organization);
     }
 
-    @RequestMapping("/{statRegionName}/{cityRegionName}/{organizationName}")
-    public ModelAndView renderOrganizationProfileByName(@ModelAttribute Organization organization, @PathVariable String organizationName, @PathVariable String stateRegionName,
+    @RequestMapping("/{stateRegionName}/{cityRegionName}/{organizationName}")
+    public ModelAndView renderOrganizationProfileByName(@PathVariable String organizationName, @PathVariable String stateRegionName,
             @PathVariable String cityRegionName)
     {
         // TODO: sanitize organizationId
-        if(organization == null)
-        {
-            organization = getOrganizationFromPathParameters(organizationName, stateRegionName, cityRegionName, "");
-        }
+        Organization organization = organizationDiscoveryService.getOrganizationByRegionAndOrganizationNames(organizationName, stateRegionName,
+                cityRegionName);
 
         return buildModelAndView(organization);
-    }
-
-    private Organization getOrganizationFromPathParameters(String organizationName, String stateRegionName, String cityRegionName,
-            String neighborhoodRegionName)
-    {
-        Organization organization = organizationDiscoveryService.getOrganizationByRegionAndOrganizationNames(organizationName, stateRegionName, cityRegionName, neighborhoodRegionName);
-        return organization;
     }
 
     private ModelAndView buildModelAndView(Organization organization)
     {
         ModelAndView mav = new ModelAndView(VIEW_NAME);
-        CommunityUIModel organizationUI = null; // TODO: implement mapping from domain to UI
+        OrganizationUIModel organizationUI = organizationUIModelMapper.map(organization);
         mav.addObject("organization", organizationUI);
 
         return mav;
     }
 
-    @RequestMapping("/{organizationId}")    
+    @RequestMapping("/{organizationId}")
     public ModelAndView renderOrganizationProfileById(@PathVariable String organizationId)
     {
-        // TODO: sanitize organizationId        
-        GlobalRegion region = organizationDiscoveryService.getRegionForOrganization(Long.valueOf(organizationId));
+        // TODO: sanitize organizationId
         Organization organization = organizationDiscoveryService.getOrganizationById(Long.valueOf(organizationId));
 
         throwExceptionIfOrganizationIsNull(organization, organizationId);
-        
-        return buildRedirectUrl(region, organization);
+
+        return buildRedirectUrl(organization);
     }
 
-    private ModelAndView buildRedirectUrl(GlobalRegion region, Organization organization)
-    {   
-        StringBuilder seoUrl = new StringBuilder("redirect:").append(region.getEnglishName()).append("/").append(organization.getName());
-        
+    private ModelAndView buildRedirectUrl(Organization organization)
+    {
+        String organizationName = organization.getName().replaceAll(" ", "-");
+        Region organizationRegion = organization.getRegion();
+        Region state = getParentRegionTypeFromOrganizationRegion(GlobalRegionType.STATE, organizationRegion);
+        Region city = getParentRegionTypeFromOrganizationRegion(GlobalRegionType.CITY, organizationRegion);
+        Region neighborhood = getParentRegionTypeFromOrganizationRegion(GlobalRegionType.NEIGHBORHOOS, organizationRegion);
+
+        StringBuilder seoUrl = new StringBuilder("redirect:").append(state.getEnglishName()).append("/");
+
+        if (city != null)
+        {
+            seoUrl.append(city.getEnglishName()).append("/");
+        }
+
+        if (neighborhood != null)
+        {
+            seoUrl.append(neighborhood.getEnglishName()).append("/");
+        }
+
+        seoUrl.append(organizationName);
+
         return new ModelAndView(seoUrl.toString(), "organization", organization);
+    }
+
+    /**
+     * @param neighborhood
+     * @param organizationRegion
+     * @return
+     */
+    private Region getParentRegionTypeFromOrganizationRegion(GlobalRegionType regionType, Region region)
+    {
+        if (region == null)
+        {
+            return null;
+        }
+
+        if (region.getRegionType() == regionType)
+        {
+            return region;
+        } else
+        {
+            return getParentRegionTypeFromOrganizationRegion(regionType, region.getParentRegion());
+        }
     }
 
     /**
@@ -99,9 +127,9 @@ public class ProfilePageController
      */
     private void throwExceptionIfOrganizationIsNull(Organization organization, String id)
     {
-        if(organization == null)
+        if (organization == null)
         {
             throw new PageNotFoundException("Unable to find profile for organization with organizationId: " + id);
-        }        
+        }
     }
 }

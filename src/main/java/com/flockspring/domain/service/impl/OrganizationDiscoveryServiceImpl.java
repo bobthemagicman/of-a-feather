@@ -2,6 +2,7 @@ package com.flockspring.domain.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.flockspring.dataaccess.OrganizationRepository;
 import com.flockspring.dataaccess.RegionRepository;
@@ -49,19 +50,23 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
         return organizationRepository.findOne(organizationId);
     }
 
-    @Override
+    @Override 
+    @Transactional(readOnly=true)
     public Organization getOrganizationByRegionAndOrganizationNames(String organizationName, String stateRegionName, String cityRegionName,
             String neighborhoodRegionName)
     {
-        // TODO Auto-generated method stub
-        return null;
+        String parentRegion = neighborhoodRegionName == null ? cityRegionName : neighborhoodRegionName;
+        organizationName = organizationName.replaceAll("-", "%");
+        
+        OrganizationImpl organization = organizationRepository.findByNameAndParentRegion(organizationName, parentRegion);
+        
+        return organization;
     }
 
     @Override
     public Organization getOrganizationByRegionAndOrganizationNames(String organizationName, String stateRegionName, String cityRegionName)
     {
-        // TODO Auto-generated method stub
-        return null;
+        return getOrganizationByRegionAndOrganizationNames(organizationName, stateRegionName, cityRegionName, null);
     }
 
    

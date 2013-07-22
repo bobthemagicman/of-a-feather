@@ -14,6 +14,6 @@ import com.flockspring.domain.types.impl.RegionImpl;
 public interface RegionRepository extends JpaRepository<RegionImpl, Long>
 {
 
-    @Query("SELECT region FROM RegionImpl region WHERE :organization MEMBER OF region.organizations") 
+    @Query("SELECT region FROM RegionImpl region WHERE :organization IN ELEMENTS(region.organizations)") 
     Region findByOrganizationInRegionOrganizations(@Param("organization") OrganizationImpl organizationId);
 }

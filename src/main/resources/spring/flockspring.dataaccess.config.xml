@@ -19,6 +19,7 @@
 
 	<context:property-placeholder location="classpath:dataaccess.properties" />
 	<jpa:repositories base-package="com.flockspring.dataaccess" />
+	<tx:annotation-driven />
 
 	<bean
 		class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />

@@ -18,6 +18,8 @@
         				http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 
 	<context:component-scan base-package="com.flockspring.ui.controller" />
+	<context:component-scan base-package="com.flockspring.ui.mapper" />
+	<context:component-scan base-package="com.lehman.technology.group.common.web.ui.mapper" />
 
 	<mvc:annotation-driven />
 	<mvc:resources mapping="/resources/**" location="/resources/" />

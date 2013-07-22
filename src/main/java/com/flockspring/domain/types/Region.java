@@ -17,4 +17,6 @@ import com.lehman.technology.group.common.domain.types.GlobalRegion;
 public interface Region extends GlobalRegion
 {
     List<Organization> getOrganizations();
+    
+    Region getParentRegion();
 }

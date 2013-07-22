@@ -8,8 +8,9 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.Region;
@@ -24,12 +25,16 @@ import com.lehman.technology.group.common.domain.types.impl.JpaGlobalRegionImpl;
  *
  */
 @Entity
+@Table(name="GLOBAL_REGION")
 public class RegionImpl extends JpaGlobalRegionImpl implements Region
 {
     private static final long serialVersionUID = -1601591650248928148L;
     
-    @OneToMany
-    @JoinTable(name="REGION_ORGANIZATIONS", joinColumns=@JoinColumn(name = "REGION_ID"), inverseJoinColumns=@JoinColumn(name = "ORGANIZATION_ID"))
+    @ManyToOne
+    @JoinColumn(name = "PARENT_REGION_ID")
+    private RegionImpl parentRegion;
+    
+    @OneToMany(mappedBy = "region")
     private List<OrganizationImpl> organizations;
     
     @Override
@@ -44,5 +49,11 @@ public class RegionImpl extends JpaGlobalRegionImpl implements Region
     public void setOrganizations(List<OrganizationImpl> organizations)
     {
         this.organizations = organizations;
+    }
+
+    @Override
+    public Region getParentRegion()
+    {
+        return parentRegion;
     }
 }

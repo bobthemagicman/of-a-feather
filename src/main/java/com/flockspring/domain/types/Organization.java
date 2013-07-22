@@ -3,13 +3,14 @@
  */
 package com.flockspring.domain.types;
 
-import java.util.List;
+import java.io.Serializable;
+import java.util.Set;
 
 import com.lehman.technology.group.common.domain.types.Address;
 import com.lehman.technology.group.common.domain.types.Image;
 import com.lehman.technology.group.common.domain.types.Language;
 
-public interface Organization
+public interface Organization extends Serializable
 {
     Address getAddress();
 
@@ -19,11 +20,11 @@ public interface Organization
 
     String getServiceTimes();
 
-    List<Language> getLanguages();
+    Set<Language> getLanguages();
 
-    List<Image> getImages();
+    Set<Image> getImages();
 
-    List<Leader> getLeadershipTeam();
+    Set<Leader> getLeadershipTeam();
 
     Affiliation getPrimaryAffiliation();
 
@@ -57,8 +58,5 @@ public interface Organization
 
     long getId();
 
-    /**
-     * @return
-     */
-    Leader getPrimaryLeader();
+    Region getRegion();
 }

@@ -4,7 +4,7 @@
 package com.flockspring.domain.service;
 
 import com.flockspring.domain.types.Organization;
-import com.lehman.technology.group.common.domain.types.GlobalRegion;
+import com.flockspring.domain.types.Region;
 
 /**
  * IOrganizationService.java
@@ -17,7 +17,7 @@ public interface OrganizationDiscoveryService {
 
     Organization getOrganizationByNameAndRegion(String name, Long regionId);
 
-    GlobalRegion getRegionForOrganization(Long OrganizationId);
+    Region getRegionForOrganization(Long OrganizationId);
     
     Organization getOrganizationById(Long OrganizationId);
     
