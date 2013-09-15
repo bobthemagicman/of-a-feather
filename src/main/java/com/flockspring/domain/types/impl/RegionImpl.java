@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 FlockSpring Inc. All rights reserved
+ * Copyright 2013 flockspring Inc. All rights reserved
  */
 package com.flockspring.domain.types.impl;
 
@@ -14,7 +14,6 @@ import javax.persistence.Table;
 
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.Region;
-import com.lehman.technology.group.common.domain.types.impl.JpaGlobalRegionImpl;
 
 
 /**
@@ -26,7 +25,7 @@ import com.lehman.technology.group.common.domain.types.impl.JpaGlobalRegionImpl;
  */
 @Entity
 @Table(name="GLOBAL_REGION")
-public class RegionImpl extends JpaGlobalRegionImpl implements Region
+public class RegionImpl extends JpaGlobalRegionImpl<Region> implements Region
 {
     private static final long serialVersionUID = -1601591650248928148L;
     

@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 FlockSpring Inc. All rights reserved
+ * Copyright 2013 flockspring Inc. All rights reserved
  */
 package com.flockspring.domain.types.impl;
 
@@ -10,14 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
 import com.flockspring.domain.types.Leader;
-import com.lehman.technology.group.common.domain.types.impl.JpaImageImpl;
 
 /**
  * LeaderImpl.java

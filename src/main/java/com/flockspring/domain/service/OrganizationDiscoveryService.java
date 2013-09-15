@@ -1,7 +1,9 @@
 /*
- * Copyright 2013 FlockSpring Inc. All rights reserved
+ * Copyright 2013 flockspring Inc. All rights reserved
  */
 package com.flockspring.domain.service;
+
+import java.util.List;
 
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.Region;
@@ -24,4 +26,6 @@ public interface OrganizationDiscoveryService {
     Organization getOrganizationByRegionAndOrganizationNames(String organizationName, String stateRegionName, String cityRegionName, String neighborhoodRegionName);
     
     Organization getOrganizationByRegionAndOrganizationNames(String organizationName, String stateRegionName, String cityRegionName);
+
+    List<Organization> searchForOrganizations(String query);
 }

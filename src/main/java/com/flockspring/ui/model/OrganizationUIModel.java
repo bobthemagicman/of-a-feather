@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 FlockSpring Inc. All rights reserved
+ * Copyright 2013 flockspring Inc. All rights reserved
  */
 package com.flockspring.ui.model;
 
@@ -10,9 +10,7 @@ import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
 import com.flockspring.domain.types.MusicStyle;
-import com.lehman.technology.group.common.web.ui.model.AddressUIModel;
-import com.lehman.technology.group.common.web.ui.model.ImageUIModel;
-import com.lehman.technology.group.common.web.ui.model.LanguageUIModel;
+import com.google.common.collect.ComparisonChain;
 
 /**
  * CommunityUIModel.java
@@ -21,7 +19,7 @@ import com.lehman.technology.group.common.web.ui.model.LanguageUIModel;
  * @date May 18, 2013
  *
  */
-public class OrganizationUIModel {
+public class OrganizationUIModel implements Comparable<OrganizationUIModel> {
 
     private final AddressUIModel address;
     private final MusicStyle musicStyle;
@@ -46,16 +44,17 @@ public class OrganizationUIModel {
     
     private final int yearFounded;
     private final int averageServiceCongregationSize;
+    private final int distanceFromSearchPoint;
     
     private final boolean envFriendly;
     private final boolean parkingLot;
-    private final boolean gayAffirming;
-  
+      
     public OrganizationUIModel(AddressUIModel address, MusicStyle musicStyle, int yearFounded,
             String serviceTimes, Set<LanguageUIModel> languages, String serviceDays, Set<ImageUIModel> images,
             String communityCategory, String denomination, String subDenomination, String name, String programsOffered, String ageDemographics,
             String ethnicDemographics, String srLdrBiography, String description, String websiteUrl, String facebookUrl,
-            int averageServiceCongregationSize, boolean envFriendly, boolean parkingLot, boolean gayAffirming, Set<LeaderUIModel> leadershipTeam) {
+            int averageServiceCongregationSize, boolean envFriendly, boolean parkingLot, boolean gayAffirming, Set<LeaderUIModel> leadershipTeam,
+            int distanceFromSearchPoint) {
         
         super();
     
@@ -80,8 +79,8 @@ public class OrganizationUIModel {
         this.averageServiceCongregationSize = averageServiceCongregationSize;
         this.envFriendly = envFriendly;
         this.parkingLot = parkingLot;
-        this.gayAffirming = gayAffirming;
         this.leadershipTeam = leadershipTeam;
+        this.distanceFromSearchPoint = distanceFromSearchPoint;
     }
 
     public AddressUIModel getAddress()
@@ -193,12 +192,12 @@ public class OrganizationUIModel {
     {
         return parkingLot;
     }
-
-    public boolean isGayAffirming()
-    {
-        return gayAffirming;
-    }
     
+    public int getDistanceFromSearchPoint()
+    {
+        return distanceFromSearchPoint;
+    }
+
     @Override
     public int hashCode()
     {
@@ -215,5 +214,13 @@ public class OrganizationUIModel {
     public boolean equals(Object obj)
     {
         return EqualsBuilder.reflectionEquals(this, obj);
+    }
+
+    @Override
+    public int compareTo(OrganizationUIModel right)
+    {
+        
+        return ComparisonChain.start().compare(this.getDistanceFromSearchPoint(), right.getDistanceFromSearchPoint())
+                .result();
     }
 }

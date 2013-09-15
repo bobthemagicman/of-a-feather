@@ -1,28 +1,51 @@
 package com.flockspring.domain.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.solr.core.geo.Distance;
+import org.springframework.data.solr.core.geo.Distance.Unit;
+import org.springframework.data.solr.core.geo.GeoLocation;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.flockspring.dataaccess.OrganizationRepository;
-import com.flockspring.dataaccess.RegionRepository;
+import com.flockspring.dataaccess.jpa.OrganizationJpaRepository;
+import com.flockspring.dataaccess.jpa.RegionJpaRepository;
+import com.flockspring.dataaccess.service.client.MapQuestServiceClient;
+import com.flockspring.dataaccess.service.client.USPSClient;
+import com.flockspring.dataaccess.solr.OrganizationSolrRepository;
 import com.flockspring.domain.service.OrganizationDiscoveryService;
+import com.flockspring.domain.types.Address;
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.Region;
 import com.flockspring.domain.types.impl.OrganizationImpl;
 
 @Service
-public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoveryService {
+public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoveryService
+{
 
-    private final OrganizationRepository organizationRepository;
-    private final RegionRepository regionRepository;
-
+    private final OrganizationJpaRepository organizationJpaRepository;
+    private final RegionJpaRepository regionJpaRepository;
+    private final OrganizationSolrRepository organizationSolrRepository;
+    private final MapQuestServiceClient mapQuestServiceClient;
+    private final USPSClient uspsClient;
+    private final int defaultDistance;
+    
     @Autowired
-    public OrganizationDiscoveryServiceImpl(final OrganizationRepository organizationRepository, final RegionRepository regionRepository) {
+    public OrganizationDiscoveryServiceImpl(final OrganizationJpaRepository organizationRepository, final RegionJpaRepository regionRepository,
+            final OrganizationSolrRepository organizationSolrRepository, final USPSClient uspsClient, 
+            @Value("${com.flickspring.domain.service.organization.default.distance}") final int defaultDistance, final MapQuestServiceClient mapQuestServiceClient)
+    {
         super();
-        
-        this.organizationRepository = organizationRepository;
-        this.regionRepository = regionRepository;
+
+        this.uspsClient = uspsClient;
+        this.organizationSolrRepository = organizationSolrRepository;
+        this.organizationJpaRepository = organizationRepository;
+        this.regionJpaRepository = regionRepository;
+        this.defaultDistance = defaultDistance;
+        this.mapQuestServiceClient = mapQuestServiceClient;
     }
 
     @Override
@@ -36,7 +59,7 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
     public Region getRegionForOrganization(Long organizationId)
     {
         OrganizationImpl organization = findOrganizationById(organizationId);
-        return regionRepository.findByOrganizationInRegionOrganizations(organization); 
+        return regionJpaRepository.findByOrganizationInRegionOrganizations(organization);
     }
 
     @Override
@@ -44,22 +67,22 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
     {
         return findOrganizationById(organizationId);
     }
-    
+
     private OrganizationImpl findOrganizationById(Long organizationId)
     {
-        return organizationRepository.findOne(organizationId);
+        return organizationJpaRepository.findOne(organizationId);
     }
 
-    @Override 
-    @Transactional(readOnly=true)
+    @Override
+    @Transactional(readOnly = true)
     public Organization getOrganizationByRegionAndOrganizationNames(String organizationName, String stateRegionName, String cityRegionName,
             String neighborhoodRegionName)
     {
         String parentRegion = neighborhoodRegionName == null ? cityRegionName : neighborhoodRegionName;
         organizationName = organizationName.replaceAll("-", "%");
-        
-        OrganizationImpl organization = organizationRepository.findByNameAndParentRegion(organizationName, parentRegion);
-        
+
+        OrganizationImpl organization = organizationJpaRepository.findByNameAndParentRegion(organizationName, parentRegion);
+
         return organization;
     }
 
@@ -69,5 +92,54 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
         return getOrganizationByRegionAndOrganizationNames(organizationName, stateRegionName, cityRegionName, null);
     }
 
-   
+    @Override
+    public List<Organization> searchForOrganizations(String query)
+    {
+    
+        Address address = null;
+        
+        query = query.trim();
+        if(query.matches("\\d{5}"))
+        {
+            address = uspsClient.verifyAddressInformation(query);
+        }
+        else if(query.matches(".?\\s"))
+        {
+            String city = "";
+            String state = "";
+            String address1 = "";
+            String address2 = "";
+            
+            //Just city and state <--if there is a comment you need to break up the code
+            if(query.matches("\\w{2}")){
+                
+                String[] parts = query.split("(\\w)(\\s+)([\\.,])");                
+                if(parts.length > 0)
+                {
+                    city = parts[0];
+                }
+                
+                if(parts.length > 1)
+                {
+                    state = parts[1];
+                }
+            }
+            
+            address = uspsClient.verifyAddressInformation(city, state, address1, address2);
+        }
+        
+        //Check Store/Cache for matching query(non-mvp)
+        //Geolocate query via mapquest api
+        if(address != null)
+        {
+            address = mapQuestServiceClient.getAddressGeoCode(address);
+            //store in cache
+            GeoLocation geoLoc = new GeoLocation(address.getLatitude(), address.getLongitude());
+            Distance dist = new Distance(defaultDistance, Unit.MILES);
+            
+            return new ArrayList<Organization>(organizationSolrRepository.findByAddressWithin(geoLoc, dist));
+        }
+        
+        return new ArrayList<Organization>(0);
+    }
 }

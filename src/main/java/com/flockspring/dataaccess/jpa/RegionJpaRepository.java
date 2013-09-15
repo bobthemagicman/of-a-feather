@@ -1,7 +1,7 @@
 /*
- * Copyright 2013 FlockSpring Inc. All rights reserved
+ * Copyright 2013 flockspring Inc. All rights reserved
  */
-package com.flockspring.dataaccess;
+package com.flockspring.dataaccess.jpa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,7 +11,7 @@ import com.flockspring.domain.types.Region;
 import com.flockspring.domain.types.impl.OrganizationImpl;
 import com.flockspring.domain.types.impl.RegionImpl;
 
-public interface RegionRepository extends JpaRepository<RegionImpl, Long>
+public interface RegionJpaRepository extends JpaRepository<RegionImpl, Long>
 {
 
     @Query("SELECT region FROM RegionImpl region WHERE :organization IN ELEMENTS(region.organizations)") 

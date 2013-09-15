@@ -1,12 +1,11 @@
 /*
- * Copyright 2013 FlockSpring Inc. All rights reserved
+ * Copyright 2013 flockspring Inc. All rights reserved
  */
 package com.flockspring.domain.types;
 
 import java.io.Serializable;
 
 import com.flockspring.domain.types.impl.OrganizationImpl;
-import com.lehman.technology.group.common.domain.types.Image;
 
 /**
  * Leader.java

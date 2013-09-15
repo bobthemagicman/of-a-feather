@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 FlockSpring Inc. All rights reserved
+ * Copyright 2013 flockspring Inc. All rights reserved
  */
 package com.flockspring.ui.mapper;
 
@@ -10,9 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.flockspring.domain.types.Leader;
+import com.flockspring.ui.model.ImageUIModel;
 import com.flockspring.ui.model.LeaderUIModel;
-import com.lehman.technology.group.common.web.ui.mapper.ImageUIModelMapper;
-import com.lehman.technology.group.common.web.ui.model.ImageUIModel;
 
 /**
  * leaderUIModelMapper.java

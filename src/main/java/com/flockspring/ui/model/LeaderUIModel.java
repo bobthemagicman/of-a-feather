@@ -1,5 +1,5 @@
 /*
- * Copyright 013 FlockSpring Inc. All rights reserved
+ * Copyright 013 flockspring Inc. All rights reserved
  */
 package com.flockspring.ui.model;
 
@@ -7,7 +7,6 @@ import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
-import com.lehman.technology.group.common.web.ui.model.ImageUIModel;
 
 /**
  * Leader.java

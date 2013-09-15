@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 FlockSpring Inc. All rights reserved
+ * Copyright 2013 flockspring Inc. All rights reserved
  */
 package com.flockspring.ui.mapper;
 
@@ -11,14 +11,11 @@ import org.springframework.stereotype.Component;
 import com.flockspring.domain.types.Leader;
 import com.flockspring.domain.types.MusicStyle;
 import com.flockspring.domain.types.Organization;
+import com.flockspring.ui.model.AddressUIModel;
+import com.flockspring.ui.model.ImageUIModel;
+import com.flockspring.ui.model.LanguageUIModel;
 import com.flockspring.ui.model.LeaderUIModel;
 import com.flockspring.ui.model.OrganizationUIModel;
-import com.lehman.technology.group.common.web.ui.mapper.AddressUIModelMapper;
-import com.lehman.technology.group.common.web.ui.mapper.ImageUIModelMapper;
-import com.lehman.technology.group.common.web.ui.mapper.LanguageUIModelMapper;
-import com.lehman.technology.group.common.web.ui.model.AddressUIModel;
-import com.lehman.technology.group.common.web.ui.model.ImageUIModel;
-import com.lehman.technology.group.common.web.ui.model.LanguageUIModel;
 
 /**
  * OrganizationUIModelMapper.java
@@ -73,13 +70,14 @@ public class OrganizationUIModelMapper
         String communityCategory = organization.getPrimaryAffiliation().getLocalizedStringCode();
         String description = organization.getDescription();
         String denomination = organization.getAffilationDenomination().getLocalizedStringCode();
+        int distanceFromSearchPoint = organization.getDistanceFromSearchPoint();
         
         String serviceTimes = organization.getServiceTimes();
         int yearFounded = organization.getYearFounded();
         
         OrganizationUIModel model = new OrganizationUIModel(address, musicStyle, yearFounded, serviceTimes, languages, serviceDays, images,
                 communityCategory, denomination, subDenomination, name, programsOffered, ageDemographics, ethnicDemographics, srLdrBiography, 
-                description, websiteUrl, facebookUrl, averageServiceCongregationSize, envFriendly, parkingLot, gayAffirming, leadershipTeam);
+                description, websiteUrl, facebookUrl, averageServiceCongregationSize, envFriendly, parkingLot, gayAffirming, leadershipTeam, distanceFromSearchPoint);
         
         return model;
     }

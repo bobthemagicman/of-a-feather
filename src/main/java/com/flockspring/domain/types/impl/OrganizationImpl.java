@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 FlockSpring Inc. All rights reserved
+ * Copyright 2013 flockspring Inc. All rights reserved
  */
 package com.flockspring.domain.types.impl;
 
@@ -20,21 +20,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+import com.flockspring.domain.types.Address;
 import com.flockspring.domain.types.Affiliation;
+import com.flockspring.domain.types.Image;
+import com.flockspring.domain.types.Language;
 import com.flockspring.domain.types.Leader;
 import com.flockspring.domain.types.MusicStyle;
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.Region;
-import com.lehman.technology.group.common.domain.types.Address;
-import com.lehman.technology.group.common.domain.types.Image;
-import com.lehman.technology.group.common.domain.types.Language;
-import com.lehman.technology.group.common.domain.types.impl.JpaAddressImpl;
-import com.lehman.technology.group.common.domain.types.impl.JpaImageImpl;
 
 @Entity
 @Table(name="ORGANIZATION")
@@ -120,6 +119,9 @@ public class OrganizationImpl implements Organization
     @Column(name="GAY_AFIRMING")
     private boolean gayAffirming;
 
+    @Transient
+    private int distanceFromSearchPoint;
+    
     @Override
     public long getId()
     {
@@ -265,13 +267,15 @@ public class OrganizationImpl implements Organization
     }
 
     @Override
-    public Region getRegion() {
+    public Region getRegion() 
+    {
         return region;
     }
-    
-    public void setId(long id)
+
+    @Override
+    public int getDistanceFromSearchPoint() 
     {
-        this.id = id;
+        return this.distanceFromSearchPoint;
     }
 
     public void setAddress(JpaAddressImpl address)
@@ -382,6 +386,11 @@ public class OrganizationImpl implements Organization
     public void setGayAffirming(boolean gayAffirming)
     {
         this.gayAffirming = gayAffirming;
+    }
+    
+    public void setDistanceFromSearchPoint(int distanceFromSearchPoint)
+    {
+        this.distanceFromSearchPoint = distanceFromSearchPoint;
     }
 
     @Override

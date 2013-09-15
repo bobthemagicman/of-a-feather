@@ -1,14 +1,11 @@
 /*
- * Copyright 2013 FlockSpring Inc. All rights reserved
+ * Copyright 2013 flockspring Inc. All rights reserved
  */
 package com.flockspring.domain.types;
 
 import java.io.Serializable;
 import java.util.Set;
 
-import com.lehman.technology.group.common.domain.types.Address;
-import com.lehman.technology.group.common.domain.types.Image;
-import com.lehman.technology.group.common.domain.types.Language;
 
 public interface Organization extends Serializable
 {
@@ -59,4 +56,6 @@ public interface Organization extends Serializable
     long getId();
 
     Region getRegion();
+
+    int getDistanceFromSearchPoint();
 }

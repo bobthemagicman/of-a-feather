@@ -22,7 +22,7 @@
 	<context:component-scan base-package="com.lehman.technology.group.common.web.ui.mapper" />
 
 	<mvc:annotation-driven />
-	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:resources mapping="/static/**" location="/resources/" />
 	<mvc:view-controller path="/about" view-name="aboutPage" />
 	<mvc:view-controller path="/contact" view-name="contactUsPage" />
 

@@ -1,91 +1,75 @@
 /*
- * Copyright 2013 FlockSpring Inc. All rights reserved
+ * Copyright 2013 flockspring Inc. All rights reserved
  */
 package com.flockspring.domain.types;
 
-import com.lehman.technology.group.common.web.ui.model.LocalizedEnum;
+import com.flockspring.ui.model.LocalizedEnum;
 
 public enum Affiliation implements LocalizedEnum
 {
-    //Christian Denominations
+    NONDENOMINATIONAL("affiliation.nondenominational"),
     CATHOLICISM("affiliation.catholicism"),
     EASTERN_ORTHODOX("affiliation.eastern.orthodox"),
-    ORIENTAL_ORTHODOXY("affiliation.oriental.orthodoxy"),
-    
-    //Primary Religions
-    BABISM("affiliation.babism"),
-    BAHA_I_FAITH("affiliation.baha-i-faith", Affiliation.CATHOLICISM),
-    CHRISTIANITY("affiliation.christianity"),
-    DRUZE("affiliation.druze"),
-    GNOSTICISM("affiliation.gnosticism"),
-    ISLAM("affiliation.islam"),
-    JUDAISM("affiliation.judiasm"),
-    RASTAFARI_MOVEMENT("affiliation.rastafari.movement"),
-    BLACK_HEBREW_ISRAELITES("affiliation.black.hebrew.israelites"),
-    MANDAEANS("affiliation.mandaeans"),
-    SABIANS("affiliation.sabians"),
-    SAMARITANISM("affiliation.samaritanism"),
-    SHABAKISM("affiliation.shabakism"),
-    AYYAVAZHI("affiliation.ayyavazhi"),
-    BHAKTI_MOVEMENT("affiliation.bhakti.movement"),
-    BUDDHISM("affiliation.buddhism"),
-    DIN_I_LLAHI("affiliation.din-i-llahi"),
-    HINDUISM("affiliation.hinduism"),
-    JAINISM("affiliation.jainism"),
-    MEIVAZHI("affiliation.meivazhi"),
-    SIKHISM("affiliation.sikhism"),
-    MANICHAEISM("affiliation.manichaeism"),
-    MAZDAKISM("affiliation.mazdakism"),
-    MITHRAISM("affiliation.mithraism"),
-    YAZDANISM("affiliation.yazdanism"),
-    ZOROASTRIANISM("affiliation.zoroastrianism"),
-    CONFUCIANISM("affiliation.confucianism"),
-    SHINTO("affiliation.shinto"),
-    TAOISM("affiliation.taoism"),
-    CAODAISM("affiliation.caodaism"),
-    CHINESE_FOLK("affiliation.chinese.folk"),
-    CHONDOGYO("affiliation.chondogyo"),
-    FALUN_GONG("affiliation.falun.gong"),
-    HAO_HAO("affiliation.hao.hao"),
-    I_KUAN_TAO("affiliation.i-kuan-tao"),
-    JEUNG_SAN_DO("affiliation.jeung.san.do"),
-    MOHISM("affiliation.mohism"),
-    OOMOTO("affiliation.oomoto"),
-    SEICHO_NO_LE("affiliation.seicho.no.le"),
-    TENRIKYO("affiliation.tenrikyo"),
-    BATUQUE("affiliation.batuque"),
-    CANDOMBLE("affiliation.candomble"),
-    DAHOMEY_MYTHOLOGY("affiliation.dahomey.mythology"),
-    HAITAIN_MYTHOLOG("affiliation.haitain.mythology"),
-    KUMINA("affiliation.kumina"),
-    MACUMBA("affiliation.macumba"),
-    MAMI_WATA("affiliation.mami.wata"),
-    OBEAH("affiliation.obeah"),
-    OYOTUNJI("affiliation.oyotunji"),
-    QUIMBANDA("affiliation.quimbanda"),
-    SANTERIA("affiliation.santeria"),
-    UMBANDA("affiliation.umbanda"),
-    VODOU("affiliation.vodou"),
-    PALO("affiliation.palo");
-    
+    ORIENTAL_ORTHODOX("affiliation.oriental.orthodox"),
+    PROTESTANTISM("affiliation.protestantism"),
+    LUTHERANISM("affiliation.lutheranism"),
+    ANGLICANISM("affiliation.angelicanism"),
+    CALVINISM("affiliation.calvinism"),
+    PRESBYTERIANISM("affiliation.presbyterianism"),
+    CONGREGATIONALIST("affiliation.congregationalist"),
+    ANABAPTISTS("affiliation.anabaptists"),
+    BRETHREN("affiliation.brethren"),
+    METHODISTS("affiliation.methodists"),
+    PRIESTS_AND_HOLINESS("affiliation.priests.and.holiness"),
+    BAPTISTS("affiliation.baptists"),
+    APISTOLIC("affiliation.apistolic"),
+    PENTECOSTALISM("affiliation.pentecostalism"),
+    CHARISMATICS("affiliation.charismatics"),
+    AFRICAN_INITIATED("affiliation.african.initiated"),
+    MESSIANIC_JUDAISM("affiliation.messianic.judiasm"),
+    UNITED_AND_UNITING("affiliation.united.and.uniting"),
+    QUAKER("affiliation.quaker"),
+    STONE_CAMPBELL_RESTORATION("affiliation.stone.campbell.restoration"),
+    SOUTHCOTTITES("affiliation.southcottites"),
+    MILLERITES("affiliation.millerites"),
+    LATTER_DAY_SAINTS("affiliation.latter.day.saints"),
+    ONENESS_PENTACOSTALISM("affiliation.oneness.pentacostalism"),
+    UNITARIAN("affiliation.unitarian"),
+    BIBLE_STUDENT_GROUPS("affiliation.bible.student.groups"),
+    CHRISTIAN_SCIENCE("affiliation.christian.science"),
+    NEW_THOUGHT("affiliation.new.thought"),
+    ESOTERICISM("affiliation.esotericism");
+
     private String localizationCode;
-    private Affiliation [] affiliations;
-    
-    Affiliation(String localizationCode, Affiliation ... affiliations)
+    private Affiliation[] affiliations;
+
+    Affiliation(String localizationCode, Affiliation... affiliations)
     {
         this.localizationCode = localizationCode;
         this.affiliations = affiliations;
     }
-    
+
     @Override
     public String getLocalizedStringCode()
     {
 
         return localizationCode;
     }
-    
+
     public Affiliation[] getChildAffiliations()
     {
         return affiliations;
+    }
+    
+    @Override
+    public String getName()
+    {
+        return this.name();
+    }
+    
+    @Override
+    public int getOrdinal()
+    {
+        return ordinal();
     }
 }

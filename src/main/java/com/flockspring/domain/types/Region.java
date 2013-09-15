@@ -1,11 +1,10 @@
 /*
- * Copyright 2013 FlockSpring Inc. All rights reserved
+ * Copyright 2013 flockspring Inc. All rights reserved
  */
 package com.flockspring.domain.types;
 
 import java.util.List;
 
-import com.lehman.technology.group.common.domain.types.GlobalRegion;
 
 /**
  * Region.java
@@ -14,7 +13,7 @@ import com.lehman.technology.group.common.domain.types.GlobalRegion;
  * @date Jun 16, 2013
  *
  */
-public interface Region extends GlobalRegion
+public interface Region extends GlobalRegion<Region>
 {
     List<Organization> getOrganizations();
     

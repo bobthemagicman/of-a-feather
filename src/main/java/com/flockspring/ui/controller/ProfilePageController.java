@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 FlockSpring Inc. All rights reserved
+ * Copyright 2013 flockspring Inc. All rights reserved
  */
 package com.flockspring.ui.controller;
 
@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.flockspring.domain.service.OrganizationDiscoveryService;
+import com.flockspring.domain.types.GlobalRegionType;
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.Region;
 import com.flockspring.ui.mapper.OrganizationUIModelMapper;
 import com.flockspring.ui.model.OrganizationUIModel;
-import com.lehman.technology.group.common.domain.types.GlobalRegionType;
 
 @Controller
 @RequestMapping("/communities")
