@@ -13,7 +13,7 @@
 	span {font-weight: bold;}
 </style>
 </head>
-<body>
+<body>	
 	<div><span>Total Number of Results: </span>${results.size()}</div>
 	<c:forEach items="${results}" var="result" varStatus="p_tracker">
 		<h2>Organization ${p_tracker.index + 1}</h2>

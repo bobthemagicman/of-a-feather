@@ -14,12 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.flockspring.dataaccess.jpa.OrganizationJpaRepository;
 import com.flockspring.dataaccess.jpa.RegionJpaRepository;
 import com.flockspring.dataaccess.service.client.MapQuestServiceClient;
-import com.flockspring.dataaccess.service.client.USPSClient;
+import com.flockspring.dataaccess.service.client.USPSAddressAPIService;
 import com.flockspring.dataaccess.solr.OrganizationSolrRepository;
 import com.flockspring.domain.service.OrganizationDiscoveryService;
 import com.flockspring.domain.types.Address;
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.Region;
+import com.flockspring.domain.types.impl.AddressImpl;
 import com.flockspring.domain.types.impl.OrganizationImpl;
 
 @Service
@@ -30,17 +31,18 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
     private final RegionJpaRepository regionJpaRepository;
     private final OrganizationSolrRepository organizationSolrRepository;
     private final MapQuestServiceClient mapQuestServiceClient;
-    private final USPSClient uspsClient;
+    private final USPSAddressAPIService uspsAddressAPIService;
     private final int defaultDistance;
-    
+
     @Autowired
     public OrganizationDiscoveryServiceImpl(final OrganizationJpaRepository organizationRepository, final RegionJpaRepository regionRepository,
-            final OrganizationSolrRepository organizationSolrRepository, final USPSClient uspsClient, 
-            @Value("${com.flickspring.domain.service.organization.default.distance}") final int defaultDistance, final MapQuestServiceClient mapQuestServiceClient)
+            final OrganizationSolrRepository organizationSolrRepository, final USPSAddressAPIService uspsAddressAPIService,
+            @Value("${com.flickspring.domain.service.organization.default.distance}") final int defaultDistance,
+            final MapQuestServiceClient mapQuestServiceClient)
     {
         super();
 
-        this.uspsClient = uspsClient;
+        this.uspsAddressAPIService = uspsAddressAPIService;
         this.organizationSolrRepository = organizationSolrRepository;
         this.organizationJpaRepository = organizationRepository;
         this.regionJpaRepository = regionRepository;
@@ -95,13 +97,31 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
     @Override
     public List<Organization> searchForOrganizations(String query)
     {
-    
-        Address address = null;
+
+        Address address = verifyQuery(query.trim());
+
+        // Check Store/Cache for matching query(non-mvp)
+        // Geolocate query via mapquest api
+        if (address != null)
+        {
+            address = mapQuestServiceClient.getAddressGeoCode(address);
+            // store in cache
+            GeoLocation geoLoc = new GeoLocation(address.getLatitude(), address.getLongitude());
+            Distance dist = new Distance(defaultDistance, Unit.MILES);
+
+            return new ArrayList<Organization>(organizationSolrRepository.findByAddressWithin(geoLoc, dist));
+        }
+
+        return new ArrayList<Organization>(0);
+    }
+
+    private Address verifyQuery(String query)
+    {
         
-        query = query.trim();
         if(query.matches("\\d{5}"))
         {
-            address = uspsClient.verifyAddressInformation(query);
+            Address address = new AddressImpl(0, "", "", query, "", "", "", 0, 0);
+            return uspsAddressAPIService.lookupCityState(address);
         }
         else if(query.matches(".?\\s"))
         {
@@ -124,22 +144,11 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
                     state = parts[1];
                 }
             }
-            
-            address = uspsClient.verifyAddressInformation(city, state, address1, address2);
+           
+            Address address = new AddressImpl(0, address1, address2, "", state, city, "USA", 0, 0);
+            return uspsAddressAPIService.lookupZip(address);
         }
         
-        //Check Store/Cache for matching query(non-mvp)
-        //Geolocate query via mapquest api
-        if(address != null)
-        {
-            address = mapQuestServiceClient.getAddressGeoCode(address);
-            //store in cache
-            GeoLocation geoLoc = new GeoLocation(address.getLatitude(), address.getLongitude());
-            Distance dist = new Distance(defaultDistance, Unit.MILES);
-            
-            return new ArrayList<Organization>(organizationSolrRepository.findByAddressWithin(geoLoc, dist));
-        }
-        
-        return new ArrayList<Organization>(0);
+        return null;
     }
 }
