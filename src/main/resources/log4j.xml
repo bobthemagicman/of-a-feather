@@ -25,10 +25,15 @@
     	<priority value="WARN" />
     	<appender-ref ref="console" />
   	</category>
-		
+	<category name="org.springframework.data.document.mongodb" additivity="false">
+		<priority value="DEBUG" />
+		<appender-ref ref="console"/>
+	</category>		
   	<root>
     	<priority value="WARN" />
     	<appender-ref ref="console" />
   	</root>
 
 </log4j:configuration>
+
+

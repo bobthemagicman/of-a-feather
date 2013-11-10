@@ -69,9 +69,9 @@ public class USPSAddressAPIService
     
     private Address convertAddressFromAPI(com.mindfreez.shipping.Address address)
     {
-        return new AddressImpl(0, address.getStreet() == null ? "" : address.getStreet(), address.getStreet2() == null ? "" : address.getStreet2(),
+        return new AddressImpl(address.getStreet() == null ? "" : address.getStreet(), address.getStreet2() == null ? "" : address.getStreet2(),
                 address.getPostalCode() == null ? "" : address.getPostalCode(), address.getState() == null ? "" : address.getState(),
-                address.getCity() == null ? "" : address.getCity(), "USA", 0, 0);
+                address.getCity() == null ? "" : address.getCity(), "USA", new double[]{0, 0});
         
     }
 }

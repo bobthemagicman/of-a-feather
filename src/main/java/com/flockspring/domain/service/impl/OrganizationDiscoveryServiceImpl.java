@@ -1,53 +1,56 @@
+/*
+ * Copyright 2013 FlockSpring Inc. All rights reserved
+ */
 package com.flockspring.domain.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.NavigableSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.solr.core.geo.Distance;
-import org.springframework.data.solr.core.geo.Distance.Unit;
-import org.springframework.data.solr.core.geo.GeoLocation;
+import org.springframework.data.mongodb.core.geo.Distance;
+import org.springframework.data.mongodb.core.geo.GeoResult;
+import org.springframework.data.mongodb.core.geo.GeoResults;
+import org.springframework.data.mongodb.core.geo.Metrics;
+import org.springframework.data.mongodb.core.geo.Point;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.flockspring.dataaccess.jpa.OrganizationJpaRepository;
-import com.flockspring.dataaccess.jpa.RegionJpaRepository;
+import com.flockspring.dataaccess.mongodb.OrganizationRepository;
+import com.flockspring.dataaccess.mongodb.RegionRepository;
 import com.flockspring.dataaccess.service.client.MapQuestServiceClient;
 import com.flockspring.dataaccess.service.client.USPSAddressAPIService;
-import com.flockspring.dataaccess.solr.OrganizationSolrRepository;
 import com.flockspring.domain.service.OrganizationDiscoveryService;
 import com.flockspring.domain.types.Address;
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.Region;
 import com.flockspring.domain.types.impl.AddressImpl;
 import com.flockspring.domain.types.impl.OrganizationImpl;
+import com.flockspring.ui.model.AjaxSearchFilterRequest;
 
 @Service
 public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoveryService
 {
 
-    private final OrganizationJpaRepository organizationJpaRepository;
-    private final RegionJpaRepository regionJpaRepository;
-    private final OrganizationSolrRepository organizationSolrRepository;
+    private final OrganizationRepository organizationRepository;
+    private final RegionRepository regionRepository;
     private final MapQuestServiceClient mapQuestServiceClient;
     private final USPSAddressAPIService uspsAddressAPIService;
     private final int defaultDistance;
 
     @Autowired
-    public OrganizationDiscoveryServiceImpl(final OrganizationJpaRepository organizationRepository, final RegionJpaRepository regionRepository,
-            final OrganizationSolrRepository organizationSolrRepository, final USPSAddressAPIService uspsAddressAPIService,
+    public OrganizationDiscoveryServiceImpl(final OrganizationRepository organizationRepository, final USPSAddressAPIService uspsAddressAPIService,
             @Value("${com.flickspring.domain.service.organization.default.distance}") final int defaultDistance,
-            final MapQuestServiceClient mapQuestServiceClient)
+            final MapQuestServiceClient mapQuestServiceClient, RegionRepository regionRepository)
     {
         super();
 
         this.uspsAddressAPIService = uspsAddressAPIService;
-        this.organizationSolrRepository = organizationSolrRepository;
-        this.organizationJpaRepository = organizationRepository;
-        this.regionJpaRepository = regionRepository;
+        this.organizationRepository = organizationRepository;
         this.defaultDistance = defaultDistance;
         this.mapQuestServiceClient = mapQuestServiceClient;
+        this.regionRepository = regionRepository;
     }
 
     @Override
@@ -58,21 +61,21 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
     }
 
     @Override
-    public Region getRegionForOrganization(Long organizationId)
+    public Region getRegionForOrganization(String organizationId)
     {
         OrganizationImpl organization = findOrganizationById(organizationId);
-        return regionJpaRepository.findByOrganizationInRegionOrganizations(organization);
+        return null;//regionRepository.findByOrganizationInRegionOrganizations(organization);
     }
 
     @Override
-    public Organization getOrganizationById(Long organizationId)
+    public Organization getOrganizationById(String organizationId)
     {
         return findOrganizationById(organizationId);
     }
 
-    private OrganizationImpl findOrganizationById(Long organizationId)
+    private OrganizationImpl findOrganizationById(String organizationId)
     {
-        return organizationJpaRepository.findOne(organizationId);
+        return organizationRepository.findOne(organizationId);
     }
 
     @Override
@@ -83,7 +86,7 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
         String parentRegion = neighborhoodRegionName == null ? cityRegionName : neighborhoodRegionName;
         organizationName = organizationName.replaceAll("-", "%");
 
-        OrganizationImpl organization = organizationJpaRepository.findByNameAndParentRegion(organizationName, parentRegion);
+        OrganizationImpl organization = organizationRepository.findByNameAndRegion(organizationName, parentRegion);
 
         return organization;
     }
@@ -95,10 +98,11 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
     }
 
     @Override
-    public List<Organization> searchForOrganizations(String query)
+    public NavigableSet<Organization> searchForOrganizations(String query)
     {
 
-        Address address = verifyQuery(query.trim());
+       // Address address = verifyQuery(query.trim());
+        Address address = new AddressImpl("", "", "98052", "WA", "REDMOND", "USA", new double[]{0.0, 0.0});
 
         // Check Store/Cache for matching query(non-mvp)
         // Geolocate query via mapquest api
@@ -106,13 +110,26 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
         {
             address = mapQuestServiceClient.getAddressGeoCode(address);
             // store in cache
-            GeoLocation geoLoc = new GeoLocation(address.getLatitude(), address.getLongitude());
-            Distance dist = new Distance(defaultDistance, Unit.MILES);
+            
+            Point point = new Point(address.getLongitude(), address.getLatitude()); 
+            Distance dist = new Distance(defaultDistance, Metrics.MILES);
 
-            return new ArrayList<Organization>(organizationSolrRepository.findByAddressWithin(geoLoc, dist));
+            GeoResults<OrganizationImpl> results = organizationRepository.findByAddressLocationNear(point, dist);
+            
+            NavigableSet<Organization> organizations = new TreeSet<>();
+            for(GeoResult<OrganizationImpl> geoResult : results)
+            {
+                geoResult.getDistance();
+                OrganizationImpl organization = geoResult.getContent();
+                organization.setDistanceFromSearchPoint(geoResult.getDistance().getValue());
+                
+                organizations.add(organization);
+            }
+            
+            return organizations;
         }
 
-        return new ArrayList<Organization>(0);
+        return null;
     }
 
     private Address verifyQuery(String query)
@@ -120,7 +137,7 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
         
         if(query.matches("\\d{5}"))
         {
-            Address address = new AddressImpl(0, "", "", query, "", "", "", 0, 0);
+            Address address = new AddressImpl("", "", query, "", "", "", new double[]{0, 0});
             return uspsAddressAPIService.lookupCityState(address);
         }
         else if(query.matches(".?\\s"))
@@ -145,10 +162,17 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
                 }
             }
            
-            Address address = new AddressImpl(0, address1, address2, "", state, city, "USA", 0, 0);
+            Address address = new AddressImpl(address1, address2, "", state, city, "USA", new double[]{0, 0});
             return uspsAddressAPIService.lookupZip(address);
         }
         
+        return null;
+    }
+
+    @Override
+    public NavigableSet<Organization> getFilteredOrganizations(AjaxSearchFilterRequest filterRequest)
+    {
+        // TODO Auto-generated method stub
         return null;
     }
 }

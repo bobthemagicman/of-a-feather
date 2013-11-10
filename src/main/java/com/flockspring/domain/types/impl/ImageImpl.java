@@ -1,29 +1,13 @@
 /*
- *  Copyright (c) 2013, Lehman Technolog Group
- *  All rights reserved.
- *  
- *  Redistribution and use in source and binary forms, with or without modification, are permitted provided that 
- *  the following conditions are met:
- *  
- *  Redistributions of source code must retain the above copyright notice, this list of conditions and the following 
- *  disclaimer.
- *  
- *  Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following 
- *  disclaimer in the documentation and/or other materials provided with the distribution.
- *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, 
- *  INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
- *  IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
- *  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; 
- *  OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT 
- *  (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF 
- *  SUCH DAMAGE.
- *
+ * Copyright 2013 FlockSpring Inc. All rights reserved
  */
 package com.flockspring.domain.types.impl;
 
-import java.io.Serializable;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.flockspring.domain.types.Image;
+import com.google.common.collect.ComparisonChain;
 
 /**
  * ImageImpl.java
@@ -32,81 +16,124 @@ import com.flockspring.domain.types.Image;
  * @date May 18, 2013
  *
  */
-public class ImageImpl implements Image, Serializable 
+public class ImageImpl implements Image, Comparable<ImageImpl> 
 {
-    
-    private static final long serialVersionUID = 4341636298330964999L;
-
     private String name;
     private String path;
-    private String alt;
-    private String title;
+    private String altText;
+    private String titleText;
     private String extension;
-    
-    private int id;
     private int width;
     private int height;
-    
+    private boolean primary;
+
+    @Override
+    public String getName()
+    {
+        return name;
+    }
+
+    @Override
+    public String getPath()
+    {
+        return path;
+    }
+
     @Override
     public String getAltText()
     {
-
-        return alt;
+        return altText;
     }
 
     @Override
     public String getTitleText()
     {
-       
-        return title;
+        return titleText;
     }
 
     @Override
     public String getExtension()
     {
-       
         return extension;
     }
 
     @Override
     public int getWidth()
     {
-       
         return width;
     }
 
     @Override
     public int getHeight()
     {
-       
         return height;
-    }
-
-    @Override
-    public String getPath()
-    {
-       
-        return path;
-    }
-
-    @Override
-    public String getName()
-    {
-       
-        return name;
-    }
-
-    @Override
-    public long getId()
-    {
-       
-        return id;
     }
 
     @Override
     public boolean isPrimary()
     {
-        // TODO Auto-generated method stub
-        return false;
+        return primary;
+    }
+    
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public void setPath(String path)
+    {
+        this.path = path;
+    }
+
+    public void setAltText(String altText)
+    {
+        this.altText = altText;
+    }
+
+    public void setTitleText(String titleText)
+    {
+        this.titleText = titleText;
+    }
+
+    public void setExtension(String extension)
+    {
+        this.extension = extension;
+    }
+
+    public void setWidth(int width)
+    {
+        this.width = width;
+    }
+
+    public void setHeight(int height)
+    {
+        this.height = height;
+    }
+    
+    public void setPrimary(boolean primary)
+    {
+        this.primary = primary;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public boolean equals(Object that)
+    {
+        return EqualsBuilder.reflectionEquals(this, that);
+    }
+
+    @Override
+    public int compareTo(ImageImpl other)
+    {
+        return ComparisonChain.start()
+                .compare(this.path, other.path)
+                .compare(this.name, other.getName())
+                .result();
+                
     }
 }

@@ -89,8 +89,8 @@ public class MapQuestServiceClient
         AddressImpl addressWithLatLng = callMapQuestGeoCodingAPI(verifyMaxResultsValueAndConvertToString(maxResults), String.valueOf(true), 
                 formatAddressQuery(address));
         
-        return new AddressImpl(address.getId(), address.getStreet1(), address.getStreet2(), address.getPostalCode(), address.getState(), 
-                address.getCity(), address.getCountry(), addressWithLatLng.getLongitude(), addressWithLatLng.getLatitude());
+        return new AddressImpl(address.getStreet1(), address.getStreet2(), address.getPostalCode(), address.getState(), 
+                address.getCity(), address.getCountry(), new double[]{addressWithLatLng.getLongitude(), addressWithLatLng.getLatitude()});
     }
 
     private String formatAddressQuery(Address address)

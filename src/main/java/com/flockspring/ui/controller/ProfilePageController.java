@@ -69,7 +69,7 @@ public class ProfilePageController
     public ModelAndView renderOrganizationProfileById(@PathVariable String organizationId)
     {
         // TODO: sanitize organizationId
-        Organization organization = organizationDiscoveryService.getOrganizationById(Long.valueOf(organizationId));
+        Organization organization = organizationDiscoveryService.getOrganizationById(organizationId);
 
         throwExceptionIfOrganizationIsNull(organization, organizationId);
 

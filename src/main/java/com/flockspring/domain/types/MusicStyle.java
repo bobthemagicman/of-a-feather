@@ -3,7 +3,6 @@
  */
 package com.flockspring.domain.types;
 
-import com.flockspring.ui.model.LocalizedEnum;
 
 /**
  * MusicStyle.java
@@ -12,37 +11,16 @@ import com.flockspring.ui.model.LocalizedEnum;
  * @date May 18, 2013
  *
  */
-public enum MusicStyle implements LocalizedEnum
+public enum MusicStyle
 {
-    GOSPEL("music.style.gospel"),
-    JAZZ("music.style.jazz"),
-    BIG_BAND("music.style.big.band"),
-    TRADITIONAL("music.style.traditional"),
-    NONE("music.style.none"),
-    CHOIR("music.style.choir"),
-    MODERN("music.style.modern");
-
-    private String localizString;
-    
-    private MusicStyle(String localizString) {
-        this.localizString = localizString;
-    }
-
-    @Override
-    public String getLocalizedStringCode() 
-    {
-        return this.localizString;
-    }
-
-    @Override
-    public String getName()
-    {
-        return this.name();
-    }
-    
-    @Override
-    public int getOrdinal()
-    {
-        return ordinal();
-    }
+    TRADITIONAL_5,
+    TRADITIONAL_4,
+    TRADITIONAL_3,
+    TRADITIONAL_2,
+    TRADITIONAL_1,
+    CONTEMPORARY_1,
+    CONTEMPORARY_2,
+    CONTEMPORARY_3,
+    CONTEMPORARY_4,
+    CONTEMPORARY_5;
 }

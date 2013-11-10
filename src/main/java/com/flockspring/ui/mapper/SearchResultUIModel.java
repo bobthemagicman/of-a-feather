@@ -3,11 +3,12 @@
  */
 package com.flockspring.ui.mapper;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.flockspring.ui.model.ImageUIModel;
 import com.google.common.collect.ComparisonChain;
+import com.google.common.collect.Ordering;
 
 /**
  * SearchResultUIModel.java
@@ -94,8 +95,8 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
     {
         
         return ComparisonChain.start()
-                .compare(this.getDistanceFromSearchPoint(), right.getDistanceFromSearchPoint())
-                .compare(this.getOrganizationName(), right.getOrganizationName())
+                .compare(this.getDistanceFromSearchPoint(), right.getDistanceFromSearchPoint(), Ordering.natural().nullsFirst())
+                .compare(this.getOrganizationName(), right.getOrganizationName(), Ordering.natural().nullsFirst())
                 .result();
     }   
 }

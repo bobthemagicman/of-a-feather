@@ -38,7 +38,8 @@ public enum Affiliation implements LocalizedEnum
     BIBLE_STUDENT_GROUPS("affiliation.bible.student.groups"),
     CHRISTIAN_SCIENCE("affiliation.christian.science"),
     NEW_THOUGHT("affiliation.new.thought"),
-    ESOTERICISM("affiliation.esotericism");
+    ESOTERICISM("affiliation.esotericism"),
+    NONE("affiliation.none");
 
     private String localizationCode;
     private Affiliation[] affiliations;

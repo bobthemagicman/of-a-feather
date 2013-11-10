@@ -3,8 +3,6 @@
  */
 package com.flockspring.domain.types;
 
-import java.io.Serializable;
-
 import com.flockspring.domain.types.impl.OrganizationImpl;
 
 /**
@@ -14,7 +12,7 @@ import com.flockspring.domain.types.impl.OrganizationImpl;
  * @date Jun 12, 2013
  * 
  */
-public interface Leader extends Serializable
+public interface Leader
 {
 
     String getName();

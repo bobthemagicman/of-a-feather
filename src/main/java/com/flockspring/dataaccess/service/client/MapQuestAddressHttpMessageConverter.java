@@ -81,7 +81,7 @@ public class MapQuestAddressHttpMessageConverter implements HttpMessageConverter
                 double latitiude = Double.valueOf(childNodes.item(0).getTextContent());
                 double longitude = Double.valueOf(childNodes.item(1).getTextContent());
                 
-                return new AddressImpl(new Long(nodeNum), "", "", "", "", "", "", longitude, latitiude);
+                return new AddressImpl("", "", "", "", "", "", new double[]{longitude, latitiude});
             }
         });
     }
