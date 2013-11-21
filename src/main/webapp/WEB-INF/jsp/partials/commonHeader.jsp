@@ -4,7 +4,7 @@
          pageEncoding="ISO-8859-1"%>
 <%@ include file="/WEB-INF/jsp/init.jsp"%>
 
-<spring:url value="/static/images/logoA_darker.png" var="ofAFeatherLogo" />
+<spring:url value="/static/images/site/logoA_darker.png" var="ofAFeatherLogo" />
 
 <!DOCTYPE html>
 <html lang="en">
