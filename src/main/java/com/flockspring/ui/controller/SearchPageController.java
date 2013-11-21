@@ -58,7 +58,7 @@ public class SearchPageController
     }
 
     @RequestMapping("/search")
-    public ModelAndView search(@RequestParam String query, @RequestParam(required = false) String stubMode, HttpSession session)
+    public ModelAndView search(@RequestParam(value="search-bar") String query, @RequestParam(required = false) String stubMode, HttpSession session)
     {
         NavigableSet<SearchResultUIModel> results = new TreeSet<SearchResultUIModel>();
         if (StringUtils.hasText(stubMode))

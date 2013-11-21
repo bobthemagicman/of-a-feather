@@ -12,25 +12,20 @@
   	</appender> 
   	
 	<category name="com.flockspring" additivity="false">
-    	<priority value="WARN" />
-    	<appender-ref ref="console" />
-  	</category>
-
-  	<category name="org.hibernate" additivity="false">
-    	<priority value="WARN" />
+    	<priority value="${com.flockspring.level}" />
     	<appender-ref ref="console" />
   	</category>
 
   	<category name="org.springframework" additivity="false">
-    	<priority value="WARN" />
+    	<priority value="${org.springframework.level}" />
     	<appender-ref ref="console" />
   	</category>
 	<category name="org.springframework.data.document.mongodb" additivity="false">
-		<priority value="DEBUG" />
+		<priority value="${org.springframework.data.document.mongodb.level}" />
 		<appender-ref ref="console"/>
 	</category>		
   	<root>
-    	<priority value="WARN" />
+    	<priority value="${root.level}" />
     	<appender-ref ref="console" />
   	</root>
 

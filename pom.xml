@@ -3,14 +3,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.flockspring</groupId>
-	<artifactId>flockSpring</artifactId>
+
+	<name>OfAFeather</name>
+	<packaging>war</packaging>
+	<artifactId>of-a-feather</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 
-	<name>flockSpring</name>
-	<packaging>war</packaging>
-
 	<properties>
-
 		<!-- Generic properties -->
 		<java.version>1.7</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -30,7 +29,7 @@
 		<!-- Database access -->
 		<spring-data-mongodb.version>1.3.2.RELEASE</spring-data-mongodb.version>
 		<mongo-java-driver.version>2.11.3</mongo-java-driver.version>
-		
+
 		<!-- AOP -->
 		<aspectj.version>1.7.2</aspectj.version>
 
@@ -54,16 +53,73 @@
 		<webjars-bootstrap.version>2.3.0</webjars-bootstrap.version>
 		<webjars-jquery-ui.version>1.9.2</webjars-jquery-ui.version>
 		<webjars-jquery.version>1.9.0</webjars-jquery.version>
-				
-		<!--  Misc dependencies -->
+
+		<!-- Misc dependencies -->
 		<org.apache.tomcat.version>7.0.35</org.apache.tomcat.version>
 		<jackson.version>1.9.13</jackson.version>
-		
-		<!-- Convenience dependencies-->
-		<guava.version>r09</guava.version> 
+
+		<!-- Convenience dependencies -->
+		<guava.version>r09</guava.version>
 		<commons-lang3.version>3.1</commons-lang3.version>
-		
+
+		<!-- Build Properties -->
+		<mongodb.dbName>ofAFeather</mongodb.dbName>
+		<mongodb.username>flockSpring</mongodb.username>
+		<mongodb.password>fl0ckSpr!ng</mongodb.password>
+		<usps.api.username>827FLOCK5747</usps.api.username>
+		<usps.api.password>813BA15RE419</usps.api.password>
+		<mapquest.api.app.key>Fmjtd%7Cluub250rnq%2C85%3Do5-9u8wq0</mapquest.api.app.key>
+		<mapquest.api.url>www.mapquestapi.com</mapquest.api.url>
+		<mapquest.api.maxResults>1</mapquest.api.maxResults>
 	</properties>
+
+	<profiles>
+		<profile>
+			<id>development</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<build.finalName>ofAFeather</build.finalName>
+				<build.environment>dev</build.environment>
+
+				<mongodb.port>27017</mongodb.port>
+				<mongodb.host>localhost</mongodb.host>
+
+				<usps.api.url>http://production.shippingapis.com/ShippingAPITest.dll</usps.api.url>
+				
+				<!-- Log Levels -->
+				<com.flockspring.level>DEBUG</com.flockspring.level>
+				<org.springframework.level>WARN</org.springframework.level>
+				<org.springframework.data.document.mongodb.level>WARN</org.springframework.data.document.mongodb.level>
+				<root.level>WARN</root.level>
+			</properties>
+		</profile>
+		<profile>
+			<id>production</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<property>
+					<name>environment</name>
+					<value>production</value>
+				</property>
+			</activation>
+			<properties>
+				<build.finalName>ROOT</build.finalName>
+				<build.environment>prod</build.environment>
+
+				<mongodb.port>33617</mongodb.port>
+				<mongodb.host>ds033617-internal.mongolab.com</mongodb.host>
+
+				<usps.api.url>http://production.shippingapis.com/ShippingAPITest.dll</usps.api.url>
+				<!-- Log Levels -->
+				<com.flockspring.level>ERROR</com.flockspring.level>
+				<org.springframework.level>ERROR</org.springframework.level>
+				<org.springframework.data.document.mongodb.level>ERROR</org.springframework.data.document.mongodb.level>
+				<root.level>ERROR</root.level>
+			</properties>
+		</profile>
+	</profiles>
 
 	<dependencies>
 		<dependency>
@@ -71,7 +127,7 @@
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>
 		</dependency>
-		            
+
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -273,9 +329,8 @@
 		</pluginRepository>
 	</pluginRepositories>
 
-	<!-- all Maven plugin versions are mentioned in order to guarantee the build 
-		reproducibility in the long term -->
 	<build>
+		<finalName>${build.finalName}</finalName>
 		<defaultGoal>install</defaultGoal>
 		<plugins>
 			<plugin>
@@ -292,6 +347,20 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.3</version>
+				<configuration>
+					<nonFilteredFileExtensions>
+						<nonFilteredFileExtension>pdf,svg,css</nonFilteredFileExtension>
+					</nonFilteredFileExtensions>
+					<webResources>
+						<resource>
+							<directory>src/main/resources</directory>
+							<targetPath>WEB-INF/classes</targetPath>
+							<include>**/**/*.properties</include>
+							<exclude>spring/*</exclude>
+							<filtering>true</filtering>
+						</resource>
+					</webResources>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -329,7 +398,7 @@
 					<password>mavenDeployer</password>
 					<username>mavenDeployer</username>
 					<port>9966</port>
-					<path>/flockSpring</path>
+					<path>/${build.finalName}</path>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -442,6 +511,4 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-
-
 </project>
