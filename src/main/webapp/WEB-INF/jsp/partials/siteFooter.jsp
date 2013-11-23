@@ -1,5 +1,3 @@
-<%@ include file="/WEB-INF/jsp/init.jsp"%>
-
 <spring:url value="/static/images/site/facebook_128.png" var="facebookIcon"/>
 <spring:url value="/static/images/site/instagram_64.png" var="instagramIcon"/>
 <spring:url value="/static/images/site/twitter_128.png" var="twitterIcon"/>
@@ -23,5 +21,3 @@
 <script src="${bootstrapJS}"></script>
 <script src="${frontPageJS}" type="text/javascript"></script>
 
-</body>
-</html>

@@ -24,6 +24,7 @@
 	<mvc:annotation-driven />
 	<mvc:resources mapping="/static/**" location="/resources/" />
 	<mvc:view-controller path="/about" view-name="aboutPage" />
+	<mvc:view-controller path="/addYourChurch" view-name="addChurchPage" />
 	<mvc:view-controller path="/contact" view-name="contactUsPage" />
 
 	<bean id="messageSource"

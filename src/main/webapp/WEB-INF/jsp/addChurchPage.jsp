@@ -1,6 +1,19 @@
-<%@ include file="/WEB-INF/jsp/partials/commonHeader.jsp"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ include file="/WEB-INF/jsp/init.jsp"%>
 
-<spring:url value="/static/images/site/area_map.jpg" var="areaMap"/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<%-- Common Metadata, scripts, and CSS --%>
+	<%@ include file="/WEB-INF/jsp/partials/commonHead.jsp"%>
+	
+	<title>Of A Feather - Find your new church home today</title>	
+</head>
+<body>
+
+<%-- Site Header --%>
+<%@ include file="/WEB-INF/jsp/partials/siteHeader.jsp"%>
 
 <div class="container addyourchurch-page">
     <div class="row">
@@ -33,4 +46,6 @@
 
 </div>
 
-<%@ include file="/WEB-INF/jsp/partials/commonFooter.jsp"%>
+<%@ include file="/WEB-INF/jsp/partials/siteFooter.jsp"%>
+
+</body>

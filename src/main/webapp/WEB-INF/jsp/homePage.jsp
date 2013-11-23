@@ -1,7 +1,19 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<%@ include file="/WEB-INF/jsp/init.jsp"%>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<%-- Common Metadata, scripts, and CSS --%>
+	<%@ include file="/WEB-INF/jsp/partials/commonHead.jsp"%>
+	
+	<title>Of A Feather - Find your new church home today</title>	
+</head>
+<body>
 
-
-<%@ include file="/WEB-INF/jsp/partials/commonHeader.jsp"%>
+<%-- Site Header --%>
+<%@ include file="/WEB-INF/jsp/partials/siteHeader.jsp"%>
 
 <spring:url value="/static/images/hero/01-church-of-the-cross-in-B.jpg" var="heroImage1"/>
 <spring:url value="/static/images/hero/Church_of_The_Holy_Cross_shadow.jpg" var="heroImage2" />
@@ -41,7 +53,7 @@
                 <button type="button" id="searchButton" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
             </span>
         </div>
-        <a href="#" class="btn btn-primary">Add Your Church!</a>
+        <a href="${addYourChurchLink}" class="btn btn-primary">Add Your Church!</a>
     </div>
 
     <div class="header-label">
@@ -64,8 +76,8 @@
             </p>
         </div>
         <div class="col-sm-8">
-            <h5>In the meantime, we invite you to learn more <a href="about.html">about our organization</a>.</h5>
-            <h5>Better yet, <a href="addyourchurch.html">add your church</a> to our database before we launch!</h5>
+            <h5>In the meantime, we invite you to learn more <a href="${aboutUsLink}">about our organization</a>.</h5>             
+            <h5>Better yet, <a href="${addYourChurchLink}">add your church</a> to our database before we launch!</h5>
         </div>
     </div>
 </div>
@@ -324,4 +336,8 @@
         </div>
     </div>
 </div>
-<%@ include file="/WEB-INF/jsp/partials/commonFooter.jsp"%>
+
+<%@ include file="/WEB-INF/jsp/partials/siteFooter.jsp"%>
+
+</body>
+</html>

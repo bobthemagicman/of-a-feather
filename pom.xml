@@ -61,6 +61,7 @@
 		<!-- Convenience dependencies -->
 		<guava.version>r09</guava.version>
 		<commons-lang3.version>3.1</commons-lang3.version>
+		<commons-io.version>2.4</commons-io.version>
 
 		<!-- Build Properties -->
 		<mongodb.dbName>ofAFeather</mongodb.dbName>
@@ -87,7 +88,7 @@
 				<mongodb.host>localhost</mongodb.host>
 
 				<usps.api.url>http://production.shippingapis.com/ShippingAPITest.dll</usps.api.url>
-				
+
 				<!-- Log Levels -->
 				<com.flockspring.level>DEBUG</com.flockspring.level>
 				<org.springframework.level>WARN</org.springframework.level>
@@ -132,6 +133,11 @@
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>${commons-lang3.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons-io.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
