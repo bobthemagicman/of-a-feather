@@ -3,9 +3,15 @@
  */
 package com.flockspring.dataaccess.service.client;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.client.utils.URIUtils;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.message.BasicNameValuePair;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,9 +33,8 @@ public class MapQuestServiceClient
 {
     private final static String MAX_RESULTS = "maxResults";
     private final static String THUMB_MAPS = "thumbMaps";
-    private final static String KEY = "key";
     private final static String OUT_FORMAT = "outFormat";
-    private final static String ADDRESS_QUERY = "addressQuery";
+    private final static String ADDRESS_QUERY = "location";
         
     private final RestOperations restTemplate;
     private final int defaultMaxResults;
@@ -49,8 +54,7 @@ public class MapQuestServiceClient
      *   &lt;/options&gt;
      * &lt;/address&gt; 
      */    
-    private String geocodingPathRequestXmlQueryString = new StringBuilder("/geocoding/V1/address?").append("key={")
-            .append(KEY).append("}&outFormat={").append(OUT_FORMAT).append("}&inFormat=xml&xml=<address><location><street>{")
+    private String geocodingPathRequestXmlQueryString = new StringBuilder("&outFormat={").append(OUT_FORMAT).append("}&inFormat=xml&xml=<address><location><street>{")
             .append(ADDRESS_QUERY).append("}</street></location><options><thumbMaps>{").append(THUMB_MAPS)
             .append("}</thumbMaps><maxResults>{").append(MAX_RESULTS).append("}</maxResults></options></address>").toString();
     
@@ -85,8 +89,8 @@ public class MapQuestServiceClient
         AddressImpl addressWithLatLng = callMapQuestGeoCodingAPI(verifyMaxResultsValueAndConvertToString(maxResults), String.valueOf(true), 
                 formatAddressQuery(address));
         
-        return new AddressImpl(address.getId(), address.getStreet1(), address.getStreet2(), address.getPostalCode(), address.getState(), 
-                address.getCity(), address.getCountry(), addressWithLatLng.getLongitude(), addressWithLatLng.getLatitude());
+        return new AddressImpl(address.getStreet1(), address.getStreet2(), address.getPostalCode(), address.getState(), 
+                address.getCity(), address.getCountry(), new double[]{addressWithLatLng.getLongitude(), addressWithLatLng.getLatitude()});
     }
 
     private String formatAddressQuery(Address address)
@@ -113,21 +117,31 @@ public class MapQuestServiceClient
         StringBuilder sb = new StringBuilder(webServiceUrl);
         sb.append(geocodingPathRequestXmlQueryString);
 
-        Map<String, String> parameterMap = getGeoCodingRequestParameters(maxResults, String.valueOf(false), 
+        List<NameValuePair> params = getGeoCodingRequestParameters(maxResults, String.valueOf(false), 
                 OutFormatType.XML.name().toLowerCase(), addressQuery);
-
-        return restTemplate.getForObject(sb.toString(), AddressImpl.class, parameterMap);
+                
+        try
+        {
+            String query = new StringBuilder("key=Fmjtd%7Cluub250rnq%2C85%3Do5-9u8wq0&").append(URLEncodedUtils.format(params, "UTF-8")).toString();
+            URI uri = URIUtils.createURI("http", webServiceUrl, -1, "geocoding/v1/address", query, null);
+            return restTemplate.getForObject(uri, AddressImpl.class);
+        } catch (URISyntaxException e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        return null;
     }
 
-    private Map<String, String> getGeoCodingRequestParameters(String maxResults, String thumbMaps, String outFormat, String addressQuery)
+    private List<NameValuePair> getGeoCodingRequestParameters(String maxResults, String thumbMaps, String outFormat, String addressQuery)
     {
-        Map<String, String> parameterMap = new HashMap<String, String>(3);
-        parameterMap.put(KEY, webServiceKey);
-        parameterMap.put(MAX_RESULTS, maxResults);
-        parameterMap.put(THUMB_MAPS, thumbMaps);
-        parameterMap.put(OUT_FORMAT, outFormat);
-        parameterMap.put(ADDRESS_QUERY, addressQuery);
+        List<NameValuePair> paramsList = new ArrayList<NameValuePair>(4);
+        paramsList.add(new BasicNameValuePair(MAX_RESULTS, maxResults));
+        paramsList.add(new BasicNameValuePair(THUMB_MAPS, thumbMaps));
+        paramsList.add(new BasicNameValuePair(OUT_FORMAT, outFormat));
+        paramsList.add(new BasicNameValuePair(ADDRESS_QUERY, addressQuery));
 
-        return parameterMap;
+        return paramsList;
     }
 }

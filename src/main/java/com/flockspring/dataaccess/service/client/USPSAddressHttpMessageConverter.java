@@ -106,8 +106,8 @@ public class USPSAddressHttpMessageConverter implements HttpMessageConverter<Add
                     default: throw new DOMException((short) 0, "Unknown node: " + element.getNodeName());
                 }
                                 
-                return new AddressImpl(new Long(nodeNum), address1, address2, new StringBuilder(zip5).append("-")
-                        .append(zip4).toString(), state, city, "USA", 0.0, 0.0);
+                return new AddressImpl(address1, address2, new StringBuilder(zip5).append("-").append(zip4).toString(), 
+                        state, city, "USA", new double[]{0.0, 0.0});
             }
         });
     }

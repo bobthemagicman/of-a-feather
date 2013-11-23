@@ -41,15 +41,20 @@ public class ImageUIModelMapper
 
     public ImageUIModel map(Image image)
     {
-        String altText = image.getAltText();
-        int height = image.getHeight();
-        String name = image.getName();
-        String path = image.getPath();
-        String title = image.getTitleText();
-        int width = image.getWidth();
+        if(image != null)
+        {
+            String altText = image.getAltText();
+            int height = image.getHeight();
+            String name = image.getName();
+            String path = image.getPath();
+            String title = image.getTitleText();
+            int width = image.getWidth();
+            
+            ImageUIModel model = new ImageUIModel(altText, name, path, title, height, width);
+                    
+            return model;
+        }
         
-        ImageUIModel model = new ImageUIModel(altText, name, path, title, height, width);
-        
-        return model;
+        return null;
     }
 }

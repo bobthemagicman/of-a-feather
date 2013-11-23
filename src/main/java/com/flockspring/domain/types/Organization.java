@@ -3,19 +3,20 @@
  */
 package com.flockspring.domain.types;
 
-import java.io.Serializable;
 import java.util.Set;
 
+import com.flockspring.ui.model.CongregationSize;
+import com.flockspring.ui.model.Programs;
+import com.flockspring.ui.model.ServiceTime;
 
-public interface Organization extends Serializable
+
+public interface Organization
 {
     Address getAddress();
 
-    MusicStyle getMusicStyle();
-
     int getYearFounded();
 
-    String getServiceTimes();
+    Set<ServiceTime> getServiceTimes();
 
     Set<Language> getLanguages();
 
@@ -25,17 +26,11 @@ public interface Organization extends Serializable
 
     Affiliation getPrimaryAffiliation();
 
-    Affiliation getAffilationDenomination();
+    Affiliation getDenomination();
 
-    Affiliation getSubAffiliationDenomination();
+    Affiliation getSubDenomination();
 
     String getName();
-
-    String getProgramsOffered();
-
-    String getAgeDemographics();
-
-    String getEthnicDemographics();
 
     String getDescription();
 
@@ -43,19 +38,27 @@ public interface Organization extends Serializable
 
     String getFacebookUrl();
 
-    String getServiceDays();
+    Set<ServiceDay> getServiceDays();
     
-    int getAverageServiceCongregationSize();
+    CongregationSize getCongregationSize();
 
     boolean isGayAffirming();
 
-    boolean isParkingLot();
-
-    boolean isEnvFriendly();
-
-    long getId();
+    String getId();
 
     Region getRegion();
 
-    int getDistanceFromSearchPoint();
+    double getDistanceFromSearchPoint();
+
+    MusicStyle getMusicStyle();
+    
+    boolean isParkingLotAvailable();
+    
+    Set<Programs> getProgramsOffered();
+    
+    Set<AccessabilitySupport> getAccessabilitySupport();
+    
+    DressAttire getDressAttire();
+    
+    ServiceStyle getServiceStyle();
 }

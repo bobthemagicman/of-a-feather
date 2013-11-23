@@ -3,17 +3,8 @@
  */
 package com.flockspring.domain.types.impl;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.flockspring.domain.types.Leader;
 
@@ -24,38 +15,16 @@ import com.flockspring.domain.types.Leader;
  * @date Jun 12, 2013
  *
  */
-@Entity
-@Table(name="LEADER")
 public class LeaderImpl implements Leader
 {
     
-    private static final long serialVersionUID = -2486392800486198793L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    
-    @Column(name="NAME")
     private String name;
-    
-    @Column(name="BIO")
     private String bio;
-    
-    @Column(name="TITLE")
     private String title;
-    
-    @ManyToOne
-    @JoinColumn(name="IMAGE_ID")
-    private JpaImageImpl image;
-    
-    @Column(name="PRIMARY_CONTACT")
+    private ImageImpl image;
     private boolean primaryContact;
-    
-    @Column(name="PRIMARY_LEADER")
     private boolean primaryLeader;
-
-    @ManyToOne
-    @JoinColumn(name="ORGANIZATION_ID", nullable=false)
     private OrganizationImpl organization;
 
     @Override
@@ -83,7 +52,7 @@ public class LeaderImpl implements Leader
     }
 
     @Override
-    public JpaImageImpl getImage()
+    public ImageImpl getImage()
     {
         return image;
     }
@@ -126,7 +95,7 @@ public class LeaderImpl implements Leader
         this.title = title;
     }
 
-    public void setImage(JpaImageImpl image)
+    public void setImage(ImageImpl image)
     {
         this.image = image;
     }

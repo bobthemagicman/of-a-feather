@@ -1,18 +1,24 @@
-USE flock_spring;
+var org1 = {address: {street1: '9900 Willows RD NE', city: 'Redmond', postalCode: '98028', state: 'WA', country: 'USA', longitude: '-122.14927',latitude: '47.68908', location:[-122.14927, 47.68908]},
+ primaryLeader: {name: 'Mike Howerton', title: 'Lead Pastor', bio: 'Lead pastor bio information goes here', image: {name: 'Pastor Mike Howerton', path: '/image/1234.jpg', altText: 'Pastor Mike Howerton'}, primaryContact: false, primaryLeader: true},
+ images: [{name: 'Pastor Mike Howerton', path: '/image/1234.jpg', altText: 'Pastor Mike Howerton'}, {name: 'Pastor Mike Howerton', path: '/image/1234.jpg', altText: 'Pastor Mike Howerton'}, {name: 'Pastor Mike Howerton', path: '/image/1234.jpg', altText: 'Pastor Mike Howerton'}],
+ musicStyle: 'CONTEMPORARY_3',
+ dressAttire: 'CASUAL_3',
+ serviceStyle: 'HIGH_ENERGY_3',
+ yearFounded: '2000',
+ serviceTimes: ['EARLY_MORNING', 'MID_MORNING', 'LATE_MORNING', 'AFTERNOON', 'EVENING'],
+ serviceDays: ['SUNDAY'],
+ denomination: 'NONDENOMINATIONAL',
+ subDenomination: 'NONE',
+ name: 'Overlake Christian Church',
+ programs: ['INFANT_CARE', 'TODDLER_CARE', 'SUNDAY_SCHOOL', 'BIBLE_STUDY', 'ADULT_EDUCATION', 'SPIRITUAL_CLASSES', 'PRE_SCHOOL', 'PRIMARY_SCHOOL', 'SECONDARY_SCHOOL', 'GRADUATE_STUDIES', 'CHILDRENS_GROUPS', 'MIDDLE_SCHOOL_GROUP', 'HIGH_SCHOOL_GROUP', 'YOUNG_ADULT_GROUP', 'ADULT_GROUP', 'MENS_GROUP', 'WOMENS_GROUP'],
+ accessabilityNeeds: ['WHEEL_CHAIR_ACCESS, DEAF_TRANSLATOR, PARKING_LOG'],
+ description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vulputate at justo quis molestie. Cras suscipit sagittis rutrum. In id libero quis urna consequat bibendum. Duis sed eros et ligula vestibulum congue. Praesent volutpat nibh eget ipsum tempor varius.',
+ websiteUrl: 'http://www.occ.org',
+ facebookUrl: 'https://www.facebook.com/OverlakeChristianChurch',
+ congregationSize: 'LARGE',
+ parkingLot: true,
+ gayAffirming: false
+} 
 
-INSERT INTO ADDRESS (ID, STREET1, STREET2, CITY, POSTAL_CODE, STATE, COUNTRY, LONGITUDE, LATITUDE) VALUES (null, "9900 Willows RD NE", "", "Redmond", 98028, "WA", "USA", 1232545, 1234567);
-SET @ADDRESS_ID = LAST_INSERT_ID();
-
-INSERT INTO IMAGE (ID, NAME, PATH, ALT,	WIDTH, HEIGHT, EXTENSION) VALUES (NULL, "Pastor Mike Howerton", "/image/1234.jpg", "Pastor Mike Howerton", 500, 500, "JPG");
-SET @IMAGE_ID = LAST_INSERT_ID();
-
-INSERT INTO LEADER (ID,	NAME, TITLE, BIO, IMAGE_ID, PRIMARY_CONTACT, PRIMARY_LEADER) VALUES (null, "Mike Howerton", "Head Pastor", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vulputate at justo quis molestie. Nulla ut nisl ac lectus tristique commodo. Proin pulvinar, neque vel tempus euismod, erat magna gravida ante, id scelerisque ante metus non ante. Cras suscipit sagittis rutrum. In id libero quis urna consequat bibendum. Duis sed eros et ligula vestibulum congue. Praesent volutpat nibh eget ipsum tempor varius. Pellentesque fringilla lacus ac magna ultricies blandit.", @IMAGE_ID, false, true);
-
-SET @REGION_ID = (SELECT ID FROM GLOBAL_REGION WHERE REGION_TYPE = 'City'AND ENGLISH_NAME = "Redmond");
- 
-SET @DESCRIPTION_FILLER = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vulputate at justo quis molestie. Cras suscipit sagittis rutrum. In id libero quis urna consequat bibendum. Duis sed eros et ligula vestibulum congue. Praesent volutpat nibh eget ipsum tempor varius. Pellentesque fringilla lacus ac magna ultricies blandit. Morbi ut sodales magna. Quisque vestibulum enim non lacus pretium commodo. Morbi accumsan tortor eu elit congue iaculis. Fusce adipiscing justo urna, ut varius tellus sagittis non. Morbi semper augue id ipsum tempor, non feugiat enim elementum. Sed venenatis felis vitae scelerisque consequat. Suspendisse potenti. Etiam mollis lectus in eros pellentesque rutrum. Etiam posuere tristique tortor, in tristique felis imperdiet eu. Proin accumsan nibh et faucibus congue. Donec interdum dignissim augue ac luctus. Donec eu odio turpis. Curabitur sagittis interdum magna, facilisis elementum libero posuere eu. Etiam eleifend neque non suscipit hendrerit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nullam libero justo, vestibulum eu turpis quis, ultricies pellentesque sem. Cras placerat justo at erat dapibus mattis. Nulla scelerisque tristique elit, sit amet dictum sapien. Nunc dolor justo, tincidunt sit amet pretium in, commodo sit amet massa. Integer vulputate faucibus tortor, tempus tempus felis fringilla at. In hac habitasse platea dictumst.";
-INSERT INTO ORGANIZATION (ID, ADDRESS_ID, MUSIC_STYLE, YEAR_FOUNDED, SERVICE_TIMES, SERVICE_DAYS, PRIMARY_AFFILIATION, AFFILIATION_DENOMINATION, AFFILIATION_SUBDENOMINATION, NAME, PROGRAMS_OFFERED, AGE_DEMOGRAPHICS, ETHNIC_DEMOGRAPHICS, DESCRIPTION, WEBSITE_URL, FACEBOOK_URL, AVERAGE_SERVICE_CONGREGATION_SIZE, 
-ENVIRONMENTALLY_FRIENDLY, PARKING_LOT, GAY_AFIRMING, REGION_ID) 
-			      VALUES (NULL, @ADDRESS_ID, 7, 2002, "9:20AM, 11:00AM, 6:00PM", "Sunday", 1, 1, NULL, "Overlake Christian Church", "Child Care, Divorce Care, Celebrate Recovery", "All ages", "Primarily Cacusain,", @DESCRIPTION_FILLER, "http://www.occ.org", 
-			      "https://www.facebook.com/OverlakeChristianChurch", 1000, true, true, false, @REGION_ID);
-			      
+db.organizations.ensureIndex( {"address.location": "2d"})
+db.organizations.insert(org1);

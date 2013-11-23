@@ -3,10 +3,13 @@
  */
 package com.flockspring.ui.model;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
+import java.util.Set;
+
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.google.common.collect.ComparisonChain;
+import com.google.common.collect.Ordering;
 
 /**
  * SearchResultUIModel.java
@@ -20,14 +23,14 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
 
     private ImageUIModel displayImage;
     private String organizationName;
-    private String serviceTimes;
+    private Set<ServiceTime> serviceTimes;
     private String denomination;
-    private int distanceFromSearchPoint;
+    private double distanceFromSearchPoint;
     private boolean featured;
     private boolean usersFavorite;
     
-    public SearchResultUIModel(ImageUIModel displayImage, String organizationName, String serviceTimes, String denomination,
-            int distanceFromSearchPoint, boolean featured, boolean usersFavorite)
+    public SearchResultUIModel(ImageUIModel displayImage, String organizationName, Set<ServiceTime> serviceTimes, String denomination,
+            double distanceFromSearchPoint, boolean featured, boolean usersFavorite)
     {
         super();
         this.displayImage = displayImage;
@@ -49,7 +52,7 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
         return organizationName;
     }
 
-    public String getServiceTimes()
+    public Set<ServiceTime> getServiceTimes()
     {
         return serviceTimes;
     }
@@ -59,7 +62,7 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
         return denomination;
     }
 
-    public int getDistanceFromSearchPoint()
+    public double getDistanceFromSearchPoint()
     {
         return distanceFromSearchPoint;
     }
@@ -91,8 +94,8 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
     {
 
         return ComparisonChain.start()
-                .compare(this.getDistanceFromSearchPoint(), right.getDistanceFromSearchPoint())
-                .compare(this.getOrganizationName(), right.getOrganizationName())
+                .compare(this.getDistanceFromSearchPoint(), right.getDistanceFromSearchPoint(), Ordering.natural().nullsFirst())
+                .compare(this.getOrganizationName(), right.getOrganizationName(), Ordering.natural().nullsFirst())
                 .result();
     }
 }

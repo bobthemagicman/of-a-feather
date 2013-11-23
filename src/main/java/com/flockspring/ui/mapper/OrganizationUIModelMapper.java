@@ -11,11 +11,15 @@ import org.springframework.stereotype.Component;
 import com.flockspring.domain.types.Leader;
 import com.flockspring.domain.types.MusicStyle;
 import com.flockspring.domain.types.Organization;
+import com.flockspring.domain.types.ServiceDay;
 import com.flockspring.ui.model.AddressUIModel;
+import com.flockspring.ui.model.CongregationSize;
 import com.flockspring.ui.model.ImageUIModel;
 import com.flockspring.ui.model.LanguageUIModel;
 import com.flockspring.ui.model.LeaderUIModel;
 import com.flockspring.ui.model.OrganizationUIModel;
+import com.flockspring.ui.model.Programs;
+import com.flockspring.ui.model.ServiceTime;
 
 /**
  * OrganizationUIModelMapper.java
@@ -55,29 +59,27 @@ public class OrganizationUIModelMapper
         String srLdrBiography = getSeniorLeadersBiography(organization.getLeadershipTeam());
         Set<ImageUIModel> images = imageUIModelMapper.map(organization.getImages());
         boolean gayAffirming = organization.isGayAffirming();
-        String serviceDays = organization.getServiceDays();
-        String ethnicDemographics = organization.getEthnicDemographics();
+        Set<ServiceDay> serviceDays = organization.getServiceDays();
         Set<LanguageUIModel> languages = languageUIModelMapper.map(organization.getLanguages());
-        boolean parkingLot = organization.isParkingLot();
-        String ageDemographics = organization.getAgeDemographics();
-        boolean envFriendly = organization.isEnvFriendly();
-        int averageServiceCongregationSize = organization.getAverageServiceCongregationSize();
-        String programsOffered = organization.getProgramsOffered();
+        boolean parkingLot = organization.isParkingLotAvailable();
+        CongregationSize averageServiceCongregationSize = organization.getCongregationSize();
+        Set<Programs> programsOffered = organization.getProgramsOffered();
         String name = organization.getName();
-        String subDenomination = organization.getSubAffiliationDenomination() == null ? null : organization.getSubAffiliationDenomination().getLocalizedStringCode();
+        String subDenomination = organization.getSubDenomination() == null ? null : organization.getSubDenomination().getLocalizedStringCode();
         String facebookUrl = organization.getFacebookUrl();
         String websiteUrl = organization.getWebsiteUrl();
         String communityCategory = organization.getPrimaryAffiliation().getLocalizedStringCode();
         String description = organization.getDescription();
-        String denomination = organization.getAffilationDenomination().getLocalizedStringCode();
-        int distanceFromSearchPoint = organization.getDistanceFromSearchPoint();
+        String denomination = organization.getDenomination().getLocalizedStringCode();
+        double distanceFromSearchPoint = organization.getDistanceFromSearchPoint();
         
-        String serviceTimes = organization.getServiceTimes();
+        Set<ServiceTime> serviceTimes = organization.getServiceTimes();
         int yearFounded = organization.getYearFounded();
         
-        OrganizationUIModel model = new OrganizationUIModel(address, musicStyle, yearFounded, serviceTimes, languages, serviceDays, images,
-                communityCategory, denomination, subDenomination, name, programsOffered, ageDemographics, ethnicDemographics, srLdrBiography, 
-                description, websiteUrl, facebookUrl, averageServiceCongregationSize, envFriendly, parkingLot, gayAffirming, leadershipTeam, distanceFromSearchPoint);
+        OrganizationUIModel model = new OrganizationUIModel(address, musicStyle, yearFounded, serviceTimes, languages, serviceDays, images, communityCategory, 
+                denomination, subDenomination, name, programsOffered, srLdrBiography, description, websiteUrl, facebookUrl, averageServiceCongregationSize, 
+                parkingLot, gayAffirming, leadershipTeam, distanceFromSearchPoint);
+        
         
         return model;
     }

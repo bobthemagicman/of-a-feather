@@ -3,7 +3,6 @@
  */
 package com.flockspring.ui.mapper;
 
-import java.util.List;
 import java.util.NavigableSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -37,7 +36,7 @@ public class SearchResultsModelMapper
         this.imageUIModelMapper = imageUIModelMapper;
     }
 
-    public NavigableSet<SearchResultUIModel> map(List<Organization> organizations)
+    public NavigableSet<SearchResultUIModel> map(NavigableSet<Organization> organizations)
     {
         
         NavigableSet<SearchResultUIModel> results = new TreeSet<>();
@@ -54,7 +53,7 @@ public class SearchResultsModelMapper
         ImageUIModel image = imageUIModelMapper.map(getPrimaryOrganizationImage(organization.getImages()));
         
         return new SearchResultUIModel(image, organization.getName(), organization.getServiceTimes(), 
-                organization.getAffilationDenomination().getLocalizedStringCode(), organization.getDistanceFromSearchPoint(),
+                organization.getDenomination().getLocalizedStringCode(), organization.getDistanceFromSearchPoint(),
                 isOrganizationFeatured(organization), isOrganizationUserFavorite(organization));
     }
 

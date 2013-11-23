@@ -3,13 +3,15 @@
  */
 package com.flockspring.ui.model;
 
+import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
-import org.apache.commons.lang.builder.HashCodeBuilder;
-import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.flockspring.domain.types.MusicStyle;
+import com.flockspring.domain.types.ServiceDay;
 import com.google.common.collect.ComparisonChain;
 
 /**
@@ -28,56 +30,50 @@ public class OrganizationUIModel implements Comparable<OrganizationUIModel> {
     private final Set<ImageUIModel> images;
     private final Set<LeaderUIModel> leadershipTeam;
     
-    private final String serviceTimes;
-    private final String serviceDays;
+    private final Set<ServiceTime> serviceTimes;
+    private final Set<ServiceDay> serviceDays;
     private final String communityCategory;
     private final String denomination;
     private final String subDenomination;
     private final String name;
-    private final String programsOffered;
-    private final String ageDemographics;
-    private final String ethnicDemographics;
+    private final Set<Programs> programsOffered;
     private final String srLdrBiography;
     private final String description;
     private final String websiteUrl;
     private final String facebookUrl;
     
     private final int yearFounded;
-    private final int averageServiceCongregationSize;
-    private final int distanceFromSearchPoint;
+    private final CongregationSize averageServiceCongregationSize;
+    private final double distanceFromSearchPoint;
     
-    private final boolean envFriendly;
     private final boolean parkingLot;
       
     public OrganizationUIModel(AddressUIModel address, MusicStyle musicStyle, int yearFounded,
-            String serviceTimes, Set<LanguageUIModel> languages, String serviceDays, Set<ImageUIModel> images,
-            String communityCategory, String denomination, String subDenomination, String name, String programsOffered, String ageDemographics,
-            String ethnicDemographics, String srLdrBiography, String description, String websiteUrl, String facebookUrl,
-            int averageServiceCongregationSize, boolean envFriendly, boolean parkingLot, boolean gayAffirming, Set<LeaderUIModel> leadershipTeam,
-            int distanceFromSearchPoint) {
+            Set<ServiceTime> serviceTimes2, Set<LanguageUIModel> languages, Set<ServiceDay> serviceDays2, Set<ImageUIModel> images,
+            String communityCategory, String denomination, String subDenomination, String name, Set<Programs> programsOffered2,
+            String srLdrBiography, String description, String websiteUrl, String facebookUrl,
+            CongregationSize averageServiceCongregationSize2, boolean parkingLot, boolean gayAffirming, Set<LeaderUIModel> leadershipTeam,
+            double distanceFromSearchPoint) {
         
         super();
     
         this.address = address;
         this.musicStyle = musicStyle;
         this.yearFounded = yearFounded;
-        this.serviceTimes = serviceTimes;
+        this.serviceTimes = serviceTimes2;
         this.languages = languages;
-        this.serviceDays = serviceDays;
+        this.serviceDays = serviceDays2;
         this.images = images;
         this.communityCategory = communityCategory;
         this.denomination = denomination;
         this.subDenomination = subDenomination;
         this.name = name;
-        this.programsOffered = programsOffered;
-        this.ageDemographics = ageDemographics;
-        this.ethnicDemographics = ethnicDemographics;
+        this.programsOffered = programsOffered2;
         this.srLdrBiography = srLdrBiography;
         this.description = description;
         this.websiteUrl = websiteUrl;
         this.facebookUrl = facebookUrl;
-        this.averageServiceCongregationSize = averageServiceCongregationSize;
-        this.envFriendly = envFriendly;
+        this.averageServiceCongregationSize = averageServiceCongregationSize2;
         this.parkingLot = parkingLot;
         this.leadershipTeam = leadershipTeam;
         this.distanceFromSearchPoint = distanceFromSearchPoint;
@@ -98,7 +94,7 @@ public class OrganizationUIModel implements Comparable<OrganizationUIModel> {
         return yearFounded;
     }
 
-    public String getServiceTimes()
+    public Set<ServiceTime> getServiceTimes()
     {
         return serviceTimes;
     }
@@ -108,7 +104,7 @@ public class OrganizationUIModel implements Comparable<OrganizationUIModel> {
         return languages;
     }
 
-    public String getServiceDays()
+    public Set<ServiceDay> getServiceDays()
     {
         return serviceDays;
     }
@@ -143,19 +139,9 @@ public class OrganizationUIModel implements Comparable<OrganizationUIModel> {
         return name;
     }
 
-    public String getProgramsOffered()
+    public Set<Programs> getProgramsOffered()
     {
         return programsOffered;
-    }
-
-    public String getAgeDemographics()
-    {
-        return ageDemographics;
-    }
-
-    public String getEthnicDemographics()
-    {
-        return ethnicDemographics;
     }
 
     public String getSrLdrBiography()
@@ -178,14 +164,9 @@ public class OrganizationUIModel implements Comparable<OrganizationUIModel> {
         return facebookUrl;
     }
 
-    public int getAverageServiceCongregationSize()
+    public CongregationSize getAverageServiceCongregationSize()
     {
         return averageServiceCongregationSize;
-    }
-
-    public boolean isEnvFriendly()
-    {
-        return envFriendly;
     }
 
     public boolean isParkingLot()
@@ -193,7 +174,7 @@ public class OrganizationUIModel implements Comparable<OrganizationUIModel> {
         return parkingLot;
     }
     
-    public int getDistanceFromSearchPoint()
+    public double getDistanceFromSearchPoint()
     {
         return distanceFromSearchPoint;
     }

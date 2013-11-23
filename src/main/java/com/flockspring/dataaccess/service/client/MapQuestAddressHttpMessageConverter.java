@@ -23,6 +23,7 @@ import org.springframework.xml.xpath.XPathOperations;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import com.flockspring.domain.types.impl.AddressImpl;
 
@@ -48,7 +49,7 @@ public class MapQuestAddressHttpMessageConverter implements HttpMessageConverter
     @Override
     public boolean canRead(Class<?> clazz, MediaType mediaType)
     {
-        return AddressImpl.class == clazz && mediaType.equals(MediaType.TEXT_XML);
+        return AddressImpl.class == clazz && mediaType != null && mediaType.isCompatibleWith(MediaType.TEXT_XML);
     }
 
     @Override
@@ -69,28 +70,18 @@ public class MapQuestAddressHttpMessageConverter implements HttpMessageConverter
     {
         Source messageXml = new SourceHttpMessageConverter<Source>().read(Source.class, message);
 
-        return xpathTemplate.evaluateAsObject("//displayLatLng", messageXml, new NodeMapper<AddressImpl>() {
+        return xpathTemplate.evaluateAsObject("//latLng", messageXml, new NodeMapper<AddressImpl>() {
             @Override
             public AddressImpl mapNode(Node node, int nodeNum) throws DOMException
             {
                 Element element = (Element) node;
                 
-                double latitiude = 0;
-                double longitude = 0;
+                NodeList childNodes = element.getChildNodes();
                 
-                switch(node.getNodeName().toLowerCase())
-                {
-                    case "lat" : latitiude = Double.valueOf(element.getNodeValue());
-                        break;
-                        
-                    case "lng" : longitude = Double.valueOf(element.getNodeValue());
-                        break;
-                        
-                    default:
-                        //ignore                        
-                }
+                double latitiude = Double.valueOf(childNodes.item(0).getTextContent());
+                double longitude = Double.valueOf(childNodes.item(1).getTextContent());
                 
-                return new AddressImpl(new Long(nodeNum), "", "", "", "", "", "", longitude, latitiude);
+                return new AddressImpl("", "", "", "", "", "", new double[]{longitude, latitiude});
             }
         });
     }

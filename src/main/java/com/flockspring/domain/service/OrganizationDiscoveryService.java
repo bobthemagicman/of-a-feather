@@ -3,10 +3,11 @@
  */
 package com.flockspring.domain.service;
 
-import java.util.List;
+import java.util.NavigableSet;
 
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.Region;
+import com.flockspring.ui.model.AjaxSearchFilterRequest;
 
 /**
  * IOrganizationService.java
@@ -19,13 +20,15 @@ public interface OrganizationDiscoveryService {
 
     Organization getOrganizationByNameAndRegion(String name, Long regionId);
 
-    Region getRegionForOrganization(Long OrganizationId);
+    Region getRegionForOrganization(String OrganizationId);
     
-    Organization getOrganizationById(Long OrganizationId);
+    Organization getOrganizationById(String OrganizationId);
     
     Organization getOrganizationByRegionAndOrganizationNames(String organizationName, String stateRegionName, String cityRegionName, String neighborhoodRegionName);
     
     Organization getOrganizationByRegionAndOrganizationNames(String organizationName, String stateRegionName, String cityRegionName);
 
-    List<Organization> searchForOrganizations(String query);
+    NavigableSet<Organization> searchForOrganizations(String query);
+
+    NavigableSet<Organization> getFilteredOrganizations(AjaxSearchFilterRequest filterRequest);
 }
