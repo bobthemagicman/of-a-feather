@@ -22,7 +22,6 @@
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script src="${bootstrapJS}"></script>
 <script src="${frontPageJS}" type="text/javascript"></script>
-<script src="${bootstrapPaginatorJS}" type="text/javascript"></script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script src="${searchResultsPageJS}" type="text/javascript"></script>
 
