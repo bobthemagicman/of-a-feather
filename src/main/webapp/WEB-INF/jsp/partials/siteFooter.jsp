@@ -5,7 +5,6 @@
 <spring:url value="/static/js/bootstrap.min.js" var="bootstrapJS"/>
 <spring:url value="/static/js/front.js" var="frontPageJS"/>
 <spring:url value="/static/js/search.js" var="searchResultsPageJS"/>
-<spring:url value="/static/js/bootstrap-paginator.min.js" var="bootstrapPaginatorJS" />
 
 <div class="footer">
 
