@@ -8,10 +8,13 @@ $(document).ready(function() {
    
    loadImageInfo(); 
     
+   //Currently using only one hero image so no need to cycle
+   /*
    setTimeout(function() {
        cycleImage();
    }, 10000);
-   
+   */
+  
    $('.carousel').carousel({
      interval: false
     });
@@ -55,20 +58,23 @@ function cycleImage() {
 
 function loadImageInfo() {
     
-    var churchName = $(".active-image").attr("data-church-name");
+    if($(".active-image").length) {
     
-    var churchInfo = $(".active-image").attr("data-church-location") + "&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;" + $(".active-image").attr("data-church-denomination");
+        var churchName = $(".active-image").attr("data-church-name");
+
+        var churchInfo = $(".active-image").attr("data-church-location") + "&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;" + $(".active-image").attr("data-church-denomination");
+
+        var photographerCredit = $(".active-image").attr("data-photographer-credit");
+
+        $(".church-name").html(churchName.toUpperCase());
+
+        $(".church-info").html(churchInfo);
+
+        $(".photographer-credit").html(photographerCredit);
+
+        $(".header-label").fadeTo(2000, 1);
     
-    var photographerCredit = $(".active-image").attr("data-photographer-credit");
-    
-    $(".church-name").html(churchName.toUpperCase());
-    
-    $(".church-info").html(churchInfo);
-    
-    $(".photographer-credit").html(photographerCredit);
-    
-    $(".header-label").fadeTo(2000, 1);
-    
+    }
 }
 
 function fixTabPanes() {

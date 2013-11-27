@@ -16,8 +16,6 @@
 <%@ include file="/WEB-INF/jsp/partials/siteHeader.jsp"%>
 
 <spring:url value="/static/images/hero/01-church-of-the-cross-in-B.jpg" var="heroImage1"/>
-<spring:url value="/static/images/hero/Church_of_The_Holy_Cross_shadow.jpg" var="heroImage2" />
-<spring:url value="/static/images/hero/Cathedral_of_St_John_shadow.jpg" var="heroImage3" /> 
 <spring:url value="/static/images/site/blur.png" var="blurImage" />
 <spring:url value="/static/images/site/coming_soon.png" var="comingSoonImage" />
 
