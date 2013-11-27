@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -103,7 +104,7 @@ public class SearchPageController
         session.setAttribute(RESULT_IDS, resultIds);
     }
 
-    @RequestMapping("/search/ajax/filter-results")
+    @RequestMapping(value = "/ajax/filter-results", method = RequestMethod.POST, headers = {"content-type=application/json"})
     public @ResponseBody AjaxSearchFilterResponse ajaxResultsFilter(@RequestBody AjaxSearchFilterRequest filterRequest, HttpSession session)
     {
         

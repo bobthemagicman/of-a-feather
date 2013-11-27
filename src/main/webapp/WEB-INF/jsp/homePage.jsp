@@ -47,8 +47,8 @@
             <h4>Personalized church search</h4>
         </div>
         <div class="blur"><img src="${blurImage}" /></div>
-        <div class="input-group" data-toggle="popover" data-content="Our search capability is still under development! Please check back soon!" data-trigger="hover" data-placement="bottom">
-            <input id="search-bar" disabled="disabled" type="text" class="form-control button-on-right" autofocus="autofocus" placeholder="Find Churches Near (City, State Zip)">
+        <div class="input-group" data-toggle="popover">
+            <input id="search-bar" type="text" class="form-control button-on-right" autofocus="autofocus" placeholder="Find Churches Near (City, State Zip)">
             <span id="search-button" class="input-group-btn">
                 <button type="button" id="searchButton" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
             </span>
@@ -338,6 +338,8 @@
 </div>
 
 <%@ include file="/WEB-INF/jsp/partials/siteFooter.jsp"%>
+<spring:url value="/static/js/front.js" var="frontPageJS"/>
+<script src="${frontPageJS}" type="text/javascript"></script>
 
 </body>
 </html>

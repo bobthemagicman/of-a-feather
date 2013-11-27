@@ -20,5 +20,7 @@ var org1 = {address: {street1: '9900 Willows RD NE', city: 'Redmond', postalCode
  gayAffirming: false
 } 
 
-db.organizations.ensureIndex( {"address.location": "2d"})
+
 db.organizations.insert(org1);
+db.organizations.ensureIndex( {"address.location": "2d"})
+db.addUser( { user: "flockSpring", pwd: "fl0ckSpr!ng", roles: ["readWrite"] } );

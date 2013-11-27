@@ -52,8 +52,6 @@ public interface Organization
 
     MusicStyle getMusicStyle();
     
-    boolean isParkingLotAvailable();
-    
     Set<Programs> getProgramsOffered();
     
     Set<AccessabilitySupport> getAccessabilitySupport();
@@ -61,4 +59,14 @@ public interface Organization
     DressAttire getDressAttire();
     
     ServiceStyle getServiceStyle();
+
+    Set<AccessabilitySupport> getAccessibilitySupport();
+
+    Set<Programs> getProgrammsOffered();
+
+    String getTwitterUrl();
+
+    String getStatementOfFaith();
+
+    String getMissionStatement();
 }

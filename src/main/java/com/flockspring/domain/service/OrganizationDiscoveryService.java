@@ -7,6 +7,7 @@ import java.util.NavigableSet;
 
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.Region;
+import com.flockspring.domain.types.impl.OrganizationImpl;
 import com.flockspring.ui.model.AjaxSearchFilterRequest;
 
 /**
@@ -31,4 +32,6 @@ public interface OrganizationDiscoveryService {
     NavigableSet<Organization> searchForOrganizations(String query);
 
     NavigableSet<Organization> getFilteredOrganizations(AjaxSearchFilterRequest filterRequest);
+
+    void saveOrganization(OrganizationImpl organization);
 }

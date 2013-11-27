@@ -3,7 +3,6 @@
  */
 package com.flockspring.ui.model;
 
-import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -46,13 +45,11 @@ public class OrganizationUIModel implements Comparable<OrganizationUIModel> {
     private final CongregationSize averageServiceCongregationSize;
     private final double distanceFromSearchPoint;
     
-    private final boolean parkingLot;
-      
     public OrganizationUIModel(AddressUIModel address, MusicStyle musicStyle, int yearFounded,
             Set<ServiceTime> serviceTimes2, Set<LanguageUIModel> languages, Set<ServiceDay> serviceDays2, Set<ImageUIModel> images,
             String communityCategory, String denomination, String subDenomination, String name, Set<Programs> programsOffered2,
             String srLdrBiography, String description, String websiteUrl, String facebookUrl,
-            CongregationSize averageServiceCongregationSize2, boolean parkingLot, boolean gayAffirming, Set<LeaderUIModel> leadershipTeam,
+            CongregationSize averageServiceCongregationSize2, boolean gayAffirming, Set<LeaderUIModel> leadershipTeam,
             double distanceFromSearchPoint) {
         
         super();
@@ -74,7 +71,6 @@ public class OrganizationUIModel implements Comparable<OrganizationUIModel> {
         this.websiteUrl = websiteUrl;
         this.facebookUrl = facebookUrl;
         this.averageServiceCongregationSize = averageServiceCongregationSize2;
-        this.parkingLot = parkingLot;
         this.leadershipTeam = leadershipTeam;
         this.distanceFromSearchPoint = distanceFromSearchPoint;
     }
@@ -169,11 +165,6 @@ public class OrganizationUIModel implements Comparable<OrganizationUIModel> {
         return averageServiceCongregationSize;
     }
 
-    public boolean isParkingLot()
-    {
-        return parkingLot;
-    }
-    
     public double getDistanceFromSearchPoint()
     {
         return distanceFromSearchPoint;

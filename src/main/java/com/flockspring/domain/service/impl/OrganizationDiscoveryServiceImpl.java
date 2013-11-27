@@ -4,7 +4,6 @@
 package com.flockspring.domain.service.impl;
 
 import java.util.NavigableSet;
-import java.util.Set;
 import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -174,5 +173,11 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
     {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public void saveOrganization(OrganizationImpl organization)
+    {
+        organizationRepository.save(organization);        
     }
 }

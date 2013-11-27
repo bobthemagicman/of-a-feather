@@ -61,7 +61,6 @@ public class OrganizationUIModelMapper
         boolean gayAffirming = organization.isGayAffirming();
         Set<ServiceDay> serviceDays = organization.getServiceDays();
         Set<LanguageUIModel> languages = languageUIModelMapper.map(organization.getLanguages());
-        boolean parkingLot = organization.isParkingLotAvailable();
         CongregationSize averageServiceCongregationSize = organization.getCongregationSize();
         Set<Programs> programsOffered = organization.getProgramsOffered();
         String name = organization.getName();
@@ -78,7 +77,7 @@ public class OrganizationUIModelMapper
         
         OrganizationUIModel model = new OrganizationUIModel(address, musicStyle, yearFounded, serviceTimes, languages, serviceDays, images, communityCategory, 
                 denomination, subDenomination, name, programsOffered, srLdrBiography, description, websiteUrl, facebookUrl, averageServiceCongregationSize, 
-                parkingLot, gayAffirming, leadershipTeam, distanceFromSearchPoint);
+                gayAffirming, leadershipTeam, distanceFromSearchPoint);
         
         
         return model;

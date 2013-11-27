@@ -1,5 +1,3 @@
-<%@ page import="com.flockspring.domain.types.MusicStyle"%>
-<%@ page import="com.flockspring.domain.types.Affiliation"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ include file="/WEB-INF/jsp/init.jsp"%>
@@ -7,13 +5,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html} charset=ISO-8859-1">
-<title>Insert title here</title>
-<style type="text/css">
-	span {font-weight: bold;}
-</style>
+	<%-- Common Metadata, scripts, and CSS --%>
+	<%@ include file="/WEB-INF/jsp/partials/commonHead.jsp"%>
+	
+	<title>Of A Feather - Find your new church home today</title>	
 </head>
-<body>	
+<body>
+
+<%-- Site Header --%>
+<%@ include file="/WEB-INF/jsp/partials/siteHeader.jsp"%>
+
+<div class="container front-page-temp">	
 	<div><span>Total Number of Results: </span>${results.size()}</div>
 	<c:forEach items="${results}" var="result" varStatus="p_tracker">
 		<h2>Organization ${p_tracker.index + 1}</h2>
@@ -30,5 +32,32 @@
 	    <p><span>Is organization user favorite: </span><c:out value="${result.usersFavorite}" /></p>
 	</c:forEach>
 	
+	<a href="javaScript:testFilterMessage();return false;" class="btn btn-primary">Test Filter Message</a>
+</div>	
+	<spring:url value="/search/ajax/filter-results" var="ajaxUrl" />
+	<script>
+		function testFilterMessage()
+		{
+			
+			var affiliationArray = new Array('NONDENOMINATIONAL', 'METHODISTS', 'ANGLICANISM');
+			var jsonData = JSON.stringify({ "affiliations" : affiliationArray });
+			
+			$.ajax({
+				url: '${ajaxUrl}',
+				type: 'POST', 
+				data: jsonData,
+				contentType: 'application/json',
+				dataType: 'json',
+				error: function() {
+					alert("Failed");
+				},
+				success: function(xhr) {
+					alert("Success:" + xhr)
+				}				
+			});
+		}
+	</script>
+<%@ include file="/WEB-INF/jsp/partials/siteFooter.jsp"%>
+
 </body>
 </html>

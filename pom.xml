@@ -18,6 +18,8 @@
 		<!-- Spring -->
 		<spring-framework.version>3.1.4.RELEASE</spring-framework.version>
 		<spring-framework-xml.version>2.1.3.RELEASE</spring-framework-xml.version>
+		<spring-framework-webflow.version>2.3.2.RELEASE</spring-framework-webflow.version>
+		<spring-data-mongodb.version>1.3.2.RELEASE</spring-data-mongodb.version>
 
 		<!-- Java EE / Java SE dependencies -->
 		<jsp.version>2.2</jsp.version>
@@ -27,7 +29,6 @@
 		<jaxb-impl.version>2.2.7</jaxb-impl.version>
 
 		<!-- Database access -->
-		<spring-data-mongodb.version>1.3.2.RELEASE</spring-data-mongodb.version>
 		<mongo-java-driver.version>2.11.3</mongo-java-driver.version>
 
 		<!-- AOP -->
@@ -35,8 +36,6 @@
 
 		<!-- Logging -->
 		<logback.version>1.0.12</logback.version>
-		<slf4j.version>1.7.5</slf4j.version>
-		<sl4fj-log4j12.version>1.7.5</sl4fj-log4j12.version>
 
 		<!-- Test -->
 		<junit.version>4.11</junit.version>
@@ -160,6 +159,11 @@
 			<version>${mongo-java-driver.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.webflow</groupId>
+			<artifactId>spring-webflow</artifactId>
+			<version>${spring-framework-webflow.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-mongodb</artifactId>
 			<version>${spring-data-mongodb.version}</version>
@@ -233,12 +237,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
 			<version>${spring-framework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>

@@ -3,7 +3,6 @@
 <spring:url value="/static/images/site/twitter_128.png" var="twitterIcon"/>
 
 <spring:url value="/static/js/bootstrap.min.js" var="bootstrapJS"/>
-<spring:url value="/static/js/front.js" var="frontPageJS"/>
 
 <div class="footer">
 
@@ -15,9 +14,8 @@
 
 </div>
 
-
 <!-- Scripts placed at the end of the document so the pages load faster -->
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="${bootstrapJS}"></script>
-<script src="${frontPageJS}" type="text/javascript"></script>
+
 

@@ -1,4 +1,4 @@
-<spring:url value="/addYourChurch" var="addYourChurchLink" />
+<spring:url value="/addAChurch" var="addYourChurchLink" />
 <spring:url value="/about" var="aboutUsLink" />
 <spring:url value="/" var="homeLink" />
 
