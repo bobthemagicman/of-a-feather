@@ -17,7 +17,21 @@
         <webflow:flow-location path="classpath:spring/flows/addAChurch.xml" />        
     </webflow:flow-registry>
 
-    <webflow:flow-builder-services id="flowBuilderServices" view-factory-creator="mvcViewFactoryCreator" />
+    <webflow:flow-builder-services id="flowBuilderServices" view-factory-creator="mvcViewFactoryCreator" validator="jsr303Validator"
+    		expression-parser="webflowExpressionParser"/>
+    		
+    <bean id="expressionParser" class="org.springframework.expression.spel.standard.SpelExpressionParser">
+		<constructor-arg name="configuration">
+			<bean class="org.springframework.expression.spel.SpelParserConfiguration">
+				<constructor-arg name="autoGrowCollections" value="true" />
+				<constructor-arg name="autoGrowNullReferences" value="false" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+  	<bean id="webflowExpressionParser" class="org.springframework.webflow.expression.spel.WebFlowSpringELExpressionParser">
+    	<constructor-arg name="expressionParser" ref="expressionParser" />    	
+  	</bean>		
 
     <bean id="mvcViewFactoryCreator" class="org.springframework.webflow.mvc.builder.MvcViewFactoryCreator"
           p:viewResolvers-ref="internalResourceViewResolver" />

@@ -178,6 +178,13 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
     @Override
     public void saveOrganization(OrganizationImpl organization)
     {
+        processImages(organization);
         organizationRepository.save(organization);        
+    }
+
+    private void processImages(OrganizationImpl organization)
+    {
+        // TODO Auto-generated method stub
+        
     }
 }

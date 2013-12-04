@@ -4,6 +4,7 @@
 package com.flockspring.domain.types.impl;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -11,6 +12,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.util.AutoPopulatingList;
 
 import com.flockspring.domain.types.AccessabilitySupport;
 import com.flockspring.domain.types.Address;
@@ -18,7 +20,6 @@ import com.flockspring.domain.types.Affiliation;
 import com.flockspring.domain.types.DressAttire;
 import com.flockspring.domain.types.Image;
 import com.flockspring.domain.types.Language;
-import com.flockspring.domain.types.Leader;
 import com.flockspring.domain.types.MusicStyle;
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.Region;
@@ -28,6 +29,7 @@ import com.flockspring.ui.model.CongregationSize;
 import com.flockspring.ui.model.Programs;
 import com.flockspring.ui.model.ServiceTime;
 import com.google.common.collect.ComparisonChain;
+import com.sun.istack.NotNull;
 
 /**
  * OrganizationImpl.java
@@ -40,12 +42,18 @@ import com.google.common.collect.ComparisonChain;
 public class OrganizationImpl implements Organization, Comparable<Organization>, Serializable
 {
     private static final long serialVersionUID = -3602244882007924589L;
-    
+
     private String id;
-    private int yearFounded;
+    private Integer yearFounded;
     private boolean gayAffirming;
+    
+    @NotNull
     private String name;
+    
+    @NotNull
     private String missionStatement;
+    
+    @NotNull
     private String statementOfFaith;
     private String description;
     private String websiteUrl;
@@ -61,7 +69,7 @@ public class OrganizationImpl implements Organization, Comparable<Organization>,
     private Affiliation subDenomination;
     private Affiliation primaryAffiliation;
     private Set<ImageImpl> images;
-    private Set<LeaderImpl> leadershipTeam;
+    private AutoPopulatingList<LeaderImpl> leadershipTeam = new AutoPopulatingList<>(LeaderImpl.class);
     private Set<ServiceTime> serviceTimes;
     private Set<ServiceDay> serviceDays;
     private Set<Language> languages;
@@ -70,6 +78,50 @@ public class OrganizationImpl implements Organization, Comparable<Organization>,
     private double distanceFromSearchPoint;
     
     
+    
+    public OrganizationImpl(String id, Integer yearFounded, boolean gayAffirming, String name, String missionStatement, String statementOfFaith,
+            String description, String websiteUrl, String facebookUrl, String twitterUrl, CongregationSize congregationSize, AddressImpl address,
+            Region region, MusicStyle musicStyle, ServiceStyle serviceStyle, DressAttire dressAttire, Affiliation denomination,
+            Affiliation subDenomination, Affiliation primaryAffiliation, Set<ImageImpl> images, AutoPopulatingList<LeaderImpl> leadershipTeam,
+            Set<ServiceTime> serviceTimes, Set<ServiceDay> serviceDays, Set<Language> languages, Set<Programs> programmsOffered,
+            Set<AccessabilitySupport> accessibilitySupport, double distanceFromSearchPoint)
+    {
+        super();
+        
+        this.id = id;
+        this.yearFounded = yearFounded;
+        this.gayAffirming = gayAffirming;
+        this.name = name;
+        this.missionStatement = missionStatement;
+        this.statementOfFaith = statementOfFaith;
+        this.description = description;
+        this.websiteUrl = websiteUrl;
+        this.facebookUrl = facebookUrl;
+        this.twitterUrl = twitterUrl;
+        this.congregationSize = congregationSize;
+        this.address = address;
+        this.region = region;
+        this.musicStyle = musicStyle;
+        this.serviceStyle = serviceStyle;
+        this.dressAttire = dressAttire;
+        this.denomination = denomination;
+        this.subDenomination = subDenomination;
+        this.primaryAffiliation = primaryAffiliation;
+        this.images = images;
+        this.leadershipTeam = leadershipTeam;
+        this.serviceTimes = serviceTimes;
+        this.serviceDays = serviceDays;
+        this.languages = languages;
+        this.programmsOffered = programmsOffered;
+        this.accessibilitySupport = accessibilitySupport;
+        this.distanceFromSearchPoint = distanceFromSearchPoint;
+    }
+
+    public OrganizationImpl()
+    {
+        super();
+    }
+
     @Override
     public String getId()
     {
@@ -83,7 +135,7 @@ public class OrganizationImpl implements Organization, Comparable<Organization>,
     }
 
     @Override
-    public int getYearFounded()
+    public Integer getYearFounded()
     {
         return yearFounded;
     }
@@ -119,15 +171,10 @@ public class OrganizationImpl implements Organization, Comparable<Organization>,
     }
 
     @Override
-    public Set<Leader> getLeadershipTeam()
+    public List<LeaderImpl> getLeadershipTeam()
     {
-        Set<Leader> leaderSet = new TreeSet<Leader>();
-        if(leadershipTeam != null)
-        {
-            leaderSet.addAll(leadershipTeam);
-        }
         
-        return leaderSet;
+        return leadershipTeam;
     }
 
     @Override
@@ -226,7 +273,7 @@ public class OrganizationImpl implements Organization, Comparable<Organization>,
         return accessibilitySupport;
     }
     
-    public void setYearFounded(int yearFounded)
+    public void setYearFounded(Integer yearFounded)
     {
         this.yearFounded = yearFounded;
     }
@@ -321,7 +368,7 @@ public class OrganizationImpl implements Organization, Comparable<Organization>,
         this.images = images;
     }
 
-    public void setLeadershipTeam(Set<LeaderImpl> leadershipTeam)
+    public void setLeadershipTeam(AutoPopulatingList<LeaderImpl> leadershipTeam)
     {
         this.leadershipTeam = leadershipTeam;
     }

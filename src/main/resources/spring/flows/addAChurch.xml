@@ -6,24 +6,33 @@
 
 	<var name="organizationCommandObject" class="com.flockspring.domain.types.impl.OrganizationImpl"/>
 	
-	<view-state id="addAChurch" model="organization" view="addAChurch/addAChurch">
+	<view-state id="addAChurch3" model="organizationCommandObject">
+		<on-render>
+			<evaluate expression="commonFormReferenceDataProvider.getDenominations()"  />
+<!-- 			<evaluate expression="" result="viewScope.subDenominations" /> -->
+<!-- 			<evaluate expression="" result="viewScope.states" /> -->
+		</on-render>
 		<transition on="next" to="addAChurch2" />
 		<transition on="cancel" to="addAChurchCancelled" />
 	</view-state>
 	
-	<view-state id="addAChurch2" model="organization">
+	<view-state id="addAChurch2" model="organizationCommandObject">
+		<on-render>
+			<evaluate expression="commonFormReferenceDataProvider.getServiceTimes()" />
+			<evaluate expression="commonFormReferenceDataProvider.getServiceDays()" />
+		</on-render>
 		<transition on="next" to="addAChurch3" />
 		<transition on="previous" to="addAChurch" />
 		<transition on="cancel" to="addAChurchCancelled" />
 	</view-state>
 	
-	<view-state id="addAChurch3" model="organization">
-		<transition on="next" to="addAChurchSuccess" >
-			<evaluate expression="organizationDiscoveryService.save(organizationCommandObject)" />
-		</transition>
-		<transition on="previous" to="addAChurch2" />
-		<transition on="cancel" to="addAChurchCancelled" />
-	</view-state>
+<!-- 	<view-state id="addAChurch3" model="organizationCommandObject"> -->
+<!-- 		<transition on="next" to="addAChurchSuccess" > -->
+<!-- 			<evaluate expression="organizationDiscoveryService.save(organizationCommandObject)" /> -->
+<!-- 		</transition> -->
+<!-- 		<transition on="previous" to="addAChurch2" /> -->
+<!-- 		<transition on="cancel" to="addAChurchCancelled" /> -->
+<!-- 	</view-state> -->
 	
 	<end-state id="addAChurchSuccess" />
 	<end-state id="addAChurchCancelled" />

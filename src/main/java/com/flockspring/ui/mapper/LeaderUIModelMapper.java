@@ -3,6 +3,7 @@
  */
 package com.flockspring.ui.mapper;
 
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.flockspring.domain.types.Leader;
+import com.flockspring.domain.types.impl.LeaderImpl;
 import com.flockspring.ui.model.ImageUIModel;
 import com.flockspring.ui.model.LeaderUIModel;
 
@@ -32,10 +34,10 @@ public class LeaderUIModelMapper
         this.imageUIModelMapper = imageUIModelMapper;
     }
     
-    public Set<LeaderUIModel> map(Set<Leader> leadershipTeam)
+    public Set<LeaderUIModel> map(List<LeaderImpl> list)
     {
         Set<LeaderUIModel> modelSet = new TreeSet<LeaderUIModel>();
-        for(Leader l : leadershipTeam)
+        for(Leader l : list)
         {
             modelSet.add(map(l));
         }

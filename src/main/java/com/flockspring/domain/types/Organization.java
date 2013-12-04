@@ -3,8 +3,10 @@
  */
 package com.flockspring.domain.types;
 
+import java.util.List;
 import java.util.Set;
 
+import com.flockspring.domain.types.impl.LeaderImpl;
 import com.flockspring.ui.model.CongregationSize;
 import com.flockspring.ui.model.Programs;
 import com.flockspring.ui.model.ServiceTime;
@@ -14,7 +16,7 @@ public interface Organization
 {
     Address getAddress();
 
-    int getYearFounded();
+    Integer getYearFounded();
 
     Set<ServiceTime> getServiceTimes();
 
@@ -22,7 +24,7 @@ public interface Organization
 
     Set<Image> getImages();
 
-    Set<Leader> getLeadershipTeam();
+    List<LeaderImpl> getLeadershipTeam();
 
     Affiliation getPrimaryAffiliation();
 

@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.persistence.Transient;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -32,7 +30,6 @@ public class GlobalRegionImpl implements GlobalRegion<GlobalRegionImpl>
     private String isoAlphaCode = "";
     private GlobalRegionType regionType;
 
-    @Transient
     private Map<String, String> localeBasedNameMap = new HashMap<String, String>();
 
     @Override

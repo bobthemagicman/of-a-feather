@@ -34,4 +34,5 @@ public interface OrganizationDiscoveryService {
     NavigableSet<Organization> getFilteredOrganizations(AjaxSearchFilterRequest filterRequest);
 
     void saveOrganization(OrganizationImpl organization);
+        
 }

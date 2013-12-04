@@ -27,6 +27,24 @@ public class ImageImpl implements Image, Comparable<ImageImpl>
     private int height;
     private boolean primary;
 
+    public ImageImpl()
+    {
+        super();
+    }
+    
+    public ImageImpl(String name, String path, String altText, String titleText, String extension, int width, int height, boolean primary)
+    {
+        super();
+        this.name = name;
+        this.path = path;
+        this.altText = altText;
+        this.titleText = titleText;
+        this.extension = extension;
+        this.width = width;
+        this.height = height;
+        this.primary = primary;
+    }
+
     @Override
     public String getName()
     {

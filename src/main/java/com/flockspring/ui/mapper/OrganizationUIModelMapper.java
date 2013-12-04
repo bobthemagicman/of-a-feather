@@ -3,6 +3,7 @@
  */
 package com.flockspring.ui.mapper;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import com.flockspring.domain.types.Leader;
 import com.flockspring.domain.types.MusicStyle;
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.ServiceDay;
+import com.flockspring.domain.types.impl.LeaderImpl;
 import com.flockspring.ui.model.AddressUIModel;
 import com.flockspring.ui.model.CongregationSize;
 import com.flockspring.ui.model.ImageUIModel;
@@ -83,11 +85,11 @@ public class OrganizationUIModelMapper
         return model;
     }
 
-    private String getSeniorLeadersBiography(Set<Leader> leadershipTeam)
+    private String getSeniorLeadersBiography(List<LeaderImpl> list)
     {
         Leader leader = null;
         
-        for(Leader l : leadershipTeam)
+        for(Leader l : list)
         {
             if(l.isPrimaryLeader())
             {

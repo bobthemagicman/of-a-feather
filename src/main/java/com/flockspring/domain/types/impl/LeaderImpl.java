@@ -3,10 +3,14 @@
  */
 package com.flockspring.domain.types.impl;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.flockspring.domain.types.Leader;
+import com.google.common.collect.ComparisonChain;
 
 /**
  * LeaderImpl.java
@@ -15,9 +19,11 @@ import com.flockspring.domain.types.Leader;
  * @date Jun 12, 2013
  *
  */
-public class LeaderImpl implements Leader
+public class LeaderImpl implements Leader, Comparable<Leader>, Serializable
 {
     
+    private static final long serialVersionUID = -5951998764576044180L;
+
     private long id;
     private String name;
     private String bio;
@@ -25,8 +31,8 @@ public class LeaderImpl implements Leader
     private ImageImpl image;
     private boolean primaryContact;
     private boolean primaryLeader;
-    private OrganizationImpl organization;
-
+    private transient MultipartFile imageFile;
+    
     @Override
     public long getId()
     {
@@ -69,12 +75,11 @@ public class LeaderImpl implements Leader
         return primaryLeader;
     }
 
-    @Override
-    public OrganizationImpl getOrganization()
+    public MultipartFile getImageFile()
     {
-        return organization;
+        return this.imageFile;                
     }
-
+    
     public void setId(long id)
     {
         this.id = id;
@@ -110,10 +115,9 @@ public class LeaderImpl implements Leader
         this.primaryLeader = primaryLeader;
     }
 
-    public void setOrganization(OrganizationImpl organization)
-    {
-        this.organization = organization;
-    }
+    public void setFile(MultipartFile imageFile) {
+        this.imageFile = imageFile;
+    } 
 
     @Override
     public int hashCode()
@@ -125,5 +129,12 @@ public class LeaderImpl implements Leader
     public boolean equals(Object obj)
     {
         return EqualsBuilder.reflectionEquals(this, obj);
+    }
+
+    @Override
+    public int compareTo(Leader o)
+    {
+        return ComparisonChain.start()
+                .compare(this.id, o.getId()).result();
     }
 }

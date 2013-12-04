@@ -24,7 +24,7 @@
 	<mvc:annotation-driven />
 	<mvc:resources mapping="/static/**" location="/resources/" />
 	<mvc:view-controller path="/about" view-name="aboutPage" />
-<!-- 	<mvc:view-controller path="/addYourChurch" view-name="addChurchPage" /> -->
+	<mvc:view-controller path="/addYourChurch" view-name="addChurchPage" />
 	<mvc:view-controller path="/contact" view-name="contactUsPage" />
 
 	<bean id="messageSource"
@@ -49,6 +49,11 @@
     	p:flowRegistry-ref="flowRegistry"
     	p:order="0" />
     
+    <bean id="jsr303Validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+    
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+    	p:maxUploadSize="100000" />
+        
     <import resource="of-a-feather.webflow.config.xml" />
     <import resource="of-a-feather.security.config.xml" />
 </beans>

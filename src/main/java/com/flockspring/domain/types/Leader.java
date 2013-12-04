@@ -3,7 +3,6 @@
  */
 package com.flockspring.domain.types;
 
-import com.flockspring.domain.types.impl.OrganizationImpl;
 
 /**
  * Leader.java
@@ -28,6 +27,4 @@ public interface Leader
     boolean isPrimaryContact();
 
     long getId();
-
-    OrganizationImpl getOrganization();
 }

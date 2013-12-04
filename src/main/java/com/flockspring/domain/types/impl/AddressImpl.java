@@ -11,6 +11,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import com.flockspring.domain.types.Address;
 
+
 public class AddressImpl implements Address, Serializable
 {
     private static final long serialVersionUID = -6084322307496407210L;
