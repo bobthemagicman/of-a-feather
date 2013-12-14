@@ -28,7 +28,8 @@
             <div class="row">
                 <div class="col-sm-4">
                     <p class="panel">
-                        <span class="glyphicon glyphicon-file"></span> To preview the questions in .pdf format, <a target="_blank" href="preview_ofafeather_questions.pdf">click here.</a>
+                    	<spring:url value="/static/downloads/preview_ofafeather_questions.pdf" var="pdfUrl" />
+                        <span class="glyphicon glyphicon-file"></span> To preview the questions in .pdf format, <a target="_blank" href="${pdfUrl}">click here.</a>
                     </p>
                 </div> 
                 <div class="col-sm-8 centered-text">
