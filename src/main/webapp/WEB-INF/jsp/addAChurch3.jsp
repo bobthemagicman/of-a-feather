@@ -23,33 +23,34 @@
 		<form:form commandName="organizationCommandObject" method="POST" enctype="multipart/form-data">
 			<div class="form-group">
 				<form:label path="leadershipTeam[0].name">
-					<span><spring:message code="add.a.church." text="" /></span>
+					<span><spring:message code="add.a.church.name" text="Name" /></span>
 					<form:input path="leadershipTeam[0].name" />
 				</form:label>
 			</div>
 			<div class="form-group">
 				<form:label path="leadershipTeam[0].bio">
-					<span><spring:message code="add.a.church." text="" /></span>
+					<span><spring:message code="add.a.church.bio" text="Bio" /></span>
 					<form:textarea path="leadershipTeam[0].bio" />
 				</form:label>
 			</div>
 			<div class="form-group">
 				<form:label path="leadershipTeam[0].title">
-					<span><spring:message code="add.a.church." text="" /></span>
+					<span><spring:message code="add.a.church.position.or.title" text="Position or Title" /></span>
 					<form:input path="leadershipTeam[0].title" />
 				</form:label>
 			</div>
 			<div class="form-group">
 				<form:label path="leadershipTeam[0].primaryContact">
-					<span><spring:message code="add.a.church." text="" /></span>
+					<span><spring:message code="add.a.church.primary.contact" text="Is this person the primary Contact for the church?" /></span>
 					<form:checkbox path="leadershipTeam[0].primaryContact" />
 				</form:label>
+			</div>
+			<div class="form-group">
 				<form:label path="leadershipTeam[0].primaryLeader">
-					<span><spring:message code="add.a.church." text="" /></span>
+					<span><spring:message code="add.a.church.primary.leader" text="Is this person the primary leader for the church?" /></span>
 					<form:checkbox path="leadershipTeam[0].primaryLeader" />
 				</form:label>
 			</div>
-
 			
 			<input type="file" name="imageFile" id="imageFile" />
 			

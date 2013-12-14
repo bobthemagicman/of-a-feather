@@ -16,6 +16,8 @@ public enum AccessabilitySupport
     DEAF_TRANSLATOR,
     HEARING_LOOP,
     PARKING_LOT,
+    STREET_PARKING,
+    PARKING_GARAGE,
     CARPOOL; 
     
 }

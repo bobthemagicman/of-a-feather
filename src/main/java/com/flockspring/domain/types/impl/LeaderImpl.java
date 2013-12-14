@@ -7,7 +7,6 @@ import java.io.Serializable;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.flockspring.domain.types.Leader;
 import com.google.common.collect.ComparisonChain;
@@ -28,10 +27,13 @@ public class LeaderImpl implements Leader, Comparable<Leader>, Serializable
     private String name;
     private String bio;
     private String title;
+    private LeaderRole leaderRole;
     private ImageImpl image;
     private boolean primaryContact;
     private boolean primaryLeader;
-    private transient MultipartFile imageFile;
+    private String emailAddress;
+    private String phoneNumber;
+    private int yearStarted;
     
     @Override
     public long getId()
@@ -74,10 +76,49 @@ public class LeaderImpl implements Leader, Comparable<Leader>, Serializable
     {
         return primaryLeader;
     }
-
-    public MultipartFile getImageFile()
+    
+    @Override
+    public LeaderRole getLeaderRole()
     {
-        return this.imageFile;                
+        return leaderRole;
+    }
+
+    @Override
+    public String getEmailAddress()
+    {
+        return emailAddress;
+    }
+
+    @Override
+    public String getPhoneNumber()
+    {
+        return phoneNumber;
+    }
+
+    @Override
+    public int getYearStarted()
+    {
+        return yearStarted;
+    }
+
+    public void setLeaderRole(LeaderRole leaderRole)
+    {
+        this.leaderRole = leaderRole;
+    }
+
+    public void setEmailAddress(String emailAddress)
+    {
+        this.emailAddress = emailAddress;
+    }
+
+    public void setPhoneNumber(String phoneNumber)
+    {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setYearStarted(int yearStarted)
+    {
+        this.yearStarted = yearStarted;
     }
     
     public void setId(long id)
@@ -114,10 +155,6 @@ public class LeaderImpl implements Leader, Comparable<Leader>, Serializable
     {
         this.primaryLeader = primaryLeader;
     }
-
-    public void setFile(MultipartFile imageFile) {
-        this.imageFile = imageFile;
-    } 
 
     @Override
     public int hashCode()
