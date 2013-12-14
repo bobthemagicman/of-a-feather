@@ -3,120 +3,43 @@
  * and open the template in the editor.
  */
 
-$(document).ready(function() {
- 
-    $(".checkbox-group label input[type=checkbox]").change(function() {
-       $(this).parent().toggleClass("checked"); 
-    });
-    
-    $(".panel-group .panel-heading .accordion-toggle").click(function (){
-        $(".panel-group .panel-heading .accordion-toggle").removeClass("active");
-        
-        if($(this).parents(".panel-heading").siblings(".panel-collapse").hasClass("in")) {
-            
-            $(this).removeClass("active");
-        }
-        else {
-            $(this).addClass("active");
-        }
-    });
-    
-    $(".panel-heading .accordion-toggle.map-toggle").click(function (){
-        $(".panel-heading .accordion-toggle.map-toggle").toggleClass("active");
-    });
-    
-    $("#map-canvas").height($(".left-column").width());
 
-    $(".map-buttons, .plus-icon, .minus-icon").click(function(event) {
+$(document).ready(function() {
+    
+    initializeSearchPage();
+    
+    $(".map-buttons img").click(function(event) {
         event.stopPropagation();
         expandCollapseMap(); 
-    });
-
-    google.maps.visualRefresh = true;
-    
-    $(".checkbox-group input[type='checkbox']").change(function() {
-        var elementId = $(this).attr("data-linked-checkbox");
-        $("#" + elementId).prop('checked',$(this).prop('checked'));
-        $("label[for='" + elementId + "']").toggleClass('checked');
-    });
-    
-    fixTabPanes();
-    
-    initializeSliders();
-    
-    initializeButtons();
-    
-    initializeMap();
+  }); 
     
 });
 
 
-function getMaxZindex() {
-    var currentZIndex = 0, maxZIndex = 0;
-
-    $("*").each(function() {
-        currentZIndex = $(this).zIndex();
-        if (currentZIndex > maxZIndex) {
-            maxZIndex = currentZIndex;
-        }
-    });
-    return(maxZIndex);
-}
-
-
-function expandCollapseMap() {
+function initializeSearchPage() {
     
-    var mapContainer = $(".map-container-outer, .map-container, #map-canvas");
+    initializeUserSliders();
     
-    if($(".map-container-outer").hasClass('map-expanded')) {
-        //collapse
-        mapContainer.fadeOut('fast');
-        $(".map-container-outer").css("position","relative").css("top",'auto').css("left",'auto');
-        $(".map-container-outer").toggleClass('map-expanded');
-        var newMapWidth = $(".left-column").width();
-        mapContainer.css("width", newMapWidth).css("height", newMapWidth);
-        mapContainer.fadeIn('fast');
-        $(".search-options-panel").fadeIn('slow');
-    }
-    else {
-        //expand
-        mapContainer.fadeOut('fast');
-        $(".search-options-panel").fadeOut('slow');
-        var leftColumnOffset = $(".left-column").offset();
-        var leftColumnWidth = $(".left-column").width();
-        var newMapWidth = parseInt(leftColumnOffset.left) + parseInt(leftColumnWidth);
-        newMapWidth += 'px';
-        var newMapHeight = parseInt($(window).height()) - parseInt($(".navbar").height());
-        mapContainer.css("width", newMapWidth).css("height", newMapHeight);
-        $(".map-container-outer").css("position","fixed").css("top",$(".navbar").height()).css("left",'0px');
-        $(".map-container-outer").toggleClass('map-expanded');
-        
-        mapContainer.fadeIn('fast');
-        
-    }
+    initializeInfoSliders();
+    
+    initializeSearchElements();
    
-    initializeMap();
+    initializeTooltips();
+   
+    initializeResults();
+
+    initializeFavorites();
+
+    paginate(10);
     
 }
 
-function fixTabPanes() {
- 
-    $("#moreProgramsModal .tab-pane").css('height','260px');
-    $("#languagesModal .tab-pane").css('height','425px');
-}
-
-function initializeSliders() {
+function initializeUserSliders() {
     
     $(".slider-tooltip").fadeTo('slow',.01);
     
     $(".slider").slider({range: true, min: -500, max: 500, values: [-500,500]});
     
-    var adultEducation = $(".adult-education");
-    
-    adultEducation.attr("data-toggle","tooltip");
-    adultEducation.attr("title","non-spiritual, life skills, financial, etc.");
-    adultEducation.tooltip({'placement': 'right'});
-   
     $( ".slider" ).on( "slide", function( event, ui ) {
         
         var sliderTips = new Array;
@@ -194,26 +117,306 @@ function initializeSliders() {
         toolTip = sliderTips[sliderNumber][values[sliderInMotion]];
         
         if(toolTip !== ' ') {
+        
             $(".slider-tooltip[data-assoc-slider='" + assocSlider + "']").show().fadeIn().html(toolTip);
+        
         }
+        
     } );
     
     $( ".slider" ).on( "slidestop", function( event, ui ) {
+        
         $(".slider-tooltip[data-assoc-slider='" + $(this).attr('id') + "']").fadeTo('slow',.01);
+        
     } );
     
     $( ".slider" ).on( "slidestart", function( event, ui ) {
+        
         $(".slider-tooltip[data-assoc-slider='" + $(this).attr('id') + "']").fadeTo('slow',1);
+        
     } );
+    
 }
 
-function initializeButtons() {
+function initializeInfoSliders() {
+    
+    $(".info-slider").each(function() {
+ 
+       var sliderValue = $(this).attr("data-slider-value");
+       
+        $(this).slider({
+           disabled: true,     
+           range: false,
+           min: 1,
+           max: 10,
+           value: sliderValue
+        });
+        
+    });
+    
+}
+
+function initializeSearchElements() {
     
     $(".day-buttons").buttonset();
 
     $(".gay-affirming input").button();
     
+    $(".checkbox-group label input[type=checkbox]").change(function() {
+       $(this).parent().toggleClass("checked"); 
+    });
+    
+    $(".panel-group .panel-heading .accordion-toggle").click(function (){
+        $(".panel-group .panel-heading .accordion-toggle").removeClass("active");
+        
+        if($(this).parents(".panel-heading").siblings(".panel-collapse").hasClass("in")) {
+            
+            $(this).removeClass("active");
+        }
+        else {
+            $(this).addClass("active");
+        }
+        
+    });
+    
+    $(".panel-heading .accordion-toggle.map-toggle").click(function (){
+        $(".panel-heading .accordion-toggle.map-toggle").toggleClass("active");
+    });
+    
+    $(".checkbox-group input[type='checkbox']").change(function() {
+        
+        var elementId = $(this).attr("data-linked-checkbox");
+        
+        $("#" + elementId).prop('checked',$(this).prop('checked'));
+        $("label[for='" + elementId + "']").toggleClass('checked');
+          
+    });
+    
+    fixTabPanes();
+    
 }
+
+function initializeTooltips() {
+    var tooltipElement = $(".adult-education");
+    
+    tooltipElement.attr("data-toggle","tooltip");
+    tooltipElement.attr("title","non-spiritual, life skills, financial, etc.");
+    tooltipElement.tooltip({'placement': 'right'});
+}
+
+function initializeFavorites() {
+    $(".favorite-icon").click(function() {
+       $(this).toggleClass("favorited"); 
+    });
+}
+
+function paginate(resultsPerPage) {
+
+    var numPages = assignPages(resultsPerPage);
+
+    var options = {
+        currentPage: 1,
+        totalPages: numPages,
+        alignment: 'center',
+        onPageClicked: function(e, originalEvent, type, page) {
+
+            e.stopImmediatePropagation();
+
+            var currentTarget = $(e.currentTarget);
+
+            var pages = currentTarget.bootstrapPaginator("getPages");
+
+            currentTarget.bootstrapPaginator("show", page);
+
+            var pages = currentTarget.bootstrapPaginator("getPages");
+
+            displayPage(pages.current, numPages);
+
+        }
+    };
+
+    $('.pagination').bootstrapPaginator(options);
+
+    displayPage(1);
+
+}
+
+
+
+function getMaxZindex() {
+    var currentZIndex = 0, maxZIndex = 0;
+
+    $("*").each(function() {
+        currentZIndex = $(this).zIndex();
+        if (currentZIndex > maxZIndex) {
+            maxZIndex = currentZIndex;
+        }
+    });
+    return(maxZIndex);
+}
+
+function loadingScreenToggle() {
+
+    var searchResultsPane = $(".search-results");
+
+    var leftPosition = parseInt(searchResultsPane.position().left) + parseInt(searchResultsPane.width() / 2) - 64;
+
+    var topPosition = parseInt($(window).height() / 2) - 32;
+
+    if ($(".ajax-loader").length > 0) {
+        searchResultsPane.fadeTo(1000, 1);
+        $(".pagination").fadeTo(1000,1);
+        $(".ajax-loader").remove();
+        assignPages(10);
+    }
+    else {
+        searchResultsPane.fadeTo(1000, 0.05);
+        $(".pagination").fadeTo(1000,0.05);
+        searchResultsPane.parent().append('<img class="ajax-loader" src="images/ajax-loader.gif" style="left: ' + leftPosition + 'px; top: ' + topPosition + 'px" />');
+        $(".ajax-loader").fadeTo(1000, 1);
+    }
+    
+    paginate(10);
+
+}
+
+function initializeResults() {
+
+    var i, e;
+
+    var count = 2;
+
+    for (i = 0; i < 20; i++) {
+        e = $(".search-result-entry.first-entry").clone();
+
+        e.attr("data-result-id", count);
+
+        e.attr("data-latitude", parseFloat(e.attr("data-latitude")) + (-0.5 + Math.random()) * 0.1);
+
+        e.attr("data-longitude", parseFloat(e.attr("data-longitude")) + (-0.5 + Math.random()) * 0.1);
+
+        e.appendTo(".search-results");
+
+        e.removeClass("first-entry");
+
+        count++;
+
+    }
+    
+    $(".search-result-entry").each(function() {
+        $(this).attr("calc-distance", calculateDistance($(this).attr("data-latitude"), $(this).attr("data-longitude")));
+    });
+
+}
+
+function assignPages(resultsPerPage) {
+    
+    var searchResults = $(".search-result-entry");
+    
+    var numResults = searchResults.length;
+    
+    var numPages = Math.ceil(numResults / resultsPerPage);  
+  
+    var currentPage = 1, spotsRemaining = resultsPerPage;
+  
+    $(".search-result-entry").removeClass("first-entry");
+    $(".search-result-entry").removeClass("last-entry");
+    
+    searchResults.each(function() {
+        if(spotsRemaining === resultsPerPage) {
+            $(this).addClass("first-entry");
+        }
+        else if(spotsRemaining === 1) {
+            $(this).addClass("last-entry");
+        }
+        else if(spotsRemaining === 0) {
+            currentPage++;
+            spotsRemaining = resultsPerPage;
+             $(this).addClass("first-entry");
+        }
+    
+        $(this).attr("data-page-number",currentPage);
+      
+      
+        spotsRemaining--;
+        
+        
+    });
+    
+    return numPages;
+    
+}
+
+function displayPage(pageToShow) {
+    
+    if(pageToShow !== $(".search-results").attr("data-current-page")) {
+    
+        $(".search-result-entry").removeClass('show-result');
+
+        $(".search-result-entry[data-page-number=" + pageToShow + "]").addClass('show-result');
+
+        $(".search-results").attr("data-current-page", pageToShow);
+
+        initializeMap();
+
+        //$(window).scrollTo('.first-entry');
+        
+        fixFooter();
+
+    }
+}
+
+
+function calculateDistance(lat, long) {
+    
+    return 1.25;
+    
+}
+
+function expandCollapseMap() {
+    
+    
+    var mapContainer = $(".map-container-outer, .map-container, #map-canvas");
+    
+    if($(".map-container-outer").hasClass('map-expanded')) {
+        //collapse
+        mapContainer.fadeOut('fast');
+        $(".map-container-outer").css("position","relative").css("top",'auto').css("left",'auto');
+        $(".map-container-outer").toggleClass('map-expanded');
+        var newMapWidth = $(".left-column").width();
+        mapContainer.css("width", newMapWidth).css("height", newMapWidth);
+        mapContainer.fadeIn('fast');
+        $(".search-options-panel").fadeIn('slow');
+    }
+    else {
+        //expand
+        mapContainer.fadeOut('fast');
+        $(".search-options-panel").fadeOut('slow');
+        var leftColumnOffset = $(".left-column").offset();
+        var leftColumnWidth = $(".left-column").width();
+        var newMapWidth = parseInt(leftColumnOffset.left) + parseInt(leftColumnWidth);
+        newMapWidth += 'px';
+        var newMapHeight = parseInt($(window).height()) - parseInt($(".navbar").height());
+        mapContainer.css("width", newMapWidth).css("height", newMapHeight);
+        $(".map-container-outer").css("position","fixed").css("top",$(".navbar").height()).css("left",'0px');
+        $(".map-container-outer").toggleClass('map-expanded');
+        
+        mapContainer.fadeIn('fast');
+        
+    }
+   
+    updateMap();
+    
+    fixFooter();
+    
+}
+
+function fixTabPanes() {
+ 
+    $("#moreProgramsModal .tab-pane").css('height','260px');
+    $("#languagesModal .tab-pane").css('height','425px');
+}
+
 
 var map;
 
@@ -221,19 +424,29 @@ var marker = new Array();
 
 function initializeMap() {
     
-  var lat = $(".main").attr("data-search-latitude");
-  var long = $(".main").attr("data-search-longitude");
+  $("#map-canvas").height($(".left-column").width()); 
     
-  var mapOptions = {
-    zoom: 11,
-    center: new google.maps.LatLng(lat, long),
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
-  map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
-      
-  placeMarkers();
+   
+    
+  updateMap();
   
+}
+
+function updateMap() {
+    var lat = $(".main").attr("data-search-latitude");
+    var long = $(".main").attr("data-search-longitude");
+
+    var mapOptions = {
+        zoom: 11,
+        center: new google.maps.LatLng(lat, long),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    map = new google.maps.Map(document.getElementById('map-canvas'),
+            mapOptions);
+
+    google.maps.visualRefresh = true;
+
+    placeMarkers();
 }
 
 function placeMarkers() {
@@ -254,7 +467,7 @@ function placeMarkers() {
               
         setTimeout(function() {
             
-            createMarker(markerId, markerLatLong, churchName, google.maps.Animation.DROP, 'http://ofafeather-testing.appwebmasters.com/images/base_marker_small.png');
+            createMarker(markerId, markerLatLong, churchName, google.maps.Animation.DROP, 'images/base_marker_small.png');
         
         }, i * delay);
         
@@ -264,16 +477,17 @@ function placeMarkers() {
     $(".search-result-entry").mouseenter(function() {
          
         var markerNumber = parseInt($(this).attr("data-result-id"));
-        marker[markerNumber].setIcon('http://ofafeather-testing.appwebmasters.com/images/green_marker_small.png');
+        marker[markerNumber].setIcon('images/green_marker_small.png');
         
     });
 
     $(".search-result-entry").mouseleave(function() {
         var markerNumber = parseInt($(this).attr("data-result-id"));
-        marker[markerNumber].setIcon('http://ofafeather-testing.appwebmasters.com/images/base_marker_small.png');
+        marker[markerNumber].setIcon('images/base_marker_small.png');
 
     });
 }
+
 
 function createMarker(markerId, latitudeLongitude, markerTitle, markerAnimation, markerIcon) {
     
@@ -284,4 +498,21 @@ function createMarker(markerId, latitudeLongitude, markerTitle, markerAnimation,
         animation: markerAnimation,
         icon: markerIcon
      });    
+}
+
+function fixFooter() {
+    
+    var windowHeight = $(window).height();
+    
+    var mainContainerHeight = $(".main").height();
+    
+    var footerHeight = $(".footer").height();
+    
+    var newFillerHeight = windowHeight - mainContainerHeight + 150;
+    
+    if(newFillerHeight > 0) {
+        newFillerHeight += "px";
+        $(".filler").height(newFillerHeight);
+    }
+    
 }
