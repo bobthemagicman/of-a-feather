@@ -21,7 +21,7 @@ import com.google.common.collect.Ordering;
 public class SearchResultUIModel implements Comparable<SearchResultUIModel>
 {
 
-    private ImageUIModel displayImage;
+    private MultimediaUIModel displayImage;
     private String organizationName;
     private Set<ServiceTime> serviceTimes;
     private String denomination;
@@ -29,7 +29,7 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
     private boolean featured;
     private boolean usersFavorite;
     
-    public SearchResultUIModel(ImageUIModel displayImage, String organizationName, Set<ServiceTime> serviceTimes, String denomination,
+    public SearchResultUIModel(MultimediaUIModel displayImage, String organizationName, Set<ServiceTime> serviceTimes, String denomination,
             double distanceFromSearchPoint, boolean featured, boolean usersFavorite)
     {
         super();
@@ -42,7 +42,7 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
         this.usersFavorite = usersFavorite;
     }
 
-    public ImageUIModel getDisplayImage()
+    public MultimediaUIModel getDisplayImage()
     {
         return displayImage;
     }

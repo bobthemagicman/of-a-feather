@@ -15,8 +15,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.flockspring.domain.types.AccessabilitySupport;
 import com.flockspring.domain.types.Address;
 import com.flockspring.domain.types.Affiliation;
-import com.flockspring.domain.types.Image;
 import com.flockspring.domain.types.Language;
+import com.flockspring.domain.types.Leader;
+import com.flockspring.domain.types.MultimediaObject;
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.ServiceDay;
 import com.flockspring.ui.model.Programs;
@@ -49,22 +50,26 @@ public class OrganizationImpl implements Organization, Comparable<Organization>,
     private Affiliation subDenomination;
     private Affiliation primaryAffiliation;
 
-    private Set<ImageImpl> images;
+    private Set<MultimediaObjectImpl> multimedia;
     private Set<LeaderImpl> leadershipTeam;
     private Set<ServiceTime> serviceTimes;
     private Set<ServiceDay> serviceDays;
     private Set<Language> languages;
     private Set<Programs> programmsOffered;
     private Set<AccessabilitySupport> accessibilitySupport;
-    private double distanceFromSearchPoint;
+    private Double distanceFromSearchPoint;
 
-    public OrganizationImpl(Integer yearFounded, String name, String missionStatement, String statementOfFaith, String welcomeMessage,
+    
+
+    public OrganizationImpl(String id, Integer yearFounded, String name, String missionStatement, String statementOfFaith, String welcomeMessage,
             AddressImpl address, AtmosphereImpl atmosphere, SocialMediaImpl socialMedia, Affiliation denomination, Affiliation subDenomination,
-            Affiliation primaryAffiliation, Set<ImageImpl> images, Set<LeaderImpl> leadershipTeam, Set<ServiceTime> serviceTimes,
+            Affiliation primaryAffiliation, Set<MultimediaObjectImpl> multimedia, Set<LeaderImpl> leadershipTeam, Set<ServiceTime> serviceTimes,
             Set<ServiceDay> serviceDays, Set<Language> languages, Set<Programs> programmsOffered, Set<AccessabilitySupport> accessibilitySupport,
             double distanceFromSearchPoint)
     {
         super();
+        
+        this.id = id;
         this.yearFounded = yearFounded;
         this.name = name;
         this.missionStatement = missionStatement;
@@ -76,7 +81,7 @@ public class OrganizationImpl implements Organization, Comparable<Organization>,
         this.denomination = denomination;
         this.subDenomination = subDenomination;
         this.primaryAffiliation = primaryAffiliation;
-        this.images = images;
+        this.multimedia = multimedia;
         this.leadershipTeam = leadershipTeam;
         this.serviceTimes = serviceTimes;
         this.serviceDays = serviceDays;
@@ -128,22 +133,28 @@ public class OrganizationImpl implements Organization, Comparable<Organization>,
     }
 
     @Override
-    public Set<Image> getImages()
+    public Set<MultimediaObject> getMultimedia()
     {
-        Set<Image> imageSet = new TreeSet<Image>();
-        if (images != null)
+        Set<MultimediaObject> imageSet = new TreeSet<>();
+        if (multimedia != null)
         {
-            imageSet.addAll(images);
+            imageSet.addAll(multimedia);
         }
 
         return imageSet;
     }
 
     @Override
-    public Set<LeaderImpl> getLeadershipTeam()
+    public Set<Leader> getLeadershipTeam()
     {
 
-        return leadershipTeam;
+        Set<Leader> leaderSet = new TreeSet<>();
+        if (leadershipTeam != null)
+        {
+            leaderSet.addAll(leadershipTeam);
+        }
+
+        return leaderSet;
     }
 
     @Override
@@ -195,19 +206,13 @@ public class OrganizationImpl implements Organization, Comparable<Organization>,
     }
 
     @Override
-    public Set<AccessabilitySupport> getAccessibilitySupport()
-    {
-        return accessibilitySupport;
-    }
-
-    @Override
     public String getWelcomeMessage()
     {
         return welcomeMessage;
     }
 
     @Override
-    public SocialMediaImpl getSocialMedia()
+    public SocialMedia getSocialMedia()
     {
         return socialMedia;
     }
@@ -258,9 +263,9 @@ public class OrganizationImpl implements Organization, Comparable<Organization>,
         this.primaryAffiliation = primaryAffiliation;
     }
 
-    public void setImages(Set<ImageImpl> images)
+    public void setMultimedia(Set<MultimediaObjectImpl> multimedia)
     {
-        this.images = images;
+        this.multimedia = multimedia;
     }
 
     public void setLeadershipTeam(Set<LeaderImpl> leadershipTeam)

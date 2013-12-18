@@ -3,25 +3,27 @@
  */
 package com.flockspring.ui.mapper;
 
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.flockspring.domain.types.AccessabilitySupport;
 import com.flockspring.domain.types.Leader;
-import com.flockspring.domain.types.MusicStyle;
 import com.flockspring.domain.types.Organization;
-import com.flockspring.domain.types.ServiceDay;
-import com.flockspring.domain.types.impl.LeaderImpl;
+import com.flockspring.domain.types.ServiceDetails;
+import com.flockspring.domain.types.impl.Atmosphere;
 import com.flockspring.ui.model.AddressUIModel;
-import com.flockspring.ui.model.CongregationSize;
-import com.flockspring.ui.model.ImageUIModel;
 import com.flockspring.ui.model.LanguageUIModel;
 import com.flockspring.ui.model.LeaderUIModel;
+import com.flockspring.ui.model.MultimediaUIModel;
+import com.flockspring.ui.model.OrganizationOverviewUIModel;
+import com.flockspring.ui.model.OrganizationStatementUIModel;
 import com.flockspring.ui.model.OrganizationUIModel;
 import com.flockspring.ui.model.Programs;
-import com.flockspring.ui.model.ServiceTime;
+import com.flockspring.ui.model.ServiceDetailUIModel;
+import com.flockspring.ui.model.ServiceOverviewUIModel;
+import com.flockspring.ui.model.SocialMediaUIModel;
 
 /**
  * OrganizationUIModelMapper.java
@@ -34,18 +36,21 @@ import com.flockspring.ui.model.ServiceTime;
 public class OrganizationUIModelMapper
 {
     private final AddressUIModelMapper addressUIModelMapper;
-    private final ImageUIModelMapper imageUIModelMapper;
+    private final MultimediaUIModelMapper multimediaUIModelMapper;
     private final LeaderUIModelMapper leaderUIModelMapper;
     private final LanguageUIModelMapper languageUIModelMapper;
+    private final SocialMediaUIModelMapper socialMediaUIModelMapper;
 
     @Autowired
-    public OrganizationUIModelMapper(AddressUIModelMapper addressUIModelMapper, ImageUIModelMapper imageUIModelMapper,
-            LeaderUIModelMapper leaderUIModelMapper, LanguageUIModelMapper languageUIModelMapper)
+    public OrganizationUIModelMapper(AddressUIModelMapper addressUIModelMapper, MultimediaUIModelMapper multimediaUIModelMapper,
+            LeaderUIModelMapper leaderUIModelMapper, LanguageUIModelMapper languageUIModelMapper, 
+            SocialMediaUIModelMapper socialMediaUIModelMapper)
     {
         this.addressUIModelMapper = addressUIModelMapper;
-        this.imageUIModelMapper = imageUIModelMapper;
+        this.multimediaUIModelMapper = multimediaUIModelMapper;
         this.leaderUIModelMapper = leaderUIModelMapper;
         this.languageUIModelMapper = languageUIModelMapper;
+        this.socialMediaUIModelMapper = socialMediaUIModelMapper;
     }
 
     public OrganizationUIModel map(Organization organization)
@@ -54,49 +59,95 @@ public class OrganizationUIModelMapper
         {
             return null;
         }
-        
-        AddressUIModel address =  addressUIModelMapper.map(organization.getAddress());
-        MusicStyle musicStyle = organization.getMusicStyle();
+                
         Set<LeaderUIModel> leadershipTeam = leaderUIModelMapper.map(organization.getLeadershipTeam());
-        String srLdrBiography = getSeniorLeadersBiography(organization.getLeadershipTeam());
-        Set<ImageUIModel> images = imageUIModelMapper.map(organization.getImages());
-        boolean gayAffirming = organization.isGayAffirming();
-        Set<ServiceDay> serviceDays = organization.getServiceDays();
+        Set<MultimediaUIModel> multimedia = multimediaUIModelMapper.map(organization.getMultimedia());
         Set<LanguageUIModel> languages = languageUIModelMapper.map(organization.getLanguages());
-        CongregationSize averageServiceCongregationSize = organization.getCongregationSize();
-        Set<Programs> programsOffered = organization.getProgramsOffered();
-        String name = organization.getName();
-        String subDenomination = organization.getSubDenomination() == null ? null : organization.getSubDenomination().getLocalizedStringCode();
-        String facebookUrl = organization.getFacebookUrl();
-        String websiteUrl = organization.getWebsiteUrl();
-        String communityCategory = organization.getPrimaryAffiliation().getLocalizedStringCode();
-        String description = organization.getDescription();
-        String denomination = organization.getDenomination().getLocalizedStringCode();
-        double distanceFromSearchPoint = organization.getDistanceFromSearchPoint();
         
-        Set<ServiceTime> serviceTimes = organization.getServiceTimes();
-        int yearFounded = organization.getYearFounded();
+        OrganizationOverviewUIModel overview = getOrganizationOverviewUIModel(organization);       
         
-        OrganizationUIModel model = new OrganizationUIModel(address, musicStyle, yearFounded, serviceTimes, languages, serviceDays, images, communityCategory, 
-                denomination, subDenomination, name, programsOffered, srLdrBiography, description, websiteUrl, facebookUrl, averageServiceCongregationSize, 
-                gayAffirming, leadershipTeam, distanceFromSearchPoint);
+        OrganizationStatementUIModel statements = new OrganizationStatementUIModel(organization.getMissionStatement(),
+                organization.getStatementOfFaith(), organization.getWelcomeMessage());
+                
+        ServiceOverviewUIModel servicesOverviews = new ServiceOverviewUIModel(getServiceDuration(organization.getAtmosphere()),
+                languages, getServiceSchedule(organization));
+        
+        Set<ServiceDetailUIModel> serviceDetails = getServiceDetails(organization);
+        Set<Programs> programsOffered = organization.getProgrammsOffered();
+        
+        OrganizationUIModel model = new OrganizationUIModel(organization.getId(), overview, multimedia, leadershipTeam, statements, 
+                servicesOverviews, serviceDetails, programsOffered);
+        
         
         
         return model;
     }
 
-    private String getSeniorLeadersBiography(List<LeaderImpl> list)
+    private int getServiceDuration(Atmosphere atmosphere)
     {
-        Leader leader = null;
-        
-        for(Leader l : list)
+        int duration = 0;
+        for(ServiceDetails s : atmosphere.getServiceDetails())
         {
-            if(l.isPrimaryLeader())
+            if(duration == 0 || s.getDurationInMinutes() > duration)
             {
-                leader = l;
-            }            
+                duration = s.getDurationInMinutes();
+            }
         }
         
-        return leader == null ? "" : leader.getBio();
+        return duration;
+    }
+
+    private String getServiceSchedule(Organization organization)
+    {
+       
+        return null;
+    }
+
+    private Set<ServiceDetailUIModel> getServiceDetails(Organization organization)
+    {
+       
+        return null;
+    }
+
+    private OrganizationOverviewUIModel getOrganizationOverviewUIModel(Organization organization)
+    {
+        Atmosphere atmosphere = organization.getAtmosphere();
+        AddressUIModel address = addressUIModelMapper.map(organization.getAddress()); 
+        SocialMediaUIModel socialMedia = socialMediaUIModelMapper.map(organization.getSocialMedia());
+        
+        Leader leadPastor = getLeadPastor(organization.getLeadershipTeam());
+        
+        //TODO: jbritain once we have a user infrastructure this will be dynamic
+        boolean isUserFavorite = false;
+        
+        //TODO: jbritain we want to display twillio number here, not the church number.
+        String phoneNumber = "(510) 261-2052 ext 2323";
+        
+        //TODO: jbritain format serviceTimesShort
+        String serviceTimesShort = "";
+        
+        return new OrganizationOverviewUIModel(organization.getName(), organization.getDenomination().getLocalizedStringCode(),
+                organization.getSubDenomination().getLocalizedStringCode(), organization.getYearFounded(), leadPastor.getName(), 
+                atmosphere.getCongregationSize(), phoneNumber, organization.getSocialMedia().getWebsiteUrl(), serviceTimesShort,
+                isUserFavorite, socialMedia, address, organization.getDistanceFromSearchPoint(), 
+                getParkingLotInfo(organization.getAccessabilitySupport()));
+    }
+
+    private boolean getParkingLotInfo(Set<AccessabilitySupport> accessabilitySupports)
+    {
+        return accessabilitySupports.contains(AccessabilitySupport.PARKING_GARAGE) || accessabilitySupports.contains(AccessabilitySupport.PARKING_LOT);
+    }
+
+    private Leader getLeadPastor(Set<Leader> leadershipTeam)
+    {
+       for(Leader l : leadershipTeam)
+       {
+           if(l.isPrimaryLeader())
+           {
+               return l;
+           }
+       }
+       
+       return null;
     }
 }

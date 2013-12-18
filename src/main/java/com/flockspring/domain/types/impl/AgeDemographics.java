@@ -12,14 +12,11 @@ package com.flockspring.domain.types.impl;
  */
 public enum AgeDemographics
 {
-    YOUNG5,
-    YOUNG4,
-    YOUNG3, 
-    YOUNG2, 
-    YOUNG1, 
-    SENIOR1,
-    SENIOR2,
-    SENIOR3,
-    SENIOR4,
-    SENIOR5;
+    YOUTH,
+    YOUNG_ADULTS,
+    FAMILY,
+    ALL_AGES,
+    MOSTLY_MATURE,
+    MATURE,
+    SENIOR;
 }

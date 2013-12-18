@@ -3,7 +3,6 @@
  */
 package com.flockspring.ui.mapper;
 
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -11,9 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.flockspring.domain.types.Leader;
-import com.flockspring.domain.types.impl.LeaderImpl;
-import com.flockspring.ui.model.ImageUIModel;
 import com.flockspring.ui.model.LeaderUIModel;
+import com.flockspring.ui.model.MultimediaUIModel;
 
 /**
  * leaderUIModelMapper.java
@@ -26,15 +24,15 @@ import com.flockspring.ui.model.LeaderUIModel;
 public class LeaderUIModelMapper
 {
 
-    private ImageUIModelMapper imageUIModelMapper;
+    private MultimediaUIModelMapper imageUIModelMapper;
 
     @Autowired
-    public LeaderUIModelMapper(ImageUIModelMapper imageUIModelMapper)
+    public LeaderUIModelMapper(MultimediaUIModelMapper imageUIModelMapper)
     {
         this.imageUIModelMapper = imageUIModelMapper;
     }
     
-    public Set<LeaderUIModel> map(List<LeaderImpl> list)
+    public Set<LeaderUIModel> map(Set<Leader> list)
     {
         Set<LeaderUIModel> modelSet = new TreeSet<LeaderUIModel>();
         for(Leader l : list)
@@ -48,7 +46,7 @@ public class LeaderUIModelMapper
     public LeaderUIModel map(Leader leader)
     {
         String bio = leader.getBio();
-        ImageUIModel image = imageUIModelMapper.map(leader.getImage());
+        MultimediaUIModel image = imageUIModelMapper.map(leader.getImage());
         String name = leader.getName();
         String title = leader.getTitle();
         boolean primaryContact = leader.isPrimaryContact();

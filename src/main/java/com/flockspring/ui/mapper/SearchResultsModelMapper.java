@@ -10,9 +10,9 @@ import java.util.TreeSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.flockspring.domain.types.Image;
+import com.flockspring.domain.types.MultimediaObject;
 import com.flockspring.domain.types.Organization;
-import com.flockspring.ui.model.ImageUIModel;
+import com.flockspring.ui.model.MultimediaUIModel;
 import com.flockspring.ui.model.SearchResultUIModel;
 
 /**
@@ -26,10 +26,10 @@ import com.flockspring.ui.model.SearchResultUIModel;
 public class SearchResultsModelMapper
 {
 
-    private ImageUIModelMapper imageUIModelMapper;
+    private MultimediaUIModelMapper imageUIModelMapper;
     
     @Autowired    
-    public SearchResultsModelMapper(ImageUIModelMapper imageUIModelMapper)
+    public SearchResultsModelMapper(MultimediaUIModelMapper imageUIModelMapper)
     {
         super();
         
@@ -50,7 +50,7 @@ public class SearchResultsModelMapper
 
     public SearchResultUIModel map(Organization organization)
     {
-        ImageUIModel image = imageUIModelMapper.map(getPrimaryOrganizationImage(organization.getImages()));
+        MultimediaUIModel image = imageUIModelMapper.map(getPrimaryOrganizationImage(organization.getMultimedia()));
         
         return new SearchResultUIModel(image, organization.getName(), organization.getServiceTimes(), 
                 organization.getDenomination().getLocalizedStringCode(), organization.getDistanceFromSearchPoint(),
@@ -69,9 +69,9 @@ public class SearchResultsModelMapper
         return false;
     }
 
-    private Image getPrimaryOrganizationImage(Set<Image> images)
+    private MultimediaObject getPrimaryOrganizationImage(Set<MultimediaObject> images)
     {
-        for(Image i : images)
+        for(MultimediaObject i : images)
         {
             if(i.isPrimary())
             {

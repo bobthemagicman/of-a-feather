@@ -21,7 +21,29 @@ public class SocialMediaImpl implements SocialMedia
     private String facebookUrl;
     private String twitterUrl;
     private String otherUrl;
+    private String instagramUrl;
    
+    public SocialMediaImpl()
+    {
+        super();
+    }
+            
+    public SocialMediaImpl(String websiteUrl, String blogUrl, String googlePlusUrl, String youtubeUrl, String podcastUrl, String facebookUrl,
+            String twitterUrl, String otherUrl, String instagramUrl)
+    {
+        super();
+        
+        this.websiteUrl = websiteUrl;
+        this.blogUrl = blogUrl;
+        this.googlePlusUrl = googlePlusUrl;
+        this.youtubeUrl = youtubeUrl;
+        this.podcastUrl = podcastUrl;
+        this.facebookUrl = facebookUrl;
+        this.twitterUrl = twitterUrl;
+        this.otherUrl = otherUrl;
+        this.instagramUrl = instagramUrl;
+    }
+
     @Override
     public String getWebsiteUrl()
     {
@@ -70,6 +92,12 @@ public class SocialMediaImpl implements SocialMedia
         return otherUrl;
     }
     
+    @Override
+    public String getInstagramUrl()
+    {
+        return instagramUrl;
+    }
+    
     public void setWebsiteUrl(String websiteUrl)
     {
         this.websiteUrl = websiteUrl;
@@ -108,5 +136,10 @@ public class SocialMediaImpl implements SocialMedia
     public void setOtherUrl(String otherUrl)
     {
         this.otherUrl = otherUrl;
+    }
+
+    public void setInstagramUrl(String instagramUrl)
+    {
+        this.instagramUrl = instagramUrl;
     }
 }

@@ -22,13 +22,11 @@ public interface Leader
 
     String getTitle();
 
-    Image getImage();
+    MultimediaObject getImage();
 
     boolean isPrimaryLeader();
 
     boolean isPrimaryContact();
-
-    long getId();
 
     LeaderRole getLeaderRole();
 

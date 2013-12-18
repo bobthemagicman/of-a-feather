@@ -6,7 +6,7 @@ package com.flockspring.domain.types.impl;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import com.flockspring.domain.types.Image;
+import com.flockspring.domain.types.MultimediaObject;
 import com.google.common.collect.ComparisonChain;
 
 /**
@@ -16,33 +16,30 @@ import com.google.common.collect.ComparisonChain;
  * @date May 18, 2013
  *
  */
-public class ImageImpl implements Image, Comparable<ImageImpl> 
+public class MultimediaObjectImpl implements MultimediaObject, Comparable<MultimediaObjectImpl> 
 {
     private String name;
     private String path;
     private String altText;
     private String titleText;
-    private String extension;
-    private int width;
-    private int height;
     private boolean primary;
+    private boolean video;
 
-    public ImageImpl()
+    public MultimediaObjectImpl()
     {
         super();
     }
     
-    public ImageImpl(String name, String path, String altText, String titleText, String extension, int width, int height, boolean primary)
+    public MultimediaObjectImpl(String name, String path, String altText, String titleText, boolean primary, 
+            boolean video)
     {
         super();
         this.name = name;
         this.path = path;
         this.altText = altText;
         this.titleText = titleText;
-        this.extension = extension;
-        this.width = width;
-        this.height = height;
         this.primary = primary;
+        this.video = video;
     }
 
     @Override
@@ -70,27 +67,16 @@ public class ImageImpl implements Image, Comparable<ImageImpl>
     }
 
     @Override
-    public String getExtension()
-    {
-        return extension;
-    }
-
-    @Override
-    public int getWidth()
-    {
-        return width;
-    }
-
-    @Override
-    public int getHeight()
-    {
-        return height;
-    }
-
-    @Override
     public boolean isPrimary()
     {
         return primary;
+    }
+
+    @Override
+    public boolean isVideo()
+    {
+        
+        return video;
     }
     
     public void setName(String name)
@@ -113,21 +99,6 @@ public class ImageImpl implements Image, Comparable<ImageImpl>
         this.titleText = titleText;
     }
 
-    public void setExtension(String extension)
-    {
-        this.extension = extension;
-    }
-
-    public void setWidth(int width)
-    {
-        this.width = width;
-    }
-
-    public void setHeight(int height)
-    {
-        this.height = height;
-    }
-    
     public void setPrimary(boolean primary)
     {
         this.primary = primary;
@@ -146,7 +117,7 @@ public class ImageImpl implements Image, Comparable<ImageImpl>
     }
 
     @Override
-    public int compareTo(ImageImpl other)
+    public int compareTo(MultimediaObjectImpl other)
     {
         return ComparisonChain.start()
                 .compare(this.path, other.path)

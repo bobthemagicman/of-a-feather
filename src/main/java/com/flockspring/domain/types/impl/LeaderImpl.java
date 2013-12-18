@@ -23,22 +23,37 @@ public class LeaderImpl implements Leader, Comparable<Leader>, Serializable
     
     private static final long serialVersionUID = -5951998764576044180L;
 
-    private long id;
     private String name;
     private String bio;
     private String title;
     private LeaderRole leaderRole;
-    private ImageImpl image;
+    private MultimediaObjectImpl image;
     private boolean primaryContact;
     private boolean primaryLeader;
     private String emailAddress;
     private String phoneNumber;
-    private int yearStarted;
+    private Integer yearStarted;
     
-    @Override
-    public long getId()
+    public LeaderImpl()
     {
-        return id;
+        super();
+    }
+    
+    public LeaderImpl(String name, String bio, String title, LeaderRole leaderRole, MultimediaObjectImpl image, boolean primaryContact,
+            boolean primaryLeader, String emailAddress, String phoneNumber, int yearStarted)
+    {
+        super();
+       
+        this.name = name;
+        this.bio = bio;
+        this.title = title;
+        this.leaderRole = leaderRole;
+        this.image = image;
+        this.primaryContact = primaryContact;
+        this.primaryLeader = primaryLeader;
+        this.emailAddress = emailAddress;
+        this.phoneNumber = phoneNumber;
+        this.yearStarted = yearStarted;
     }
 
     @Override
@@ -60,7 +75,7 @@ public class LeaderImpl implements Leader, Comparable<Leader>, Serializable
     }
 
     @Override
-    public ImageImpl getImage()
+    public MultimediaObjectImpl getImage()
     {
         return image;
     }
@@ -121,11 +136,6 @@ public class LeaderImpl implements Leader, Comparable<Leader>, Serializable
         this.yearStarted = yearStarted;
     }
     
-    public void setId(long id)
-    {
-        this.id = id;
-    }
-
     public void setName(String name)
     {
         this.name = name;
@@ -141,7 +151,7 @@ public class LeaderImpl implements Leader, Comparable<Leader>, Serializable
         this.title = title;
     }
 
-    public void setImage(ImageImpl image)
+    public void setImage(MultimediaObjectImpl image)
     {
         this.image = image;
     }
@@ -169,9 +179,14 @@ public class LeaderImpl implements Leader, Comparable<Leader>, Serializable
     }
 
     @Override
-    public int compareTo(Leader o)
+    public int compareTo(Leader right)
     {
+        LeaderImpl left = this;
         return ComparisonChain.start()
-                .compare(this.id, o.getId()).result();
+                .compare(left.getName(), right.getName())
+                .compare(left.getTitle(), right.getTitle())
+                .compare(left.isPrimaryContact(), right.isPrimaryContact())
+                .compare(left.isPrimaryLeader(), right.isPrimaryLeader())
+                .result();
     }
 }

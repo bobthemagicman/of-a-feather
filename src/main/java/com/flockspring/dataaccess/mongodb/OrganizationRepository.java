@@ -21,5 +21,5 @@ public interface OrganizationRepository extends MongoRepository<OrganizationImpl
 {
     GeoResults<OrganizationImpl> findByAddressLocationNear(Point point, Distance distance);
 
-    OrganizationImpl findByNameAndRegion(String organizationName, String parentRegion);
+//    OrganizationImpl findByNameAndRegion(String organizationName, String parentRegion);
 }

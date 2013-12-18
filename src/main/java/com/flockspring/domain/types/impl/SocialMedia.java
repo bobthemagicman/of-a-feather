@@ -27,4 +27,6 @@ public interface SocialMedia
     String getTwitterUrl();
     
     String getOtherUrl();
+
+    String getInstagramUrl();
 }

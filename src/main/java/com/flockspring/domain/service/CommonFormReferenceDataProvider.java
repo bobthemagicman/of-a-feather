@@ -24,7 +24,7 @@ import com.flockspring.domain.types.Region;
 import com.flockspring.domain.types.ServiceDay;
 import com.flockspring.domain.types.ServiceStyle;
 import com.flockspring.domain.types.impl.AddressImpl;
-import com.flockspring.domain.types.impl.ImageImpl;
+import com.flockspring.domain.types.impl.MultimediaObjectImpl;
 import com.flockspring.domain.types.impl.LeaderImpl;
 import com.flockspring.domain.types.impl.OrganizationImpl;
 import com.flockspring.ui.model.CongregationSize;

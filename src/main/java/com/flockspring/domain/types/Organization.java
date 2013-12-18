@@ -6,8 +6,7 @@ package com.flockspring.domain.types;
 import java.util.Set;
 
 import com.flockspring.domain.types.impl.Atmosphere;
-import com.flockspring.domain.types.impl.LeaderImpl;
-import com.flockspring.domain.types.impl.SocialMediaImpl;
+import com.flockspring.domain.types.impl.SocialMedia;
 import com.flockspring.ui.model.Programs;
 import com.flockspring.ui.model.ServiceTime;
 
@@ -21,9 +20,9 @@ public interface Organization
 
     Set<Language> getLanguages();
 
-    Set<Image> getImages();
+    Set<MultimediaObject> getMultimedia();
 
-    Set<LeaderImpl> getLeadershipTeam();
+    Set<Leader> getLeadershipTeam();
 
     Set<ServiceDay> getServiceDays();
     
@@ -31,8 +30,6 @@ public interface Organization
     
     Set<AccessabilitySupport> getAccessabilitySupport();
     
-    Set<AccessabilitySupport> getAccessibilitySupport();
-
     Set<Programs> getProgrammsOffered();
     
     Affiliation getPrimaryAffiliation();
@@ -53,7 +50,7 @@ public interface Organization
 
     String getWelcomeMessage();
 
-    SocialMediaImpl getSocialMedia();
+    SocialMedia getSocialMedia();
     
     Address getAddress();
 
