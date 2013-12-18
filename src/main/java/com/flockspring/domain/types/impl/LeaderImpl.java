@@ -3,10 +3,13 @@
  */
 package com.flockspring.domain.types.impl;
 
+import java.io.Serializable;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import com.flockspring.domain.types.Leader;
+import com.google.common.collect.ComparisonChain;
 
 /**
  * LeaderImpl.java
@@ -15,22 +18,42 @@ import com.flockspring.domain.types.Leader;
  * @date Jun 12, 2013
  *
  */
-public class LeaderImpl implements Leader
+public class LeaderImpl implements Leader, Comparable<Leader>, Serializable
 {
     
-    private long id;
+    private static final long serialVersionUID = -5951998764576044180L;
+
     private String name;
     private String bio;
     private String title;
-    private ImageImpl image;
+    private LeaderRole leaderRole;
+    private MultimediaObjectImpl image;
     private boolean primaryContact;
     private boolean primaryLeader;
-    private OrganizationImpl organization;
-
-    @Override
-    public long getId()
+    private String emailAddress;
+    private String phoneNumber;
+    private Integer yearStarted;
+    
+    public LeaderImpl()
     {
-        return id;
+        super();
+    }
+    
+    public LeaderImpl(String name, String bio, String title, LeaderRole leaderRole, MultimediaObjectImpl image, boolean primaryContact,
+            boolean primaryLeader, String emailAddress, String phoneNumber, int yearStarted)
+    {
+        super();
+       
+        this.name = name;
+        this.bio = bio;
+        this.title = title;
+        this.leaderRole = leaderRole;
+        this.image = image;
+        this.primaryContact = primaryContact;
+        this.primaryLeader = primaryLeader;
+        this.emailAddress = emailAddress;
+        this.phoneNumber = phoneNumber;
+        this.yearStarted = yearStarted;
     }
 
     @Override
@@ -52,7 +75,7 @@ public class LeaderImpl implements Leader
     }
 
     @Override
-    public ImageImpl getImage()
+    public MultimediaObjectImpl getImage()
     {
         return image;
     }
@@ -68,18 +91,51 @@ public class LeaderImpl implements Leader
     {
         return primaryLeader;
     }
+    
+    @Override
+    public LeaderRole getLeaderRole()
+    {
+        return leaderRole;
+    }
 
     @Override
-    public OrganizationImpl getOrganization()
+    public String getEmailAddress()
     {
-        return organization;
+        return emailAddress;
     }
 
-    public void setId(long id)
+    @Override
+    public String getPhoneNumber()
     {
-        this.id = id;
+        return phoneNumber;
     }
 
+    @Override
+    public int getYearStarted()
+    {
+        return yearStarted;
+    }
+
+    public void setLeaderRole(LeaderRole leaderRole)
+    {
+        this.leaderRole = leaderRole;
+    }
+
+    public void setEmailAddress(String emailAddress)
+    {
+        this.emailAddress = emailAddress;
+    }
+
+    public void setPhoneNumber(String phoneNumber)
+    {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public void setYearStarted(int yearStarted)
+    {
+        this.yearStarted = yearStarted;
+    }
+    
     public void setName(String name)
     {
         this.name = name;
@@ -95,7 +151,7 @@ public class LeaderImpl implements Leader
         this.title = title;
     }
 
-    public void setImage(ImageImpl image)
+    public void setImage(MultimediaObjectImpl image)
     {
         this.image = image;
     }
@@ -110,11 +166,6 @@ public class LeaderImpl implements Leader
         this.primaryLeader = primaryLeader;
     }
 
-    public void setOrganization(OrganizationImpl organization)
-    {
-        this.organization = organization;
-    }
-
     @Override
     public int hashCode()
     {
@@ -125,5 +176,17 @@ public class LeaderImpl implements Leader
     public boolean equals(Object obj)
     {
         return EqualsBuilder.reflectionEquals(this, obj);
+    }
+
+    @Override
+    public int compareTo(Leader right)
+    {
+        LeaderImpl left = this;
+        return ComparisonChain.start()
+                .compare(left.getName(), right.getName())
+                .compare(left.getTitle(), right.getTitle())
+                .compare(left.isPrimaryContact(), right.isPrimaryContact())
+                .compare(left.isPrimaryLeader(), right.isPrimaryLeader())
+                .result();
     }
 }

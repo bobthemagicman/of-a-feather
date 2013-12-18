@@ -336,6 +336,8 @@
 </div>
 
 <%@ include file="/WEB-INF/jsp/partials/siteFooter.jsp"%>
+<spring:url value="/static/js/front.js" var="frontPageJS"/>
+<script src="${frontPageJS}" type="text/javascript"></script>
 
 </body>
 </html>

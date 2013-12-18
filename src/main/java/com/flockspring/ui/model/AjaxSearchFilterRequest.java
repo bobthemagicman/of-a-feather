@@ -21,37 +21,17 @@ import com.flockspring.domain.types.ServiceDay;
 public class AjaxSearchFilterRequest
 {
 
-    private final Set<Affiliation> affiliations;
-    private final Set<Language> languages;
-    private final Set<ServiceTime> serviceTimes;
-    private final Set<ServiceDay> serviceDays;
-    private final Set<CongregationSize> congregationSize;
-    private final Set<SpecialNeedsSupport> specialNeedsSupport;
-    private final Set<Programs> childCarePrograms;
-    private final Pair<Integer, Integer> atmosphereServiceStyle;
-    private final Pair<Integer, Integer> atmosphereMusicStyle;
-    private final Pair<Integer, Integer> atmosphereDressAttire;
+    private Set<Affiliation> affiliations;
+    private Set<Language> languages;
+    private Set<ServiceTime> serviceTimes;
+    private Set<ServiceDay> serviceDays;
+    private Set<CongregationSize> congregationSize;
+    private Set<SpecialNeedsSupport> specialNeedsSupport;
+    private Set<Programs> childCarePrograms;
+    private Pair<Integer, Integer> atmosphereServiceStyle;
+    private Pair<Integer, Integer> atmosphereMusicStyle;
+    private Pair<Integer, Integer> atmosphereDressAttire;
    
-    public AjaxSearchFilterRequest(final Set<Affiliation> affiliations, final Set<Language> languages, 
-            final Set<ServiceTime> serviceTimes, final Set<ServiceDay> serviceDays, final Set<CongregationSize> congregationSize, 
-            final Set<SpecialNeedsSupport> specialNeedsSupport, final Set<Programs> childCarePrograms, 
-            final Pair<Integer, Integer> atmosphereServiceStyle, final Pair<Integer, Integer> atmosphereMusicStyle,
-            final Pair<Integer, Integer> atmosphereDressAttire)
-    {
-        super();
-        
-        this.affiliations = affiliations;
-        this.languages = languages;
-        this.serviceTimes = serviceTimes;
-        this.serviceDays = serviceDays;
-        this.congregationSize = congregationSize;
-        this.specialNeedsSupport = specialNeedsSupport;
-        this.childCarePrograms = childCarePrograms;
-        this.atmosphereServiceStyle = atmosphereServiceStyle;
-        this.atmosphereMusicStyle = atmosphereMusicStyle;
-        this.atmosphereDressAttire = atmosphereDressAttire;
-    }
-
     public Set<Affiliation> getAffiliations()
     {
         return affiliations;

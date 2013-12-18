@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.flockspring.domain.types.Leader;
-import com.flockspring.ui.model.ImageUIModel;
 import com.flockspring.ui.model.LeaderUIModel;
+import com.flockspring.ui.model.MultimediaUIModel;
 
 /**
  * leaderUIModelMapper.java
@@ -24,18 +24,18 @@ import com.flockspring.ui.model.LeaderUIModel;
 public class LeaderUIModelMapper
 {
 
-    private ImageUIModelMapper imageUIModelMapper;
+    private MultimediaUIModelMapper imageUIModelMapper;
 
     @Autowired
-    public LeaderUIModelMapper(ImageUIModelMapper imageUIModelMapper)
+    public LeaderUIModelMapper(MultimediaUIModelMapper imageUIModelMapper)
     {
         this.imageUIModelMapper = imageUIModelMapper;
     }
     
-    public Set<LeaderUIModel> map(Set<Leader> leadershipTeam)
+    public Set<LeaderUIModel> map(Set<Leader> list)
     {
         Set<LeaderUIModel> modelSet = new TreeSet<LeaderUIModel>();
-        for(Leader l : leadershipTeam)
+        for(Leader l : list)
         {
             modelSet.add(map(l));
         }
@@ -46,7 +46,7 @@ public class LeaderUIModelMapper
     public LeaderUIModel map(Leader leader)
     {
         String bio = leader.getBio();
-        ImageUIModel image = imageUIModelMapper.map(leader.getImage());
+        MultimediaUIModel image = imageUIModelMapper.map(leader.getImage());
         String name = leader.getName();
         String title = leader.getTitle();
         boolean primaryContact = leader.isPrimaryContact();

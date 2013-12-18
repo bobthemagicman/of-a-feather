@@ -3,6 +3,8 @@
  */
 package com.flockspring.domain.types;
 
+import com.flockspring.ui.model.LocalizedEnum;
+
 /**
  * ServiceDay.java
  *
@@ -10,13 +12,38 @@ package com.flockspring.domain.types;
  * @date Oct 27, 2013
  *
  */
-public enum ServiceDay
+public enum ServiceDay implements LocalizedEnum
 {
-    MONDAY, 
-    TUESDAY,
-    WEDNESDAY,
-    THURSDAY,
-    FRIDAY,
-    SATURDAY,
-    SUNDAY;
+    MONDAY("enum.monday"), 
+    TUESDAY("enum.tuesday"),
+    WEDNESDAY("enum.wednesday"),
+    THURSDAY("enum.thursday"),
+    FRIDAY("enum.friday"),
+    SATURDAY("enum.saturday"),
+    SUNDAY("enum.sunday");
+
+    private String localizationStringCode;
+    
+    private ServiceDay(String localizationStringCode)
+    {
+        this.localizationStringCode = localizationStringCode;
+    }
+    
+    @Override
+    public String getLocalizedStringCode()
+    {
+        return this.localizationStringCode;
+    }
+
+    @Override
+    public String getName()
+    {
+        return this.name();
+    }
+
+    @Override
+    public int getOrdinal()
+    {
+        return this.ordinal();
+    }
 }

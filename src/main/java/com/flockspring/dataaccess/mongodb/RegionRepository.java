@@ -3,17 +3,16 @@
  */
 package com.flockspring.dataaccess.mongodb;
 
+import java.util.List;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import com.flockspring.domain.types.Region;
 import com.flockspring.domain.types.impl.GlobalRegionImpl;
 import com.flockspring.domain.types.impl.OrganizationImpl;
 
-public interface RegionRepository extends MongoRepository<GlobalRegionImpl, Long>
+public interface RegionRepository extends MongoRepository<GlobalRegionImpl, String>, CustomRegionRepository<GlobalRegionImpl, String>
 {
-
-//    @Query("") 
-//    Region findByOrganizationInRegionOrganizations(@Param("organization") OrganizationImpl organizationId);
+    
+    
 }

@@ -5,25 +5,33 @@ package com.flockspring.domain.types;
 
 import java.util.Set;
 
-import com.flockspring.ui.model.CongregationSize;
+import com.flockspring.domain.types.impl.Atmosphere;
+import com.flockspring.domain.types.impl.SocialMedia;
 import com.flockspring.ui.model.Programs;
 import com.flockspring.ui.model.ServiceTime;
 
 
 public interface Organization
 {
-    Address getAddress();
-
-    int getYearFounded();
+    
+    Integer getYearFounded();
 
     Set<ServiceTime> getServiceTimes();
 
     Set<Language> getLanguages();
 
-    Set<Image> getImages();
+    Set<MultimediaObject> getMultimedia();
 
     Set<Leader> getLeadershipTeam();
 
+    Set<ServiceDay> getServiceDays();
+    
+    Set<Programs> getProgramsOffered();
+    
+    Set<AccessabilitySupport> getAccessabilitySupport();
+    
+    Set<Programs> getProgrammsOffered();
+    
     Affiliation getPrimaryAffiliation();
 
     Affiliation getDenomination();
@@ -32,33 +40,19 @@ public interface Organization
 
     String getName();
 
-    String getDescription();
-
-    String getWebsiteUrl();
-
-    String getFacebookUrl();
-
-    Set<ServiceDay> getServiceDays();
-    
-    CongregationSize getCongregationSize();
-
-    boolean isGayAffirming();
-
     String getId();
 
-    Region getRegion();
-
     double getDistanceFromSearchPoint();
+    
+    String getStatementOfFaith();
 
-    MusicStyle getMusicStyle();
+    String getMissionStatement();
+
+    String getWelcomeMessage();
+
+    SocialMedia getSocialMedia();
     
-    boolean isParkingLotAvailable();
-    
-    Set<Programs> getProgramsOffered();
-    
-    Set<AccessabilitySupport> getAccessabilitySupport();
-    
-    DressAttire getDressAttire();
-    
-    ServiceStyle getServiceStyle();
+    Address getAddress();
+
+    Atmosphere getAtmosphere();
 }

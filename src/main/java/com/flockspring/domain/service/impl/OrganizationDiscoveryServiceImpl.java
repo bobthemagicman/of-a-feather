@@ -4,7 +4,6 @@
 package com.flockspring.domain.service.impl;
 
 import java.util.NavigableSet;
-import java.util.Set;
 import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
 {
 
     private final OrganizationRepository organizationRepository;
-    private final RegionRepository regionRepository;
+//    private final RegionRepository regionRepository;
     private final MapQuestServiceClient mapQuestServiceClient;
     private final USPSAddressAPIService uspsAddressAPIService;
     private final int defaultDistance;
@@ -42,7 +41,7 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
     @Autowired
     public OrganizationDiscoveryServiceImpl(final OrganizationRepository organizationRepository, final USPSAddressAPIService uspsAddressAPIService,
             @Value("${com.flickspring.domain.service.organization.default.distance}") final int defaultDistance,
-            final MapQuestServiceClient mapQuestServiceClient, RegionRepository regionRepository)
+            final MapQuestServiceClient mapQuestServiceClient)
     {
         super();
 
@@ -50,7 +49,7 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
         this.organizationRepository = organizationRepository;
         this.defaultDistance = defaultDistance;
         this.mapQuestServiceClient = mapQuestServiceClient;
-        this.regionRepository = regionRepository;
+//        this.regionRepository = regionRepository;
     }
 
     @Override
@@ -86,9 +85,9 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
         String parentRegion = neighborhoodRegionName == null ? cityRegionName : neighborhoodRegionName;
         organizationName = organizationName.replaceAll("-", "%");
 
-        OrganizationImpl organization = organizationRepository.findByNameAndRegion(organizationName, parentRegion);
+//        OrganizationImpl organization = organizationRepository.findByNameAndRegion(organizationName, parentRegion);
 
-        return organization;
+        return null;
     }
 
     @Override
@@ -174,5 +173,18 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
     {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    @Override
+    public void saveOrganization(OrganizationImpl organization)
+    {
+        processImages(organization);
+        organizationRepository.save(organization);        
+    }
+
+    private void processImages(OrganizationImpl organization)
+    {
+        // TODO Auto-generated method stub
+        
     }
 }

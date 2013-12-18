@@ -3,7 +3,8 @@
  */
 package com.flockspring.domain.types;
 
-import com.flockspring.domain.types.impl.OrganizationImpl;
+import com.flockspring.domain.types.impl.LeaderRole;
+
 
 /**
  * Leader.java
@@ -21,13 +22,17 @@ public interface Leader
 
     String getTitle();
 
-    Image getImage();
+    MultimediaObject getImage();
 
     boolean isPrimaryLeader();
 
     boolean isPrimaryContact();
 
-    long getId();
+    LeaderRole getLeaderRole();
 
-    OrganizationImpl getOrganization();
+    int getYearStarted();
+
+    String getPhoneNumber();
+
+    String getEmailAddress();
 }

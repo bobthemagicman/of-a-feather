@@ -7,6 +7,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import com.google.common.collect.ComparisonChain;
+
 /**
  * UIImage.java
  *
@@ -14,17 +16,16 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  * @date May 18, 2013
  *
  */
-public class ImageUIModel {
+public class MultimediaUIModel implements Comparable<MultimediaUIModel>{
     
     private final String name;
     private final String path;
     private final String alt;
     private final String title;
-        
-    private final int width;
-    private final int height;
+    private final boolean primary;
+    private final boolean video;
 
-    public ImageUIModel(String alt, String name, String path, String title, int height, int width)
+    public MultimediaUIModel(String alt, String name, String path, String title, boolean primary, boolean video)
     {
         super();
         
@@ -32,8 +33,8 @@ public class ImageUIModel {
         this.path = path;
         this.alt = alt;
         this.title = title;
-        this.width = width;
-        this.height = height;       
+        this.primary = primary;      
+        this.video = video;
     }
 
     public String getName()
@@ -56,14 +57,14 @@ public class ImageUIModel {
         return title;
     }
 
-    public int getWidth()
+    public boolean isPrimary()
     {
-        return width;
+        return primary;
     }
-
-    public int getHeight()
+    
+    public boolean isVideo()
     {
-        return height;
+        return video;
     }
     
     @Override
@@ -82,5 +83,16 @@ public class ImageUIModel {
     public String toString()
     {
         return ToStringBuilder.reflectionToString(this);
+    }
+
+    @Override
+    public int compareTo(MultimediaUIModel right)
+    {
+        MultimediaUIModel left = this;
+        return ComparisonChain.start()
+                .compare(left.getName(), right.getName())
+                .compare(left.getPath(), right.getPath())
+                .compare(left.isPrimary(), right.isPrimary())
+                .result();
     }
 }

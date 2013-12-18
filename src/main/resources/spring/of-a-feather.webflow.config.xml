@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:webflow="http://www.springframework.org/schema/webflow-config"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/webflow-config
+    	http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.3.xsd">
+
+    <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter"
+          p:flowExecutor-ref="flowExecutor" />
+
+    <webflow:flow-executor id="flowExecutor" />
+        
+    <webflow:flow-registry id="flowRegistry" flow-builder-services="flowBuilderServices" >
+        <webflow:flow-location path="classpath:spring/flows/addAChurch.xml" />        
+    </webflow:flow-registry>
+
+    <webflow:flow-builder-services id="flowBuilderServices" view-factory-creator="mvcViewFactoryCreator" validator="jsr303Validator"
+    		expression-parser="webflowExpressionParser"/>
+    		
+    <bean id="expressionParser" class="org.springframework.expression.spel.standard.SpelExpressionParser">
+		<constructor-arg name="configuration">
+			<bean class="org.springframework.expression.spel.SpelParserConfiguration">
+				<constructor-arg name="autoGrowCollections" value="true" />
+				<constructor-arg name="autoGrowNullReferences" value="false" />
+			</bean>
+		</constructor-arg>
+	</bean>
+
+  	<bean id="webflowExpressionParser" class="org.springframework.webflow.expression.spel.WebFlowSpringELExpressionParser">
+    	<constructor-arg name="expressionParser" ref="expressionParser" />    	
+  	</bean>		
+
+    <bean id="mvcViewFactoryCreator" class="org.springframework.webflow.mvc.builder.MvcViewFactoryCreator"
+          p:viewResolvers-ref="internalResourceViewResolver" />
+
+    <bean id="organizationBean" class="com.flockspring.domain.types.impl.OrganizationImpl" scope="prototype" />
+
+</beans>

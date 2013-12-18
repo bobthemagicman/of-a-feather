@@ -16,8 +16,10 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<!-- Spring -->
-		<spring-framework.version>3.1.4.RELEASE</spring-framework.version>
+		<spring-framework.version>3.1.1.RELEASE</spring-framework.version>
 		<spring-framework-xml.version>2.1.3.RELEASE</spring-framework-xml.version>
+		<spring-framework-webflow.version>2.3.1.RELEASE</spring-framework-webflow.version>
+		<spring-data-mongodb.version>1.3.0.RELEASE</spring-data-mongodb.version>
 
 		<!-- Java EE / Java SE dependencies -->
 		<jsp.version>2.2</jsp.version>
@@ -27,16 +29,13 @@
 		<jaxb-impl.version>2.2.7</jaxb-impl.version>
 
 		<!-- Database access -->
-		<spring-data-mongodb.version>1.3.2.RELEASE</spring-data-mongodb.version>
-		<mongo-java-driver.version>2.11.3</mongo-java-driver.version>
+		<mongo-java-driver.version>2.10.1</mongo-java-driver.version>
 
 		<!-- AOP -->
 		<aspectj.version>1.7.2</aspectj.version>
 
 		<!-- Logging -->
 		<logback.version>1.0.12</logback.version>
-		<slf4j.version>1.7.5</slf4j.version>
-		<sl4fj-log4j12.version>1.7.5</sl4fj-log4j12.version>
 
 		<!-- Test -->
 		<junit.version>4.11</junit.version>
@@ -46,8 +45,6 @@
 		<jodatime-hibernate.version>1.3</jodatime-hibernate.version>
 		<jodatime-jsptags.version>1.1.1</jodatime-jsptags.version>
 		<jodatime.version>2.2</jodatime.version>
-		<jadira-usertype-core.version>3.1.0.CR5</jadira-usertype-core.version>
-
 
 		<!-- Web dependencies -->
 		<webjars-bootstrap.version>2.3.0</webjars-bootstrap.version>
@@ -57,6 +54,8 @@
 		<!-- Misc dependencies -->
 		<org.apache.tomcat.version>7.0.35</org.apache.tomcat.version>
 		<jackson.version>1.9.13</jackson.version>
+		<hibernate-validation.version>4.2.0.Final</hibernate-validation.version>
+		<commons-fileupload.version>1.3</commons-fileupload.version>
 
 		<!-- Convenience dependencies -->
 		<guava.version>r09</guava.version>
@@ -124,11 +123,21 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>${commons-fileupload.version}</version>
+		</dependency>
+		            
+		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>
 		</dependency>
-
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-validator</artifactId>
+		    <version>${hibernate-validation.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -160,6 +169,11 @@
 			<version>${mongo-java-driver.version}</version>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.webflow</groupId>
+			<artifactId>spring-webflow</artifactId>
+			<version>${spring-framework-webflow.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-mongodb</artifactId>
 			<version>${spring-data-mongodb.version}</version>
@@ -169,11 +183,6 @@
 			<artifactId>tomcat-jsp-api</artifactId>
 			<version>${org.apache.tomcat.version}</version>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.jadira.usertype</groupId>
-			<artifactId>usertype.core</artifactId>
-			<version>${jadira-usertype-core.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -233,12 +242,6 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
 			<version>${spring-framework.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-			<version>${slf4j.version}</version>
-			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>

@@ -7,11 +7,10 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.persistence.Transient;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.flockspring.domain.types.GlobalRegion;
 import com.flockspring.domain.types.GlobalRegionType;
@@ -23,6 +22,7 @@ import com.flockspring.domain.types.GlobalRegionType;
  * @date May 27, 2013
  * 
  */
+@Document
 public class GlobalRegionImpl implements GlobalRegion<GlobalRegionImpl>
 {
     private long id;
@@ -32,7 +32,6 @@ public class GlobalRegionImpl implements GlobalRegion<GlobalRegionImpl>
     private String isoAlphaCode = "";
     private GlobalRegionType regionType;
 
-    @Transient
     private Map<String, String> localeBasedNameMap = new HashMap<String, String>();
 
     @Override

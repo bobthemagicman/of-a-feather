@@ -3,115 +3,63 @@
  */
 package com.flockspring.ui.model;
 
-import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import com.flockspring.domain.types.MusicStyle;
-import com.flockspring.domain.types.ServiceDay;
 import com.google.common.collect.ComparisonChain;
 
 /**
- * CommunityUIModel.java
+ * OrganizationUIModel.java
  *
  * @author Justen L. Britain
  * @date May 18, 2013
  *
  */
-public class OrganizationUIModel implements Comparable<OrganizationUIModel> {
+public class OrganizationUIModel implements Comparable<OrganizationUIModel> 
+{
 
-    private final AddressUIModel address;
-    private final MusicStyle musicStyle;
+    private final String id;
+    private final OrganizationOverviewUIModel overview;
+    private final Set<MultimediaUIModel> multimedia;
     
-    private final Set<LanguageUIModel> languages;
-    private final Set<ImageUIModel> images;
     private final Set<LeaderUIModel> leadershipTeam;
-    
-    private final Set<ServiceTime> serviceTimes;
-    private final Set<ServiceDay> serviceDays;
-    private final String communityCategory;
-    private final String denomination;
-    private final String subDenomination;
-    private final String name;
+    private final OrganizationStatementUIModel statements;
+    private final ServiceOverviewUIModel servicesOverviews;
+    private final Set<ServiceDetailUIModel> serviceDetails;
     private final Set<Programs> programsOffered;
-    private final String srLdrBiography;
-    private final String description;
-    private final String websiteUrl;
-    private final String facebookUrl;
-    
-    private final int yearFounded;
-    private final CongregationSize averageServiceCongregationSize;
-    private final double distanceFromSearchPoint;
-    
-    private final boolean parkingLot;
-      
-    public OrganizationUIModel(AddressUIModel address, MusicStyle musicStyle, int yearFounded,
-            Set<ServiceTime> serviceTimes2, Set<LanguageUIModel> languages, Set<ServiceDay> serviceDays2, Set<ImageUIModel> images,
-            String communityCategory, String denomination, String subDenomination, String name, Set<Programs> programsOffered2,
-            String srLdrBiography, String description, String websiteUrl, String facebookUrl,
-            CongregationSize averageServiceCongregationSize2, boolean parkingLot, boolean gayAffirming, Set<LeaderUIModel> leadershipTeam,
-            double distanceFromSearchPoint) {
         
+    public OrganizationUIModel(String id, OrganizationOverviewUIModel overview, Set<MultimediaUIModel> multimedia, 
+            Set<LeaderUIModel> leadershipTeam, OrganizationStatementUIModel statements, ServiceOverviewUIModel servicesOverviews,
+            Set<ServiceDetailUIModel> serviceDetails, Set<Programs> programsOffered)
+    {
         super();
-    
-        this.address = address;
-        this.musicStyle = musicStyle;
-        this.yearFounded = yearFounded;
-        this.serviceTimes = serviceTimes2;
-        this.languages = languages;
-        this.serviceDays = serviceDays2;
-        this.images = images;
-        this.communityCategory = communityCategory;
-        this.denomination = denomination;
-        this.subDenomination = subDenomination;
-        this.name = name;
-        this.programsOffered = programsOffered2;
-        this.srLdrBiography = srLdrBiography;
-        this.description = description;
-        this.websiteUrl = websiteUrl;
-        this.facebookUrl = facebookUrl;
-        this.averageServiceCongregationSize = averageServiceCongregationSize2;
-        this.parkingLot = parkingLot;
+
+        this.id = id;
+        this.overview = overview;
+        this.multimedia = multimedia;
         this.leadershipTeam = leadershipTeam;
-        this.distanceFromSearchPoint = distanceFromSearchPoint;
+        this.statements = statements;
+        this.servicesOverviews = servicesOverviews;
+        this.serviceDetails = serviceDetails;
+        this.programsOffered = programsOffered;
     }
 
-    public AddressUIModel getAddress()
+    public String getId()
     {
-        return address;
+        return id;
+    }
+    
+    public OrganizationOverviewUIModel getOverview()
+    {
+        return overview;
     }
 
-    public MusicStyle getMusicStyle()
+    public Set<MultimediaUIModel> getMultimedia()
     {
-        return musicStyle;
-    }
-
-    public int getYearFounded()
-    {
-        return yearFounded;
-    }
-
-    public Set<ServiceTime> getServiceTimes()
-    {
-        return serviceTimes;
-    }
-
-    public Set<LanguageUIModel> getLanguages()
-    {
-        return languages;
-    }
-
-    public Set<ServiceDay> getServiceDays()
-    {
-        return serviceDays;
-    }
-
-    public Set<ImageUIModel> getImages()
-    {
-        return images;
+        return multimedia;
     }
 
     public Set<LeaderUIModel> getLeadershipTeam()
@@ -119,24 +67,19 @@ public class OrganizationUIModel implements Comparable<OrganizationUIModel> {
         return leadershipTeam;
     }
 
-    public String getCommunityCategory()
+    public OrganizationStatementUIModel getStatements()
     {
-        return communityCategory;
+        return statements;
     }
 
-    public String getDenomination()
+    public ServiceOverviewUIModel getServicesOverviews()
     {
-        return denomination;
+        return servicesOverviews;
     }
 
-    public String getSubDenomination()
+    public Set<ServiceDetailUIModel> getServiceDetails()
     {
-        return subDenomination;
-    }
-
-    public String getName()
-    {
-        return name;
+        return serviceDetails;
     }
 
     public Set<Programs> getProgramsOffered()
@@ -144,41 +87,17 @@ public class OrganizationUIModel implements Comparable<OrganizationUIModel> {
         return programsOffered;
     }
 
-    public String getSrLdrBiography()
+    public AddressUIModel getAddress()
     {
-        return srLdrBiography;
-    }
-
-    public String getDescription()
-    {
-        return description;
-    }
-
-    public String getWebsiteUrl()
-    {
-        return websiteUrl;
-    }
-
-    public String getFacebookUrl()
-    {
-        return facebookUrl;
-    }
-
-    public CongregationSize getAverageServiceCongregationSize()
-    {
-        return averageServiceCongregationSize;
-    }
-
-    public boolean isParkingLot()
-    {
-        return parkingLot;
+        return this.overview.getAddress();
     }
     
-    public double getDistanceFromSearchPoint()
+    public SocialMediaUIModel getSocialMedia()
     {
-        return distanceFromSearchPoint;
+        return this.overview.getSocialMedia();
     }
-
+    
+    
     @Override
     public int hashCode()
     {
@@ -200,8 +119,9 @@ public class OrganizationUIModel implements Comparable<OrganizationUIModel> {
     @Override
     public int compareTo(OrganizationUIModel right)
     {
-        
-        return ComparisonChain.start().compare(this.getDistanceFromSearchPoint(), right.getDistanceFromSearchPoint())
+        OrganizationUIModel left = this;
+        return ComparisonChain.start()
+                .compare(left.getId(), right.getId())
                 .result();
     }
 }

@@ -444,10 +444,10 @@
             </div><!-- /.left-column -->
             
             <div class="col-sm-8 right-column">
-
+				
                 <div class="search-results">
 
-                    <div class="showing-results">Showing Results <span class="now-showing">???</span> of <span class="total-results">${results.size()}</span></div>
+                    <div class="showing-results">Showing Results <span class="now-showing">${resultsPageStartNum} - ${resultsPageEndNum}</span> of <span class="total-results">${totalNumberOfResults}</span></div>
 
                     
                     <c:forEach items="${results}" var="result" varStatus="p_tracker">
@@ -484,7 +484,9 @@
             </div><!-- /.right-column -->
             
         </div><!-- /.main -->
-        
+        <script>
+        	testJSON();
+        </script>
 
         <%@ include file="/WEB-INF/jsp/partials/siteFooter.jsp"%> 
     </body>

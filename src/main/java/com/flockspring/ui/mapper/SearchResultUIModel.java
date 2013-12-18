@@ -6,7 +6,7 @@ package com.flockspring.ui.mapper;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import com.flockspring.ui.model.ImageUIModel;
+import com.flockspring.ui.model.MultimediaUIModel;
 import com.google.common.collect.ComparisonChain;
 import com.google.common.collect.Ordering;
 
@@ -27,10 +27,10 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
     private boolean usersFavorite;
     private boolean featured;
     
-    private ImageUIModel displayImage;
+    private MultimediaUIModel displayImage;
 
     public SearchResultUIModel(String organizationName, String serviceTimes, String denomination, int distanceFromSearchPoint, boolean usersFavorite,
-            boolean featured, ImageUIModel displayImage)
+            boolean featured, MultimediaUIModel displayImage)
     {
         super();
         
@@ -73,7 +73,7 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
         return featured;
     }
 
-    public ImageUIModel getDisplayImage()
+    public MultimediaUIModel getDisplayImage()
     {
         return displayImage;
     }

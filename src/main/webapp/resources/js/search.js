@@ -26,8 +26,6 @@ function initializeSearchPage() {
    
     initializeTooltips();
    
-    initializeResults();
-
     initializeFavorites();
 
     paginate(10);
@@ -280,35 +278,6 @@ function loadingScreenToggle() {
 
 }
 
-function initializeResults() {
-
-    var i, e;
-
-    var count = 2;
-
-    for (i = 0; i < 20; i++) {
-        e = $(".search-result-entry.first-entry").clone();
-
-        e.attr("data-result-id", count);
-
-        e.attr("data-latitude", parseFloat(e.attr("data-latitude")) + (-0.5 + Math.random()) * 0.1);
-
-        e.attr("data-longitude", parseFloat(e.attr("data-longitude")) + (-0.5 + Math.random()) * 0.1);
-
-        e.appendTo(".search-results");
-
-        e.removeClass("first-entry");
-
-        count++;
-
-    }
-    
-    $(".search-result-entry").each(function() {
-        $(this).attr("calc-distance", calculateDistance($(this).attr("data-latitude"), $(this).attr("data-longitude")));
-    });
-
-}
-
 function assignPages(resultsPerPage) {
     
     var searchResults = $(".search-result-entry");
@@ -515,4 +484,28 @@ function fixFooter() {
         $(".filler").height(newFillerHeight);
     }
     
+}
+
+function testJSON() {
+    debugger;
+    $.ajaxSetup({ scriptCharset: "utf-8" , contentType: "application/json; charset=utf-8"});
+    
+    var AjaxSearchFilterRequest = "search/ajax/filter-results";
+
+    var json = {  "congregationSize" : ["SMALL"] };  
+
+    $.ajax({  
+        url: AjaxSearchFilterRequest,  
+        data: JSON.stringify(json),  
+        type: "POST",  
+
+        beforeSend: function(xhr) {  
+            xhr.setRequestHeader("Accept", "application/json");  
+            xhr.setRequestHeader("Content-Type", "application/json");  
+        },  
+        success: function(data) {  
+                      
+        }  
+    });  
+   
 }

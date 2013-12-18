@@ -3,6 +3,7 @@
  */
 package com.flockspring.domain.types.impl;
 
+import java.io.Serializable;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -14,58 +15,87 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.flockspring.domain.types.AccessabilitySupport;
 import com.flockspring.domain.types.Address;
 import com.flockspring.domain.types.Affiliation;
-import com.flockspring.domain.types.DressAttire;
-import com.flockspring.domain.types.Image;
 import com.flockspring.domain.types.Language;
 import com.flockspring.domain.types.Leader;
-import com.flockspring.domain.types.MusicStyle;
+import com.flockspring.domain.types.MultimediaObject;
 import com.flockspring.domain.types.Organization;
-import com.flockspring.domain.types.Region;
 import com.flockspring.domain.types.ServiceDay;
-import com.flockspring.domain.types.ServiceStyle;
-import com.flockspring.ui.model.CongregationSize;
 import com.flockspring.ui.model.Programs;
 import com.flockspring.ui.model.ServiceTime;
 import com.google.common.collect.ComparisonChain;
-import com.google.common.collect.Ordering;
 
 /**
  * OrganizationImpl.java
- *
+ * 
  * @author Justen L. Britain
  * @date May 18, 2013
- *
+ * 
  */
-@Document(collection="organizations")
-public class OrganizationImpl implements Organization, Comparable<Organization>
+@Document(collection = "organizations")
+public class OrganizationImpl implements Organization, Comparable<Organization>, Serializable
 {
+    private static final long serialVersionUID = -3602244882007924589L;
+
     private String id;
-    private int yearFounded;
-    private boolean gayAffirming;
-    private boolean parkingLotAvailable;
+    private Integer yearFounded;
     private String name;
-    private String description;
-    private String websiteUrl;
-    private String facebookUrl;
-    private CongregationSize congregationSize;
+    private String missionStatement;
+    private String statementOfFaith;
+    private String welcomeMessage;
+
     private AddressImpl address;
-    private Region region;
-    private MusicStyle musicStyle;
-    private ServiceStyle serviceStyle;
-    private DressAttire dressAttire;
+    private AtmosphereImpl atmosphere;
+    private SocialMediaImpl socialMedia;
     private Affiliation denomination;
     private Affiliation subDenomination;
     private Affiliation primaryAffiliation;
-    private Set<ImageImpl> images;
+
+    private Set<MultimediaObjectImpl> multimedia;
     private Set<LeaderImpl> leadershipTeam;
     private Set<ServiceTime> serviceTimes;
     private Set<ServiceDay> serviceDays;
     private Set<Language> languages;
     private Set<Programs> programmsOffered;
     private Set<AccessabilitySupport> accessibilitySupport;
-    private double distanceFromSearchPoint;
+    private Double distanceFromSearchPoint;
+
     
-    
+
+    public OrganizationImpl(String id, Integer yearFounded, String name, String missionStatement, String statementOfFaith, String welcomeMessage,
+            AddressImpl address, AtmosphereImpl atmosphere, SocialMediaImpl socialMedia, Affiliation denomination, Affiliation subDenomination,
+            Affiliation primaryAffiliation, Set<MultimediaObjectImpl> multimedia, Set<LeaderImpl> leadershipTeam, Set<ServiceTime> serviceTimes,
+            Set<ServiceDay> serviceDays, Set<Language> languages, Set<Programs> programmsOffered, Set<AccessabilitySupport> accessibilitySupport,
+            double distanceFromSearchPoint)
+    {
+        super();
+        
+        this.id = id;
+        this.yearFounded = yearFounded;
+        this.name = name;
+        this.missionStatement = missionStatement;
+        this.statementOfFaith = statementOfFaith;
+        this.welcomeMessage = welcomeMessage;
+        this.address = address;
+        this.atmosphere = atmosphere;
+        this.socialMedia = socialMedia;
+        this.denomination = denomination;
+        this.subDenomination = subDenomination;
+        this.primaryAffiliation = primaryAffiliation;
+        this.multimedia = multimedia;
+        this.leadershipTeam = leadershipTeam;
+        this.serviceTimes = serviceTimes;
+        this.serviceDays = serviceDays;
+        this.languages = languages;
+        this.programmsOffered = programmsOffered;
+        this.accessibilitySupport = accessibilitySupport;
+        this.distanceFromSearchPoint = distanceFromSearchPoint;
+    }
+
+    public OrganizationImpl()
+    {
+        super();
+    }
+
     @Override
     public String getId()
     {
@@ -79,7 +109,7 @@ public class OrganizationImpl implements Organization, Comparable<Organization>
     }
 
     @Override
-    public int getYearFounded()
+    public Integer getYearFounded()
     {
         return yearFounded;
     }
@@ -103,26 +133,27 @@ public class OrganizationImpl implements Organization, Comparable<Organization>
     }
 
     @Override
-    public Set<Image> getImages()
+    public Set<MultimediaObject> getMultimedia()
     {
-        Set<Image> imageSet = new TreeSet<Image>();
-        if(images != null)
+        Set<MultimediaObject> imageSet = new TreeSet<>();
+        if (multimedia != null)
         {
-            imageSet.addAll(images);
+            imageSet.addAll(multimedia);
         }
-        
+
         return imageSet;
     }
 
     @Override
     public Set<Leader> getLeadershipTeam()
     {
-        Set<Leader> leaderSet = new TreeSet<Leader>();
-        if(leadershipTeam != null)
+
+        Set<Leader> leaderSet = new TreeSet<>();
+        if (leadershipTeam != null)
         {
             leaderSet.addAll(leadershipTeam);
         }
-        
+
         return leaderSet;
     }
 
@@ -151,65 +182,50 @@ public class OrganizationImpl implements Organization, Comparable<Organization>
     }
 
     @Override
-    public String getDescription()
-    {
-        return description;
-    }
-
-    @Override
-    public String getWebsiteUrl()
-    {
-        return websiteUrl;
-    }
-
-    @Override
-    public String getFacebookUrl()
-    {
-        return facebookUrl;
-    }
-
-    @Override
-    public CongregationSize getCongregationSize()
-    {
-        return congregationSize;
-    }
-
-    @Override
-    public boolean isGayAffirming()
-    {
-        return gayAffirming;
-    }
-
-    @Override
-    public Region getRegion() 
-    {
-        return region;
-    }
-
-    @Override
-    public double getDistanceFromSearchPoint() 
+    public double getDistanceFromSearchPoint()
     {
         return this.distanceFromSearchPoint;
     }
 
-    public void setAddress(AddressImpl address)
+    @Override
+    public String getMissionStatement()
     {
-        this.address = address;
+        return missionStatement;
     }
 
-    public void setYearFounded(int yearFounded)
+    @Override
+    public String getStatementOfFaith()
+    {
+        return statementOfFaith;
+    }
+
+    @Override
+    public Set<Programs> getProgrammsOffered()
+    {
+        return programmsOffered;
+    }
+
+    @Override
+    public String getWelcomeMessage()
+    {
+        return welcomeMessage;
+    }
+
+    @Override
+    public SocialMedia getSocialMedia()
+    {
+        return socialMedia;
+    }
+
+    @Override
+    public Atmosphere getAtmosphere()
+    {
+        return this.atmosphere;
+    }
+
+    public void setYearFounded(Integer yearFounded)
     {
         this.yearFounded = yearFounded;
-    }
-
-    public void setImages(Set<ImageImpl> images)
-    {
-        this.images = images;
-    }
-
-    public void setLeadershipTeam(Set<LeaderImpl> leadershipTeam)
-    {
-        this.leadershipTeam = leadershipTeam;
     }
 
     public void setName(String name)
@@ -217,29 +233,74 @@ public class OrganizationImpl implements Organization, Comparable<Organization>
         this.name = name;
     }
 
-    public void setDescription(String description)
+    public void setMissionStatement(String missionStatement)
     {
-        this.description = description;
+        this.missionStatement = missionStatement;
     }
 
-    public void setWebsiteUrl(String websiteUrl)
+    public void setStatementOfFaith(String statementOfFaith)
     {
-        this.websiteUrl = websiteUrl;
+        this.statementOfFaith = statementOfFaith;
     }
 
-    public void setFacebookUrl(String facebookUrl)
+    public void setAddress(AddressImpl address)
     {
-        this.facebookUrl = facebookUrl;
+        this.address = address;
     }
-    
-    public void setGayAffirming(boolean gayAffirming)
+
+    public void setDenomination(Affiliation denomination)
     {
-        this.gayAffirming = gayAffirming;
+        this.denomination = denomination;
     }
-    
-    public void setDistanceFromSearchPoint(double distance)
+
+    public void setSubDenomination(Affiliation subDenomination)
     {
-        this.distanceFromSearchPoint = distance;
+        this.subDenomination = subDenomination;
+    }
+
+    public void setPrimaryAffiliation(Affiliation primaryAffiliation)
+    {
+        this.primaryAffiliation = primaryAffiliation;
+    }
+
+    public void setMultimedia(Set<MultimediaObjectImpl> multimedia)
+    {
+        this.multimedia = multimedia;
+    }
+
+    public void setLeadershipTeam(Set<LeaderImpl> leadershipTeam)
+    {
+        this.leadershipTeam = leadershipTeam;
+    }
+
+    public void setServiceTimes(Set<ServiceTime> serviceTimes)
+    {
+        this.serviceTimes = serviceTimes;
+    }
+
+    public void setServiceDays(Set<ServiceDay> serviceDays)
+    {
+        this.serviceDays = serviceDays;
+    }
+
+    public void setLanguages(Set<Language> languages)
+    {
+        this.languages = languages;
+    }
+
+    public void setProgrammsOffered(Set<Programs> programmsOffered)
+    {
+        this.programmsOffered = programmsOffered;
+    }
+
+    public void setAccessibilitySupport(Set<AccessabilitySupport> accessibilitySupport)
+    {
+        this.accessibilitySupport = accessibilitySupport;
+    }
+
+    public void setDistanceFromSearchPoint(double distanceFromSearchPoint)
+    {
+        this.distanceFromSearchPoint = distanceFromSearchPoint;
     }
 
     @Override
@@ -261,18 +322,6 @@ public class OrganizationImpl implements Organization, Comparable<Organization>
     }
 
     @Override
-    public MusicStyle getMusicStyle()
-    {
-        return musicStyle;
-    }
-    
-    @Override
-    public boolean isParkingLotAvailable()
-    {
-        return parkingLotAvailable;
-    }
-    
-    @Override
     public Set<Programs> getProgramsOffered()
     {
         return programmsOffered;
@@ -285,21 +334,8 @@ public class OrganizationImpl implements Organization, Comparable<Organization>
     }
 
     @Override
-    public DressAttire getDressAttire()
-    {
-        return dressAttire;
-    }
-
-    @Override
-    public ServiceStyle getServiceStyle()
-    {
-        return serviceStyle;
-    }
-
-    @Override
     public int compareTo(Organization o)
     {
-        return ComparisonChain.start().compare(this.getDistanceFromSearchPoint(), o.getDistanceFromSearchPoint())
-                .result();
+        return ComparisonChain.start().compare(this.getDistanceFromSearchPoint(), o.getDistanceFromSearchPoint()).result();
     }
 }

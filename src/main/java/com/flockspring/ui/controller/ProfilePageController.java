@@ -73,33 +73,35 @@ public class ProfilePageController
 
         throwExceptionIfOrganizationIsNull(organization, organizationId);
 
-        return buildRedirectUrl(organization);
+        return buildModelAndView(organization); 
     }
 
-    private ModelAndView buildRedirectUrl(Organization organization)
-    {
-        String organizationName = organization.getName().replaceAll(" ", "-");
-        Region organizationRegion = organization.getRegion();
-        Region state = getParentRegionTypeFromOrganizationRegion(GlobalRegionType.STATE, organizationRegion);
-        Region city = getParentRegionTypeFromOrganizationRegion(GlobalRegionType.CITY, organizationRegion);
-        Region neighborhood = getParentRegionTypeFromOrganizationRegion(GlobalRegionType.NEIGHBORHOOS, organizationRegion);
-
-        StringBuilder seoUrl = new StringBuilder("redirect:").append(state.getEnglishName()).append("/");
-
-        if (city != null)
-        {
-            seoUrl.append(city.getEnglishName()).append("/");
-        }
-
-        if (neighborhood != null)
-        {
-            seoUrl.append(neighborhood.getEnglishName()).append("/");
-        }
-
-        seoUrl.append(organizationName);
-
-        return new ModelAndView(seoUrl.toString(), "organization", organization);
-    }
+//    private ModelAndView buildRedirectUrl(Organization organization)
+//    {
+////        String organizationName = organization.getName().replaceAll(" ", "-");
+////        Region organizationRegion = organization.getRegion();
+////        Region state = getParentRegionTypeFromOrganizationRegion(GlobalRegionType.STATE, organizationRegion);
+////        Region city = getParentRegionTypeFromOrganizationRegion(GlobalRegionType.CITY, organizationRegion);
+////        Region neighborhood = getParentRegionTypeFromOrganizationRegion(GlobalRegionType.NEIGHBORHOOS, organizationRegion);
+////
+////        StringBuilder seoUrl = new StringBuilder("redirect:").append(state.getEnglishName()).append("/");
+////
+////        if (city != null)
+////        {
+////            seoUrl.append(city.getEnglishName()).append("/");
+////        }
+////
+////        if (neighborhood != null)
+////        {
+////            seoUrl.append(neighborhood.getEnglishName()).append("/");
+////        }
+////
+////        seoUrl.append(organizationName);
+////
+////        return new ModelAndView(seoUrl.toString(), "organization", organization);
+////        
+//        return null;
+//    }
 
     /**
      * @param neighborhood
