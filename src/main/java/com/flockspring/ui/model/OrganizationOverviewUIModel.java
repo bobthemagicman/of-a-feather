@@ -13,8 +13,8 @@ package com.flockspring.ui.model;
 public class OrganizationOverviewUIModel
 {
     private final String name;
-    private final String denomination;
-    private final String subDenomination;
+    private final String denominationLocalizationCode;
+    private final String subDenominationLocalizationCode;
     private final int yearFounded;
     private final String leadPastorName;
     private final CongregationSize averageServiceCongregationSize;
@@ -34,8 +34,8 @@ public class OrganizationOverviewUIModel
         super();
       
         this.name = name;
-        this.denomination = denomination;
-        this.subDenomination = subDenomination;
+        this.denominationLocalizationCode = denomination;
+        this.subDenominationLocalizationCode = subDenomination;
         this.yearFounded = yearFounded;
         this.leadPastorName = leadPastorName;
         this.averageServiceCongregationSize = averageServiceCongregationSize;
@@ -54,14 +54,14 @@ public class OrganizationOverviewUIModel
         return name;
     }
 
-    public String getDenomination()
+    public String getDenominationLocalizationCode()
     {
-        return denomination;
+        return denominationLocalizationCode;
     }
 
-    public String getSubDenomination()
+    public String getSubDenominationLocalizationCode()
     {
-        return subDenomination;
+        return subDenominationLocalizationCode;
     }
 
     public int getYearFounded()

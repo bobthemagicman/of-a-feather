@@ -90,9 +90,9 @@ public class MultimediaUIModel implements Comparable<MultimediaUIModel>{
     {
         MultimediaUIModel left = this;
         return ComparisonChain.start()
-                .compare(left.getName(), right.getName())
-                .compare(left.getPath(), right.getPath())
                 .compare(left.isPrimary(), right.isPrimary())
+                .compare(left.getName(), right.getName())
+                .compare(left.getPath(), right.getPath())                
                 .result();
     }
 }

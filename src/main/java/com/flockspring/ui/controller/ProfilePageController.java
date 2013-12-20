@@ -5,9 +5,13 @@ package com.flockspring.ui.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import scala.collection.generic.BitOperations.Int;
 
 import com.flockspring.domain.service.OrganizationDiscoveryService;
 import com.flockspring.domain.types.GlobalRegionType;
@@ -17,7 +21,7 @@ import com.flockspring.ui.mapper.OrganizationUIModelMapper;
 import com.flockspring.ui.model.OrganizationUIModel;
 
 @Controller
-@RequestMapping("/communities")
+@RequestMapping("/church-profiles")
 public class ProfilePageController
 {
     private static final String VIEW_NAME = "profilePage";
@@ -42,7 +46,7 @@ public class ProfilePageController
         Organization organization = organizationDiscoveryService.getOrganizationByRegionAndOrganizationNames(organizationName, stateRegionName,
                 cityRegionName, neighborhoodRegionName);
 
-        return buildModelAndView(organization);
+        return buildModelAndView(organization, -1);
     }
 
     @RequestMapping("/{stateRegionName}/{cityRegionName}/{organizationName}")
@@ -53,27 +57,41 @@ public class ProfilePageController
         Organization organization = organizationDiscoveryService.getOrganizationByRegionAndOrganizationNames(organizationName, stateRegionName,
                 cityRegionName);
 
-        return buildModelAndView(organization);
+        return null;
     }
 
-    private ModelAndView buildModelAndView(Organization organization)
+    private ModelAndView buildModelAndView(Organization organization, double distance)
     {
         ModelAndView mav = new ModelAndView(VIEW_NAME);
-        OrganizationUIModel organizationUI = organizationUIModelMapper.map(organization);
+        
+        OrganizationUIModel organizationUI = organizationUIModelMapper.map(organization, distance);
         mav.addObject("organization", organizationUI);
 
         return mav;
     }
 
     @RequestMapping("/{organizationId}")
-    public ModelAndView renderOrganizationProfileById(@PathVariable String organizationId)
+    public ModelAndView renderOrganizationProfileById(@PathVariable String organizationId, 
+            @RequestParam(value = "dist", required = false) String distance)
     {
+        double dist = -1;
+        if(StringUtils.hasText(distance))
+        {
+            try
+            {
+                dist = Double.parseDouble(distance);
+            }catch(NumberFormatException nfe)
+            {
+                //log invalid distance here
+            }
+        }
+        
         // TODO: sanitize organizationId
         Organization organization = organizationDiscoveryService.getOrganizationById(organizationId);
 
         throwExceptionIfOrganizationIsNull(organization, organizationId);
 
-        return buildModelAndView(organization); 
+        return buildModelAndView(organization, dist); 
     }
 
 //    private ModelAndView buildRedirectUrl(Organization organization)

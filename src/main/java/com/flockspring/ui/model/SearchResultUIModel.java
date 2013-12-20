@@ -32,9 +32,12 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
     private final String city;
     private final String state;
     private final String postalCode;
+    private final double latitude;
+    private final double longitude;
     
-    public SearchResultUIModel(MultimediaUIModel displayImage, String organizationName, Set<ServiceTime> serviceTimes, String denomination,
-            String id, double distanceFromSearchPoint, boolean featured, boolean usersFavorite, String city, String state, String postalCode)
+    public SearchResultUIModel(MultimediaUIModel displayImage, String organizationName, Set<ServiceTime> serviceTimes, 
+            String denomination, String id, double distanceFromSearchPoint, boolean featured, boolean usersFavorite, 
+            String city, String state, String postalCode, double latitude, double longitude)
     {
         super();
         
@@ -49,6 +52,8 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
         this.city = city;
         this.state = state;
         this.postalCode = postalCode;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 
     public MultimediaUIModel getDisplayImage()
@@ -104,6 +109,16 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
     public String getPostalCode()
     {
         return postalCode;
+    }
+
+    public double getLatitude()
+    {
+        return latitude;
+    }
+
+    public double getLongitude()
+    {
+        return longitude;
     }
 
     @Override

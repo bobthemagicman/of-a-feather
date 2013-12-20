@@ -28,13 +28,13 @@ import com.flockspring.ui.model.SearchResultsUIModel;
  *
  */
 @Component
-public class SearchResultsModelMapper
+public class SearchResultsUIModelMapper
 {
 
     private MultimediaUIModelMapper imageUIModelMapper;
     
     @Autowired    
-    public SearchResultsModelMapper(MultimediaUIModelMapper imageUIModelMapper)
+    public SearchResultsUIModelMapper(MultimediaUIModelMapper imageUIModelMapper)
     {
         super();
         
@@ -75,7 +75,7 @@ public class SearchResultsModelMapper
         return new SearchResultUIModel(image, organization.getName(), organization.getServiceTimes(), 
                 organization.getDenomination().getLocalizedStringCode(), organization.getId(), geoResult.getDistance().getValue(),
                 isOrganizationFeatured(organization), isOrganizationUserFavorite(organization), address.getCity(), 
-                address.getState(), address.getPostalCode());
+                address.getState(), address.getPostalCode(), address.getLatitude(), address.getLongitude());
     }
 
     private boolean isOrganizationUserFavorite(Organization organization)

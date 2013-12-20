@@ -12,21 +12,21 @@ package com.flockspring.ui.model;
  */
 public enum CongregationSize implements LocalizedEnum
 {
-    SMALL(0, 300, "enum.small"),
-    MEDIUM(301, 800, "enum.medium"),
-    LARGE(801, 1500, "enum.large"),
-    MEGA(1501, -1, "enum.mega"),
-    UNKNOWN(0, 0, "enum.unknown");
+    SMALL(0, 300, "congregation.size.small"),
+    MEDIUM(301, 800, "congregation.size.medium"),
+    LARGE(801, 1500, "congregation.size.large"),
+    MEGA(1501, -1, "congregation.size.mega"),
+    UNKNOWN(0, 0, "congregation.size.unknown");
     
     private int lowThreshold;
     private int highThreshold;
-    private String localizationStringCode;
+    private String localizedStringCode;
     
-    private CongregationSize(int lowThreshold, int highThreshold, String localizationStringCode)
+    private CongregationSize(int lowThreshold, int highThreshold, String localizedStringCode)
     {
         this.lowThreshold = lowThreshold;
         this.highThreshold = highThreshold;
-        this.localizationStringCode = localizationStringCode;
+        this.localizedStringCode = localizedStringCode;
     }
     
     public CongregationSize getCongregationTypeFromExactSize(int exactSize)
@@ -46,7 +46,7 @@ public enum CongregationSize implements LocalizedEnum
     @Override
     public String getLocalizedStringCode()
     {
-        return this.localizationStringCode;
+        return this.localizedStringCode;
     }
 
     @Override

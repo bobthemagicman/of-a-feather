@@ -27,7 +27,7 @@ public class AjaxSearchFilterRequest
     private Set<ServiceDay> serviceDays;
     private Set<CongregationSize> congregationSize;
     private Set<SpecialNeedsSupport> specialNeedsSupport;
-    private Set<Programs> childCarePrograms;
+    private Set<Programs> programsAndMinistries;
     private Pair<Integer, Integer> atmosphereServiceStyle;
     private Pair<Integer, Integer> atmosphereMusicStyle;
     private Pair<Integer, Integer> atmosphereDressAttire;
@@ -62,9 +62,9 @@ public class AjaxSearchFilterRequest
         return specialNeedsSupport;
     }
 
-    public Set<Programs> getChildCarePrograms()
+    public Set<Programs> getProgramsAndMinistries()
     {
-        return childCarePrograms;
+        return programsAndMinistries;
     }
 
     public Pair<Integer, Integer> getAtmosphereServiceStyle()

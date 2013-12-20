@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.flockspring.domain.types.AccessabilitySupport;
+import com.flockspring.domain.types.Affiliation;
 import com.flockspring.domain.types.Leader;
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.ServiceDetails;
@@ -55,6 +56,11 @@ public class OrganizationUIModelMapper
 
     public OrganizationUIModel map(Organization organization)
     {
+        return map(organization, -1);
+    }
+            
+    public OrganizationUIModel map(Organization organization, double distance)
+    {
         if(organization == null)
         {
             return null;
@@ -64,7 +70,7 @@ public class OrganizationUIModelMapper
         Set<MultimediaUIModel> multimedia = multimediaUIModelMapper.map(organization.getMultimedia());
         Set<LanguageUIModel> languages = languageUIModelMapper.map(organization.getLanguages());
         
-        OrganizationOverviewUIModel overview = getOrganizationOverviewUIModel(organization);       
+        OrganizationOverviewUIModel overview = getOrganizationOverviewUIModel(organization, distance);       
         
         OrganizationStatementUIModel statements = new OrganizationStatementUIModel(organization.getMissionStatement(),
                 organization.getStatementOfFaith(), organization.getWelcomeMessage());
@@ -109,7 +115,7 @@ public class OrganizationUIModelMapper
         return null;
     }
 
-    private OrganizationOverviewUIModel getOrganizationOverviewUIModel(Organization organization)
+    private OrganizationOverviewUIModel getOrganizationOverviewUIModel(Organization organization, double distance)
     {
         Atmosphere atmosphere = organization.getAtmosphere();
         AddressUIModel address = addressUIModelMapper.map(organization.getAddress()); 
@@ -126,11 +132,13 @@ public class OrganizationUIModelMapper
         //TODO: jbritain format serviceTimesShort
         String serviceTimesShort = "";
         
+        String subDenominationLocalizationCode = organization.getSubDenomination() == Affiliation.NONE ?
+                "" : organization.getSubDenomination().getLocalizedStringCode();
+        
         return new OrganizationOverviewUIModel(organization.getName(), organization.getDenomination().getLocalizedStringCode(),
-                organization.getSubDenomination().getLocalizedStringCode(), organization.getYearFounded(), leadPastor.getName(), 
+                subDenominationLocalizationCode, organization.getYearFounded(), leadPastor.getName(), 
                 atmosphere.getCongregationSize(), phoneNumber, organization.getSocialMedia().getWebsiteUrl(), serviceTimesShort,
-                isUserFavorite, socialMedia, address, organization.getDistanceFromSearchPoint(), 
-                getParkingLotInfo(organization.getAccessabilitySupport()));
+                isUserFavorite, socialMedia, address, distance, getParkingLotInfo(organization.getAccessabilitySupport()));
     }
 
     private boolean getParkingLotInfo(Set<AccessabilitySupport> accessabilitySupports)

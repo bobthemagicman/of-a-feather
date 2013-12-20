@@ -110,7 +110,7 @@ var org1 = {
 			'GRADUATE_STUDIES', 'CHILDRENS_GROUPS', 'MIDDLE_SCHOOL_GROUP',
 			'HIGH_SCHOOL_GROUP', 'YOUNG_ADULT_GROUP', 'ADULT_GROUP',
 			'MENS_GROUP', 'WOMENS_GROUP' ],
-	accessabilitysupport : [ 'WHEEL_CHAIR_ACCESS', 'DEAF_TRANSLATOR', 'PARKING_LOG' ],
+	accessabilitysupport : [ 'WHEELCHAIR_ACCESS', 'DEAF_TRANSLATOR', 'PARKING_LOT' ],
 	gayAffirming : false
 };
 

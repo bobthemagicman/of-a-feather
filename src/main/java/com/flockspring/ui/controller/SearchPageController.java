@@ -24,7 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.flockspring.domain.service.OrganizationDiscoveryService;
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.impl.OrganizationImpl;
-import com.flockspring.ui.mapper.SearchResultsModelMapper;
+import com.flockspring.ui.mapper.SearchResultsUIModelMapper;
 import com.flockspring.ui.model.AjaxSearchFilterRequest;
 import com.flockspring.ui.model.AjaxSearchFilterResponse;
 import com.flockspring.ui.model.SearchResultUIModel;
@@ -43,11 +43,11 @@ public class SearchPageController
 {
     private final static String RESULT_IDS = "resultIds";
     private final OrganizationDiscoveryService organizationDiscoveryService;
-    private final SearchResultsModelMapper searchResultsModelMapper;
+    private final SearchResultsUIModelMapper searchResultsModelMapper;
 
     @Autowired
     public SearchPageController(final OrganizationDiscoveryService organizationDiscoveryService,
-            final SearchResultsModelMapper searchResultsModelMapper)
+            final SearchResultsUIModelMapper searchResultsModelMapper)
     {
         super();
 

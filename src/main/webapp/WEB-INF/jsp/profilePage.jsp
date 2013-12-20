@@ -25,6 +25,8 @@
         <spring:url value="/static/images/site/electric_guitar_icon.png" var="electricGuitarIcon"/>
         <spring:url value="/static/images/site/envelope_icon.png" var="envelopeIcon"/>
         <spring:url value="/static/images/site/facebook_icon.png" var="facebookIcon"/>
+        <spring:url value="/static/images/site/youtube_icon.png" var="youtubeIcon"/>
+        <spring:url value="/static/images/site/google_plus_icon.png" var="googlePlusIcon"/>
         <spring:url value="/static/images/site/guitar_icon.png" var="guitarIcon"/>
         <spring:url value="/static/images/site/heart_icon.png" var="heartIcon"/>
         <spring:url value="/static/images/site/heart_icon_filled_gray.png" var="heartIconFilled"/>
@@ -46,7 +48,7 @@
         <spring:url value="/static/images/site/visiting_icon.png" var="visitingIcon"/>
         
         
-        <div class="container profile" data-church-name="${organization.name}" data-latitude="${organization.address.latitude}" data-longitude="${organization.address.longitude}">
+        <div class="container profile" data-church-name="${organization.overview.name}" data-latitude="${organization.overview.address.latitude}" data-longitude="${organization.overview.address.longitude}">
 
             <div class="profile-top">
 
@@ -59,22 +61,24 @@
                                 <img src="${leftArrowLarge}" />
                             </div>
                             <div class="carousel-inner">
-                                <div class="item active">
-                                    <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image1.jpg" />
-                                </div>
-                                <div class="item">
-                                    <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image2.jpg" />
-                                </div>
-                                <div class="item">
-                                    <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image3.jpg" />
-                                </div>
-                                <div class="item">
-                                    <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image4.jpg" />
-                                </div>
-                                <div class="item">
-                                    <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image5.jpg" />
-                                </div>
-                            </div>
+                            	<c:forEach items="${organization.multimedia}" var="multimediaObject" varStatus="index">
+	                                <c:set var="class" value="item" />
+	                                <c:if test="${index.first}">
+	                                	<c:set var="class" value="item active" />
+	                                </c:if>
+	                                
+	                                <c:if test="${multimediaObject.video ne true}">
+	                                <spring:url value="/static/church-images/${organization.id}/${multimediaObject.path}" var="imgSrc"/>
+	                                <div class="item active">
+	                                    <img src="${imgSrc}" title="${multimediaObject.title}" alt="${multimediaObject.alt}"/>
+	                                </div>	                                
+	                                </c:if>
+	                                
+	                                <c:if test="${multimediaObject.video}">
+	                                	<%-- TODO: Video objects go here --%>
+	                                </c:if>
+	                            </c:forEach>
+	                        </div>
                             <div class="media-right-arrow" data-slide="next">
                                 <img src="${rightArrowLarge}" />
                             </div>
@@ -153,12 +157,14 @@
 
                         <div class="church-intro">
 
-                            <h1 class="org">${organization.name}</h1>
+                            <h1 class="org">${organization.overview.name}</h1>
 
-                            <h2>${organization.denomination}</h2>
+                            <h2><spring:message code="${organization.overview.denominationLocalizationCode}" /></h2>
                             
-                            <h2>${organization.subDenomination}</h2>
-
+                            <c:if test="${not empty organization.overview.subDenominationLocalizationCode}">
+                            <h2><spring:message code="${organization.overview.subDenominationLocalizationCode}" /></h2>
+							</c:if>
+							
                             <div class="basic-info-container">
 
                                 <div class="profile-large-icon-container">
@@ -166,9 +172,9 @@
                                 </div>
 
                                 <div class="basic-info">
-                                    Founded in ${organization.yearFounded}<br />
-                                    Pastor &gt; <span class="church-leader">Patrick &amp; Marlena Kiteley</span><br />
-                                    Size &gt; Large (1000)
+                                    Founded in ${organization.overview.yearFounded}<br />
+                                    Pastor &gt; <span class="church-leader">${organization.overview.leadPastorName}</span><br />
+                                    Size &gt; <spring:message code="${organization.overview.averageServiceCongregationSize.localizedStringCode}" />
                                 </div>
 
                             </div>
@@ -180,8 +186,8 @@
                                 </div>
 
                                 <div class="contact-info">
-                                    <span class="tel">(510) 261-2052 ext. 130</span><br />
-                                    <a class="url fn n" href="${organization.websiteUrl}">${organization.websiteUrl}</a>
+                                    <span class="tel">${organization.overview.phoneNumber}</span><br />
+                                    <a class="url fn n" href="${organization.overview.websiteUrl}">${organization.overview.websiteUrl}</a>
                                 </div>
 
                             </div>
@@ -190,9 +196,25 @@
 
                         <div class="profile-icons-container">
                             <img src="${heartIcon}" />
-                            <a href="${organization.facebookUrl}" target="_blank"><img src="${facebookIcon}" /></a>
-                            <a href="#" target="_blank"><img src="${twitterIcon}" /></a>
-                            <a href="#" target="_blank"><img src="${instagramIcon}" /></a>
+                            <c:if test="${not empty organization.socialMedia.facebookUrl}">
+                            <a href="${organization.socialMedia.facebookUrl}" target="_blank"><img src="${facebookIcon}" /></a>
+                            </c:if>
+                            
+                            <c:if test="${not empty organization.socialMedia.twitterUrl}">
+                            <a href="${organization.socialMedia.twitterUrl}" target="_blank"><img src="${twitterIcon}" /></a>
+                            </c:if>
+                            
+                            <c:if test="${not empty organization.socialMedia.instagramUrl}">
+                            <a href="${organization.socialMedia.instagramUrl}" target="_blank"><img src="${instagramIcon}" /></a>
+                            </c:if>
+                            
+                            <c:if test="${not empty organization.socialMedia.youtubeUrl}">
+                            <a href="${organization.socialMedia.youtubeUrl}" target="_blank"><img src="${youtubeIcon}" /></a>
+                            </c:if>
+                            
+                            <c:if test="${not empty organization.socialMedia.googlePlusUrl}">
+                            <a href="${organization.socialMedia.googlePlusUrl}" target="_blank"><img src="${googlePlusIcon}" /></a>
+                            </c:if>
                         </div>
 
                     </div>
@@ -210,23 +232,22 @@
 
                         <div class="visit-us-times">
                             <img src="${leftArrow}" />
-                            <p>
-                                Service Times on Sunday<br />
-                                9am, 11am, and 1pm en Espa&ntilde;ol
-                            </p>
+                            <p>${organization.overview.serviceTimesShort}</p>
                         </div>
 
                     </div>
 
                     <div class="location-info">
                         <div class="adr location">
-                            <span class="street-address">${organization.address.street1}</span><br />
-                            <span class="street-address">${organization.address.street2}</span><br />
-                            <span class="locality">${organization.address.city}</span>, <span class="region">${organization.address.state}</span> <span class="postal-code">${organization.address.postalCode}</span> <span class="country-name">${organization.address.country}</span><br />
+                            <span class="street-address">${organization.overview.address.street1}</span><br />
+                            <span class="street-address">${organization.overview.address.street2}</span><br />
+                            <span class="locality">${organization.overview.address.city}</span>, <span class="region">${organization.overview.address.state}</span> <span class="postal-code">${organization.overview.address.postalCode}</span> <span class="country-name">${organization.overview.address.country}</span><br />
+                            <c:if test="${organization.overview.parkingLotAvailable}">
                             <span class="transportation-info">Parking Lot Available</span>
+                            </c:if>
                         </div>
                         <div class="distance-info">
-                            <span class="distance">??? miles away</span>
+                            <span class="distance"><fmt:formatNumber maxFractionDigits="2">${organization.overview.distanceFromSearchPoint}</fmt:formatNumber> miles away</span>
                         </div>
                     </div>
 
@@ -256,51 +277,43 @@
                 <div class="container">
                     <div class="tab-content">
                         <div class="tab-pane active fade in" id="tab1">
+                            <c:forEach items="${organization.leadershipTeam}" var="leader">
                             <div class="pastor-info-container">
                                 <div class="pastor-photo">
-                                    <img src="http://placehold.it/200x200" />
+                                	<spring:url value="/static/church-images/${organization.id}/${leader.image.path}" var="leaderImgSrc" />
+                                    <img src="leaderImgSrc" alt="${leader.image.alt}" title="${leader.image.title}"/>
                                 </div>
                                 <div class="pastor-info">
-                                    <h2>Lead Pastors</h2>
+                                    <h2>${leader.title}</h2>
                                     <hr />
-                                    <h3>Patrick &amp; Marlena Kiteley</h3>
+                                    <h3>${leader.name}</h3>
                                     <hr />
-                                    <p>
-                                        Pastors Patrick and Marlena Kiteley are the Senior Pastors of Shiloh Church. They represent the 4th generation of the Kiteley family to lead Shiloh Church in its 48-year history. Patrick is a beloved speaker world-wide, bringing a prophetic message of restoration, hope and healing wherever he goes. They have been married 15 years and have three children.
-                                    </p>
+                                    <p>${leader.bio}</p>
                                 </div>
                             </div>
                             <br />
-                            <div class="pastor-info-container">
-                                <div class="pastor-photo">
-                                    <img src="http://placehold.it/200x200" />
-                                </div>
-                                <div class="pastor-info">
-                                    <h2>Care Center Pastors</h2>
-                                    <hr />
-                                    <h3>Derrick &amp; Heather Sheppard</h3>
-                                    <hr />
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                    </p>
-                                </div>
-                            </div>
+                            </c:forEach>
                         </div>
                         <div class="tab-pane fade" id="tab2">
+                            <c:if test="${not empty organization.statements.missionStatement}">
                             <h2>Mission Statement</h2>
                             <hr />
-                            <p>
-                                Mission Statement/Motto/Purpose: Love God, Love People.
-                            </p>
-                            <p>
-                                Welcome Message: We want to take a moment to extend a very warm invite to Shiloh Church. Whether you&apos;re just having a look, or are searching out for a new church home, we would be delighted to have you come and worship with us. Make sure to check out our website for upcoming events and service times! We hope to see you soon!
-                            </p>
+                            <p>${organization.statements.missionStatement}</p>
                             <br />
+                            </c:if>
+                            
+                            <c:if test="${not empty organization.statements.statementOfFaith}">
+                            <h2>Welcome Message</h2>
+                            <hr />
+                            <p>${organization.statements.welcomeMessage}</p>
+                            <br />
+                            </c:if>
+                            
+                            <c:if test="${not empty organization.statements.statementOfFaith}">
                             <h2>Statement of Faith</h2>
                             <hr />
-                            <p>
-                                The whole Bible is our sufficient rule for faith and practice. This Statement of Faith is intended as a basis of fellowship among us (i.e., that we all speak the same things. I Corinthians 1-10; Acts 2:42).
-                            </p>                                
+                            <p>${organization.statements.statementOfFaith}</p>                 
+                            </c:if>               
                         </div>
                         <div class="tab-pane fade" id="tab3">
                             <h2>Service Times</h2>
@@ -311,24 +324,30 @@
                                 <li>11am (sign language translation available)</li>
                                 <li>1pm (en Espa&ntilde;ol)
                             </ul>
-                            <p><span class="label">Languages:</span> Sign Language, Spanish</p>
-                            <p><span class="label">Duration:</span> 1 hr 30 min</p>
+                            <p><span class="label">Languages:</span>&nbsp; 
+                            	<c:forEach items="${organization.serviceOverview.languages}">
+                            		<span class="service-lang">${lang.englishName} <c:if test="${not empty lang.localizedName}">&#40;${lang.localizedName}&#41;</c:if></span>,&nbsp;
+                            	</c:forEach>
+                      		</p>
+                            <c:set var="hours" value="${organization.serviceOverview.durationInMinutes / 60 }" />
+                            <c:set var="hrString" value="hr" />
+                            <c:if test="${hours > 1}"><c:set var="hrString" value="hrs" /></c:if>
+                            <c:set var="minutes" value="${organization.serviceOverview.durationInMinutes % 60 }" />
+                            <p><span class="label">Duration:</span> ${hours} ${hrString} <c:if test="${minutes ne 0}">${minutes} min</c:if></p>
                             <br />
-                            <p><span class="label">Service Schedule:</span> If you have children please arrive a few minutes before the start of service to get your kids all checked into Shiloh Kids Church/Nursery.</p>
-                            <br />
-                            <p>8:45am - Kids check in opens (infants to 5th grade)<br />
-                                9:00am - 1st Service begins<br />
-                                9:30am - Youth Sunday School begins (Jr &amp; Sr High Students)
+                            <p><span class="label">Service Schedule:</span> 
+                            	${organizaiton.serviceOverview.serviceSchedule}
                             </p>
 
                         </div>
                         <div class="tab-pane fade" id="tab4">
                             <h2>Church Atmosphere</h2>
-
+							<c:forEach items="${organization.serviceDetails}" var="serviceDetails">
                             <div class="service-atmosphere">
-
+							
                                 <div class="general-atmosphere">
-                                    <h1>9am Service</h1>
+                                	<h1>${serviceDetails.serviceName}</h1>
+                                	<%-- 
                                     <div class="general-atmosphere-container">
                                         <div class="slider-container">
                                             <h2>General Atmosphere</h2>
@@ -337,6 +356,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    --%>
                                 </div>
                                 <div class="atmosphere-details-container">
                                     <div class="left-atmosphere-details-container">
@@ -417,6 +437,7 @@
                                     </div>
                                 </div>
                             </div>
+                            </c:forEach>
                         </div>
                         <div class="tab-pane fade" id="tab5">
                             <div class="programs-ministries">
@@ -490,48 +511,6 @@
             </div>
 
         </div>
-
-        <!--
-
-        <h2>Address Info:</h2>
-        Street 1: ${organization.address.street1}<br />
-        Street 2: ${organization.address.street2}<br />
-        Postal Code: ${organization.address.postalCode}<br />
-        State: ${organization.address.state}<br />
-        City: ${organization.address.city}<br />
-        Country: ${organization.address.country}<br />
-        Longitude: ${organization.address.longitude}<br />
-        Latitude: ${organization.address.latitude}<br />
-
-        <br />
-        <br />
-        <h2>Music Style</h2>
-        Music Style: ${organization.musicStyle}<br />
-
-        <h2>Language Info:</h2>
-        <h2>Images:</h2>
-        <h2>Leader Info:</h2>
-        <h2>Organization Info:</h2>
-        Service Times: ${organization.serviceTimes}<br />
-        Service Days: ${organization.serviceDays}<br />
-        Religion: ${organization.communityCategory}<br />
-        Denomination: ${organization.denomination}<br />
-        SubDenomination: ${organization.subDenomination}<br />
-        Name: ${organization.name}<br />
-        Programs Offered: ${organization.programsOffered}<br />
-        Age Demographic: ${organization.ageDemographics}<br />
-        Ethnic Demographics: ${organization.ethnicDemographics}<br />
-        Lead Pastor Bio: ${organization.srLdrBiography}<br />
-        Blurb: ${organization.description}<br />
-        Website: ${organization.websiteUrl}<br />
-        Facebook: ${organization.facebookUrl}<br />
-        Year Founded: ${organization.yearFounded}<br />
-        Avg. Congregation Size: ${organization.averageServiceCongregationSize}<br />
-        Env. Friendly: ${organization.envFriendly}<br />
-        Has Parkinglot: ${organization.parkingLot}<br />
-        Is Gay Affirming${organization.gayAffirming}<br />
-
-        -->
 
         <%@ include file="/WEB-INF/jsp/partials/siteFooter.jsp"%>
 
