@@ -447,13 +447,12 @@
 				
                 <div class="search-results">
 
-                    <div class="showing-results">Showing Results <span class="now-showing">${resultsPageStartNum} - ${resultsPageEndNum}</span> of <span class="total-results">${totalNumberOfResults}</span></div>
+                    <div class="showing-results">Showing Results <span class="now-showing">${results.pageStartIndex} - ${results.pageEndIndex}</span> of <span class="total-results">${results.totalNumberOfResults}</span></div>
 
-                    
-                    <c:forEach items="${results}" var="result" varStatus="p_tracker">
-                        <spring:url value="/static/images/${result.displayImage.path}" var="imagePath"/>
+                    <c:forEach items="${results.items}" var="result" varStatus="p_tracker">
+                        <spring:url value="/static/church-images/${result.id}/${result.displayImage.path}" var="imagePath"/>
                         
-                        <div class="search-result-entry show-result <c:if test='${p_tracker.index == 0}'>first-entry</c:if>" data-result-id="${p_tracker.index + 1}" data-church-name="${result.organizationName}" data-latitude="37.785084" data-longitude="-122.434146">
+                        <div class="search-result-entry show-result <c:if test='${p_tracker.index == 0}'>first-entry</c:if>" data-result-id="${p_tracker.index + 1}" data-church-name="${result.organizationName}" data-latitude="${result.latitude}" data-longitude="${result.longitude}">
                             <div class="col-sm-3">
                                 <div class="search-result-image-container">
                                     <img class="profile-image img-responsive" src="${imagePath}" alt="${result.displayImage.alt}" title="${result.displayImage.title}" />
@@ -462,13 +461,14 @@
                             <div class="col-sm-9 search-result-text">
                                 <div class="row">
                                     <div class="col-sm-8">
-                                        <span class="church-name">${result.organizationName}</span>
-                                        <span class="church-location">City, State Zip</span>
+                                    	<spring:url value="/church-profiles/${result.id}?dist=${result.distanceFromSearchPoint}" var="profileUrl"/>
+                                        <a href="${profileUrl}"><span class="church-name">${result.organizationName}</span></a>
+                                        <span class="church-location">${result.city}, ${result.state} ${result.postalCode}</span>
                                         <span class="church-denomination"><spring:message code="${result.denomination}" /></span>
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="search-result-distance">
-                                            <span class="distance">${result.distanceFromSearchPoint}</span> miles away
+                                            <span class="distance"><fmt:formatNumber maxFractionDigits="2">${result.distanceFromSearchPoint}</fmt:formatNumber></span> miles away
                                         </div>
                                     </div>
                                 </div>
@@ -488,6 +488,6 @@
         	testJSON();
         </script>
 
-        <%@ include file="/WEB-INF/jsp/partials/siteFooter.jsp"%> 
+        <%@ include file="/WEB-INF/jsp/partials/siteFooter.jsp" %> 
     </body>
 </html>

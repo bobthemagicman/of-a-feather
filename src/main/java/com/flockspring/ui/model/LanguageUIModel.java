@@ -7,6 +7,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import com.google.common.collect.ComparisonChain;
+
 /**
  * UILanguage.java
  *
@@ -14,7 +16,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
  * @date May 18, 2013
  *
  */
-public class LanguageUIModel 
+public class LanguageUIModel implements Comparable<LanguageUIModel> 
 {
     private String englishName;
     private String localizedName;
@@ -52,5 +54,14 @@ public class LanguageUIModel
     public String toString()
     {
         return ToStringBuilder.reflectionToString(this);
+    }
+
+    @Override
+    public int compareTo(LanguageUIModel right)
+    {
+        LanguageUIModel left = this;
+        return ComparisonChain.start()
+                .compare(left.getEnglishName(), right.getEnglishName())
+                .result();
     }
 }

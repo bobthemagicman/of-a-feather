@@ -42,8 +42,6 @@ public interface Organization
 
     String getId();
 
-    double getDistanceFromSearchPoint();
-    
     String getStatementOfFaith();
 
     String getMissionStatement();

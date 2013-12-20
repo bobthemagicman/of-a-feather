@@ -12,6 +12,7 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.geo.GeoPage;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,10 +23,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.flockspring.domain.service.OrganizationDiscoveryService;
 import com.flockspring.domain.types.Organization;
-import com.flockspring.ui.mapper.SearchResultsModelMapper;
+import com.flockspring.domain.types.impl.OrganizationImpl;
+import com.flockspring.ui.mapper.SearchResultsUIModelMapper;
 import com.flockspring.ui.model.AjaxSearchFilterRequest;
 import com.flockspring.ui.model.AjaxSearchFilterResponse;
 import com.flockspring.ui.model.SearchResultUIModel;
+import com.flockspring.ui.model.SearchResultsUIModel;
 
 /**
  * SearchPageController.java
@@ -40,11 +43,11 @@ public class SearchPageController
 {
     private final static String RESULT_IDS = "resultIds";
     private final OrganizationDiscoveryService organizationDiscoveryService;
-    private final SearchResultsModelMapper searchResultsModelMapper;
+    private final SearchResultsUIModelMapper searchResultsModelMapper;
 
     @Autowired
     public SearchPageController(final OrganizationDiscoveryService organizationDiscoveryService,
-            final SearchResultsModelMapper searchResultsModelMapper)
+            final SearchResultsUIModelMapper searchResultsModelMapper)
     {
         super();
 
@@ -53,8 +56,19 @@ public class SearchPageController
     }
 
     @RequestMapping("/search")
-    public ModelAndView search(@RequestParam(value = "search-bar") String query, HttpSession session)
+    public ModelAndView search(@RequestParam(value = "search-bar") String query, 
+            @RequestParam(value = "page", required = false, defaultValue = "0") String page, HttpSession session)
     {
+        int pageNum = 0;
+        try
+        {
+            pageNum = Integer.parseInt(page);
+        }
+        catch(NumberFormatException nfe)
+        {
+            //well fuck
+        }
+        
         Map<String, Object> model = new HashMap<>();
         NavigableSet<SearchResultUIModel> results = new TreeSet<SearchResultUIModel>();
 
@@ -64,16 +78,11 @@ public class SearchPageController
             // redirect to error page, likely a bad deeplink
         }
 
-        NavigableSet<Organization> organizations = organizationDiscoveryService.searchForOrganizations(query);
-        storeResultIdsInSession(organizations, session);
-        results = searchResultsModelMapper.map(organizations);
+        GeoPage<OrganizationImpl> geoPageResult = organizationDiscoveryService.searchForOrganizations(query, pageNum);
+//        storeResultIdsInSession(organizations, session);
+        SearchResultsUIModel searchResultsUIModel = searchResultsModelMapper.map(geoPageResult);
 
-        model.put("results", results);
-        model.put("totalNumberOfResults", 10);
-        model.put("resultsPageStartNum", 10);
-        model.put("resultsPageEndNum", 10);
-        
-        return new ModelAndView("searchResultsPage", model);
+        return new ModelAndView("searchResultsPage", "results", searchResultsUIModel);
     }
 
     private void storeResultIdsInSession(Set<Organization> organizations, HttpSession session)
@@ -110,10 +119,10 @@ public class SearchPageController
 
             Map<String, Organization> organizationMap = createOrganizationMap(organizations);
             NavigableSet<String> filteredResultIds = filterResultIdsWithRetrievedOrganizations(organizationMap, resultIds);
-            NavigableSet<Organization> filteredOrganization = filterRetrievedOrganizationsWithResultIds(organizationMap, resultIds);
+            GeoPage<OrganizationImpl> filteredOrganization = filterRetrievedOrganizationsWithResultIds(organizationMap, resultIds);
 
-            storeResultIdsInSession(filteredOrganization, session);
-            NavigableSet<SearchResultUIModel> searchResultUIModels = searchResultsModelMapper.map(filteredOrganization);
+            //storeResultIdsInSession(filteredOrganization, session);
+            SearchResultsUIModel searchResultUIModels = searchResultsModelMapper.map(filteredOrganization);
             AjaxSearchFilterResponse response = new AjaxSearchFilterResponse(filteredResultIds, searchResultUIModels);
 
             return response;
@@ -122,7 +131,7 @@ public class SearchPageController
         return new AjaxSearchFilterResponse();
     }
 
-    private NavigableSet<Organization> filterRetrievedOrganizationsWithResultIds(Map<String, Organization> organizationMap,
+    private GeoPage<OrganizationImpl> filterRetrievedOrganizationsWithResultIds(Map<String, Organization> organizationMap,
             NavigableSet<String> resultIds)
     {
         NavigableSet<Organization> filteredOrganizations = new TreeSet<>();
@@ -135,7 +144,7 @@ public class SearchPageController
             }
         }
 
-        return filteredOrganizations;
+        return null;
     }
 
     private NavigableSet<String> filterResultIdsWithRetrievedOrganizations(Map<String, Organization> organizationMap, NavigableSet<String> resultIds)

@@ -8,12 +8,17 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.geo.GeoPage;
+import org.springframework.data.mongodb.core.geo.GeoResult;
 import org.springframework.stereotype.Component;
 
+import com.flockspring.domain.types.Address;
 import com.flockspring.domain.types.MultimediaObject;
 import com.flockspring.domain.types.Organization;
+import com.flockspring.domain.types.impl.OrganizationImpl;
 import com.flockspring.ui.model.MultimediaUIModel;
 import com.flockspring.ui.model.SearchResultUIModel;
+import com.flockspring.ui.model.SearchResultsUIModel;
 
 /**
  * SearchResultsModelMapper.java
@@ -23,38 +28,54 @@ import com.flockspring.ui.model.SearchResultUIModel;
  *
  */
 @Component
-public class SearchResultsModelMapper
+public class SearchResultsUIModelMapper
 {
 
     private MultimediaUIModelMapper imageUIModelMapper;
     
     @Autowired    
-    public SearchResultsModelMapper(MultimediaUIModelMapper imageUIModelMapper)
+    public SearchResultsUIModelMapper(MultimediaUIModelMapper imageUIModelMapper)
     {
         super();
         
         this.imageUIModelMapper = imageUIModelMapper;
     }
 
-    public NavigableSet<SearchResultUIModel> map(NavigableSet<Organization> organizations)
+    public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult)
     {
         
         NavigableSet<SearchResultUIModel> results = new TreeSet<>();
-        for(Organization o : organizations)
+        for(GeoResult<OrganizationImpl> geoResult : geoPageResult)
         {
-            results.add(map(o));
+            results.add(map(geoResult));
         }
         
-        return results;
+        int currentPage = geoPageResult.getNumber();
+        long totalResults = geoPageResult.getTotalElements();
+        int numResultsOnPage = geoPageResult.getNumberOfElements();
+        int numResultsPerPage = geoPageResult.getSize();
+        
+        int pageStartIndex = 1;
+        if(!geoPageResult.isFirstPage())
+        {
+            pageStartIndex = (currentPage * numResultsPerPage); 
+        }         
+        
+        int pageEndIndex = (pageStartIndex + numResultsOnPage) - 1;
+        
+        return new SearchResultsUIModel(results, currentPage, totalResults, pageStartIndex, pageEndIndex);
     }
 
-    public SearchResultUIModel map(Organization organization)
+    public SearchResultUIModel map(GeoResult<OrganizationImpl> geoResult)
     {
+        Organization organization = geoResult.getContent(); 
         MultimediaUIModel image = imageUIModelMapper.map(getPrimaryOrganizationImage(organization.getMultimedia()));
+        Address address = organization.getAddress();
         
         return new SearchResultUIModel(image, organization.getName(), organization.getServiceTimes(), 
-                organization.getDenomination().getLocalizedStringCode(), organization.getDistanceFromSearchPoint(),
-                isOrganizationFeatured(organization), isOrganizationUserFavorite(organization));
+                organization.getDenomination().getLocalizedStringCode(), organization.getId(), geoResult.getDistance().getValue(),
+                isOrganizationFeatured(organization), isOrganizationUserFavorite(organization), address.getCity(), 
+                address.getState(), address.getPostalCode(), address.getLatitude(), address.getLongitude());
     }
 
     private boolean isOrganizationUserFavorite(Organization organization)

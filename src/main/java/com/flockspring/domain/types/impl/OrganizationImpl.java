@@ -22,7 +22,6 @@ import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.ServiceDay;
 import com.flockspring.ui.model.Programs;
 import com.flockspring.ui.model.ServiceTime;
-import com.google.common.collect.ComparisonChain;
 
 /**
  * OrganizationImpl.java
@@ -32,7 +31,7 @@ import com.google.common.collect.ComparisonChain;
  * 
  */
 @Document(collection = "organizations")
-public class OrganizationImpl implements Organization, Comparable<Organization>, Serializable
+public class OrganizationImpl implements Organization, Serializable
 {
     private static final long serialVersionUID = -3602244882007924589L;
 
@@ -56,16 +55,12 @@ public class OrganizationImpl implements Organization, Comparable<Organization>,
     private Set<ServiceDay> serviceDays;
     private Set<Language> languages;
     private Set<Programs> programmsOffered;
-    private Set<AccessabilitySupport> accessibilitySupport;
-    private Double distanceFromSearchPoint;
-
-    
+    private Set<AccessabilitySupport> accessabilitysupport;
 
     public OrganizationImpl(String id, Integer yearFounded, String name, String missionStatement, String statementOfFaith, String welcomeMessage,
             AddressImpl address, AtmosphereImpl atmosphere, SocialMediaImpl socialMedia, Affiliation denomination, Affiliation subDenomination,
             Affiliation primaryAffiliation, Set<MultimediaObjectImpl> multimedia, Set<LeaderImpl> leadershipTeam, Set<ServiceTime> serviceTimes,
-            Set<ServiceDay> serviceDays, Set<Language> languages, Set<Programs> programmsOffered, Set<AccessabilitySupport> accessibilitySupport,
-            double distanceFromSearchPoint)
+            Set<ServiceDay> serviceDays, Set<Language> languages, Set<Programs> programmsOffered, Set<AccessabilitySupport> accessabilitysupport)
     {
         super();
         
@@ -87,8 +82,7 @@ public class OrganizationImpl implements Organization, Comparable<Organization>,
         this.serviceDays = serviceDays;
         this.languages = languages;
         this.programmsOffered = programmsOffered;
-        this.accessibilitySupport = accessibilitySupport;
-        this.distanceFromSearchPoint = distanceFromSearchPoint;
+        this.accessabilitysupport = accessabilitysupport;
     }
 
     public OrganizationImpl()
@@ -179,12 +173,6 @@ public class OrganizationImpl implements Organization, Comparable<Organization>,
     public String getName()
     {
         return name;
-    }
-
-    @Override
-    public double getDistanceFromSearchPoint()
-    {
-        return this.distanceFromSearchPoint;
     }
 
     @Override
@@ -293,14 +281,9 @@ public class OrganizationImpl implements Organization, Comparable<Organization>,
         this.programmsOffered = programmsOffered;
     }
 
-    public void setAccessibilitySupport(Set<AccessabilitySupport> accessibilitySupport)
+    public void setAccessabilitysupport(Set<AccessabilitySupport> accessabilitysupport)
     {
-        this.accessibilitySupport = accessibilitySupport;
-    }
-
-    public void setDistanceFromSearchPoint(double distanceFromSearchPoint)
-    {
-        this.distanceFromSearchPoint = distanceFromSearchPoint;
+        this.accessabilitysupport = accessabilitysupport;
     }
 
     @Override
@@ -330,12 +313,6 @@ public class OrganizationImpl implements Organization, Comparable<Organization>,
     @Override
     public Set<AccessabilitySupport> getAccessabilitySupport()
     {
-        return accessibilitySupport;
-    }
-
-    @Override
-    public int compareTo(Organization o)
-    {
-        return ComparisonChain.start().compare(this.getDistanceFromSearchPoint(), o.getDistanceFromSearchPoint()).result();
+        return accessabilitysupport;
     }
 }

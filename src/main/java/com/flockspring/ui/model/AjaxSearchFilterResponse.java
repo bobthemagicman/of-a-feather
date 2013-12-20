@@ -20,16 +20,16 @@ public class AjaxSearchFilterResponse
     private final String NO_RESULTS = "";
     
     private final NavigableSet<String> organizationIds;
-    private final NavigableSet<SearchResultUIModel> organizations;
+    private final SearchResultsUIModel searchResultUIModel;
     private final String statusMessage;
     private final String errorMessage;
     
-    public AjaxSearchFilterResponse(NavigableSet<String> organizationIds, NavigableSet<SearchResultUIModel> organizations)
+    public AjaxSearchFilterResponse(NavigableSet<String> organizationIds, SearchResultsUIModel searchResultUIModel)
     {
         super();
         
         this.organizationIds = organizationIds;
-        this.organizations = organizations;
+        this.searchResultUIModel = searchResultUIModel;
         this.statusMessage = SUCCESS;
         this.errorMessage = "";
     }
@@ -37,7 +37,7 @@ public class AjaxSearchFilterResponse
     public AjaxSearchFilterResponse()
     {
         this.organizationIds = new TreeSet<>();
-        this.organizations = new TreeSet<>();
+        this.searchResultUIModel = null;
         this.statusMessage = NO_RESULTS;
         this.errorMessage = "";
     }
@@ -45,7 +45,7 @@ public class AjaxSearchFilterResponse
     public AjaxSearchFilterResponse(String errorMessage)
     {
         this.organizationIds = new TreeSet<>();
-        this.organizations = new TreeSet<>();
+        this.searchResultUIModel = null;
         this.statusMessage = ERROR;
         this.errorMessage = errorMessage;
     }
@@ -55,9 +55,9 @@ public class AjaxSearchFilterResponse
         return organizationIds;
     }
     
-    public NavigableSet<SearchResultUIModel> getOrganizations()
+    public SearchResultsUIModel getOrganizations()
     {
-        return organizations;
+        return searchResultUIModel;
     }
 
     public String getStatusMessage()

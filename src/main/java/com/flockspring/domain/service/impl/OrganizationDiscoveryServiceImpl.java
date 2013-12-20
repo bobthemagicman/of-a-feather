@@ -4,20 +4,19 @@
 package com.flockspring.domain.service.impl;
 
 import java.util.NavigableSet;
-import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.geo.Distance;
-import org.springframework.data.mongodb.core.geo.GeoResult;
-import org.springframework.data.mongodb.core.geo.GeoResults;
+import org.springframework.data.mongodb.core.geo.GeoPage;
 import org.springframework.data.mongodb.core.geo.Metrics;
 import org.springframework.data.mongodb.core.geo.Point;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.flockspring.dataaccess.mongodb.OrganizationRepository;
-import com.flockspring.dataaccess.mongodb.RegionRepository;
 import com.flockspring.dataaccess.service.client.MapQuestServiceClient;
 import com.flockspring.dataaccess.service.client.USPSAddressAPIService;
 import com.flockspring.domain.service.OrganizationDiscoveryService;
@@ -37,10 +36,12 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
     private final MapQuestServiceClient mapQuestServiceClient;
     private final USPSAddressAPIService uspsAddressAPIService;
     private final int defaultDistance;
+    private final int defaultPageSize;
 
     @Autowired
     public OrganizationDiscoveryServiceImpl(final OrganizationRepository organizationRepository, final USPSAddressAPIService uspsAddressAPIService,
-            @Value("${com.flickspring.domain.service.organization.default.distance}") final int defaultDistance,
+            @Value("${com.flockspring.domain.service.organization.default.distance}") final int defaultDistance,
+            @Value("${com.flockspring.domain.service.organization.default.pageSize}") final int defaultPageSize,
             final MapQuestServiceClient mapQuestServiceClient)
     {
         super();
@@ -49,6 +50,7 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
         this.organizationRepository = organizationRepository;
         this.defaultDistance = defaultDistance;
         this.mapQuestServiceClient = mapQuestServiceClient;
+        this.defaultPageSize = defaultPageSize;
 //        this.regionRepository = regionRepository;
     }
 
@@ -97,7 +99,7 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
     }
 
     @Override
-    public NavigableSet<Organization> searchForOrganizations(String query)
+    public GeoPage<OrganizationImpl> searchForOrganizations(String query, int page)
     {
 
        // Address address = verifyQuery(query.trim());
@@ -113,19 +115,11 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
             Point point = new Point(address.getLongitude(), address.getLatitude()); 
             Distance dist = new Distance(defaultDistance, Metrics.MILES);
 
-            GeoResults<OrganizationImpl> results = organizationRepository.findByAddressLocationNear(point, dist);
+            Pageable pageRequest = new PageRequest(page, defaultPageSize);
+            GeoPage<OrganizationImpl> results = organizationRepository.findByAddressLocationNear(point, dist, pageRequest);
             
-            NavigableSet<Organization> organizations = new TreeSet<>();
-            for(GeoResult<OrganizationImpl> geoResult : results)
-            {
-                geoResult.getDistance();
-                OrganizationImpl organization = geoResult.getContent();
-                organization.setDistanceFromSearchPoint(geoResult.getDistance().getValue());
-                
-                organizations.add(organization);
-            }
-            
-            return organizations;
+            //TODO:jbritain figure out how to not pass the Impl class up to the UI layer!
+            return results;
         }
 
         return null;

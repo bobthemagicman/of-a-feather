@@ -59,32 +59,20 @@ var org1 = {
 	denomination : 'NONDENOMINATIONAL',
 	subDenomination : 'NONE',
 	multimedia : [ {
-		name : 'Pastor Mike Howerton',
-		path : '/image/1234.jpg',
-		altText : 'Pastor Mike Howerton',
+		name : 'Church View',
+		path : '1.jpg',
+		altText : 'Church and sign',
 		primary : true,
-		video : false
-	}, {
-		name : 'Pastor Mike Howerton',
-		path : '/image/1234.jpg',
-		altText : 'Pastor Mike Howerton',
-		primary : false,
-		video : false
-	}, {
-		name : 'Pastor Mike Howerton',
-		path : '/image/1234.jpg',
-		altText : 'Pastor Mike Howerton',
-		primary : false,
 		video : false
 	} ],
 	leadershipTeam : [ {
-		name : 'Mike Howerton',
+		name : 'Dave and Debbie Fakelastname',
 		title : 'Lead Pastor',
 		bio : 'Lead pastor bio information goes here',
 		leaderRole : 'PASTOR',
 		image : {
 			name : 'Pastor Mike Howerton',
-			path : '/image/1234.jpg',
+			path : '3.jpg',
 			altText : 'Pastor Mike Howerton',
 			primary : false,
 			video : false
@@ -100,8 +88,8 @@ var org1 = {
 		bio : 'Community pastor bio information goes here',
 		leaderRole : 'PASTOR',
 		image : {
-			name : 'Pastor Mike Howerton',
-			path : '/image/1234.jpg',
+			name : 'Pastor Dave Someone',
+			path : '3.jpg',
 			altText : 'Pastor Mike Howerton',
 			primary : false,
 			video : false
@@ -122,7 +110,7 @@ var org1 = {
 			'GRADUATE_STUDIES', 'CHILDRENS_GROUPS', 'MIDDLE_SCHOOL_GROUP',
 			'HIGH_SCHOOL_GROUP', 'YOUNG_ADULT_GROUP', 'ADULT_GROUP',
 			'MENS_GROUP', 'WOMENS_GROUP' ],
-	accessabilitysupport : [ 'WHEEL_CHAIR_ACCESS', 'DEAF_TRANSLATOR', 'PARKING_LOG' ],
+	accessabilitysupport : [ 'WHEELCHAIR_ACCESS', 'DEAF_TRANSLATOR', 'PARKING_LOT' ],
 	gayAffirming : false
 };
 

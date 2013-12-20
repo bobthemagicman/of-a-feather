@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.flockspring.domain.types.impl.AgeDemographics;
 import com.flockspring.domain.types.impl.MusicalInstruments;
+import com.google.common.collect.ComparisonChain;
 
 /**
  * ChurchServiceImpl.java
@@ -15,7 +16,7 @@ import com.flockspring.domain.types.impl.MusicalInstruments;
  * @date Dec 16, 2013
  *
  */
-public class ServiceDetailsImpl implements ServiceDetails
+public class ServiceDetailsImpl implements ServiceDetails, Comparable<ServiceDetails>
 {
 
     private MusicStyle musicStyle;
@@ -114,5 +115,15 @@ public class ServiceDetailsImpl implements ServiceDetails
     public void setStartTime(String startTime)
     {
         this.startTime = startTime;
+    }
+
+    @Override
+    public int compareTo(ServiceDetails right)
+    {
+        ServiceDetails left = this;
+        return ComparisonChain.start()
+                .compare(left.getStartTime(), right.getStartTime())
+                .compare(left.getDurationInMinutes(), right.getDurationInMinutes())
+                .result();
     }
 }
