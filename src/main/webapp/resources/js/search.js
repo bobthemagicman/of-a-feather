@@ -11,7 +11,11 @@ $(document).ready(function() {
     $(".map-buttons img").click(function(event) {
         event.stopPropagation();
         expandCollapseMap(); 
-  }); 
+    }); 
+    
+    $(window).resize(function() {
+       fixFooter(); 
+    });
     
 });
 
@@ -28,8 +32,24 @@ function initializeSearchPage() {
    
     initializeFavorites();
 
-    paginate(10);
+    initializeFilterFunctions();
+
+    //paginate(10);
     
+    fixFooter();
+    
+}
+
+function initializeFilterFunctions() {
+
+    $(".filter input").change(function() {
+        filterRequest();
+    });
+
+    $(".slider-filter").on("slidechange", function(event, ui) {
+        filterRequest();
+    });
+
 }
 
 function initializeUserSliders() {
@@ -328,7 +348,7 @@ function displayPage(pageToShow) {
 
         initializeMap();
 
-        // $(window).scrollTo('.first-entry');
+        //$(window).scrollTo('.first-entry');
         
         fixFooter();
 
@@ -336,19 +356,13 @@ function displayPage(pageToShow) {
 }
 
 
-function calculateDistance(lat, long) {
-    
-    return 1.25;
-    
-}
-
 function expandCollapseMap() {
     
     
     var mapContainer = $(".map-container-outer, .map-container, #map-canvas");
     
     if($(".map-container-outer").hasClass('map-expanded')) {
-        // collapse
+        //collapse
         mapContainer.fadeOut('fast');
         $(".map-container-outer").css("position","relative").css("top",'auto').css("left",'auto');
         $(".map-container-outer").toggleClass('map-expanded');
@@ -358,7 +372,7 @@ function expandCollapseMap() {
         $(".search-options-panel").fadeIn('slow');
     }
     else {
-        // expand
+        //expand
         mapContainer.fadeOut('fast');
         $(".search-options-panel").fadeOut('slow');
         var leftColumnOffset = $(".left-column").offset();
@@ -395,10 +409,9 @@ function initializeMap() {
     
   $("#map-canvas").height($(".left-column").width()); 
     
-   
-    
   updateMap();
   
+  fixFooter();
 }
 
 function updateMap() {
@@ -436,7 +449,7 @@ function placeMarkers() {
               
         setTimeout(function() {
             
-            createMarker(markerId, markerLatLong, churchName, google.maps.Animation.DROP, 'images/base_marker_small.png');
+            createMarker(markerId, markerLatLong, churchName, google.maps.Animation.DROP, 'http://ofafeather-testing.appwebmasters.com/images/base_marker_small.png');
         
         }, i * delay);
         
@@ -446,13 +459,13 @@ function placeMarkers() {
     $(".search-result-entry").mouseenter(function() {
          
         var markerNumber = parseInt($(this).attr("data-result-id"));
-        marker[markerNumber].setIcon('images/green_marker_small.png');
+        marker[markerNumber].setIcon('http://ofafeather-testing.appwebmasters.com/images/green_marker_small.png');
         
     });
 
     $(".search-result-entry").mouseleave(function() {
         var markerNumber = parseInt($(this).attr("data-result-id"));
-        marker[markerNumber].setIcon('images/base_marker_small.png');
+        marker[markerNumber].setIcon('http://ofafeather-testing.appwebmasters.com/images/base_marker_small.png');
 
     });
 }
@@ -477,25 +490,24 @@ function fixFooter() {
     
     var footerHeight = $(".footer").height();
     
-    var newFillerHeight = windowHeight - mainContainerHeight + 150;
+    var newFillerHeight = windowHeight - mainContainerHeight + 100;
     
     if(newFillerHeight > 0) {
         newFillerHeight += "px";
-        $(".filler").height(newFillerHeight);
+        $(".footer").css('margin-top', newFillerHeight);
     }
     
 }
 
-function testJSONSet() {
-    
+function filterRequest() {
     $.ajaxSetup({ scriptCharset: "utf-8" , contentType: "application/json; charset=utf-8"});
     
-    var AjaxSearchFilterRequest = "search/ajax/filter-results";
+    var searchFilterRequest = "search/ajax/filter-results";
 
-    var json = {  "congregationSize" : ["SMALL"] };  
+    var json = constructJSON();
 
     $.ajax({  
-        url: AjaxSearchFilterRequest,  
+        url: searchFilterRequest,  
         data: JSON.stringify(json),  
         type: "POST",  
 
@@ -504,31 +516,91 @@ function testJSONSet() {
             xhr.setRequestHeader("Content-Type", "application/json");  
         },  
         success: function(data) {  
-                      
+            console.log('Successful request.');
         }  
     });  
-   
 }
 
-function testJSONPair() {
-    $.ajaxSetup({ scriptCharset: "utf-8" , contentType: "application/json; charset=utf-8"});
+function constructJSON() {
     
-    var AjaxSearchFilterRequest = "search/ajax/filter-results";
-
-    var json = {  "atmosphereServiceStyleFloor" : 1, "atmosphereServiceStyleCeiling" : 3 };  
+    var optionsCount, optionsString, filtersCount, firstFilter = true, jsonString = '{ ';
     
-    $.ajax({  
-        url: AjaxSearchFilterRequest,  
-        data: JSON.stringify(json),  
-        type: "POST",  
-
-        beforeSend: function(xhr) {  
-            xhr.setRequestHeader("Accept", "application/json");  
-            xhr.setRequestHeader("Content-Type", "application/json");  
-        },  
-        success: function(data) {  
-                      
-        }  
-    });  
+    var filtersArray = new Array();
+    
+    $(".filter").each(function(i) {
+    
+        var optionsArray = new Array();
+        
+        filtersArray[i] = '"' + $(this).attr("data-filter-type") + '"';  
+        
+        $(this).find("label.checked input").each(function(j) {
+            //read selected options from checkboxes
+            optionsArray[j] = '"' + $(this).attr("data-filter-option") + '"';
+            
+        });
+        
+        $(this).find("input + label.ui-state-active").each(function(k) {
+           //read selected options from JQueryUI buttons
+           optionsArray[k] = '"' + $(this).prev("input").attr("data-filter-option") + '"';
+        });
+        
+        var uniqueOptionsArray = new Array();
+        $.each(optionsArray, function(k, el){
+            if($.inArray(el, uniqueOptionsArray) === -1) uniqueOptionsArray.push(el);
+        });
+        
+        optionsArray = uniqueOptionsArray;
+        
+        optionsString = '[ ';
+        
+        for(optionsCount = 0; optionsCount < optionsArray.length; optionsCount++) {
+            if(optionsCount > 0) {
+                optionsString += ', ';
+            }
+            optionsString += optionsArray[optionsCount];
+        }
+        
+        optionsString += ' ]';
+        
+        if(optionsCount > 0) {
+            filtersArray[i] += ': ' + optionsString;
+        }
+        else {
+            filtersArray[i] = '';
+        }
+        
+    });
    
+    $(".slider-filter").each(function() {
+        
+        var sliderValues = $(this).slider("values");
+        
+        var sliderFloor = scaleSliderValue(sliderValues[0]);
+        
+        var sliderCeiling = scaleSliderValue(sliderValues[1]);
+        
+        filtersArray.push('"' + $(this).attr("data-filter-type") + 'Floor": ' + sliderFloor);
+        
+        filtersArray.push('"' + $(this).attr("data-filter-type") + 'Ceiling": ' + sliderCeiling);
+        
+    });
+   
+    for(filtersCount = 0; filtersCount < filtersArray.length; filtersCount++) {
+        if(filtersArray[filtersCount].length > 0) {
+            if(!firstFilter) {
+                jsonString += ', ';
+            }
+            jsonString += filtersArray[filtersCount];
+            firstFilter = false;
+        }
+    }
+    
+    jsonString += ' }';
+    
+    return JSON.parse(jsonString);
+    
+}
+
+function scaleSliderValue(v) {
+    return Math.round(v * (9/1000) + 5.5);
 }
