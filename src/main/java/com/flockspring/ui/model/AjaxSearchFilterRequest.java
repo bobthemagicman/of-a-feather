@@ -5,8 +5,6 @@ package com.flockspring.ui.model;
 
 import java.util.Set;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.flockspring.domain.types.Affiliation;
 import com.flockspring.domain.types.Language;
 import com.flockspring.domain.types.ServiceDay;
@@ -28,57 +26,140 @@ public class AjaxSearchFilterRequest
     private Set<CongregationSize> congregationSize;
     private Set<SpecialNeedsSupport> specialNeedsSupport;
     private Set<Programs> programsAndMinistries;
-    private Pair<Integer, Integer> atmosphereServiceStyle;
-    private Pair<Integer, Integer> atmosphereMusicStyle;
-    private Pair<Integer, Integer> atmosphereDressAttire;
+    private Integer atmosphereServiceStyleFloor;
+    private Integer atmosphereServiceStyleCeiling;
+    private Integer atmosphereMusicStyleFloor;
+    private Integer atmosphereMusicStyleCeiling;
+    private Integer atmosphereDressAttireFloor;
+    private Integer atmosphereDressAttireCeiling;
    
     public Set<Affiliation> getAffiliations()
     {
         return affiliations;
     }
-
+    
     public Set<Language> getLanguages()
     {
         return languages;
     }
-
+    
     public Set<ServiceTime> getServiceTimes()
     {
         return serviceTimes;
     }
-
+    
     public Set<ServiceDay> getServiceDays()
     {
         return serviceDays;
     }
-
+    
     public Set<CongregationSize> getCongregationSize()
     {
         return congregationSize;
     }
-
+    
     public Set<SpecialNeedsSupport> getSpecialNeedsSupport()
     {
         return specialNeedsSupport;
     }
-
+    
     public Set<Programs> getProgramsAndMinistries()
     {
         return programsAndMinistries;
     }
-
-    public Pair<Integer, Integer> getAtmosphereServiceStyle()
+    
+    public Integer getAtmosphereServiceStyleFloor()
     {
-        return atmosphereServiceStyle;
+        return atmosphereServiceStyleFloor;
     }
-
-    public Pair<Integer, Integer> getAtmosphereMusicStyle()
+    
+    public Integer getAtmosphereServiceStyleCeiling()
     {
-        return atmosphereMusicStyle;
+        return atmosphereServiceStyleCeiling;
     }
-
-    public Pair<Integer, Integer> getAtmosphereDressAttire()
+    
+    public Integer getAtmosphereMusicStyleFloor()
     {
-        return atmosphereDressAttire;
+        return atmosphereMusicStyleFloor;
+    }
+    
+    public Integer getAtmosphereMusicStyleCeiling()
+    {
+        return atmosphereMusicStyleCeiling;
+    }
+    
+    public Integer getAtmosphereDressAttireFloor()
+    {
+        return atmosphereDressAttireFloor;
+    }
+    
+    public Integer getAtmosphereDressAttireCeiling()
+    {
+        return atmosphereDressAttireCeiling;
+    }
+    
+    public void setAffiliations(Set<Affiliation> affiliations)
+    {
+        this.affiliations = affiliations;
+    }
+    
+    public void setLanguages(Set<Language> languages)
+    {
+        this.languages = languages;
+    }
+    
+    public void setServiceTimes(Set<ServiceTime> serviceTimes)
+    {
+        this.serviceTimes = serviceTimes;
+    }
+    
+    public void setServiceDays(Set<ServiceDay> serviceDays)
+    {
+        this.serviceDays = serviceDays;
+    }
+    
+    public void setCongregationSize(Set<CongregationSize> congregationSize)
+    {
+        this.congregationSize = congregationSize;
+    }
+    
+    public void setSpecialNeedsSupport(Set<SpecialNeedsSupport> specialNeedsSupport)
+    {
+        this.specialNeedsSupport = specialNeedsSupport;
+    }
+    
+    public void setProgramsAndMinistries(Set<Programs> programsAndMinistries)
+    {
+        this.programsAndMinistries = programsAndMinistries;
+    }
+    
+    public void setAtmosphereServiceStyleFloor(Integer atmosphereServiceStyleFloor)
+    {
+        this.atmosphereServiceStyleFloor = atmosphereServiceStyleFloor;
+    }
+    
+    public void setAtmosphereServiceStyleCeiling(Integer atmosphereServiceStyleCeiling)
+    {
+        this.atmosphereServiceStyleCeiling = atmosphereServiceStyleCeiling;
+    }
+    
+    public void setAtmosphereMusicStyleFloor(Integer atmosphereMusicStyleFloor)
+    {
+        this.atmosphereMusicStyleFloor = atmosphereMusicStyleFloor;
+    }
+    
+    public void setAtmosphereMusicStyleCeiling(Integer atmosphereMusicStyleCeiling)
+    {
+        this.atmosphereMusicStyleCeiling = atmosphereMusicStyleCeiling;
+    }
+    
+    public void setAtmosphereDressAttireFloor(Integer atmosphereDressAttireFloor)
+    {
+        this.atmosphereDressAttireFloor = atmosphereDressAttireFloor;
+    }
+    
+    public void setAtmosphereDressAttireCeiling(Integer atmosphereDressAttireCeiling)
+    {
+        this.atmosphereDressAttireCeiling = atmosphereDressAttireCeiling;
     }
 }
