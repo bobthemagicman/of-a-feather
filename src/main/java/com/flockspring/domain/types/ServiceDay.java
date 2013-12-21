@@ -14,13 +14,13 @@ import com.flockspring.ui.model.LocalizedEnum;
  */
 public enum ServiceDay implements LocalizedEnum
 {
-    MONDAY("enum.monday"), 
-    TUESDAY("enum.tuesday"),
-    WEDNESDAY("enum.wednesday"),
-    THURSDAY("enum.thursday"),
-    FRIDAY("enum.friday"),
-    SATURDAY("enum.saturday"),
-    SUNDAY("enum.sunday");
+    MONDAY("service.day.monday"), 
+    TUESDAY("service.day.tuesday"),
+    WEDNESDAY("service.day.wednesday"),
+    THURSDAY("service.day.thursday"),
+    FRIDAY("service.day.friday"),
+    SATURDAY("service.day.saturday"),
+    SUNDAY("service.day.sunday");
 
     private String localizationStringCode;
     

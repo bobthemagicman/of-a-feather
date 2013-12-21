@@ -328,7 +328,7 @@ function displayPage(pageToShow) {
 
         initializeMap();
 
-        //$(window).scrollTo('.first-entry');
+        // $(window).scrollTo('.first-entry');
         
         fixFooter();
 
@@ -348,7 +348,7 @@ function expandCollapseMap() {
     var mapContainer = $(".map-container-outer, .map-container, #map-canvas");
     
     if($(".map-container-outer").hasClass('map-expanded')) {
-        //collapse
+        // collapse
         mapContainer.fadeOut('fast');
         $(".map-container-outer").css("position","relative").css("top",'auto').css("left",'auto');
         $(".map-container-outer").toggleClass('map-expanded');
@@ -358,7 +358,7 @@ function expandCollapseMap() {
         $(".search-options-panel").fadeIn('slow');
     }
     else {
-        //expand
+        // expand
         mapContainer.fadeOut('fast');
         $(".search-options-panel").fadeOut('slow');
         var leftColumnOffset = $(".left-column").offset();
@@ -486,14 +486,37 @@ function fixFooter() {
     
 }
 
-function testJSON() {
-    debugger;
+function testJSONSet() {
+    
     $.ajaxSetup({ scriptCharset: "utf-8" , contentType: "application/json; charset=utf-8"});
     
     var AjaxSearchFilterRequest = "search/ajax/filter-results";
 
     var json = {  "congregationSize" : ["SMALL"] };  
 
+    $.ajax({  
+        url: AjaxSearchFilterRequest,  
+        data: JSON.stringify(json),  
+        type: "POST",  
+
+        beforeSend: function(xhr) {  
+            xhr.setRequestHeader("Accept", "application/json");  
+            xhr.setRequestHeader("Content-Type", "application/json");  
+        },  
+        success: function(data) {  
+                      
+        }  
+    });  
+   
+}
+
+function testJSONPair() {
+    $.ajaxSetup({ scriptCharset: "utf-8" , contentType: "application/json; charset=utf-8"});
+    
+    var AjaxSearchFilterRequest = "search/ajax/filter-results";
+
+    var json = {  "atmosphereServiceStyleFloor" : 1, "atmosphereServiceStyleCeiling" : 3 };  
+    
     $.ajax({  
         url: AjaxSearchFilterRequest,  
         data: JSON.stringify(json),  

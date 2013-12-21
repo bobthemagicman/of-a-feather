@@ -15,16 +15,15 @@ import com.flockspring.ui.model.LocalizedEnum;
  */
 public enum MusicStyle implements LocalizedEnum
 {
-    TRADITIONAL_5("enum."),
-    TRADITIONAL_4("enum."),
-    TRADITIONAL_3("enum."),
-    TRADITIONAL_2("enum."),
-    TRADITIONAL_1("enum."),
-    CONTEMPORARY_1("enum."),
-    CONTEMPORARY_2("enum."),
-    CONTEMPORARY_3("enum."),
-    CONTEMPORARY_4("enum."),
-    CONTEMPORARY_5("enum.");
+    SPECTRUM_MIN("music.style.traditional"),//Not a slider value
+    TRADITIONAL_4("music.style.classic.hymns"),
+    TRADITIONAL_3("music.style.classic.songs.sound"),
+    TRADITIONAL_2("music.style.upbeat.classic.gospel"),
+    NEUTRAL("music.style.blend.of.both"),
+    CONTEMPORARY_2("music.style.contemporary.sound"),
+    CONTEMPORARY_3("music.style.modern"),
+    CONTEMPORARY_4("music.style.radically.modern"),
+    SPECTRUM_MAX("music.style.contemporary");//Not a slider value
     
     private String localizationStringCode;
     

@@ -3,6 +3,8 @@
  */
 package com.flockspring.domain.types.impl;
 
+import com.flockspring.ui.model.LocalizedEnum;
+
 /**
  * AgeDemographics.java
  *
@@ -10,13 +12,40 @@ package com.flockspring.domain.types.impl;
  * @date Dec 8, 2013
  *
  */
-public enum AgeDemographics
+public enum AgeDemographics implements LocalizedEnum
 {
-    YOUTH,
-    YOUNG_ADULTS,
-    FAMILY,
-    ALL_AGES,
-    MOSTLY_MATURE,
-    MATURE,
-    SENIOR;
+    SPECTRUM_MIN("age.demographics.youth"),//not a slider value
+    YOUTH_3("age.demographics.college.and.high.school"),
+    YOUTH_2("age.demographics.post.college"),
+    YOUTH_1("age.demographics.families.with.young.children"),
+    NEUTRAL("age.demographics.all.ages"),
+    MATURE_1("age.demographics.families.with.older.children"),
+    MATURE_2("age.demographics.mature"),
+    MATURE_3("age.demographics.senior"),
+    SPECTRUM_MAX("age.demographics.mature");//not a slider value
+        
+    private String localizationStringCode;
+    
+    private AgeDemographics(String localizationStringCode)
+    {
+        this.localizationStringCode = localizationStringCode;
+    }
+    
+    @Override
+    public String getLocalizedStringCode()
+    {
+        return this.localizationStringCode;
+    }
+
+    @Override
+    public String getName()
+    {
+        return this.name();
+    }
+
+    @Override
+    public int getOrdinal()
+    {
+        return this.ordinal();
+    }
 }

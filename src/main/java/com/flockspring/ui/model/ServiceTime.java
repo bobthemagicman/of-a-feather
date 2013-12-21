@@ -12,11 +12,11 @@ package com.flockspring.ui.model;
  */
 public enum ServiceTime implements LocalizedEnum
 {
-    EARLY_MORNING("enum.early.morning"),
-    MID_MORNING("enum.mid.morning"),
-    LATE_MORNING("enum.late.morning"),
-    AFTERNOON("enum.afternoon"), 
-    EVENING("enum.evening"); 
+    EARLY_MORNING("service.time.early.morning"),
+    MID_MORNING("service.time.mid.morning"),
+    LATE_MORNING("service.time.late.morning"),
+    AFTERNOON("service.time.afternoon"), 
+    EVENING("service.time.evening"); 
     
     private String localizationStringCode;
 
