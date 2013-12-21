@@ -8,6 +8,12 @@
 	<%-- Common Metadata, scripts, and CSS --%>
 	<%@ include file="/WEB-INF/jsp/partials/commonHead.jsp"%>
 	
+        <spring:url value="/static/js/front.js" var="frontJS" />
+        <script type="text/javascript">
+            $LAB.queueScript("${frontJS}")
+                .runQueue();
+        </script>
+        
 	<title>Of A Feather - Find your new church home today</title>	
 </head>
 <body>
@@ -336,8 +342,6 @@
 </div>
 
 <%@ include file="/WEB-INF/jsp/partials/siteFooter.jsp"%>
-<spring:url value="/static/js/front.js" var="frontPageJS"/>
-<script src="${frontPageJS}" type="text/javascript"></script>
 
 </body>
 </html>
