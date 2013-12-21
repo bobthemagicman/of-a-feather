@@ -8,6 +8,13 @@
         <%-- Common Metadata, scripts, and CSS --%>
         <%@ include file="/WEB-INF/jsp/partials/commonHead.jsp"%>
 
+        <spring:url value="/static/js/profile.js" var="profileJS" />
+        <script type="text/javascript">
+            $LAB.queueScript("${profileJS}")
+                .queueScript("https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=initializeMap")
+                .runQueue();
+        </script>
+        
         <title>Of A Feather - Find your new church home today</title>	
     </head>
     <body>
