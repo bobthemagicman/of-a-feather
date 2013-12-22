@@ -3,7 +3,10 @@
  */
 package com.flockspring.ui.mapper;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -79,7 +82,7 @@ public class OrganizationUIModelMapper
                 languages, getServiceSchedule(organization));
         
         Set<ServiceDetailUIModel> serviceDetails = getServiceDetails(organization);
-        Set<Programs> programsOffered = organization.getProgrammsOffered();
+        Map<Programs, Set<Programs>> programsOffered = getProgramsOffered(organization);
         
         OrganizationUIModel model = new OrganizationUIModel(organization.getId(), overview, multimedia, leadershipTeam, statements, 
                 servicesOverviews, serviceDetails, programsOffered);
@@ -87,6 +90,23 @@ public class OrganizationUIModelMapper
         
         
         return model;
+    }
+
+    private Map<Programs, Set<Programs>> getProgramsOffered(Organization organization)
+    {
+        Map<Programs, Set<Programs>> programsMap = new HashMap<>();
+        for(Programs p : organization.getProgramsOffered())
+        {
+            if(programsMap.containsKey(p.getCategory()))
+            {
+                programsMap.get(p.getCategory()).add(p);
+            }else{
+                Set<Programs> programSet = new TreeSet<Programs>();
+                programsMap.put(p.getCategory(), programSet);
+            }
+        }
+        
+        return programsMap; 
     }
 
     private int getServiceDuration(Atmosphere atmosphere)

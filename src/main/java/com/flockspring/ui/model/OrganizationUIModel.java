@@ -3,6 +3,7 @@
  */
 package com.flockspring.ui.model;
 
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -27,13 +28,13 @@ public class OrganizationUIModel implements Comparable<OrganizationUIModel>
     
     private final Set<LeaderUIModel> leadershipTeam;
     private final OrganizationStatementUIModel statements;
-    private final ServiceOverviewUIModel servicesOverviews;
+    private final ServiceOverviewUIModel servicesOverview;
     private final Set<ServiceDetailUIModel> serviceDetails;
-    private final Set<Programs> programsOffered;
+    private final Map<Programs, Set<Programs>> programsOffered;
         
     public OrganizationUIModel(String id, OrganizationOverviewUIModel overview, Set<MultimediaUIModel> multimedia, 
             Set<LeaderUIModel> leadershipTeam, OrganizationStatementUIModel statements, ServiceOverviewUIModel servicesOverviews,
-            Set<ServiceDetailUIModel> serviceDetails, Set<Programs> programsOffered)
+            Set<ServiceDetailUIModel> serviceDetails, Map<Programs, Set<Programs>> programsOffered)
     {
         super();
 
@@ -42,7 +43,7 @@ public class OrganizationUIModel implements Comparable<OrganizationUIModel>
         this.multimedia = multimedia;
         this.leadershipTeam = leadershipTeam;
         this.statements = statements;
-        this.servicesOverviews = servicesOverviews;
+        this.servicesOverview = servicesOverviews;
         this.serviceDetails = serviceDetails;
         this.programsOffered = programsOffered;
     }
@@ -72,9 +73,9 @@ public class OrganizationUIModel implements Comparable<OrganizationUIModel>
         return statements;
     }
 
-    public ServiceOverviewUIModel getServicesOverviews()
+    public ServiceOverviewUIModel getServicesOverview()
     {
-        return servicesOverviews;
+        return servicesOverview;
     }
 
     public Set<ServiceDetailUIModel> getServiceDetails()
@@ -82,7 +83,7 @@ public class OrganizationUIModel implements Comparable<OrganizationUIModel>
         return serviceDetails;
     }
 
-    public Set<Programs> getProgramsOffered()
+    public Map<Programs, Set<Programs>> getProgramsOffered()
     {
         return programsOffered;
     }

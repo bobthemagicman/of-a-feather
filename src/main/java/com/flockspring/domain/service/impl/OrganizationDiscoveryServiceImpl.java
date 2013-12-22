@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.flockspring.dataaccess.mongodb.OrganizationRepository;
 import com.flockspring.dataaccess.service.client.MapQuestServiceClient;
 import com.flockspring.dataaccess.service.client.USPSAddressAPIService;
+import com.flockspring.domain.OrganizationFilter;
 import com.flockspring.domain.service.OrganizationDiscoveryService;
 import com.flockspring.domain.types.Address;
 import com.flockspring.domain.types.Organization;
@@ -163,9 +164,15 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
     }
 
     @Override
-    public NavigableSet<Organization> getFilteredOrganizations(AjaxSearchFilterRequest filterRequest)
+    public NavigableSet<Organization> getFilteredOrganizations(OrganizationFilter filter)
     {
-        // TODO Auto-generated method stub
+        Point p = new Point(1, 2);
+        Distance d = new Distance(this.defaultDistance);
+        
+        
+        
+        PageRequest page = new PageRequest(0, defaultPageSize);
+        organizationRepository.findOrganizationsByFilteredCriteria(p, d, filter, page);
         return null;
     }
 

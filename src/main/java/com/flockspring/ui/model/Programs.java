@@ -27,7 +27,7 @@ public enum Programs implements LocalizedEnum
     PRIMARY_SCHOOL(Programs.NUSRSERY_CARE_AND_EDUCATIONAL, "programs.primary.school"),
     SECONDARY_SCHOOL(Programs.NUSRSERY_CARE_AND_EDUCATIONAL, "programs.secondary.school"),
     GRADUATE_STUDIES(Programs.NUSRSERY_CARE_AND_EDUCATIONAL, "programs.graduate.sutides"),
-    CHILDRENS_GROUP(Programs.AGE_GROUPS_AND_CREATIVE_ARTS, "programs.childrens.group"),
+    CHILDRENS_GROUPS(Programs.AGE_GROUPS_AND_CREATIVE_ARTS, "programs.childrens.group"),
     MIDDLE_SCHOOL_GROUP(Programs.AGE_GROUPS_AND_CREATIVE_ARTS, "programs.middle.school.group"),
     HIGH_SCHOOL_GROUP(Programs.AGE_GROUPS_AND_CREATIVE_ARTS, "programs.high.school.group"),
     YOUNG_ADULT_GROUP(Programs.AGE_GROUPS_AND_CREATIVE_ARTS, "programs.young.adult.group"),

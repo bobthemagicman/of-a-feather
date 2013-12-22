@@ -3,8 +3,9 @@
  */
 package com.flockspring.dataaccess.mongodb;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.geo.Distance;
-import org.springframework.data.mongodb.core.geo.GeoResults;
+import org.springframework.data.mongodb.core.geo.GeoPage;
 import org.springframework.data.mongodb.core.geo.Point;
 
 import com.flockspring.domain.OrganizationFilter;
@@ -19,5 +20,5 @@ import com.flockspring.domain.types.impl.OrganizationImpl;
  */
 public interface CustomOrganizationRepository<T, ID>
 {
-    public GeoResults<OrganizationImpl> findOrganizationsByFilteredCriteria(Point p, Distance d, OrganizationFilter o, int pageSize);    
+    public GeoPage<OrganizationImpl> findOrganizationsByFilteredCriteria(Point p, Distance d, OrganizationFilter o, PageRequest pageRequest);    
 }

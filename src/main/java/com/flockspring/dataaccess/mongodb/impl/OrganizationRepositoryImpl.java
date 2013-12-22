@@ -4,9 +4,10 @@
 package com.flockspring.dataaccess.mongodb.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.geo.Distance;
-import org.springframework.data.mongodb.core.geo.GeoResults;
+import org.springframework.data.mongodb.core.geo.GeoPage;
 import org.springframework.data.mongodb.core.geo.Point;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.NearQuery;
@@ -35,7 +36,8 @@ public class OrganizationRepositoryImpl implements CustomOrganizationRepository<
     }
     
     @Override
-    public GeoResults<OrganizationImpl> findOrganizationsByFilteredCriteria(Point p, Distance d, OrganizationFilter o, int pageSize)
+    public GeoPage<OrganizationImpl> findOrganizationsByFilteredCriteria(Point p, Distance d, OrganizationFilter o, 
+            PageRequest page)
     {
         
         Query query = new Query();
@@ -94,8 +96,9 @@ public class OrganizationRepositoryImpl implements CustomOrganizationRepository<
             query.addCriteria(Criteria.where("accessibilityNeeds").all(o.getFilteredAccessibilityNeeds()));
         }
         
-        NearQuery nearQuery = NearQuery.near(p).maxDistance(d).num(pageSize).query(query);
+        NearQuery nearQuery = NearQuery.near(p).maxDistance(d).num(page.getPageSize())//.skip(skip)
+                .query(query);
 
-        return mongoTemplate.geoNear(nearQuery, OrganizationImpl.class);
+        return null; //mongoTemplate.geoNear(nearQuery, OrganizationImpl.class);
     }
 }

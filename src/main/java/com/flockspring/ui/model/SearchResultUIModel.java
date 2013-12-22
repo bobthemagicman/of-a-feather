@@ -34,10 +34,13 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
     private final String postalCode;
     private final double latitude;
     private final double longitude;
+    private final int musicStyleSliderValue;
+    private final int serviceStyleSliderValue;
+    private final int dressAttireSliderValue;
     
-    public SearchResultUIModel(MultimediaUIModel displayImage, String organizationName, Set<ServiceTime> serviceTimes, 
-            String denomination, String id, double distanceFromSearchPoint, boolean featured, boolean usersFavorite, 
-            String city, String state, String postalCode, double latitude, double longitude)
+    public SearchResultUIModel(MultimediaUIModel displayImage, String organizationName, Set<ServiceTime> serviceTimes, String denomination,
+            String id, double distanceFromSearchPoint, boolean featured, boolean usersFavorite, String city, String state, String postalCode,
+            double latitude, double longitude, int musicStyleSliderValue, int serviceStyleSliderValue, int dressAttireSliderValue)
     {
         super();
         
@@ -54,8 +57,11 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
         this.postalCode = postalCode;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.musicStyleSliderValue = musicStyleSliderValue;
+        this.serviceStyleSliderValue = serviceStyleSliderValue;
+        this.dressAttireSliderValue = dressAttireSliderValue;
     }
-
+    
     public MultimediaUIModel getDisplayImage()
     {
         return displayImage;
@@ -76,6 +82,11 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
         return denomination;
     }
 
+    public String getId()
+    {
+        return id;
+    }
+
     public double getDistanceFromSearchPoint()
     {
         return distanceFromSearchPoint;
@@ -91,11 +102,6 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
         return usersFavorite;
     }
 
-    public String getId()
-    {
-        return this.id;
-    }
-    
     public String getCity()
     {
         return city;
@@ -119,6 +125,21 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
     public double getLongitude()
     {
         return longitude;
+    }
+
+    public int getMusicStyleSliderValue()
+    {
+        return musicStyleSliderValue;
+    }
+
+    public int getServiceStyleSliderValue()
+    {
+        return serviceStyleSliderValue;
+    }
+
+    public int getDressAttireSliderValue()
+    {
+        return dressAttireSliderValue;
     }
 
     @Override

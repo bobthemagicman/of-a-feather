@@ -30,8 +30,6 @@ public interface Organization
     
     Set<AccessabilitySupport> getAccessabilitySupport();
     
-    Set<Programs> getProgrammsOffered();
-    
     Affiliation getPrimaryAffiliation();
 
     Affiliation getDenomination();

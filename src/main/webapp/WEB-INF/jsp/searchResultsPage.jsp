@@ -458,16 +458,18 @@
 				
                 <div class="search-results">
 
-                    <div class="showing-results">Showing Results <span class="now-showing">${resultsPageStartNum} - ${resultsPageEndNum}</span> of <span class="total-results">${totalNumberOfResults}</span></div>
+                    <div class="showing-results">Showing Results <span class="now-showing">${results.pageStartIndex} - ${results.pageEndIndex}</span> of <span class="total-results">${results.totalNumberOfResults}</span></div>
             
                     <spring:url value="/static/images/site/right_arrow.png" var="rightArrow" />
                     <spring:url value="/static/images/site/heart_icon.png" var="heartIcon" />
                     
-                    
                     <c:forEach items="${results.items}" var="result" varStatus="p_tracker">
                         <spring:url value="/static/church-images/${result.id}/${result.displayImage.path}" var="imagePath"/>
-                        
-                        <div class="search-result-entry show-result" data-result-id="${p_tracker.index + 1}" data-church-name="${result.organizationName}" data-latitude="37.785084" data-longitude="-122.434146">
+						<c:if test="${result.usersFavorite}">
+                    		<spring:url value="/static/images/site/heart_favorited_icon.png" var="heartIcon" />
+                    	</c:if>
+                                            
+                        <div class="search-result-entry show-result" data-result-id="${p_tracker.index + 1}" data-church-name="${result.organizationName}" data-latitude="${result.latitude}" data-longitude="${result.longitude}">
 
                             <div class="search-result-image-container">
                                 <img src="${imagePath}" alt="${result.displayImage.alt}" title="${result.displayImage.title}" />
@@ -475,27 +477,27 @@
 
                             <div class="search-result-info">
                                 <div class="church-basic-info">
-                                    <span class="church-name">${result.organizationName}</span>
+                                	<spring:url value="/church-profile/${result.id}?dist=${result.distanceFromSearchPoint}" var="churchUrl" />
+                                    <a href="${churchUrl}"><span class="church-name">${result.organizationName}</span></a>
                                     <span class="church-denomination"><spring:message code="${result.denomination}" /></span>
-                                    <span class="church-location">City, State Zip <img src="${rightArrow}" /> <span class="distance">${result.distanceFromSearchPoint}</span> miles away</span>
+                                    <span class="church-location">${result.city}, ${result.state} ${result.postalCode}<img src="${rightArrow}" /> <span class="distance"><fmt:formatNumber maxFractionDigits="2" value="${result.distanceFromSearchPoint}" /></span> miles away</span>
                                 </div>
                                 <div class="church-sliders">
                                     <div class="slider-container">
-                                        <div class="slider-label">Service Style</div><div class="info-slider" data-slider-value="1"></div>
+                                        <div class="slider-label">Service Style</div><div class="info-slider" data-slider-value="${result.serviceStyleSliderValue}"></div>
                                     </div>
                                     <div class="slider-container">
-                                        <div class="slider-label">Music</div><div class="info-slider" data-slider-value="2"></div>
+                                        <div class="slider-label">Music</div><div class="info-slider" data-slider-value="${result.musicStyleSliderValue }"></div>
                                     </div>
                                     <div class="slider-container">
-                                        <div class="slider-label">Dress Attire</div><div class="info-slider" data-slider-value="3"></div>
+                                        <div class="slider-label">Dress Attire</div><div class="info-slider" data-slider-value="${result.dressAttireSliderValue }"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="favorite-icon">
                                 <img src="${heartIcon}" />
                             </div>
-                        </div>
-                        
+                        </div>                        
                     </c:forEach>
 
                 </div><!-- end search-results -->

@@ -21,7 +21,7 @@ import com.flockspring.ui.mapper.OrganizationUIModelMapper;
 import com.flockspring.ui.model.OrganizationUIModel;
 
 @Controller
-@RequestMapping("/church-profiles")
+@RequestMapping("/church-profile")
 public class ProfilePageController
 {
     private static final String VIEW_NAME = "profilePage";

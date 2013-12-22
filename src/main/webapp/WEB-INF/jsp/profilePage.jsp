@@ -121,6 +121,9 @@
                                             </div>
                                             <div class="thumbnail-container">
                                                 <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image5.jpg" data-slide-link="4" />
+                                            </div>
+                                            <div class="thumbnail-container">
+                                                <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image5.jpg" data-slide-link="5" />
                                             </div>                                           
                                         </div>
                                         <div class="thumbnails item">
@@ -246,16 +249,19 @@
 
                     <div class="location-info">
                         <div class="adr location">
-                            <span class="street-address">${organization.overview.address.street1}</span><br />
+                            <span class="street-address">${organization.overview.address.street1}</span>
                             <span class="street-address">${organization.overview.address.street2}</span><br />
                             <span class="locality">${organization.overview.address.city}</span>, <span class="region">${organization.overview.address.state}</span> <span class="postal-code">${organization.overview.address.postalCode}</span> <span class="country-name">${organization.overview.address.country}</span><br />
                             <c:if test="${organization.overview.parkingLotAvailable}">
                             <span class="transportation-info">Parking Lot Available</span>
                             </c:if>
                         </div>
+                        
+                        <c:if test="${organization.overview.distanceFromSearchPoint ne -1}">
                         <div class="distance-info">
                             <span class="distance"><fmt:formatNumber maxFractionDigits="2">${organization.overview.distanceFromSearchPoint}</fmt:formatNumber> miles away</span>
                         </div>
+                        </c:if>
                     </div>
 
                     <div class="map-container">
@@ -288,13 +294,12 @@
                             <div class="pastor-info-container">
                                 <div class="pastor-photo">
                                 	<spring:url value="/static/church-images/${organization.id}/${leader.image.path}" var="leaderImgSrc" />
-                                    <img src="leaderImgSrc" alt="${leader.image.alt}" title="${leader.image.title}"/>
+                                    <img src="${leaderImgSrc}" alt="${leader.image.alt}" title="${leader.image.title}"/>
                                 </div>
                                 <div class="pastor-info">
                                     <h2>${leader.title}</h2>
-                                    <hr />
                                     <h3>${leader.name}</h3>
-                                    <hr />
+                                    <br />
                                     <p>${leader.bio}</p>
                                 </div>
                             </div>
@@ -332,18 +337,28 @@
                                 <li>1pm (en Espa&ntilde;ol)
                             </ul>
                             <p><span class="label">Languages:</span>&nbsp; 
-                            	<c:forEach items="${organization.serviceOverview.languages}">
-                            		<span class="service-lang">${lang.englishName} <c:if test="${not empty lang.localizedName}">&#40;${lang.localizedName}&#41;</c:if></span>,&nbsp;
+                            	<c:forEach items="${organization.servicesOverview.languages}" var="lang">
+                            		<span class="service-lang">
+                            		<c:choose>
+                            			<c:when test="${not empty lang.localizedName and not empty lang.englishName and lang.localizedName ne lang.englishName}">
+                            				${lang.localizedName}&nbsp;&#40;${lang.englishName}&#41;
+                            			</c:when>
+                            			<c:otherwise>
+                            				${lang.englishName}
+                            			</c:otherwise>
+                            		</c:choose>
+                            		</span>,&nbsp;
                             	</c:forEach>
                       		</p>
-                            <c:set var="hours" value="${organization.serviceOverview.durationInMinutes / 60 }" />
-                            <c:set var="hrString" value="hr" />
+                            
+                            <c:set var="minutes" value="${organization.servicesOverview.durationInMinutes % 60 }" />
+                          	<c:set var="hours" value="${(organization.servicesOverview.durationInMinutes - minutes) / 60}"/>
+                          	<c:set var="hrString" value="hr" />
                             <c:if test="${hours > 1}"><c:set var="hrString" value="hrs" /></c:if>
-                            <c:set var="minutes" value="${organization.serviceOverview.durationInMinutes % 60 }" />
-                            <p><span class="label">Duration:</span> ${hours} ${hrString} <c:if test="${minutes ne 0}">${minutes} min</c:if></p>
+                            <p><span class="label">Duration:</span> <fmt:formatNumber pattern="#" value="${hours}" /> ${hrString} <c:if test="${minutes ne 0}">${minutes} min</c:if></p>
                             <br />
                             <p><span class="label">Service Schedule:</span> 
-                            	${organizaiton.serviceOverview.serviceSchedule}
+                            	${organizaiton.servicesOverview.serviceSchedule}
                             </p>
 
                         </div>
@@ -450,64 +465,29 @@
                             <div class="programs-ministries">
 
                                 <h2>Programs &amp; Ministries</h2>    
-
-                                <div class="programs-left-column">
+			
+								<div class="programs-left-column">
+									
+									<c:forEach items="${organization.programsOffered}" var="entry" varStatus="p_tracker">
                                     <div class="programs-category">
+                                        
                                         <div class="program-heading">
-                                            <h1>Nursery Care &amp; Educational</h1>
+                                            <h1><spring:message code="${entry.key.localizedStringCode}" /></h1>
                                         </div>
                                         <div class="program-listing">
-                                            <ul>
-                                                <li>Infant child care during service</li>
-                                                <li>For men (i.e., men&apos;s small group, etc.)</li>
-                                                <li>For women (i.e., women&apos;s small group, etc.)</li>
-                                                <li>Sunday school</li>
+                                        	<ul>
+                                        		<c:forEach items="${entry.value}" var="program">
+                                                <li><spring:message code="${program.localizedStringCode}" /></li>
+                                                </c:forEach>
                                             </ul>
                                         </div>
                                     </div>
 
-                                    <div class="programs-category">
-                                        <div class="program-heading">
-                                            <h1>Social &amp; Spiritual</h1>
-                                            <div class="program-listing">
-                                                <ul>
-                                                    <li>small groups (i.e., life groups, cell groups, home groups, etc.)</li>
-                                                    <li>weekly Bible study groups</li>
-                                                    <li>choir</li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="programs-right-column">
-
-                                    <div class="programs-category">
-                                        <div class="program-heading">
-                                            <h1>Support &amp; Outreach</h1>
-                                        </div>
-                                        <div class="program-listing">
-                                            <ul>
-                                                <li>social activities</li>
-                                                <li>community service/volunteering</li>
-                                                <li>mission trips/volunteering abroad</li>
-                                                <li>outreach/evangelism</li>
-                                                <li>homeless outreach &amp; care</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                    <div class="programs-category">
-                                        <div class="program-heading">
-                                            <h1>Age Groups &amp; Creative Arts</h1>
-                                        </div>
-                                        <div class="program-listing">
-                                            <ul>
-                                                <li>children&apos;s ministry (K-6)</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
+                               			<c:if test="${((fn:length(organization.programsOffered) % 2 ne 0) and (p_tracker.index +1) eq ((fn:length(organization.programsOffered) + 1) /2)) or (fn:length(organization.programsOffered) % 2 eq 0 and (fn:length(organization.programsOffered) / 2 eq (p_tracker.index + 1)))}">    
+                		        </div>
+        		        	    <div class="programs-right-column">
+		                            	</c:if>
+									</c:forEach>
                                 </div>
 
                             </div>
