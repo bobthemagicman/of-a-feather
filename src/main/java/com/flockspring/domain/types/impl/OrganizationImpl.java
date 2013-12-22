@@ -54,13 +54,13 @@ public class OrganizationImpl implements Organization, Serializable
     private Set<ServiceTime> serviceTimes;
     private Set<ServiceDay> serviceDays;
     private Set<Language> languages;
-    private Set<Programs> programmsOffered;
+    private Set<Programs> programsOffered;
     private Set<AccessabilitySupport> accessabilitysupport;
 
     public OrganizationImpl(String id, Integer yearFounded, String name, String missionStatement, String statementOfFaith, String welcomeMessage,
             AddressImpl address, AtmosphereImpl atmosphere, SocialMediaImpl socialMedia, Affiliation denomination, Affiliation subDenomination,
             Affiliation primaryAffiliation, Set<MultimediaObjectImpl> multimedia, Set<LeaderImpl> leadershipTeam, Set<ServiceTime> serviceTimes,
-            Set<ServiceDay> serviceDays, Set<Language> languages, Set<Programs> programmsOffered, Set<AccessabilitySupport> accessabilitysupport)
+            Set<ServiceDay> serviceDays, Set<Language> languages, Set<Programs> programsOffered, Set<AccessabilitySupport> accessabilitysupport)
     {
         super();
         
@@ -81,7 +81,7 @@ public class OrganizationImpl implements Organization, Serializable
         this.serviceTimes = serviceTimes;
         this.serviceDays = serviceDays;
         this.languages = languages;
-        this.programmsOffered = programmsOffered;
+        this.programsOffered = programsOffered;
         this.accessabilitysupport = accessabilitysupport;
     }
 
@@ -188,9 +188,9 @@ public class OrganizationImpl implements Organization, Serializable
     }
 
     @Override
-    public Set<Programs> getProgrammsOffered()
+    public Set<Programs> getProgramsOffered()
     {
-        return programmsOffered;
+        return programsOffered;
     }
 
     @Override
@@ -276,9 +276,9 @@ public class OrganizationImpl implements Organization, Serializable
         this.languages = languages;
     }
 
-    public void setProgrammsOffered(Set<Programs> programmsOffered)
+    public void setProgramsOffered(Set<Programs> programmsOffered)
     {
-        this.programmsOffered = programmsOffered;
+        this.programsOffered = programmsOffered;
     }
 
     public void setAccessabilitysupport(Set<AccessabilitySupport> accessabilitysupport)
@@ -302,12 +302,6 @@ public class OrganizationImpl implements Organization, Serializable
     public String toString()
     {
         return ToStringBuilder.reflectionToString(this);
-    }
-
-    @Override
-    public Set<Programs> getProgramsOffered()
-    {
-        return programmsOffered;
     }
 
     @Override

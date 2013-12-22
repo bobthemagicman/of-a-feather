@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.flockspring.domain.types.MultimediaObject;
 import com.flockspring.ui.model.MultimediaUIModel;
+import com.google.common.base.Strings;
 
 /**
  * MultimediaUIModelMapper.java
@@ -43,10 +44,10 @@ public class MultimediaUIModelMapper
     {
         if(mmObj != null)
         {
-            String altText = mmObj.getAltText();
-            String name = mmObj.getName();
+            String altText = Strings.nullToEmpty(mmObj.getAltText());
+            String name = Strings.nullToEmpty(mmObj.getName());
             String path = mmObj.getPath();
-            String title = mmObj.getTitleText();
+            String title = Strings.nullToEmpty(mmObj.getTitleText());
             boolean primary = mmObj.isPrimary();
             boolean video = mmObj.isVideo();
             

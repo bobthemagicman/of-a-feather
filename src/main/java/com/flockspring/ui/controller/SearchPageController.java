@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.flockspring.domain.OrganizationFilter;
 import com.flockspring.domain.service.OrganizationDiscoveryService;
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.impl.OrganizationImpl;
@@ -113,7 +114,9 @@ public class SearchPageController
 
         @SuppressWarnings("unchecked")
         NavigableSet<String> resultIds = (NavigableSet<String>) session.getAttribute(RESULT_IDS);
-        NavigableSet<Organization> organizations = organizationDiscoveryService.getFilteredOrganizations(filterRequest);
+        
+        OrganizationFilter organizationFilter = new OrganizationFilter();
+        NavigableSet<Organization> organizations = organizationDiscoveryService.getFilteredOrganizations(organizationFilter);
         if (organizations != null && !organizations.isEmpty())
         {
 
@@ -122,7 +125,7 @@ public class SearchPageController
             GeoPage<OrganizationImpl> filteredOrganization = filterRetrievedOrganizationsWithResultIds(organizationMap, resultIds);
 
             //storeResultIdsInSession(filteredOrganization, session);
-            SearchResultsUIModel searchResultUIModels = searchResultsModelMapper.map(filteredOrganization);
+            SearchResultsUIModel searchResultUIModels = searchResultsModelMapper.map(filteredOrganization, filterRequest);
             AjaxSearchFilterResponse response = new AjaxSearchFilterResponse(filteredResultIds, searchResultUIModels);
 
             return response;

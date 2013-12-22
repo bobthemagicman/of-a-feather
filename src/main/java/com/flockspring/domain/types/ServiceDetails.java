@@ -31,4 +31,6 @@ public interface ServiceDetails
     int getDurationInMinutes();
     
     String getStartTime();
+
+    String getServiceName();
 }

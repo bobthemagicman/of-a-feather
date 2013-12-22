@@ -15,16 +15,18 @@ import com.flockspring.ui.model.LocalizedEnum;
  */
 public enum DressAttire implements LocalizedEnum
 {
-    FORMAL_5("enum."),
-    FORMAL_4("enum."),
-    FORMAL_3("enum."),
-    FORMAL_2("enum."),
-    FORMAL_1("enum."),
-    CASUAL_1("enum."),
-    CASUAL_2("enum."),
-    CASUAL_3("enum."),
-    CASUAL_4("enum."),
-    CASUAL_5("enum.");
+    SPECTRUM_MIN("dress.attire.formal"),//Not a slider value
+    FORMAL_4("dress.attire.sunday.best"),
+    FORMAL_3("dress.attire.sunday.best"),
+    FORMAL_2("dress.attire.business.casual"),
+    FORMAL_1("dress.attire.business.casual"),
+    NEUTRAL("dress.attire.blend.of.both"),
+    CASUAL_1("dress.attire.smart.casual"),
+    CASUAL_2("dress.attire.smart.casual"),
+    CASUAL_3("dress.attire.day.at.the.beach"),
+    CASUAL_4("dress.attire.day.at.the.beach"),
+    SPECTRUM_MAX("dress.attire.casual");//Not a slider value
+    
     
     private String localizationStringCode;
     

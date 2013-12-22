@@ -11,6 +11,7 @@ import com.flockspring.domain.types.ServiceStyle;
 import com.flockspring.domain.types.impl.AgeDemographics;
 import com.flockspring.domain.types.impl.MusicalInstruments;
 import com.google.common.collect.ComparisonChain;
+import com.google.common.collect.Ordering;
 
 /**
  * ServiceDetailUIModel.java
@@ -22,19 +23,19 @@ import com.google.common.collect.ComparisonChain;
 public class ServiceDetailUIModel implements Comparable<ServiceDetailUIModel>
 {
     private final String serviceName;
-    private final MusicStyle musicStyle;
     private final Set<MusicalInstruments> musicalInstruments;
+    private final MusicStyle musicStyle;
     private final ServiceStyle serviceStyle;
     private final AgeDemographics ageDemographics;
     private final DressAttire dressAttire;
-   
-    public ServiceDetailUIModel(String serviceName, MusicStyle musicStyle, Set<MusicalInstruments> musicalInstruments, ServiceStyle serviceStyle,
+       
+    public ServiceDetailUIModel(String serviceName, Set<MusicalInstruments> musicalInstruments, MusicStyle musicStyle, ServiceStyle serviceStyle,
             AgeDemographics ageDemographics, DressAttire dressAttire)
     {
         super();
         this.serviceName = serviceName;
-        this.musicStyle = musicStyle;
         this.musicalInstruments = musicalInstruments;
+        this.musicStyle = musicStyle;
         this.serviceStyle = serviceStyle;
         this.ageDemographics = ageDemographics;
         this.dressAttire = dressAttire;
@@ -45,14 +46,14 @@ public class ServiceDetailUIModel implements Comparable<ServiceDetailUIModel>
         return serviceName;
     }
 
-    public MusicStyle getMusicStyle()
-    {
-        return musicStyle;
-    }
-
     public Set<MusicalInstruments> getMusicalInstruments()
     {
         return musicalInstruments;
+    }
+
+    public MusicStyle getMusicStyle()
+    {
+        return musicStyle;
     }
 
     public ServiceStyle getServiceStyle()
@@ -76,10 +77,10 @@ public class ServiceDetailUIModel implements Comparable<ServiceDetailUIModel>
         ServiceDetailUIModel left = this;
         return ComparisonChain.start()
                 .compare(left.getServiceName(), right.getServiceName())
-                .compare(left.getAgeDemographics(), right.getAgeDemographics())
-                .compare(left.getDressAttire(), right.getDressAttire())
-                .compare(left.getMusicStyle(), right.getMusicStyle())
-                .compare(left.getServiceStyle(), right.getServiceStyle())
+                .compare(left.getAgeDemographics(), right.getAgeDemographics(), Ordering.natural().nullsFirst())
+                .compare(left.getDressAttire(), right.getDressAttire(), Ordering.natural().nullsFirst())
+                .compare(left.getMusicStyle(), right.getMusicStyle(), Ordering.natural().nullsFirst())
+                .compare(left.getServiceStyle(), right.getServiceStyle(), Ordering.natural().nullsFirst())
                 .result();
     }
 }

@@ -15,7 +15,10 @@ import org.springframework.stereotype.Component;
 import com.flockspring.domain.types.Address;
 import com.flockspring.domain.types.MultimediaObject;
 import com.flockspring.domain.types.Organization;
+import com.flockspring.domain.types.ServiceDetails;
+import com.flockspring.domain.types.impl.Atmosphere;
 import com.flockspring.domain.types.impl.OrganizationImpl;
+import com.flockspring.ui.model.AjaxSearchFilterRequest;
 import com.flockspring.ui.model.MultimediaUIModel;
 import com.flockspring.ui.model.SearchResultUIModel;
 import com.flockspring.ui.model.SearchResultsUIModel;
@@ -43,11 +46,16 @@ public class SearchResultsUIModelMapper
 
     public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult)
     {
+        return map(geoPageResult, new AjaxSearchFilterRequest());
+    }
+    
+    public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, AjaxSearchFilterRequest filterRequest)
+    {
         
         NavigableSet<SearchResultUIModel> results = new TreeSet<>();
         for(GeoResult<OrganizationImpl> geoResult : geoPageResult)
         {
-            results.add(map(geoResult));
+            results.add(map(geoResult, filterRequest));
         }
         
         int currentPage = geoPageResult.getNumber();
@@ -66,16 +74,87 @@ public class SearchResultsUIModelMapper
         return new SearchResultsUIModel(results, currentPage, totalResults, pageStartIndex, pageEndIndex);
     }
 
-    public SearchResultUIModel map(GeoResult<OrganizationImpl> geoResult)
+    public SearchResultUIModel map(GeoResult<OrganizationImpl> geoResult, AjaxSearchFilterRequest filterRequest)
     {
-        Organization organization = geoResult.getContent(); 
+        
+        Organization organization = geoResult.getContent();
+        Atmosphere atmosphere = organization.getAtmosphere();
+        
         MultimediaUIModel image = imageUIModelMapper.map(getPrimaryOrganizationImage(organization.getMultimedia()));
         Address address = organization.getAddress();
+        ServiceDetails serviceDetails = getMatchingServiceDetails(atmosphere, filterRequest);
         
         return new SearchResultUIModel(image, organization.getName(), organization.getServiceTimes(), 
                 organization.getDenomination().getLocalizedStringCode(), organization.getId(), geoResult.getDistance().getValue(),
                 isOrganizationFeatured(organization), isOrganizationUserFavorite(organization), address.getCity(), 
-                address.getState(), address.getPostalCode(), address.getLatitude(), address.getLongitude());
+                address.getState(), address.getPostalCode(), address.getLatitude(), address.getLongitude(), 
+                getMusicStyleSliderValue(serviceDetails), getServiceStyleSliderValue(serviceDetails), 
+                getDressAttireSliderValue(serviceDetails));
+    }
+
+    private ServiceDetails getMatchingServiceDetails(Atmosphere atmosphere, AjaxSearchFilterRequest filterRequest)
+    {
+        ServiceDetails sd = null;
+        Set<ServiceDetails> serviceDetailsSet = atmosphere.getServiceDetails();
+        
+        sd = findServiceDetailsFromSliderData(filterRequest.getAtmosphereServiceStyleFloor(), 
+                filterRequest.getAtmosphereServiceStyleCeiling(), serviceDetailsSet);
+        
+        if(sd == null)
+        {
+            sd = findServiceDetailsFromSliderData(filterRequest.getAtmosphereMusicStyleFloor(), 
+                    filterRequest.getAtmosphereServiceStyleCeiling(), serviceDetailsSet);
+        }
+        
+        if(sd == null)
+        {       
+            sd = findServiceDetailsFromSliderData(filterRequest.getAtmosphereDressAttireFloor(), 
+                    filterRequest.getAtmosphereDressAttireCeiling(), serviceDetailsSet);
+        }
+        
+        if(sd == null)
+        {
+            //hack hack hack
+            sd = atmosphere.getServiceDetails().iterator().next();
+        }
+        
+        return sd;
+    }
+
+    private ServiceDetails findServiceDetailsFromSliderData(Integer floor, Integer ceiling, Set<ServiceDetails> serviceDetailsSet)
+    {
+        ServiceDetails serviceDetails = null;
+        if(floor != null && floor != 0 && ceiling != null && ceiling != 0)
+        {
+            for(ServiceDetails sd : serviceDetailsSet)
+            {
+                int translatedSliderValue = sd.getDressAttire().ordinal() + 1;
+                if(translatedSliderValue > floor && translatedSliderValue < ceiling) 
+                {
+                    serviceDetails = sd;
+                }
+            }
+        }
+        
+        return serviceDetails;
+    }
+
+    private int getDressAttireSliderValue(ServiceDetails serviceDetails)
+    {
+        
+        return serviceDetails.getDressAttire().getOrdinal() + 1;
+    }
+
+    private int getServiceStyleSliderValue(ServiceDetails serviceDetails)
+    {
+
+        return serviceDetails.getServiceStyle().ordinal() + 1;
+    }
+
+    private int getMusicStyleSliderValue(ServiceDetails serviceDetails)
+    {
+
+        return serviceDetails.getMusicStyle().ordinal() + 1;
     }
 
     private boolean isOrganizationUserFavorite(Organization organization)

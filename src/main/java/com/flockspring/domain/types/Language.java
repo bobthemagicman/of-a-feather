@@ -29,7 +29,7 @@ package com.flockspring.domain.types;
  *
  */
 public enum Language {
-    AMERICAN_SIGN_LANGUAGE(new String[]{"asl"}, new String[]{"asl"}),
+    AMERICAN_SIGN_LANGUAGE(new String[]{"American Sign Language"}, new String[]{"American Sign Language"}),
     MAINDARIN(new String[]{"mandarin"}, new String[]{"官话"}),
     SPANISH(new String[]{"spanish", "castilian"}, new String[]{"español"}),
     ENGLISH(new String[]{"english"}, new String[]{"english"}),

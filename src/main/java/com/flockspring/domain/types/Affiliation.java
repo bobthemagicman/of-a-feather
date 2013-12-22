@@ -39,6 +39,18 @@ public enum Affiliation implements LocalizedEnum
     CHRISTIAN_SCIENCE("affiliation.christian.science"),
     NEW_THOUGHT("affiliation.new.thought"),
     ESOTERICISM("affiliation.esotericism"),
+    ASSEMBLIES_OF_GOD("affiliation.assemblies.of.god"),
+    CHURCH_OF_GOD("affiliation.church.of.god"),
+    DISCIPLES_OF_CHRIST("affiliation.disciples.of.christ"),
+    FOURSQUARE("affiliation.foursquare"),
+    JEHOVAS_WITNESS("affiliation.jehovas.witness"),
+    MENNONITE("affiliation.mennonite"),
+    NAZARENE("affiliation.nazarene"),
+    OPEN_BIBLE("affiliation.open.bible"),
+    ORTHODOX("affiliation.orthodox"),
+    REFORMED_CHURCHES("affiliation.reformed.churches"),
+    SEVENTH_DAY_ADVENTIST("affiliation.seventh.day.adventist"),
+    UNITED_CHURCH_OF_CHRIST("affiliation.united.church.of.christ"),
     NONE("affiliation.none");
 
     private String localizationCode;
