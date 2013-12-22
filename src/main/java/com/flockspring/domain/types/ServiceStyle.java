@@ -15,17 +15,17 @@ import com.flockspring.ui.model.LocalizedEnum;
  */
 public enum ServiceStyle implements LocalizedEnum
 {
-    SPECTRUM_MIN("serviceStyle.conservative"),//Not a slider value
-    CONSERVATIVE_4("serviceStyle.traditional.reverent"),
-    CONSERVATIVE_3("serviceStyle.traditional.reverent"),
-    CONSERVATIVE_2("serviceStyle.traditional"),
-    CONSERVATIVE_1("serviceStyle.traditional"),
-    NEUTRAL("serviceStyle.blend.of.both"),
-    HIGH_ENERGY_1("serviceStyle.lively"),
-    HIGH_ENERGY_2("serviceStyle.lively"),
-    HIGH_ENERGY_3("serviceStyle.very.lively.spirited"),
-    HIGH_ENERGY_4("serviceStyle.very.lively.spirited"),
-    SPECTRUM_MAX("serviceStyle.high.energy");//Not a slider value
+    SPECTRUM_MIN("service.style.conservative"),//Not a slider value
+    CONSERVATIVE_4("service.style.traditional.reverent"),
+    CONSERVATIVE_3("service.style.traditional.reverent"),
+    CONSERVATIVE_2("service.style.traditional"),
+    CONSERVATIVE_1("service.style.traditional"),
+    NEUTRAL("service.style.blend.of.both"),
+    HIGH_ENERGY_1("service.style.lively"),
+    HIGH_ENERGY_2("service.style.lively"),
+    HIGH_ENERGY_3("service.style.very.lively.spirited"),
+    HIGH_ENERGY_4("service.style.very.lively.spirited"),
+    SPECTRUM_MAX("service.style.high.energy");//Not a slider value
     
     
     private String localizationStringCode;

@@ -239,6 +239,7 @@
                                 INTERESTED<br />IN VISITING?
                             </div>
                         </a>
+                        <br />
 
                         <div class="visit-us-times">
                             <img src="${leftArrow}" />
@@ -364,11 +365,11 @@
                         </div>
                         <div class="tab-pane fade" id="tab4">
                             <h2>Church Atmosphere</h2>
-							<c:forEach items="${organization.serviceDetails}" var="serviceDetails">
+							<c:forEach items="${organization.serviceDetails}" var="serviceDetail">
                             <div class="service-atmosphere">
 							
                                 <div class="general-atmosphere">
-                                	<h1>${serviceDetails.serviceName}</h1>
+                                	<h1>${serviceDetail.serviceName}</h1>
                                 	<%-- 
                                     <div class="general-atmosphere-container">
                                         <div class="slider-container">
@@ -382,10 +383,12 @@
                                 </div>
                                 <div class="atmosphere-details-container">
                                     <div class="left-atmosphere-details-container">
+                                        <c:if test="${not empty serviceDetail.serviceStyle}">
                                         <div class="slider-container">
                                             <h2>Service style</h2>
-
-                                            <div class="slider" data-slider-value="3" data-slider-description="Lively">
+                                            
+                                            <spring:message code="${serviceDetail.serviceStyle.localizedStringCode}" var="serviceStyleSliderDesc" />
+                                            <div class="slider" data-slider-value="${serviceDetail.serviceStyle.ordinal + 1}" data-slider-description="${serviceStyleSliderDesc}">
                                                 <div class="slider-labels">
                                                     <div class="slider-label-container"><span>CONSERVATIVE</span></div>
                                                     <div class="slider-label-container"><span></span></div>
@@ -394,9 +397,13 @@
                                                 <div class="slider-description"></div>
                                             </div>
                                         </div>
+                                        </c:if>
+                                        
+                                        <c:if test="${not empty serviceDetail.ageDemographics}">
+                                        <spring:message code="${serviceDetail.ageDemographics.localizedStringCode}" var="ageDemographicsSliderDesc" />
                                         <div class="slider-container">
                                             <h2>Age demographics</h2>
-                                            <div class="slider" data-slider-value="${organization.ageDemographics}" data-slider-description="All Age Groups">
+                                            <div class="slider" data-slider-value="${serviceDetail.ageDemographics.ordinal + 1}" data-slider-description="${ageDemographicsSliderDesc}">
                                                 <div class="slider-labels">
                                                     <div class="slider-label-container"><span>YOUTH</span></div>
                                                     <div class="slider-label-container"><span></span></div>
@@ -405,10 +412,14 @@
                                                 <div class="slider-description"></div>
                                             </div>
                                         </div>
+                                        </c:if>
+                                        
+                                        <c:if test="${not empty serviceDetail.dressAttire}">
+                                        <spring:message code="${serviceDetail.dressAttire.localizedStringCode}" var="dressAttireSliderDesc" />
                                         <div class="slider-container">
                                             <h2>Dress attire</h2>
 
-                                            <div class="slider" data-slider-value="5" data-slider-description="Smart Casual">
+                                            <div class="slider" data-slider-value="${serviceDetail.dressAttire.ordinal + 1}" data-slider-description="${dressAttireSliderDesc}">
                                                 <div class="slider-labels">
                                                     <div class="slider-label-container"><span>FORMAL</span></div>
                                                     <div class="slider-label-container"><span></span></div>
@@ -417,12 +428,15 @@
                                                 <div class="slider-description"></div>
                                             </div>
                                         </div>
+                                        </c:if>
                                     </div>
+                                    
+                                    <c:if test="${not empty serviceDetail.musicStyle}">
                                     <div class="right-atmosphere-details-container">
                                         <div class="slider-container">
                                             <h2>Music</h2>
-
-                                            <div class="slider" data-slider-value="${organization.musicStyle}" data-slider-description="Blend of both traditional and contemporary.">
+                                            <spring:message code="${serviceDetail.musicStyle.localizedStringCode}" var="musicStyleSliderDesc" />
+                                            <div class="slider" data-slider-value="${serviceDetail.musicStyle.ordinal + 1}" data-slider-description="${musicStyleSliderDesc}">
                                                 <div class="slider-labels">
                                                     <div class="slider-label-container"><span>TRADITIONAL</span></div>
                                                     <div class="slider-label-container"><span></span></div>
@@ -431,32 +445,19 @@
                                                 <div class="slider-description"></div>
                                             </div>
 
+                                            <c:if test="${not empty serviceDetail.musicalInstruments}">
                                             <div class="musical-instruments-container">
-                                                <div class="musical-instrument">
+                                                <c:forEach items="${serviceDetail.musicalInstruments}" var="instrument">
+                                                <spring:message code="${instrument.localizationStringCode}" var="instrumentClass" />
+                                                <div class="musical-instrument ${instrumentClass}">
                                                     <img src="${violinIcon}" />
                                                 </div>
-                                                <div class="musical-instrument">
-                                                    <img src="${pianoIcon}" />
-                                                </div>
-                                                <div class="musical-instrument">
-                                                    <img src="${choirIcon}" />
-                                                </div>
-                                                <div class="musical-instrument">
-                                                    <img src="${guitarIcon}" />
-                                                </div>
-                                                <div class="musical-instrument">
-                                                    <img src="${electricGuitarIcon}" />
-                                                </div>
-                                                <div class="musical-instrument">
-                                                    <img src="${drumsIcon}" />
-                                                </div>
-                                                <div class="musical-instrument">
-                                                    <img src="${saxophoneIcon}" />
-                                                </div>
+                                                </c:forEach>
                                             </div>
-
+                                            </c:if>
                                         </div>
                                     </div>
+                                    </c:if>
                                 </div>
                             </div>
                             </c:forEach>

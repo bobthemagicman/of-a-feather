@@ -21,26 +21,29 @@ var org1 = {
 			musicStyle : 'CONTEMPORARY_3',
 			serviceStyle : 'HIGH_ENERGY_3',
 			dressAttire : 'CASUAL_3',
-			ageDemographics : '',
+			ageDemographics : [],
 			instruments : [],
 			durationInMinutes : 90,
-			startTime : '9:20am'
+			startTime : '9:20am',
+			serviceName : '9:20 Service'
 		}, {
 			musicStyle : 'CONTEMPORARY_3',
 			serviceStyle : 'HIGH_ENERGY_3',
 			dressAttire : 'CASUAL_3',
-			ageDemographics : '',
+			ageDemographics : [],
 			instruments : [],
 			durationInMinutes : 90,
-			startTime : '11:00am'
+			startTime : '11:00am',
+			serviceName : '11am Service'
 		}, {
 			musicStyle : 'CONTEMPORARY_3',
 			serviceStyle : 'HIGH_ENERGY_3',
 			dressAttire : 'CASUAL_3',
-			ageDemographics : '',
+			ageDemographics : [],
 			instruments : [],
 			durationInMinutes : 90,
-			startTime : '6:00pm'
+			startTime : '6:00pm',
+			serviceName : 'Sunday Evening Service'
 		} ],
 		gayAffirming : false,
 		homeChurch : false
@@ -100,18 +103,17 @@ var org1 = {
 		emailAddress : '',
 		yearStarted : ''
 	} ],
-
 	serviceTimes : [ 'EARLY_MORNING', 'MID_MORNING', 'EVENING' ],
 	serviceDays : [ 'SUNDAY' ],
-	languages : ['ENGLISH', 'AMERICAN_SIGN_LANGUAGE', 'SPANISH'],
+	languages : [ 'ENGLISH', 'AMERICAN_SIGN_LANGUAGE', 'SPANISH' ],
 	programsOffered : [ 'INFANT_CARE', 'TODDLER_CARE', 'SUNDAY_SCHOOL',
 			'BIBLE_STUDY', 'ADULT_EDUCATION', 'SPIRITUAL_CLASSES',
 			'PRE_SCHOOL', 'PRIMARY_SCHOOL', 'SECONDARY_SCHOOL',
 			'GRADUATE_STUDIES', 'CHILDRENS_GROUPS', 'MIDDLE_SCHOOL_GROUP',
 			'HIGH_SCHOOL_GROUP', 'YOUNG_ADULT_GROUP', 'ADULT_GROUP',
 			'MENS_GROUP', 'WOMENS_GROUP' ],
-	accessabilitysupport : [ 'WHEELCHAIR_ACCESS', 'DEAF_TRANSLATOR', 'PARKING_LOT' ],
-	gayAffirming : false
+	accessabilitysupport : [ 'WHEELCHAIR_ACCESS', 'DEAF_TRANSLATOR',
+			'PARKING_LOT' ],
 };
 
 db.organizations.insert(org1);
@@ -119,8 +121,8 @@ db.organizations.ensureIndex({
 	"address.location" : "2d"
 });
 
-//db.addUser({
-//	user : "flockSpring",
-//	pwd : "fl0ckSpr!ng",
-//	roles : [ "readWrite" ]
-//});
+// db.addUser({
+// user : "flockSpring",
+// pwd : "fl0ckSpr!ng",
+// roles : [ "readWrite" ]
+// });

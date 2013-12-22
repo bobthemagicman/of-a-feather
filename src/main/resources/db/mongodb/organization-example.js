@@ -21,26 +21,29 @@ var org1 = {
 			musicStyle : 'CONTEMPORARY_3', // See available values below
 			serviceStyle : 'HIGH_ENERGY_3', //See available values below
 			dressAttire : 'CASUAL_3',	//See available values below
-			ageDemographics : //See available values below
+			ageDemographics :[], //See available values below
 			instruments : [], //See available values below
 			durationInMinutes : 90, //no quotes, must be a whole number
-			startTime : '9:20am'
+			startTime : '9:20am', //Service start time, will be used on the profile page in multiple places
+			serviceName: '9:20 Service' //Name of the service, will be displayed under Church Atmosphere on the profile page
 		}, {
 			musicStyle : 'CONTEMPORARY_3',
 			serviceStyle : 'HIGH_ENERGY_3',
 			dressAttire : 'CASUAL_3',
-			ageDemographics : '',
+			ageDemographics : [],
 			instruments : [],
 			durationInMinutes : 90,
-			startTime : '11:00am'
+			startTime : '11:00am',
+			serviceName : '11am Service'			
 		}, {
 			musicStyle : 'CONTEMPORARY_3',
 			serviceStyle : 'HIGH_ENERGY_3',
 			dressAttire : 'CASUAL_3',
-			ageDemographics : '',
+			ageDemographics : [],
 			instruments : [],
 			durationInMinutes : 90,
-			startTime : '6:00pm'
+			startTime : '6:00pm',
+			serviceName : 'Sunday Evening Service'
 		} ],
 		gayAffirming : false,
 		homeChurch : false
