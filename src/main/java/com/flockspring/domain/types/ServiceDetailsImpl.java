@@ -25,11 +25,11 @@ public class ServiceDetailsImpl implements ServiceDetails, Comparable<ServiceDet
     private AgeDemographics ageDemongraphics;
     private Set<MusicalInstruments> instruments;
     private Integer durationInMinutes;
-    private String startTime;
+    private TimeAndDay timeAndDay;
     private String serviceName;
-   
+    
     public ServiceDetailsImpl(MusicStyle musicStyle, ServiceStyle serviceStyle, DressAttire dressAttire, AgeDemographics ageDemongraphics,
-            Set<MusicalInstruments> instruments, int durationInMinutes, String startTime, String serviceName)
+            Set<MusicalInstruments> instruments, int durationInMinutes, TimeAndDay timeAndDay, String serviceName)
     {
         super();
         this.musicStyle = musicStyle;
@@ -38,7 +38,7 @@ public class ServiceDetailsImpl implements ServiceDetails, Comparable<ServiceDet
         this.ageDemongraphics = ageDemongraphics;
         this.instruments = instruments;
         this.durationInMinutes = durationInMinutes;
-        this.startTime = startTime;
+        this.timeAndDay = timeAndDay;
         this.serviceName = serviceName;
     }
 
@@ -79,9 +79,9 @@ public class ServiceDetailsImpl implements ServiceDetails, Comparable<ServiceDet
     }
 
     @Override
-    public String getStartTime()
+    public TimeAndDay getTimeAndDay()
     {
-        return startTime;
+        return timeAndDay;
     }
     
     @Override
@@ -120,9 +120,9 @@ public class ServiceDetailsImpl implements ServiceDetails, Comparable<ServiceDet
         this.durationInMinutes = durationInMinutes;
     }
     
-    public void setStartTime(String startTime)
+    public void setTimeDay(TimeAndDay timeAndDay)
     {
-        this.startTime = startTime;
+        this.timeAndDay = timeAndDay;
     }
 
     public void setDurationInMinutes(Integer durationInMinutes)
@@ -140,8 +140,10 @@ public class ServiceDetailsImpl implements ServiceDetails, Comparable<ServiceDet
     {
         ServiceDetails left = this;
         return ComparisonChain.start()
-                .compare(left.getStartTime(), right.getStartTime())
+                .compare(left.getTimeAndDay(), right.getTimeAndDay())
                 .compare(left.getDurationInMinutes(), right.getDurationInMinutes())
                 .result();
     }
+
+    
 }

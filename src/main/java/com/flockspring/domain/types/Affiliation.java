@@ -21,7 +21,7 @@ public enum Affiliation implements LocalizedEnum
     BRETHREN("affiliation.brethren"),
     METHODISTS("affiliation.methodists"),
     PRIESTS_AND_HOLINESS("affiliation.priests.and.holiness"),
-    BAPTISTS("affiliation.baptists"),
+    BAPTIST("affiliation.baptists"),
     APISTOLIC("affiliation.apistolic"),
     PENTECOSTALISM("affiliation.pentecostalism"),
     CHARISMATICS("affiliation.charismatics"),

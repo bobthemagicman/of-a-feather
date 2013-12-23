@@ -23,7 +23,7 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
 
     private final MultimediaUIModel displayImage;
     private final String organizationName;
-    private final Set<ServiceTime> serviceTimes;
+    private final Set<ServiceTimeRange> serviceTimes;
     private final String denomination;
     private final String id;
     private final double distanceFromSearchPoint;
@@ -38,7 +38,7 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
     private final int serviceStyleSliderValue;
     private final int dressAttireSliderValue;
     
-    public SearchResultUIModel(MultimediaUIModel displayImage, String organizationName, Set<ServiceTime> serviceTimes, String denomination,
+    public SearchResultUIModel(MultimediaUIModel displayImage, String organizationName, Set<ServiceTimeRange> serviceTimes, String denomination,
             String id, double distanceFromSearchPoint, boolean featured, boolean usersFavorite, String city, String state, String postalCode,
             double latitude, double longitude, int musicStyleSliderValue, int serviceStyleSliderValue, int dressAttireSliderValue)
     {
@@ -72,7 +72,7 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
         return organizationName;
     }
 
-    public Set<ServiceTime> getServiceTimes()
+    public Set<ServiceTimeRange> getServiceTimes()
     {
         return serviceTimes;
     }

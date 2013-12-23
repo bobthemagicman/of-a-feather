@@ -23,7 +23,6 @@
 
 <spring:url value="/static/images/hero/01-church-of-the-cross-in-B.jpg" var="heroImage1"/>
 <spring:url value="/static/images/site/blur.png" var="blurImage" />
-<spring:url value="/static/images/site/coming_soon.png" var="comingSoonImage" />
 
     <spring:url value="/static/images/features/Calvary_Baptist_Church_Hayward_ca_southern_baptist_logo.jpg" var="featuredChurchImage1"/>
     <spring:url value="/static/images/features/Community_Church_of_Hayward_hayward_ca_american_baptist_promo.jpg" var="featuredChurchImage2"/>
@@ -38,7 +37,6 @@
     <spring:url value="/static/images/features/testimonial_photo_paddock.jpg" var="testimonialPhoto3"/>
 
 <div class="header">
-    <img src="${comingSoonImage}" id="comingSoonImage" />
     <div class="header-image-container">
         <img class="active-image" src="${heroImage1}" data-church-name="Church of the Cross" data-church-location="Bluffton, SC" data-church-denomination="Episcopalian" data-photographer-credit="Photo Credit: Steven Hyatt<br />www.thechurchesofamerica.com" />
         <img src="${heroImage2}" data-church-name="Church of the Holy Cross" data-church-location="Stateburg, SC" data-church-denomination="Episcopalian" data-photographer-credit="Photo Credit: Steven Hyatt<br />www.thechurchesofamerica.com" />
@@ -51,8 +49,8 @@
             <h4>Personalized church search</h4>
         </div>
         <div class="blur"><img src="${blurImage}" /></div>
-        <div class="input-group" data-toggle="popover" data-content="Our search capability is still under development! Please check back soon!" data-trigger="hover" data-placement="bottom">
-            <input id="search-bar" disabled="disabled" type="text" class="form-control button-on-right" autofocus="autofocus" placeholder="Find Churches Near (City, State Zip)">
+        <div class="input-group" data-toggle="popover" >
+            <input id="search-bar" type="text" class="form-control button-on-right" autofocus="autofocus" placeholder="Find Churches Near (City, State Zip)">
             <span id="search-button" class="input-group-btn">
                 <button type="button" id="searchButton" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
             </span>
@@ -66,24 +64,6 @@
         <p class="photographer-credit"></p>
     </div>
 
-</div>
-
-<div class="container front-page-temp">
-    <div class="row">
-        <div class="col-sm-12">
-            <h1><span class="glyphicon glyphicon-wrench"></span> Under Development!</h1>
-        </div>
-        <div class="col-sm-4">
-            <p class="panel">
-                Thanks for visiting OfAFeather.org!<br /><br />
-                Our team is currently hard at work preparing for our beta launch during winter 2013.
-            </p>
-        </div>
-        <div class="col-sm-8">
-            <h5>In the meantime, we invite you to learn more <a href="${aboutUsLink}">about our organization</a>.</h5>             
-            <h5>Better yet, <a href="${addYourChurchLink}">add your church</a> to our database before we launch!</h5>
-        </div>
-    </div>
 </div>
 
 <div class="container features-nav-container">

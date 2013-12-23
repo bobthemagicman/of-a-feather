@@ -28,6 +28,7 @@ import com.flockspring.domain.types.impl.OrganizationImpl;
 import com.flockspring.ui.mapper.SearchResultsUIModelMapper;
 import com.flockspring.ui.model.AjaxSearchFilterRequest;
 import com.flockspring.ui.model.AjaxSearchFilterResponse;
+import com.flockspring.ui.model.OrganizationFilterMapper;
 import com.flockspring.ui.model.SearchResultUIModel;
 import com.flockspring.ui.model.SearchResultsUIModel;
 
@@ -45,15 +46,17 @@ public class SearchPageController
     private final static String RESULT_IDS = "resultIds";
     private final OrganizationDiscoveryService organizationDiscoveryService;
     private final SearchResultsUIModelMapper searchResultsModelMapper;
+    private final OrganizationFilterMapper organizationFilterMapper;
 
     @Autowired
     public SearchPageController(final OrganizationDiscoveryService organizationDiscoveryService,
-            final SearchResultsUIModelMapper searchResultsModelMapper)
+            final SearchResultsUIModelMapper searchResultsModelMapper, final OrganizationFilterMapper organizationFilterMapper)
     {
         super();
 
         this.organizationDiscoveryService = organizationDiscoveryService;
         this.searchResultsModelMapper = searchResultsModelMapper;
+        this.organizationFilterMapper = organizationFilterMapper;
     }
 
     @RequestMapping("/search")
@@ -115,7 +118,7 @@ public class SearchPageController
         @SuppressWarnings("unchecked")
         NavigableSet<String> resultIds = (NavigableSet<String>) session.getAttribute(RESULT_IDS);
         
-        OrganizationFilter organizationFilter = new OrganizationFilter();
+        OrganizationFilter organizationFilter = organizationFilterMapper.map(filterRequest);
         NavigableSet<Organization> organizations = organizationDiscoveryService.getFilteredOrganizations(organizationFilter);
         if (organizations != null && !organizations.isEmpty())
         {
