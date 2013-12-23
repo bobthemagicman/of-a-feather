@@ -76,7 +76,7 @@ public class ServiceDetailUIModel implements Comparable<ServiceDetailUIModel>
     {
         ServiceDetailUIModel left = this;
         return ComparisonChain.start()
-                .compare(left.getServiceName(), right.getServiceName())
+                .compare(left.getServiceName(), right.getServiceName(), Ordering.natural().nullsFirst())
                 .compare(left.getAgeDemographics(), right.getAgeDemographics(), Ordering.natural().nullsFirst())
                 .compare(left.getDressAttire(), right.getDressAttire(), Ordering.natural().nullsFirst())
                 .compare(left.getMusicStyle(), right.getMusicStyle(), Ordering.natural().nullsFirst())
