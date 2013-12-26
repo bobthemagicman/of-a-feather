@@ -26,7 +26,7 @@ public enum Affiliation implements LocalizedEnum
     PENTECOSTAL("affiliation.pentecostalism"),
     CHARISMATICS("affiliation.charismatics"),
     AFRICAN_INITIATED("affiliation.african.initiated"),
-    MESSIANIC_JUDA("affiliation.messianic.judiasm"),
+    MESSIANIC_JUDAISM("affiliation.messianic.judiasm"),
     UNITED_AND_UNITING("affiliation.united.and.uniting"),
     QUAKER("affiliation.quaker"),
     STONE_CAMPBELL_RESTORATION("affiliation.stone.campbell.restoration"),
