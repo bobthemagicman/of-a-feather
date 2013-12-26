@@ -61,7 +61,7 @@ public class OrganizationRepositoryImpl implements CustomOrganizationRepository<
             {
                 if(first)
                 {
-                    timeRangeCriteria.gte(str.getRangeStart()).lte(str.getRangeEnd());
+                    timeRangeCriteria.gte(str.getRangeStart().toDate()).lte(str.getRangeEnd().toDate());
                     first = false;
                 }
                 else
@@ -71,6 +71,51 @@ public class OrganizationRepositoryImpl implements CustomOrganizationRepository<
             }
             
             query.addCriteria(timeRangeCriteria);
+        }
+        
+        if(o.hasFilteredServiceDays())
+        {
+            query.addCriteria(Criteria.where("atmosphere.serviceDetails.timeAndDay.serviceDay").in(convertEnumsToStrings(o.getFilteredServiceDays())));
+        }
+        
+        if(o.hasFilteredCongregationSize())
+        {
+            query.addCriteria(Criteria.where("atmosphere.congregationSize").in(convertEnumsToStrings(o.getFilteredCongregationSize())));
+        }
+        
+        if(o.hasFilteredDressAttire())
+        {
+            query.addCriteria(Criteria.where("atmosphere.dressAttire").in(convertEnumsToStrings(o.getFilteredDressAttire())));
+        }
+        
+        if(o.hasFilteredServiceStyle())
+        {
+            query.addCriteria(Criteria.where("atmosphere.serviceStyle").in(convertEnumsToStrings(o.getFilteredServiceStyle())));
+        }
+        
+        if(o.hasFilteredMusicStyle())
+        {
+            query.addCriteria(Criteria.where("atmosphere.musicStyle").in(convertEnumsToStrings(o.getFilteredMusicStyle())));
+        }
+        
+        if(o.isGayAfirming())
+        {
+            query.addCriteria(Criteria.where("atmosphere.gayAfirming").is(true));
+        }
+        
+        if(o.hasFilteredPrograms())
+        {
+            query.addCriteria(Criteria.where("programsOffered").in(convertEnumsToStrings(o.getFilteredPrograms())));
+        }
+
+        if(o.hasFilteredLanguages())
+        {
+            query.addCriteria(Criteria.where("atmosphere.serviceDetails.languages").in(convertEnumsToStrings(o.getFilteredLanguages())));
+        }
+        
+        if(o.hasFilteredAccessibilityNeeds())
+        {
+            query.addCriteria(Criteria.where("accessabilitySupport").in(convertEnumsToStrings(o.getFilteredAccessabilitySupport())));
         }
                            
         NearQuery nearQuery = NearQuery.near(p).maxDistance(d).query(query);
