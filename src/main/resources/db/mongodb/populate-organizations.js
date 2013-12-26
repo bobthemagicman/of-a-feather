@@ -138,9 +138,9 @@ var nonDenominationalEveningOnly = {
 			postalCode : '98028',
 			state : 'WA',
 			country : 'USA',
-			longitude : -122.14927,
-			latitude : 47.68908,
-			location : [ -122.14927, 47.68908 ]
+			longitude : -122.13445,
+			latitude : 47.66884,
+			location : [ -122.13445, 47.66884 ]
 		},
 		atmosphere : {
 			congregationSize : "MEGA",
