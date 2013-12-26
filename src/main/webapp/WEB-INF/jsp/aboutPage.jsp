@@ -18,7 +18,7 @@
         <spring:url value="/static/images/site/jenn_photo.jpg" var="jennPhoto"/>
         <spring:url value="/static/images/site/justen_photo.jpg" var="justenPhoto"/>
         
-        <div class="container about-page">
+        <div class="main container about-page">
             <div class="row">
                 <div class="col-xs-12 col-sm-10 col-sm-offset-1">
                     <h1>About Us</h1>
@@ -68,6 +68,17 @@
                                 </p>
                             </div>
                         </div>
+                        <div class="team-info-container">
+                            <div class="team-member-photo">
+                                <img src="http://placehold.it/130x130" />
+                            </div>
+                            <div class="team-member-bio">
+                                <h5>Steven Yarbrough</h5>
+                                <p>
+                                    A secondary mathematics teacher for seven years, Steven was honored as &quot;Teacher of the Year&quot; at East Rutherford High School in 2010. Ready for the next challenge, he returned to graduate school at Appalachian State as a Chancellor&apos;s Fellow, where he earned an M.A. in Mathematics. He is now beginning a new stage of his life and career with a web development company in beautiful Western North Carolina. Steven enjoys working with small businesses and non-profit organizations to help make a positive impact through technology. 
+                                </p>
+                            </div>
+                        </div>    
                     </div>
 
                     <a id="visionValues"></a><h2>Vision &amp; Values</h2>

@@ -13,9 +13,6 @@ $(document).ready(function() {
         expandCollapseMap(); 
     }); 
     
-    $(window).resize(function() {
-       fixFooter(); 
-    });
     
 });
 
@@ -35,8 +32,6 @@ function initializeSearchPage() {
     initializeFilterFunctions();
 
     //paginate(10);
-    
-    fixFooter();
     
 }
 
@@ -165,8 +160,9 @@ function initializeInfoSliders() {
         $(this).slider({
            disabled: true,     
            range: false,
-           min: 1,
-           max: 10,
+           min: 0.5,
+           max: 10.45,
+           step: 0.1,
            value: sliderValue
         });
         
@@ -349,8 +345,6 @@ function displayPage(pageToShow) {
         initializeMap();
 
         //$(window).scrollTo('.first-entry');
-        
-        fixFooter();
 
     }
 }
@@ -390,8 +384,6 @@ function expandCollapseMap() {
    
     updateMap();
     
-    fixFooter();
-    
 }
 
 function fixTabPanes() {
@@ -411,7 +403,6 @@ function initializeMap() {
     
   updateMap();
   
-  fixFooter();
 }
 
 function updateMap() {
@@ -480,23 +471,6 @@ function createMarker(markerId, latitudeLongitude, markerTitle, markerAnimation,
         animation: markerAnimation,
         icon: markerIcon
      });    
-}
-
-function fixFooter() {
-    
-    var windowHeight = $(window).height();
-    
-    var mainContainerHeight = $(".main").height();
-    
-    var footerHeight = $(".footer").height();
-    
-    var newFillerHeight = windowHeight - mainContainerHeight + 100;
-    
-    if(newFillerHeight > 0) {
-        newFillerHeight += "px";
-        $(".footer").css('margin-top', newFillerHeight);
-    }
-    
 }
 
 function filterRequest() {
