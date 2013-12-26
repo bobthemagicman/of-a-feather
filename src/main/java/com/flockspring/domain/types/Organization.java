@@ -8,15 +8,12 @@ import java.util.Set;
 import com.flockspring.domain.types.impl.Atmosphere;
 import com.flockspring.domain.types.impl.SocialMedia;
 import com.flockspring.ui.model.Programs;
-import com.flockspring.ui.model.ServiceTimeRange;
 
 
 public interface Organization
 {
     
     Integer getYearFounded();
-
-    Set<Language> getLanguages();
 
     Set<MultimediaObject> getMultimedia();
 

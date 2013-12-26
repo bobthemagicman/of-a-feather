@@ -34,4 +34,9 @@ public interface ServiceDetails
     TimeAndDay getTimeAndDay();
 
     String getServiceName();
+
+    /**
+     * @return
+     */
+    Set<Language> getLanguages();
 }

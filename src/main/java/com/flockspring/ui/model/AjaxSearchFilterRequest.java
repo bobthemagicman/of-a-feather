@@ -24,7 +24,6 @@ public class AjaxSearchFilterRequest
     private Set<ServiceTimeRange> serviceTimes;
     private Set<ServiceDay> serviceDays;
     private Set<CongregationSize> congregationSize;
-    private Set<SpecialNeedsSupport> specialNeedsSupport;
     private Set<Programs> programsAndMinistries;
     private Integer atmosphereServiceStyleFloor;
     private Integer atmosphereServiceStyleCeiling;
@@ -33,6 +32,7 @@ public class AjaxSearchFilterRequest
     private Integer atmosphereDressAttireFloor;
     private Integer atmosphereDressAttireCeiling;
     private boolean gayAfirming;
+    private double[] location;
    
     public Set<Affiliation> getAffiliations()
     {
@@ -57,11 +57,6 @@ public class AjaxSearchFilterRequest
     public Set<CongregationSize> getCongregationSize()
     {
         return congregationSize;
-    }
-    
-    public Set<SpecialNeedsSupport> getSpecialNeedsSupport()
-    {
-        return specialNeedsSupport;
     }
     
     public Set<Programs> getProgramsAndMinistries()
@@ -134,11 +129,6 @@ public class AjaxSearchFilterRequest
         this.congregationSize = congregationSize;
     }
     
-    public void setSpecialNeedsSupport(Set<SpecialNeedsSupport> specialNeedsSupport)
-    {
-        this.specialNeedsSupport = specialNeedsSupport;
-    }
-    
     public void setProgramsAndMinistries(Set<Programs> programsAndMinistries)
     {
         this.programsAndMinistries = programsAndMinistries;
@@ -172,5 +162,10 @@ public class AjaxSearchFilterRequest
     public void setAtmosphereDressAttireCeiling(Integer atmosphereDressAttireCeiling)
     {
         this.atmosphereDressAttireCeiling = atmosphereDressAttireCeiling;
+    }
+
+    public double[] getLocation()
+    {
+        return location;
     }
 }

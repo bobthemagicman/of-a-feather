@@ -6,6 +6,8 @@ package com.flockspring.domain;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.springframework.data.mongodb.core.geo.Point;
+
 import com.flockspring.domain.types.AccessabilitySupport;
 import com.flockspring.domain.types.Affiliation;
 import com.flockspring.domain.types.DressAttire;
@@ -28,7 +30,6 @@ public class OrganizationFilter
 {
 
     private Set<ServiceDay> serviceDays = new TreeSet<>();
-    private Set<ServiceTimeRange> serviceTimes = new TreeSet<>();
     private Set<Affiliation> denominations = new TreeSet<>();
     private Set<Language> languages = new TreeSet<>();
     private Set<Programs> programs = new TreeSet<>();
@@ -38,15 +39,16 @@ public class OrganizationFilter
     private Set<MusicStyle> musicStyles = new TreeSet<>();
     private Set<ServiceStyle> serviceStyles = new TreeSet<>();
     private boolean gayAfirming = false;
+    private Point searchPoint = null;
+    private Set<ServiceTimeRange> serviceTimes;
 
     public OrganizationFilter(Set<ServiceDay> serviceDays, Set<ServiceTimeRange> serviceTimes, Set<Affiliation> denominations, Set<Language> languages,
             Set<Programs> programs, Set<CongregationSize> congregationSizes, Set<AccessabilitySupport> accessabilitySupports,
-            Set<DressAttire> dressAttires, Set<MusicStyle> musicStyles, Set<ServiceStyle> serviceStyles, boolean gayAfirming)
+            Set<DressAttire> dressAttires, Set<MusicStyle> musicStyles, Set<ServiceStyle> serviceStyles, boolean gayAfirming, double[] location)
     {
         super();
         
         this.serviceDays = serviceDays;
-        this.serviceTimes = serviceTimes;
         this.denominations = denominations;
         this.languages = languages;
         this.programs = programs;
@@ -56,69 +58,70 @@ public class OrganizationFilter
         this.musicStyles = musicStyles;
         this.serviceStyles = serviceStyles;
         this.gayAfirming = gayAfirming;
+        this.serviceTimes = serviceTimes;
+        
+        if(location != null && location.length == 2)
+        {
+            this.searchPoint = new Point(location[0], location[1]);
+        }
     }
 
     public boolean hasFilteredServiceDays()
     {
-        return !serviceDays.isEmpty();
-    }
-
-    public boolean hasFilteredServiceTimes()
-    {
-        return !serviceTimes.isEmpty();
+        return serviceDays != null && !serviceDays.isEmpty();
     }
 
     public boolean hasFilteredDenominations()
     {
-        return !denominations.isEmpty();
+        return denominations != null && !denominations.isEmpty();
     }
 
     public boolean hasFilteredCongregationSize()
     {
-        return !congregationSizes.isEmpty();
+        return congregationSizes != null && !congregationSizes.isEmpty();
     }
 
     public boolean hasFilteredServiceStyle()
     {
-        return !serviceStyles.isEmpty();
+        return serviceStyles != null && !serviceStyles.isEmpty();
     }
 
     public boolean hasFilteredMusicStyle()
     {
-        return !musicStyles.isEmpty();
+        return musicStyles != null && !musicStyles.isEmpty();
     }
 
     public boolean hasFilteredDressAttire()
     {
-        return !dressAttires.isEmpty();
+        return dressAttires != null && !dressAttires.isEmpty();
     }
 
     public boolean hasFilteredPrograms()
     {
-        return !programs.isEmpty();
+        return programs != null && !programs.isEmpty();
     }
 
     public boolean hasFilteredLanguages()
     {
-        return !languages.isEmpty();
+        return languages != null && !languages.isEmpty();
     }
 
     public boolean hasFilteredAccessibilityNeeds()
     {
-        return !accessabilitySupports.isEmpty();
+        return accessabilitySupports != null && !accessabilitySupports.isEmpty();
     }
-
+    
+    public boolean hasFilteredServiceTimeRange()
+    {
+        return serviceTimes != null && !serviceTimes.isEmpty();
+    }
+    
     public Set<Affiliation> getFilteredDenominations()
     {
         
         return denominations;
     }
 
-    public Set<ServiceTimeRange> getFilteredServiceTimes()
-    {
-        return serviceTimes;
-    }
-    
     public Set<Language> getFilteredLanguages()
     {
         return languages;
@@ -162,5 +165,15 @@ public class OrganizationFilter
     public boolean isGayAfirming()
     {
         return gayAfirming;
+    }
+    
+    public Point getSearchPoint()
+    {
+        return searchPoint;
+    }
+
+    public Set<ServiceTimeRange> getFilteredServiceTimes()
+    {
+        return serviceTimes;
     }
 }

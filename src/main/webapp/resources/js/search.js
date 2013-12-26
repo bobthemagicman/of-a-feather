@@ -595,6 +595,8 @@ function constructJSON() {
         }
     }
     
+    jsonString += ', "location" :';
+    jsonString += '[' + $(".container.main").data("search-longitude") + ',' + $(".container.main").data("search-latitude") + ']';  
     jsonString += ' }';
     
     return JSON.parse(jsonString);

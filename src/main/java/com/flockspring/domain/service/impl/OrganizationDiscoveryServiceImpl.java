@@ -3,8 +3,6 @@
  */
 package com.flockspring.domain.service.impl;
 
-import java.util.NavigableSet;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -24,9 +22,7 @@ import com.flockspring.domain.service.OrganizationDiscoveryService;
 import com.flockspring.domain.types.Address;
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.Region;
-import com.flockspring.domain.types.impl.AddressImpl;
 import com.flockspring.domain.types.impl.OrganizationImpl;
-import com.flockspring.ui.model.AjaxSearchFilterRequest;
 
 @Service
 public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoveryService
@@ -34,8 +30,7 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
 
     private final OrganizationRepository organizationRepository;
 //    private final RegionRepository regionRepository;
-    private final MapQuestServiceClient mapQuestServiceClient;
-    private final USPSAddressAPIService uspsAddressAPIService;
+    
     private final int defaultDistance;
     private final int defaultPageSize;
 
@@ -47,10 +42,9 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
     {
         super();
 
-        this.uspsAddressAPIService = uspsAddressAPIService;
+        
         this.organizationRepository = organizationRepository;
         this.defaultDistance = defaultDistance;
-        this.mapQuestServiceClient = mapQuestServiceClient;
         this.defaultPageSize = defaultPageSize;
 //        this.regionRepository = regionRepository;
     }
@@ -100,23 +94,16 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
     }
 
     @Override
-    public GeoPage<OrganizationImpl> searchForOrganizations(String query, int page)
+    public GeoPage<OrganizationImpl> searchForOrganizations(Address address, int page)
     {
-
-       // Address address = verifyQuery(query.trim());
-        Address address = new AddressImpl("", "", "98052", "WA", "REDMOND", "USA", new double[]{0.0, 0.0});
-
         // Check Store/Cache for matching query(non-mvp)
-        // Geolocate query via mapquest api
-        if (address != null)
+        if (address != null && address.getLatitude() != 0.0 && address.getLongitude() != 0.0)
         {
-            address = mapQuestServiceClient.getAddressGeoCode(address);
             // store in cache
-            
             Point point = new Point(address.getLongitude(), address.getLatitude()); 
             Distance dist = new Distance(defaultDistance, Metrics.MILES);
-
             Pageable pageRequest = new PageRequest(page, defaultPageSize);
+            
             GeoPage<OrganizationImpl> results = organizationRepository.findByAddressLocationNear(point, dist, pageRequest);
             
             //TODO:jbritain figure out how to not pass the Impl class up to the UI layer!
@@ -126,54 +113,15 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
         return null;
     }
 
-    private Address verifyQuery(String query)
-    {
-        
-        if(query.matches("\\d{5}"))
-        {
-            Address address = new AddressImpl("", "", query, "", "", "", new double[]{0, 0});
-            return uspsAddressAPIService.lookupCityState(address);
-        }
-        else if(query.matches(".?\\s"))
-        {
-            String city = "";
-            String state = "";
-            String address1 = "";
-            String address2 = "";
-            
-            //Just city and state <--if there is a comment you need to break up the code
-            if(query.matches("\\w{2}")){
-                
-                String[] parts = query.split("(\\w)(\\s+)([\\.,])");                
-                if(parts.length > 0)
-                {
-                    city = parts[0];
-                }
-                
-                if(parts.length > 1)
-                {
-                    state = parts[1];
-                }
-            }
-           
-            Address address = new AddressImpl(address1, address2, "", state, city, "USA", new double[]{0, 0});
-            return uspsAddressAPIService.lookupZip(address);
-        }
-        
-        return null;
-    }
 
     @Override
-    public NavigableSet<Organization> getFilteredOrganizations(OrganizationFilter filter)
+    public GeoPage<OrganizationImpl> getFilteredOrganizations(OrganizationFilter filter)
     {
-        Point p = new Point(1, 2);
+        
         Distance d = new Distance(this.defaultDistance);
         
-        
-        
         PageRequest page = new PageRequest(0, defaultPageSize);
-        organizationRepository.findOrganizationsByFilteredCriteria(p, d, filter, page);
-        return null;
+        return organizationRepository.findOrganizationsByFilteredCriteria(filter.getSearchPoint(), d, filter, page);
     }
 
     @Override

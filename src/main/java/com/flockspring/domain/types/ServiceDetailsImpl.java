@@ -27,9 +27,10 @@ public class ServiceDetailsImpl implements ServiceDetails, Comparable<ServiceDet
     private Integer durationInMinutes;
     private TimeAndDay timeAndDay;
     private String serviceName;
+    private Set<Language> languages;
     
     public ServiceDetailsImpl(MusicStyle musicStyle, ServiceStyle serviceStyle, DressAttire dressAttire, AgeDemographics ageDemongraphics,
-            Set<MusicalInstruments> instruments, int durationInMinutes, TimeAndDay timeAndDay, String serviceName)
+            Set<MusicalInstruments> instruments, int durationInMinutes, TimeAndDay timeAndDay, String serviceName, Set<Language> languages)
     {
         super();
         this.musicStyle = musicStyle;
@@ -40,6 +41,7 @@ public class ServiceDetailsImpl implements ServiceDetails, Comparable<ServiceDet
         this.durationInMinutes = durationInMinutes;
         this.timeAndDay = timeAndDay;
         this.serviceName = serviceName;
+        this.languages = languages;
     }
 
     @Override
@@ -90,6 +92,12 @@ public class ServiceDetailsImpl implements ServiceDetails, Comparable<ServiceDet
         return serviceName;
     }
 
+    @Override
+    public Set<Language> getLanguages()
+    {
+        return languages;
+    }
+
     public void setMusicStyle(MusicStyle musicStyle)
     {
         this.musicStyle = musicStyle;
@@ -133,6 +141,16 @@ public class ServiceDetailsImpl implements ServiceDetails, Comparable<ServiceDet
     public void setServiceName(String serviceName)
     {
         this.serviceName = serviceName;
+    }
+    
+    public void setTimeAndDay(TimeAndDay timeAndDay)
+    {
+        this.timeAndDay = timeAndDay;
+    }
+
+    public void setLanguages(Set<Language> languages)
+    {
+        this.languages = languages;
     }
 
     @Override

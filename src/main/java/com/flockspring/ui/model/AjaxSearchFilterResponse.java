@@ -3,8 +3,6 @@
  */
 package com.flockspring.ui.model;
 
-import java.util.NavigableSet;
-import java.util.TreeSet;
 
 /**
  * DenoiminationFilterResponse.java
@@ -19,16 +17,14 @@ public class AjaxSearchFilterResponse
     private final String ERROR = "";
     private final String NO_RESULTS = "";
     
-    private final NavigableSet<String> organizationIds;
     private final SearchResultsUIModel searchResultUIModel;
     private final String statusMessage;
     private final String errorMessage;
     
-    public AjaxSearchFilterResponse(NavigableSet<String> organizationIds, SearchResultsUIModel searchResultUIModel)
+    public AjaxSearchFilterResponse(SearchResultsUIModel searchResultUIModel)
     {
         super();
         
-        this.organizationIds = organizationIds;
         this.searchResultUIModel = searchResultUIModel;
         this.statusMessage = SUCCESS;
         this.errorMessage = "";
@@ -36,7 +32,6 @@ public class AjaxSearchFilterResponse
     
     public AjaxSearchFilterResponse()
     {
-        this.organizationIds = new TreeSet<>();
         this.searchResultUIModel = null;
         this.statusMessage = NO_RESULTS;
         this.errorMessage = "";
@@ -44,17 +39,11 @@ public class AjaxSearchFilterResponse
     
     public AjaxSearchFilterResponse(String errorMessage)
     {
-        this.organizationIds = new TreeSet<>();
         this.searchResultUIModel = null;
         this.statusMessage = ERROR;
         this.errorMessage = errorMessage;
     }
 
-    public NavigableSet<String> getOrganizationIds()
-    {
-        return organizationIds;
-    }
-    
     public SearchResultsUIModel getOrganizations()
     {
         return searchResultUIModel;

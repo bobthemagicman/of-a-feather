@@ -24,8 +24,12 @@ var org1 = {
 			ageDemographics :[], //See available values below
 			instruments : [], //See available values below
 			durationInMinutes : 90, //no quotes, must be a whole number
-			startTime : '9:20am', //Service start time, will be used on the profile page in multiple places
-			serviceName: '9:20 Service' //Name of the service, will be displayed under Church Atmosphere on the profile page
+			serviceName: '9:20 Service', //Name of the service, will be displayed under Church Atmosphere on the profile page
+			timeAndDay : {
+				startTime : '???????',
+				serviceDay : 'SUNDAY' 
+			},
+			languages : ['ENGLISH', 'AMERICAN_SIGN_LANGUAGE', 'SPANISH']
 		}, {
 			musicStyle : 'CONTEMPORARY_3',
 			serviceStyle : 'HIGH_ENERGY_3',
@@ -33,8 +37,12 @@ var org1 = {
 			ageDemographics : [],
 			instruments : [],
 			durationInMinutes : 90,
-			startTime : '11:00am',
-			serviceName : '11am Service'			
+			serviceName : '11am Service',
+			timeAndDay : {
+				startTime : '??????',
+				serviceDay : 'SUNDAY' 
+			},
+			languages : ['ENGLISH', 'AMERICAN_SIGN_LANGUAGE', 'SPANISH']
 		}, {
 			musicStyle : 'CONTEMPORARY_3',
 			serviceStyle : 'HIGH_ENERGY_3',
@@ -42,8 +50,12 @@ var org1 = {
 			ageDemographics : [],
 			instruments : [],
 			durationInMinutes : 90,
-			startTime : '6:00pm',
-			serviceName : 'Sunday Evening Service'
+			serviceName : 'Sunday Evening Service',
+			timeAndDay : {
+				startTime : '?????',
+				serviceDay : 'SUNDAY' 
+			},
+			languages : ['ENGLISH', 'AMERICAN_SIGN_LANGUAGE', 'SPANISH']
 		} ],
 		gayAffirming : false,
 		homeChurch : false
@@ -122,10 +134,6 @@ var org1 = {
 		emailAddress : '',
 		yearStarted : ''
 	} ],
-
-	serviceTimes : [ 'EARLY_MORNING', 'MID_MORNING', 'EVENING' ],			//See available values below
-	serviceDays : [ 'SUNDAY' ],												//See available values below
-	languages : ['ENGLISH', 'AMERICAN_SIGN_LANGUAGE', 'SPANISH'],
 	programsOffered : [ 'INFANT_CARE', 'TODDLER_CARE', 'SUNDAY_SCHOOL',
                     	'BIBLE_STUDY', 'ADULT_EDUCATION', 'SPIRITUAL_CLASSES',
                     	'PRE_SCHOOL', 'PRIMARY_SCHOOL', 'SECONDARY_SCHOOL',

@@ -15,13 +15,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import com.flockspring.domain.types.AccessabilitySupport;
 import com.flockspring.domain.types.Address;
 import com.flockspring.domain.types.Affiliation;
-import com.flockspring.domain.types.Language;
 import com.flockspring.domain.types.Leader;
 import com.flockspring.domain.types.MultimediaObject;
 import com.flockspring.domain.types.Organization;
-import com.flockspring.domain.types.ServiceDay;
 import com.flockspring.ui.model.Programs;
-import com.flockspring.ui.model.ServiceTimeRange;
 
 /**
  * OrganizationImpl.java
@@ -51,14 +48,13 @@ public class OrganizationImpl implements Organization, Serializable
 
     private Set<MultimediaObjectImpl> multimedia;
     private Set<LeaderImpl> leadershipTeam;
-    private Set<Language> languages;
     private Set<Programs> programsOffered;
     private Set<AccessabilitySupport> accessabilitysupport;
 
     public OrganizationImpl(String id, Integer yearFounded, String name, String missionStatement, String statementOfFaith, String welcomeMessage,
             AddressImpl address, AtmosphereImpl atmosphere, SocialMediaImpl socialMedia, Affiliation denomination, Affiliation subDenomination,
-            Affiliation primaryAffiliation, Set<MultimediaObjectImpl> multimedia, Set<LeaderImpl> leadershipTeam, Set<ServiceTimeRange> serviceTimes,
-            Set<ServiceDay> serviceDays, Set<Language> languages, Set<Programs> programsOffered, Set<AccessabilitySupport> accessabilitysupport)
+            Affiliation primaryAffiliation, Set<MultimediaObjectImpl> multimedia, Set<LeaderImpl> leadershipTeam,
+            Set<Programs> programsOffered, Set<AccessabilitySupport> accessabilitysupport)
     {
         super();
         
@@ -76,7 +72,6 @@ public class OrganizationImpl implements Organization, Serializable
         this.primaryAffiliation = primaryAffiliation;
         this.multimedia = multimedia;
         this.leadershipTeam = leadershipTeam;
-        this.languages = languages;
         this.programsOffered = programsOffered;
         this.accessabilitysupport = accessabilitysupport;
     }
@@ -102,12 +97,6 @@ public class OrganizationImpl implements Organization, Serializable
     public Integer getYearFounded()
     {
         return yearFounded;
-    }
-
-    @Override
-    public Set<Language> getLanguages()
-    {
-        return languages;
     }
 
     @Override
@@ -243,11 +232,6 @@ public class OrganizationImpl implements Organization, Serializable
     public void setLeadershipTeam(Set<LeaderImpl> leadershipTeam)
     {
         this.leadershipTeam = leadershipTeam;
-    }
-
-    public void setLanguages(Set<Language> languages)
-    {
-        this.languages = languages;
     }
 
     public void setProgramsOffered(Set<Programs> programmsOffered)

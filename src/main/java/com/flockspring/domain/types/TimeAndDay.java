@@ -3,7 +3,7 @@
  */
 package com.flockspring.domain.types;
 
-import org.joda.time.LocalTime;
+import org.joda.time.LocalDateTime;
 
 import com.google.common.collect.ComparisonChain;
 
@@ -17,17 +17,17 @@ import com.google.common.collect.ComparisonChain;
 public class TimeAndDay implements Comparable<TimeAndDay>
 {
 
-    private LocalTime startTime;
+    private LocalDateTime startTime;
     private ServiceDay serviceDay;
    
-    public TimeAndDay(LocalTime startTime, ServiceDay serviceDay)
+    public TimeAndDay(LocalDateTime startTime, ServiceDay serviceDay)
     {
         super();
         this.startTime = startTime;
         this.serviceDay = serviceDay;
     }
     
-    public LocalTime getStartTime()
+    public LocalDateTime getStartTime()
     {
         return startTime;
     }
@@ -37,7 +37,7 @@ public class TimeAndDay implements Comparable<TimeAndDay>
         return serviceDay;
     }
     
-    public void setStartTime(LocalTime startTime)
+    public void setStartTime(LocalDateTime startTime)
     {
         this.startTime = startTime;
     }

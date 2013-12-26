@@ -3,12 +3,6 @@
  */
 package com.flockspring.ui.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NavigableSet;
-import java.util.Set;
-import java.util.TreeSet;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +15,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.flockspring.dataaccess.service.client.MapQuestServiceClient;
+import com.flockspring.dataaccess.service.client.USPSAddressAPIService;
 import com.flockspring.domain.OrganizationFilter;
 import com.flockspring.domain.service.OrganizationDiscoveryService;
-import com.flockspring.domain.types.Organization;
+import com.flockspring.domain.types.Address;
+import com.flockspring.domain.types.impl.AddressImpl;
 import com.flockspring.domain.types.impl.OrganizationImpl;
+import com.flockspring.ui.mapper.OrganizationFilterMapper;
 import com.flockspring.ui.mapper.SearchResultsUIModelMapper;
 import com.flockspring.ui.model.AjaxSearchFilterRequest;
 import com.flockspring.ui.model.AjaxSearchFilterResponse;
-import com.flockspring.ui.model.OrganizationFilterMapper;
-import com.flockspring.ui.model.SearchResultUIModel;
 import com.flockspring.ui.model.SearchResultsUIModel;
 
 /**
@@ -43,20 +39,24 @@ import com.flockspring.ui.model.SearchResultsUIModel;
 @RequestMapping("/search")
 public class SearchPageController
 {
-    private final static String RESULT_IDS = "resultIds";
     private final OrganizationDiscoveryService organizationDiscoveryService;
     private final SearchResultsUIModelMapper searchResultsModelMapper;
     private final OrganizationFilterMapper organizationFilterMapper;
+    private final MapQuestServiceClient mapQuestServiceClient;
+    private final USPSAddressAPIService uspsAddressAPIService;
 
     @Autowired
     public SearchPageController(final OrganizationDiscoveryService organizationDiscoveryService,
-            final SearchResultsUIModelMapper searchResultsModelMapper, final OrganizationFilterMapper organizationFilterMapper)
+            final SearchResultsUIModelMapper searchResultsModelMapper, final OrganizationFilterMapper organizationFilterMapper,
+            final MapQuestServiceClient mapQuestServiceClient, final USPSAddressAPIService uspsAddressAPIService)
     {
         super();
 
         this.organizationDiscoveryService = organizationDiscoveryService;
         this.searchResultsModelMapper = searchResultsModelMapper;
         this.organizationFilterMapper = organizationFilterMapper;
+        this.mapQuestServiceClient = mapQuestServiceClient;
+        this.uspsAddressAPIService = uspsAddressAPIService;
     }
 
     @RequestMapping("/search")
@@ -73,40 +73,20 @@ public class SearchPageController
             //well fuck
         }
         
-        Map<String, Object> model = new HashMap<>();
-        NavigableSet<SearchResultUIModel> results = new TreeSet<SearchResultUIModel>();
-
         // check for special characters
         if (!query.matches("\\d{5}") && !query.matches(".?\\s.?"))
         {
             // redirect to error page, likely a bad deeplink
         }
 
-        GeoPage<OrganizationImpl> geoPageResult = organizationDiscoveryService.searchForOrganizations(query, pageNum);
-//        storeResultIdsInSession(organizations, session);
-        SearchResultsUIModel searchResultsUIModel = searchResultsModelMapper.map(geoPageResult);
+        //Address address = verifyQuery(query.trim());
+        Address address = new AddressImpl("", "", "98052", "WA", "REDMOND", "USA", new double[]{0.0, 0.0});
+        address = mapQuestServiceClient.getAddressGeoCode(address);
+        
+        GeoPage<OrganizationImpl> geoPageResult = organizationDiscoveryService.searchForOrganizations(address, pageNum);
+        SearchResultsUIModel searchResultsUIModel = searchResultsModelMapper.map(geoPageResult, address);
 
         return new ModelAndView("searchResultsPage", "results", searchResultsUIModel);
-    }
-
-    private void storeResultIdsInSession(Set<Organization> organizations, HttpSession session)
-    {
-        @SuppressWarnings("unchecked")
-        NavigableSet<String> resultIds = (NavigableSet<String>) session.getAttribute(RESULT_IDS);
-        if (resultIds == null || resultIds.isEmpty())
-        {
-            resultIds = new TreeSet<>();
-        }
-
-        if (organizations != null && !organizations.isEmpty())
-        {
-            for (Organization o : organizations)
-            {
-                resultIds.add(o.getId());
-            }
-        }
-
-        session.setAttribute(RESULT_IDS, resultIds);
     }
 
     @RequestMapping(value = "/ajax/filter-results", method = RequestMethod.POST, headers =
@@ -115,21 +95,14 @@ public class SearchPageController
     AjaxSearchFilterResponse ajaxResultsFilter(@RequestBody AjaxSearchFilterRequest filterRequest, HttpSession session)
     {
 
-        @SuppressWarnings("unchecked")
-        NavigableSet<String> resultIds = (NavigableSet<String>) session.getAttribute(RESULT_IDS);
-        
         OrganizationFilter organizationFilter = organizationFilterMapper.map(filterRequest);
-        NavigableSet<Organization> organizations = organizationDiscoveryService.getFilteredOrganizations(organizationFilter);
-        if (organizations != null && !organizations.isEmpty())
+        GeoPage<OrganizationImpl> geoResult = organizationDiscoveryService.getFilteredOrganizations(organizationFilter);
+        
+        if (geoResult.getNumberOfElements() != 0)
         {
 
-            Map<String, Organization> organizationMap = createOrganizationMap(organizations);
-            NavigableSet<String> filteredResultIds = filterResultIdsWithRetrievedOrganizations(organizationMap, resultIds);
-            GeoPage<OrganizationImpl> filteredOrganization = filterRetrievedOrganizationsWithResultIds(organizationMap, resultIds);
-
-            //storeResultIdsInSession(filteredOrganization, session);
-            SearchResultsUIModel searchResultUIModels = searchResultsModelMapper.map(filteredOrganization, filterRequest);
-            AjaxSearchFilterResponse response = new AjaxSearchFilterResponse(filteredResultIds, searchResultUIModels);
+            SearchResultsUIModel searchResultUIModels = searchResultsModelMapper.map(geoResult, filterRequest);
+            AjaxSearchFilterResponse response = new AjaxSearchFilterResponse(searchResultUIModels);
 
             return response;
         }
@@ -137,35 +110,40 @@ public class SearchPageController
         return new AjaxSearchFilterResponse();
     }
 
-    private GeoPage<OrganizationImpl> filterRetrievedOrganizationsWithResultIds(Map<String, Organization> organizationMap,
-            NavigableSet<String> resultIds)
+    private Address verifyQuery(String query)
     {
-        NavigableSet<Organization> filteredOrganizations = new TreeSet<>();
-
-        for (String s : resultIds)
+        
+        if(query.matches("\\d{5}"))
         {
-            if (organizationMap.containsKey(s))
-            {
-                filteredOrganizations.add(organizationMap.get(s));
+            Address address = new AddressImpl("", "", query, "", "", "", new double[]{0, 0});
+            return uspsAddressAPIService.lookupCityState(address);
+        }
+        else if(query.matches(".?\\s"))
+        {
+            String city = "";
+            String state = "";
+            String address1 = "";
+            String address2 = "";
+            
+            //Just city and state <--if there is a comment you need to break up the code
+            if(query.matches("\\w{2}")){
+                
+                String[] parts = query.split("(\\w)(\\s+)([\\.,])");                
+                if(parts.length > 0)
+                {
+                    city = parts[0];
+                }
+                
+                if(parts.length > 1)
+                {
+                    state = parts[1];
+                }
             }
+           
+            Address address = new AddressImpl(address1, address2, "", state, city, "USA", new double[]{0, 0});
+            return uspsAddressAPIService.lookupZip(address);
         }
-
+        
         return null;
     }
-
-    private NavigableSet<String> filterResultIdsWithRetrievedOrganizations(Map<String, Organization> organizationMap, NavigableSet<String> resultIds)
-    {
-        return null;
-    }
-
-    private Map<String, Organization> createOrganizationMap(Set<Organization> organizations)
-    {
-        Map<String, Organization> organizationMap = new HashMap<>();
-        for (Organization o : organizations)
-        {
-            organizationMap.put(o.getId(), o);
-        }
-        return organizationMap;
-    }
-
 }

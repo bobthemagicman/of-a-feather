@@ -22,7 +22,7 @@
         <%-- Site Header --%>
         <%@ include file="/WEB-INF/jsp/partials/siteHeader.jsp"%>
 
-        <div class="container main" data-search-latitude="37.7833" data-search-longitude="-122.4167">
+        <div class="container main" data-search-latitude="${results.searchLatitude}" data-search-longitude="${results.searchLongitude}">
 
             <spring:url value="/static/images/site/expand_map_icon.png" var="expandMapIcon" />    
             
@@ -50,10 +50,10 @@
                             <div id="collapseOne" class="panel-collapse collapse in">
                                 <div id="denominationOptions" class="panel-body filter" data-filter-type="affiliations">
                                     <div class="checkbox-group">
-                                        <label class="checkbox" for="denom1"><input id="denom1" type="checkbox" data-linked-checkbox="denomList3" data-filter-option="BAPTISTS" />Baptist<span class="badge">999+</span></label>
-                                        <label class="checkbox" for="denom2"><input id="denom2" type="checkbox" data-linked-checkbox="denomList4" data-filter-option="CATHOLICISM" />Catholic<span class="badge">103</span></label>
-                                        <label class="checkbox" for="denom3"><input id="denom3" type="checkbox" data-linked-checkbox="denomList9" data-filter-option="ANGLICANISM" />Episcopal (Anglican)<span class="badge">35</span></label>
-                                        <label class="checkbox" for="denom4"><input id="denom4" type="checkbox" data-linked-checkbox="denomList12" data-filter-option="LUTHERANISM" />Lutheran<span class="badge">8</span></label>
+                                        <label class="checkbox" for="denom1"><input id="denom1" type="checkbox" data-linked-checkbox="denomList3" data-filter-option="BAPTIST" />Baptist<span class="badge">999+</span></label>
+                                        <label class="checkbox" for="denom2"><input id="denom2" type="checkbox" data-linked-checkbox="denomList4" data-filter-option="CATHOLIC" />Catholic<span class="badge">103</span></label>
+                                        <label class="checkbox" for="denom3"><input id="denom3" type="checkbox" data-linked-checkbox="denomList9" data-filter-option="ANGLICAN" />Episcopal (Anglican)<span class="badge">35</span></label>
+                                        <label class="checkbox" for="denom4"><input id="denom4" type="checkbox" data-linked-checkbox="denomList12" data-filter-option="LUTHERAN" />Lutheran<span class="badge">8</span></label>
                                         <a data-toggle="modal" href="#denominationsModal" role="button" class="see-more-link">See more...</a>
                                     </div><!-- /.checkbox-group -->
                                     <div class="modal fade" id="denominationsModal">
@@ -70,8 +70,8 @@
 
                                                             <label class="checkbox" for="denomList1"><input id="denomList1" type="checkbox" data-filter-option="APISTOLIC" />Apostolic</label>
                                                             <label class="checkbox" for="denomList2"><input id="denomList2" type="checkbox" data-filter-option="" />Assemblies of God</label>
-                                                            <label class="checkbox" for="denomList3"><input id="denomList3" type="checkbox" data-linked-checkbox="denom1" data-filter-option="BAPTISTS" />Baptist</label>
-                                                            <label class="checkbox" for="denomList4"><input id="denomList4" type="checkbox" data-linked-checkbox="denom2" data-filter-option="CATHOLICISM" />Catholic</label>
+                                                            <label class="checkbox" for="denomList3"><input id="denomList3" type="checkbox" data-linked-checkbox="denom1" data-filter-option="BAPTIST" />Baptist</label>
+                                                            <label class="checkbox" for="denomList4"><input id="denomList4" type="checkbox" data-linked-checkbox="denom2" data-filter-option="CATHOLIC" />Catholic</label>
 
                                                             <label class="checkbox" for="denomList5"><input id="denomList5" type="checkbox" data-filter-option="CHRISTIAN_SCIENCE" />Christian Science</label>
                                                             <label class="checkbox" for="denomList6"><input id="denomList6" type="checkbox" data-filter-option="" />Church of God</label>

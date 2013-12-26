@@ -15,13 +15,13 @@ import com.flockspring.ui.model.LocalizedEnum;
 public enum AgeDemographics implements LocalizedEnum
 {
     SPECTRUM_MIN("age.demographics.youth"),//not a slider value
-    YOUTH_3("age.demographics.college.and.high.school"),
+    YOUTH_1("age.demographics.college.and.high.school"),
     YOUTH_2("age.demographics.post.college"),
-    YOUTH_1("age.demographics.families.with.young.children"),
-    NEUTRAL("age.demographics.all.ages"),
-    MATURE_1("age.demographics.families.with.older.children"),
-    MATURE_2("age.demographics.mature"),
-    MATURE_3("age.demographics.senior"),
+    YOUTH_3("age.demographics.families.with.young.children"),
+    NEUTRAL_4("age.demographics.all.ages"),
+    MATURE_5("age.demographics.families.with.older.children"),
+    MATURE_6("age.demographics.mature"),
+    MATURE_7("age.demographics.senior"),
     SPECTRUM_MAX("age.demographics.mature");//not a slider value
         
     private String localizationStringCode;
