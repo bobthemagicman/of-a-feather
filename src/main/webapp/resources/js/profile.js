@@ -3,8 +3,6 @@ $(document).ready(function() {
    
     initializeCarousels();
    
-    initializeMap();
-    
     initializeSliders();
    
     initializeVideoThumbnails();
@@ -17,8 +15,9 @@ function initializeSliders() {
         var sliderValue = $(this).attr("data-slider-value");
         $(this).slider({ 
            disabled: true,
-           min: 1,
-           max: 10,
+           min: 0.8,
+           max: 10.4,
+           step: 0.1,
            value: sliderValue
         });
         var sliderDescription = $(this).attr("data-slider-description");
@@ -94,7 +93,7 @@ function placeMarker() {
 
     markerLatLong = new google.maps.LatLng(lat, long);
 
-    createMarker(markerLatLong, churchName, google.maps.Animation.DROP, 'images/base_marker_small.png');
+    createMarker(markerLatLong, churchName, google.maps.Animation.DROP, 'http://ofafeather-testing.appwebmasters.com/images/base_marker_small.png');
  
 }
 
