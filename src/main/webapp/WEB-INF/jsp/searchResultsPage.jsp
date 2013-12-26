@@ -69,45 +69,45 @@
                                                         <div class="col-sm-6">
 
                                                             <label class="checkbox" for="denomList1"><input id="denomList1" type="checkbox" data-filter-option="APISTOLIC" />Apostolic</label>
-                                                            <label class="checkbox" for="denomList2"><input id="denomList2" type="checkbox" data-filter-option="" />Assemblies of God</label>
+                                                            <label class="checkbox" for="denomList2"><input id="denomList2" type="checkbox" data-filter-option="ASSEMBLIES_OF_GOD" />Assemblies of God</label>
                                                             <label class="checkbox" for="denomList3"><input id="denomList3" type="checkbox" data-linked-checkbox="denom1" data-filter-option="BAPTIST" />Baptist</label>
                                                             <label class="checkbox" for="denomList4"><input id="denomList4" type="checkbox" data-linked-checkbox="denom2" data-filter-option="CATHOLIC" />Catholic</label>
 
                                                             <label class="checkbox" for="denomList5"><input id="denomList5" type="checkbox" data-filter-option="CHRISTIAN_SCIENCE" />Christian Science</label>
-                                                            <label class="checkbox" for="denomList6"><input id="denomList6" type="checkbox" data-filter-option="" />Church of God</label>
+                                                            <label class="checkbox" for="denomList6"><input id="denomList6" type="checkbox" data-filter-option="CHURCH_OF_GOD" />Church of God</label>
                                                             <label class="checkbox" for="denomList7"><input id="denomList7" type="checkbox" data-filter-option="BRETHREN" />Church of the Brethren</label>
 
 
 
-                                                            <label class="checkbox" for="denomList8"><input id="denomList8" type="checkbox" data-filter-option="" />Disciples of Christ</label>
+                                                            <label class="checkbox" for="denomList8"><input id="denomList8" type="checkbox" data-filter-option="DISCIPLES_OF_CHRIST" />Disciples of Christ</label>
 
-                                                            <label class="checkbox" for="denomList9"><input id="denomList9" type="checkbox" data-linked-checkbox="denom3" data-filter-option="ANGLICANISM" />Episcopal (Anglican)</label>
+                                                            <label class="checkbox" for="denomList9"><input id="denomList9" type="checkbox" data-linked-checkbox="denom3" data-filter-option="ANGLICAN" />Episcopal (Anglican)</label>
 
-                                                            <label class="checkbox" for="denomList10"><input id="denomList10" type="checkbox" data-filter-option="" />Foursquare</label>
+                                                            <label class="checkbox" for="denomList10"><input id="denomList10" type="checkbox" data-filter-option="FOURSQUARE" />Foursquare</label>
 
-                                                            <label class="checkbox" for="denomList11"><input id="denomList11" type="checkbox" data-filter-option="" />Jehovah&apos;s Witness</label>
-                                                            <label class="checkbox" for="denomList12"><input id="denomList12" type="checkbox" data-linked-checkbox="denom4" data-filter-option="LUTHERANISM" />Lutheran</label>
-                                                            <label class="checkbox" for="denomList13"><input id="denomList13" type="checkbox" data-filter-option="" />Mennonite</label>
+                                                            <label class="checkbox" for="denomList11"><input id="denomList11" type="checkbox" data-filter-option="JEHOVAS_WITNESS" />Jehovah&apos;s Witness</label>
+                                                            <label class="checkbox" for="denomList12"><input id="denomList12" type="checkbox" data-linked-checkbox="denom4" data-filter-option="LUTHERAN" />Lutheran</label>
+                                                            <label class="checkbox" for="denomList13"><input id="denomList13" type="checkbox" data-filter-option="MENNONITE" />Mennonite</label>
                                                             <label class="checkbox" for="denomList14"><input id="denomList14" type="checkbox" data-filter-option="MESSIANIC_JUDAISM" />Messianic</label>
                                                         </div>
                                                         <div class="col-sm-6">
                                                             <label class="checkbox" for="denomList15"><input id="denomList15" type="checkbox" data-linked-checkbox="denom5" data-filter-option="METHODISTS" />Methodist</label>
                                                             <label class="checkbox" for="denomList16"><input id="denomList16" type="checkbox" data-filter-option="LATTER_DAY_SAINTS" />Latter-Day Saints/Mormon</label>
-                                                            <label class="checkbox" for="denomList17"><input id="denomList17" type="checkbox" data-filter-option="" />Nazarene</label>
+                                                            <label class="checkbox" for="denomList17"><input id="denomList17" type="checkbox" data-filter-option="NAZARENE" />Nazarene</label>
                                                             <label class="checkbox" for="denomList18"><input id="denomList18" type="checkbox" data-linked-checkbox="denom6" data-filter-option="NONDENOMINATIONAL" />Non-Denominational</label>
 
-                                                            <label class="checkbox" for="denomList19"><input id="denomList19" type="checkbox" data-filter-option="" />Open Bible</label>
+                                                            <label class="checkbox" for="denomList19"><input id="denomList19" type="checkbox" data-filter-option="OPEN_BIBLE" />Open Bible</label>
 
-                                                            <label class="checkbox" for="denomList20"><input id="denomList20" type="checkbox" data-filter-option="" />Orthodox</label>
-                                                            <label class="checkbox" for="denomList21"><input id="denomList21" type="checkbox" data-filter-option="PENTECOSTALISM" />Pentecostal</label>
-                                                            <label class="checkbox" for="denomList22"><input id="denomList22" type="checkbox" data-linked-checkbox="denom7" data-filter-option="PRESBYTERIANISM" />Presbyterian</label>
+                                                            <label class="checkbox" for="denomList20"><input id="denomList20" type="checkbox" data-filter-option="ORTHODOX" />Orthodox</label>
+                                                            <label class="checkbox" for="denomList21"><input id="denomList21" type="checkbox" data-filter-option="PENTECOSTAL" />Pentecostal</label>
+                                                            <label class="checkbox" for="denomList22"><input id="denomList22" type="checkbox" data-linked-checkbox="denom7" data-filter-option="PRESBYTERIAN" />Presbyterian</label>
 
                                                             <label class="checkbox" for="denomList23"><input id="denomList23" type="checkbox" data-filter-option="QUAKER" />Quaker (Friends)</label>
-                                                            <label class="checkbox" for="denomList24"><input id="denomList24" type="checkbox" data-filter-option="" />Reformed Churches</label>
-                                                            <label class="checkbox" for="denomList25"><input id="denomList25" type="checkbox" data-filter-option="" />Seventh Day Adventist</label>
+                                                            <label class="checkbox" for="denomList24"><input id="denomList24" type="checkbox" data-filter-option="REFORMED_CHURCHES" />Reformed Churches</label>
+                                                            <label class="checkbox" for="denomList25"><input id="denomList25" type="checkbox" data-filter-option="SEVENTH_DAY_ADVENTIST" />Seventh Day Adventist</label>
 
                                                             <label class="checkbox" for="denomList26"><input id="denomList26" type="checkbox" data-filter-option="UNITARIAN" />Unitarian Universalist</label>
-                                                            <label class="checkbox" for="denomList27"><input id="denomList27" type="checkbox" data-filter-option="" />United Church of Christ</label>
+                                                            <label class="checkbox" for="denomList27"><input id="denomList27" type="checkbox" data-filter-option="UNITED_CHURCH_OF_CHRIST" />United Church of Christ</label>
 
                                                         </div>
                                                     </div>
