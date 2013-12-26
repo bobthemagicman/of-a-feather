@@ -7,6 +7,7 @@ import java.util.Set;
 
 import com.flockspring.domain.types.impl.AgeDemographics;
 import com.flockspring.domain.types.impl.MusicalInstruments;
+import com.flockspring.ui.model.ServiceTimeRange;
 
 /**
  * ChurchService.java
@@ -30,7 +31,12 @@ public interface ServiceDetails
 
     int getDurationInMinutes();
     
-    String getStartTime();
+    TimeAndDay getTimeAndDay();
 
     String getServiceName();
+
+    /**
+     * @return
+     */
+    Set<Language> getLanguages();
 }

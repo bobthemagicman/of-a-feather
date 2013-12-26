@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.flockspring.domain.types.AccessabilitySupport;
 import com.flockspring.domain.types.Affiliation;
+import com.flockspring.domain.types.Language;
 import com.flockspring.domain.types.Leader;
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.ServiceDetails;
@@ -70,8 +71,7 @@ public class OrganizationUIModelMapper
 
         Set<LeaderUIModel> leadershipTeam = leaderUIModelMapper.map(organization.getLeadershipTeam());
         Set<MultimediaUIModel> multimedia = multimediaUIModelMapper.map(organization.getMultimedia());
-        Set<LanguageUIModel> languages = languageUIModelMapper.map(organization.getLanguages());
-
+        Set<LanguageUIModel> languages = getLanguages(); 
         OrganizationOverviewUIModel overview = getOrganizationOverviewUIModel(organization, distance);
 
         OrganizationStatementUIModel statements = new OrganizationStatementUIModel(organization.getMissionStatement(),
@@ -87,6 +87,12 @@ public class OrganizationUIModelMapper
                 serviceDetails, programsOffered);
 
         return model;
+    }
+
+    private Set<LanguageUIModel> getLanguages()
+    {
+        
+        return null;
     }
 
     private Map<Programs, Set<Programs>> getProgramsOffered(Organization organization)

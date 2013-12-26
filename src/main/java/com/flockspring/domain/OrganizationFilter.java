@@ -4,8 +4,20 @@
 package com.flockspring.domain;
 
 import java.util.Set;
+import java.util.TreeSet;
 
+import org.springframework.data.mongodb.core.geo.Point;
+
+import com.flockspring.domain.types.AccessabilitySupport;
 import com.flockspring.domain.types.Affiliation;
+import com.flockspring.domain.types.DressAttire;
+import com.flockspring.domain.types.Language;
+import com.flockspring.domain.types.MusicStyle;
+import com.flockspring.domain.types.ServiceDay;
+import com.flockspring.domain.types.ServiceStyle;
+import com.flockspring.ui.model.CongregationSize;
+import com.flockspring.ui.model.Programs;
+import com.flockspring.ui.model.ServiceTimeRange;
 
 /**
  * OrganizationFilter.java
@@ -17,104 +29,151 @@ import com.flockspring.domain.types.Affiliation;
 public class OrganizationFilter
 {
 
-    public Set<Affiliation> getFilteredDenominations()
-    {
-        
-        return null;
-    }
+    private Set<ServiceDay> serviceDays = new TreeSet<>();
+    private Set<Affiliation> denominations = new TreeSet<>();
+    private Set<Language> languages = new TreeSet<>();
+    private Set<Programs> programs = new TreeSet<>();
+    private Set<CongregationSize> congregationSizes = new TreeSet<>();
+    private Set<AccessabilitySupport> accessabilitySupports = new TreeSet<>();
+    private Set<DressAttire> dressAttires = new TreeSet<>();
+    private Set<MusicStyle> musicStyles = new TreeSet<>();
+    private Set<ServiceStyle> serviceStyles = new TreeSet<>();
+    private boolean gayAfirming = false;
+    private Point searchPoint = null;
+    private Set<ServiceTimeRange> serviceTimes;
 
-    public Object getFilteredServiceTimes()
+    public OrganizationFilter(Set<ServiceDay> serviceDays, Set<ServiceTimeRange> serviceTimes, Set<Affiliation> denominations, Set<Language> languages,
+            Set<Programs> programs, Set<CongregationSize> congregationSizes, Set<AccessabilitySupport> accessabilitySupports,
+            Set<DressAttire> dressAttires, Set<MusicStyle> musicStyles, Set<ServiceStyle> serviceStyles, boolean gayAfirming, double[] location)
     {
-        return null;
+        super();
+        
+        this.serviceDays = serviceDays;
+        this.denominations = denominations;
+        this.languages = languages;
+        this.programs = programs;
+        this.congregationSizes = congregationSizes;
+        this.accessabilitySupports = accessabilitySupports;
+        this.dressAttires = dressAttires;
+        this.musicStyles = musicStyles;
+        this.serviceStyles = serviceStyles;
+        this.gayAfirming = gayAfirming;
+        this.serviceTimes = serviceTimes;
+        
+        if(location != null && location.length == 2)
+        {
+            this.searchPoint = new Point(location[0], location[1]);
+        }
     }
 
     public boolean hasFilteredServiceDays()
     {
-        return false;
-    }
-
-    public boolean hasFilteredServiceTimes()
-    {
-        return false;
+        return serviceDays != null && !serviceDays.isEmpty();
     }
 
     public boolean hasFilteredDenominations()
     {
-        return false;
+        return denominations != null && !denominations.isEmpty();
     }
 
     public boolean hasFilteredCongregationSize()
     {
-        return false;
+        return congregationSizes != null && !congregationSizes.isEmpty();
     }
 
     public boolean hasFilteredServiceStyle()
     {
-        return false;
+        return serviceStyles != null && !serviceStyles.isEmpty();
     }
 
     public boolean hasFilteredMusicStyle()
     {
-        return false;
+        return musicStyles != null && !musicStyles.isEmpty();
     }
 
     public boolean hasFilteredDressAttire()
     {
-        return false;
-    }
-
-    public boolean hasFilteredGayAfirming()
-    {
-        return false;
+        return dressAttires != null && !dressAttires.isEmpty();
     }
 
     public boolean hasFilteredPrograms()
     {
-        return false;
+        return programs != null && !programs.isEmpty();
     }
 
     public boolean hasFilteredLanguages()
     {
-        return false;
+        return languages != null && !languages.isEmpty();
     }
 
     public boolean hasFilteredAccessibilityNeeds()
     {
-        return false;
+        return accessabilitySupports != null && !accessabilitySupports.isEmpty();
+    }
+    
+    public boolean hasFilteredServiceTimeRange()
+    {
+        return serviceTimes != null && !serviceTimes.isEmpty();
+    }
+    
+    public Set<Affiliation> getFilteredDenominations()
+    {
+        
+        return denominations;
     }
 
-    public Object getFilteredLanguages()
+    public Set<Language> getFilteredLanguages()
     {
-        return null;
+        return languages;
     }
 
-    public Object getFilteredPrograms()
+    public Set<Programs> getFilteredPrograms()
     {
-        return null;
+        return programs;
     }
 
-    public Object getFilteredCongregationSize()
+    public Set<CongregationSize> getFilteredCongregationSize()
     {
-        return null;
+        return congregationSizes;
     }
 
-    public Object getFilteredAccessibilityNeeds()
+    public Set<AccessabilitySupport> getFilteredAccessabilitySupport()
     {
-        return null;
+        return accessabilitySupports;
     }
 
-    public Object getFilteredDressAttire()
+    public Set<DressAttire> getFilteredDressAttire()
     {
-        return null;
+        return dressAttires;
     }
 
-    public Object getFilteredMusicStyleRange()
+    public Set<MusicStyle> getFilteredMusicStyle()
     {
-        return null;
+        return musicStyles;
     }
 
-    public Object getFilteredServiceStyleRange()
+    public Set<ServiceStyle> getFilteredServiceStyle()
     {
-        return null;
+        return serviceStyles;
+    }
+
+    public Set<ServiceDay> getFilteredServiceDays()
+    {
+        return serviceDays;
+    }
+    
+    public boolean isGayAfirming()
+    {
+        return gayAfirming;
+    }
+    
+    public Point getSearchPoint()
+    {
+        return searchPoint;
+    }
+
+    public Set<ServiceTimeRange> getFilteredServiceTimes()
+    {
+        return serviceTimes;
     }
 }

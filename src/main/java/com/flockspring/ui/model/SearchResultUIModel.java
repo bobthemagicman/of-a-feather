@@ -3,8 +3,6 @@
  */
 package com.flockspring.ui.model;
 
-import java.util.Set;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -23,7 +21,6 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
 
     private final MultimediaUIModel displayImage;
     private final String organizationName;
-    private final Set<ServiceTime> serviceTimes;
     private final String denomination;
     private final String id;
     private final double distanceFromSearchPoint;
@@ -38,7 +35,7 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
     private final int serviceStyleSliderValue;
     private final int dressAttireSliderValue;
     
-    public SearchResultUIModel(MultimediaUIModel displayImage, String organizationName, Set<ServiceTime> serviceTimes, String denomination,
+    public SearchResultUIModel(MultimediaUIModel displayImage, String organizationName, String denomination,
             String id, double distanceFromSearchPoint, boolean featured, boolean usersFavorite, String city, String state, String postalCode,
             double latitude, double longitude, int musicStyleSliderValue, int serviceStyleSliderValue, int dressAttireSliderValue)
     {
@@ -46,7 +43,6 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
         
         this.displayImage = displayImage;
         this.organizationName = organizationName;
-        this.serviceTimes = serviceTimes;
         this.denomination = denomination;
         this.id = id;
         this.distanceFromSearchPoint = distanceFromSearchPoint;
@@ -70,11 +66,6 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
     public String getOrganizationName()
     {
         return organizationName;
-    }
-
-    public Set<ServiceTime> getServiceTimes()
-    {
-        return serviceTimes;
     }
 
     public String getDenomination()
@@ -158,9 +149,11 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
     public int compareTo(SearchResultUIModel right)
     {
 
+        SearchResultUIModel left = this;
         return ComparisonChain.start()
-                .compare(this.getDistanceFromSearchPoint(), right.getDistanceFromSearchPoint(), Ordering.natural().nullsFirst())
-                .compare(this.getOrganizationName(), right.getOrganizationName(), Ordering.natural().nullsFirst())
+                .compare(left.getDistanceFromSearchPoint(), right.getDistanceFromSearchPoint(), Ordering.natural().nullsFirst())
+                .compare(left.getOrganizationName(), right.getOrganizationName(), Ordering.natural().nullsFirst())
+                .compare(left.getId(), right.getId())
                 .result();
     }
 }

@@ -20,15 +20,19 @@ public class SearchResultsUIModel
     private final long totalNumberOfResults;
     private final int pageStartIndex;
     private final int pageEndIndex;
+    private final double searchLatitude;
+    private final double searchLongitude;
 
     public SearchResultsUIModel(NavigableSet<SearchResultUIModel> items, int currentPage, long totalNumberOfResults, 
-            int pageStartIndex, int pageEndIndex)
+            int pageStartIndex, int pageEndIndex, double searchLatitude, double searchLongitude)
     {
         this.items = items;
         this.currentPage = currentPage;
         this.totalNumberOfResults = totalNumberOfResults;
         this.pageStartIndex = pageStartIndex;
         this.pageEndIndex = pageEndIndex;
+        this.searchLatitude = searchLatitude;
+        this.searchLongitude = searchLongitude;
     }
 
     public NavigableSet<SearchResultUIModel> getItems()
@@ -54,5 +58,15 @@ public class SearchResultsUIModel
     public int getPageEndIndex()
     {
         return pageEndIndex;
+    }
+
+    public double getSearchLatitude()
+    {
+        return searchLatitude;
+    }
+
+    public double getSearchLongitude()
+    {
+        return searchLongitude;
     }
 }

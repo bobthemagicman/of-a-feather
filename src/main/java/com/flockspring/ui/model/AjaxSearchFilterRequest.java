@@ -21,10 +21,9 @@ public class AjaxSearchFilterRequest
 
     private Set<Affiliation> affiliations;
     private Set<Language> languages;
-    private Set<ServiceTime> serviceTimes;
+    private Set<ServiceTimeRange> serviceTimes;
     private Set<ServiceDay> serviceDays;
     private Set<CongregationSize> congregationSize;
-    private Set<SpecialNeedsSupport> specialNeedsSupport;
     private Set<Programs> programsAndMinistries;
     private Integer atmosphereServiceStyleFloor;
     private Integer atmosphereServiceStyleCeiling;
@@ -32,6 +31,8 @@ public class AjaxSearchFilterRequest
     private Integer atmosphereMusicStyleCeiling;
     private Integer atmosphereDressAttireFloor;
     private Integer atmosphereDressAttireCeiling;
+    private boolean gayAfirming;
+    private double[] location;
    
     public Set<Affiliation> getAffiliations()
     {
@@ -43,7 +44,7 @@ public class AjaxSearchFilterRequest
         return languages;
     }
     
-    public Set<ServiceTime> getServiceTimes()
+    public Set<ServiceTimeRange> getServiceTimes()
     {
         return serviceTimes;
     }
@@ -56,11 +57,6 @@ public class AjaxSearchFilterRequest
     public Set<CongregationSize> getCongregationSize()
     {
         return congregationSize;
-    }
-    
-    public Set<SpecialNeedsSupport> getSpecialNeedsSupport()
-    {
-        return specialNeedsSupport;
     }
     
     public Set<Programs> getProgramsAndMinistries()
@@ -98,6 +94,16 @@ public class AjaxSearchFilterRequest
         return atmosphereDressAttireCeiling;
     }
     
+    public boolean isGayAfirming()
+    {
+        return gayAfirming;
+    }
+
+    public void setGayAfirming(boolean gayAfirming)
+    {
+        this.gayAfirming = gayAfirming;
+    }
+
     public void setAffiliations(Set<Affiliation> affiliations)
     {
         this.affiliations = affiliations;
@@ -108,7 +114,7 @@ public class AjaxSearchFilterRequest
         this.languages = languages;
     }
     
-    public void setServiceTimes(Set<ServiceTime> serviceTimes)
+    public void setServiceTimes(Set<ServiceTimeRange> serviceTimes)
     {
         this.serviceTimes = serviceTimes;
     }
@@ -121,11 +127,6 @@ public class AjaxSearchFilterRequest
     public void setCongregationSize(Set<CongregationSize> congregationSize)
     {
         this.congregationSize = congregationSize;
-    }
-    
-    public void setSpecialNeedsSupport(Set<SpecialNeedsSupport> specialNeedsSupport)
-    {
-        this.specialNeedsSupport = specialNeedsSupport;
     }
     
     public void setProgramsAndMinistries(Set<Programs> programsAndMinistries)
@@ -161,5 +162,10 @@ public class AjaxSearchFilterRequest
     public void setAtmosphereDressAttireCeiling(Integer atmosphereDressAttireCeiling)
     {
         this.atmosphereDressAttireCeiling = atmosphereDressAttireCeiling;
+    }
+
+    public double[] getLocation()
+    {
+        return location;
     }
 }

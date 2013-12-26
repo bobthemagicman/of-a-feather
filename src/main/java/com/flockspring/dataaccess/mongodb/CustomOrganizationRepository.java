@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.geo.GeoPage;
 import org.springframework.data.mongodb.core.geo.Point;
 
 import com.flockspring.domain.OrganizationFilter;
-import com.flockspring.domain.types.impl.OrganizationImpl;
 
 /**
  * CustomOrganizationRepository.java
@@ -18,7 +17,7 @@ import com.flockspring.domain.types.impl.OrganizationImpl;
  * @date Nov 9, 2013
  *
  */
-public interface CustomOrganizationRepository<T, ID>
+public interface CustomOrganizationRepository<T, ID> 
 {
-    public GeoPage<OrganizationImpl> findOrganizationsByFilteredCriteria(Point p, Distance d, OrganizationFilter o, PageRequest pageRequest);    
+    public GeoPage<T> findOrganizationsByFilteredCriteria(Point p, Distance d, OrganizationFilter o, PageRequest pageRequest);    
 }

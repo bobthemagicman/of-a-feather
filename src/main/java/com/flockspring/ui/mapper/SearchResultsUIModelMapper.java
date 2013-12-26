@@ -16,6 +16,7 @@ import com.flockspring.domain.types.Address;
 import com.flockspring.domain.types.MultimediaObject;
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.ServiceDetails;
+import com.flockspring.domain.types.impl.AddressImpl;
 import com.flockspring.domain.types.impl.Atmosphere;
 import com.flockspring.domain.types.impl.OrganizationImpl;
 import com.flockspring.ui.model.AjaxSearchFilterRequest;
@@ -44,12 +45,19 @@ public class SearchResultsUIModelMapper
         this.imageUIModelMapper = imageUIModelMapper;
     }
 
-    public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult)
+    public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, Address address)
     {
-        return map(geoPageResult, new AjaxSearchFilterRequest());
+        return map(geoPageResult, address, new AjaxSearchFilterRequest());
+    }
+
+    public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, AjaxSearchFilterRequest filterRequest)
+    {
+        AddressImpl address = new AddressImpl("", "", "", "", "", "", filterRequest.getLocation());
+       
+        return map(geoPageResult, address, filterRequest);
     }
     
-    public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, AjaxSearchFilterRequest filterRequest)
+    private SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, Address address, AjaxSearchFilterRequest filterRequest)
     {
         
         NavigableSet<SearchResultUIModel> results = new TreeSet<>();
@@ -71,7 +79,8 @@ public class SearchResultsUIModelMapper
         
         int pageEndIndex = (pageStartIndex + numResultsOnPage) - 1;
         
-        return new SearchResultsUIModel(results, currentPage, totalResults, pageStartIndex, pageEndIndex);
+        return new SearchResultsUIModel(results, currentPage, totalResults, pageStartIndex, pageEndIndex, 
+                address.getLatitude(), address.getLongitude());
     }
 
     public SearchResultUIModel map(GeoResult<OrganizationImpl> geoResult, AjaxSearchFilterRequest filterRequest)
@@ -84,7 +93,7 @@ public class SearchResultsUIModelMapper
         Address address = organization.getAddress();
         ServiceDetails serviceDetails = getMatchingServiceDetails(atmosphere, filterRequest);
         
-        return new SearchResultUIModel(image, organization.getName(), organization.getServiceTimes(), 
+        return new SearchResultUIModel(image, organization.getName(),  
                 organization.getDenomination().getLocalizedStringCode(), organization.getId(), geoResult.getDistance().getValue(),
                 isOrganizationFeatured(organization), isOrganizationUserFavorite(organization), address.getCity(), 
                 address.getState(), address.getPostalCode(), address.getLatitude(), address.getLongitude(), 

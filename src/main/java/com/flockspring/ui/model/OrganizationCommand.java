@@ -54,7 +54,7 @@ public class OrganizationCommand
     private Affiliation subDenomination;
     private AutoPopulatingList<ImageCommand> images;
     private AutoPopulatingList<LeaderCommand> leadershipTeam;
-    private AutoPopulatingList<ServiceTime> serviceTimes;
+    private AutoPopulatingList<ServiceTimeRange> serviceTimes;
     private AutoPopulatingList<ServiceDay> serviceDays;
     private AutoPopulatingList<Language> languages;
     private AutoPopulatingList<Programs> programmsOffered;

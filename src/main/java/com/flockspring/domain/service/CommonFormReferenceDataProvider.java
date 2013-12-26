@@ -29,7 +29,7 @@ import com.flockspring.domain.types.impl.LeaderImpl;
 import com.flockspring.domain.types.impl.OrganizationImpl;
 import com.flockspring.ui.model.CongregationSize;
 import com.flockspring.ui.model.Programs;
-import com.flockspring.ui.model.ServiceTime;
+import com.flockspring.ui.model.ServiceTimeRange;
 import com.google.common.collect.Sets;
 
 /**
@@ -71,9 +71,9 @@ public class CommonFormReferenceDataProvider
         return Arrays.asList(Affiliation.values());
     }
 
-    public List<ServiceTime> getServiceTimes()
+    public List<ServiceTimeRange> getServiceTimes()
     {
-        return Arrays.asList(ServiceTime.values());
+        return Arrays.asList(ServiceTimeRange.values());
     }
 
     public List<ServiceDay> getServiceDays()
