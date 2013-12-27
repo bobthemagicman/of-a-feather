@@ -38,22 +38,34 @@ function initializeCarousels() {
       $(this).parent(".carousel").carousel('prev'); 
    });
    
-   $(".thumbnails-carousel .thumbnail-container:not(.video) img").click(function() {
+   $(".media-carousel").on('slid.bs.carousel', function () {
+       var thumbnailPage = parseInt($(this).find(".item.active img, .item.active .video-placeholder").attr("data-thumbnail-page"));
+       $(".media-icons-container").carousel(thumbnailPage);
        
-       $(".media-carousel-container").show();
-    
-        $(".video-player-container").css('display','none');
-    
-        $("#videoPlayer").remove();
-        
-       var slideNumber = parseInt($(this).attr("data-slide-link"));
-       $(".media-carousel").carousel(slideNumber);
+       $("#videoPlayer").remove();
+       $(".video-placeholder").show();
+       
    });
    
-   $(".thumbnail-container.video img").click(function() {
-       var videoCode = $(this).attr("data-video-code");
-       var videoType = $(this).attr("data-video-type");
-       initializeVideo(videoType, videoCode);
+   $(".photo-thumb img").click(function() {
+       
+       var slideNumber = parseInt($(this).attr("data-slide-link"));
+       
+       $(".media-carousel").carousel(slideNumber);
+       
+   });
+   
+   
+   $(".video-placeholder").click(function() {
+       initializeVideo();
+   });
+   
+   $(".video-thumb").click(function() {
+       var slideNumber = parseInt($(this).attr("data-slide-link"));
+       $(".media-carousel").carousel(slideNumber);
+       setTimeout(function() {
+           initializeVideo();
+       }, 1000);
    });
    
 }
@@ -108,34 +120,52 @@ function createMarker(latitudeLongitude, markerTitle, markerAnimation, markerIco
      });    
 }
 
-function initializeVideo(VT, VC) {
+function initializeVideo() {
     
-    $(".media-carousel-container").hide();
+    if($("#youTubeCode").length === 0) {
+        var script   = document.createElement("script");
+        script.type  = "text/javascript";
+        script.src   = "https://www.youtube.com/iframe_api";
+        script.id    = "youTubeCode";
+        document.body.appendChild(script);
+    }
+    else {
+        playVideo();
+    }
     
-    $(".video-player-container").show();
+}
+
+function onYouTubeIframeAPIReady() {
+    playVideo();
+}
+
+function playVideo() {
+    $("#videoPlayer").remove();
     
-     var player;
-     
-     $("#videoPlayer").remove();
-     
-     $(".video-player-container").append('<div id="videoPlayer"></div>');
-     
-      if(VT === 'YT') {
-        player = new YT.Player('videoPlayer', {
-          height: $(".video-player-container").height(),
-          width: $(".video-player-container").width(),
+    var VC = $(".media-carousel .item.active .video-placeholder").attr("data-video-code");
+    var width = parseInt($(".media-carousel").width());
+    var height = parseInt($(".media-carousel").height());
+    $(".media-carousel .item.active .video-placeholder").hide();
+    $(".media-carousel .item.active").append('<iframe id="videoPlayer" type="text/html" width="'+width+'" height="'+height+'" src="http://www.youtube.com/embed/'+VC+'?enablejsapi=1&wmode=transparent" frameborder="0"></iframe>');
+    
+    /*
+    player = new YT.Player('videoPlayer', {
+          height: $(".media-carousel").height(),
+          width: $(".media-carousel").width(),
+          wmode: 'transparent',
           videoId: VC
-        });
-      }
+    });
+    */
+    
 }
 
 function initializeVideoThumbnails() {
     
-    $(".thumbnail-container.video img").each(function() {
+    $(".video-thumb, .video-placeholder").each(function() {
         
         var thumbnailImageURL = 'http://img.youtube.com/vi/' + $(this).attr('data-video-code') + '/sddefault.jpg';
         
-        $(this).attr('src', thumbnailImageURL);
-        
+        $(this).append('<img src="' + thumbnailImageURL + '" /><div class="play-button"></div>');      
     });
+    
 }
