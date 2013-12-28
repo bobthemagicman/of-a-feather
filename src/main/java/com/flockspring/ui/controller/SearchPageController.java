@@ -1,7 +1,10 @@
 /*
- * Copyright 2013 flockspring Inc. All rights reserved
+' * Copyright 2013 flockspring Inc. All rights reserved
  */
 package com.flockspring.ui.controller;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -23,8 +26,9 @@ import com.flockspring.domain.types.Address;
 import com.flockspring.domain.types.impl.AddressImpl;
 import com.flockspring.domain.types.impl.OrganizationImpl;
 import com.flockspring.ui.mapper.OrganizationFilterMapper;
+import com.flockspring.ui.mapper.SearchFilterUIModelMapper;
 import com.flockspring.ui.mapper.SearchResultsUIModelMapper;
-import com.flockspring.ui.model.AjaxSearchFilterRequest;
+import com.flockspring.ui.model.SearchFilterUICommand;
 import com.flockspring.ui.model.AjaxSearchFilterResponse;
 import com.flockspring.ui.model.SearchResultsUIModel;
 
@@ -39,11 +43,15 @@ import com.flockspring.ui.model.SearchResultsUIModel;
 @RequestMapping("/search")
 public class SearchPageController
 {
+    private static final String ORG_FILTER = "com.flockspring.organization.filters";
+    
     private final OrganizationDiscoveryService organizationDiscoveryService;
     private final SearchResultsUIModelMapper searchResultsModelMapper;
     private final OrganizationFilterMapper organizationFilterMapper;
     private final MapQuestServiceClient mapQuestServiceClient;
     private final USPSAddressAPIService uspsAddressAPIService;
+
+    private SearchFilterUIModelMapper searchFilterUIModelMapper;
 
     @Autowired
     public SearchPageController(final OrganizationDiscoveryService organizationDiscoveryService,
@@ -79,20 +87,36 @@ public class SearchPageController
             // redirect to error page, likely a bad deeplink
         }
 
+        Map<String, Object> model = new HashMap<>();
+        
         //Address address = verifyQuery(query.trim());
         Address address = new AddressImpl("", "", "98052", "WA", "REDMOND", "USA", new double[]{0.0, 0.0});
         address = mapQuestServiceClient.getAddressGeoCode(address);
         
-        GeoPage<OrganizationImpl> geoPageResult = organizationDiscoveryService.searchForOrganizations(address, pageNum);
+        OrganizationFilter organizationFilter = (OrganizationFilter) session.getAttribute(ORG_FILTER);
+        
+        GeoPage<OrganizationImpl> geoPageResult;
+        if(organizationFilter == null)
+        {
+            geoPageResult = organizationDiscoveryService.searchForOrganizations(address, pageNum);
+        }
+        else
+        {
+            geoPageResult = organizationDiscoveryService.getFilteredOrganizations(organizationFilter);
+            SearchFilterUICommand searchFilterUIModel = searchFilterUIModelMapper.map(organizationFilter);
+            model.put("filters", searchFilterUIModel);
+        }
+        
         SearchResultsUIModel searchResultsUIModel = searchResultsModelMapper.map(geoPageResult, address);
-
-        return new ModelAndView("searchResultsPage", "results", searchResultsUIModel);
+        model.put("results", searchResultsUIModel);
+            
+        return new ModelAndView("searchResultsPage", model);
     }
 
     @RequestMapping(value = "/ajax/filter-results", method = RequestMethod.POST, headers =
     { "content-type=application/json" })
     public @ResponseBody
-    AjaxSearchFilterResponse ajaxResultsFilter(@RequestBody AjaxSearchFilterRequest filterRequest, HttpSession session)
+    AjaxSearchFilterResponse ajaxResultsFilter(@RequestBody SearchFilterUICommand filterRequest, HttpSession session)
     {
 
         OrganizationFilter organizationFilter = organizationFilterMapper.map(filterRequest);
@@ -104,6 +128,8 @@ public class SearchPageController
             SearchResultsUIModel searchResultUIModels = searchResultsModelMapper.map(geoResult, filterRequest);
             AjaxSearchFilterResponse response = new AjaxSearchFilterResponse(searchResultUIModels);
 
+            session.setAttribute(ORG_FILTER, organizationFilter);
+            
             return response;
         }
 

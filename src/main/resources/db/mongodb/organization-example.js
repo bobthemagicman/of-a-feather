@@ -140,7 +140,7 @@ var org1 = {
                     	'GRADUATE_STUDIES', 'CHILDRENS_GROUPS', 'MIDDLE_SCHOOL_GROUP',
                 		'HIGH_SCHOOL_GROUP', 'YOUNG_ADULT_GROUP', 'ADULT_GROUP',
                 		'MENS_GROUP', 'WOMENS_GROUP' ],						//See available values below
-	accessabilitySupport : [ 'WHEELCHAIR_ACCESS', 'DEAF_TRANSLATOR', 
+	accessibilitySupport : [ 'WHEELCHAIR_ACCESS', 'DEAF_TRANSLATOR', 
 	                         'PARKING_LOT' ], 								//See available values below	
 };
 
@@ -305,7 +305,7 @@ var org1 = {
  *      SUNDAY
  *      
  *      
- * Full List of accessabilitySupport     
+ * Full List of accessibilitySupport     
  * 		WHEELCHAIR_ACCESS   
  *  	DEAF_TRANSLATOR   
  *   	PARKING_LOT   

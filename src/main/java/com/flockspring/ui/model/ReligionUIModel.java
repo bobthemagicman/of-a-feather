@@ -1,7 +1,7 @@
 /*
  * Copyright 2013 flockspring Inc. All rights reserved
  */
-package com.flockspring.ui.controller;
+package com.flockspring.ui.model;
 
 /**
  * ReligionUIModel.java

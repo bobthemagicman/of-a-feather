@@ -9,7 +9,7 @@ import java.util.Set;
 
 import org.springframework.util.AutoPopulatingList;
 
-import com.flockspring.domain.types.AccessabilitySupport;
+import com.flockspring.domain.types.AccessibilitySupport;
 import com.flockspring.domain.types.Affiliation;
 import com.flockspring.domain.types.DressAttire;
 import com.flockspring.domain.types.Language;
@@ -36,7 +36,7 @@ import com.google.common.collect.Sets;
  */
 public class OrganizationCommand
 {
-    private AutoPopulatingList<AccessabilitySupport> accessibilitySupport;
+    private AutoPopulatingList<AccessibilitySupport> accessibilitySupport;
     private Integer yearFounded;
     private boolean gayAffirming;
     private String name;
@@ -85,7 +85,7 @@ public class OrganizationCommand
 //        Set<ServiceTime> serviceTimeSet = Sets.newTreeSet(serviceTimes);
 //        Set<ServiceDay> serviceDaySet = Sets.newTreeSet(serviceDays);
 //        Set<Programs> programSet = Sets.newTreeSet(programmsOffered);
-//        Set<AccessabilitySupport> accessabilitySupportSet = Sets.newTreeSet(accessibilitySupport);
+//        Set<AccessibilitySupport> accessibilitySupportSet = Sets.newTreeSet(accessibilitySupport);
 //        
 //        return new OrganizationImpl(yearFounded, name, missionStatement, statementOfFaith, welcomeMessage, 
 //                address, atmosphere, socialMedia, denomination, subDenomination, primaryAffiliation, images, 

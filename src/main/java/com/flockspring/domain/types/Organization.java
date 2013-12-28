@@ -21,7 +21,7 @@ public interface Organization
 
     Set<Programs> getProgramsOffered();
     
-    Set<AccessabilitySupport> getAccessabilitySupport();
+    Set<AccessibilitySupport> getAccessibilitySupport();
     
     Affiliation getPrimaryAffiliation();
 

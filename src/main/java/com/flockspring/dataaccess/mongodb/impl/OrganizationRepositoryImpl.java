@@ -115,7 +115,7 @@ public class OrganizationRepositoryImpl implements CustomOrganizationRepository<
         
         if(o.hasFilteredAccessibilityNeeds())
         {
-            query.addCriteria(Criteria.where("accessabilitySupport").in(convertEnumsToStrings(o.getFilteredAccessabilitySupport())));
+            query.addCriteria(Criteria.where("accessibilitySupport").in(convertEnumsToStrings(o.getFilteredAccessibilitySupport())));
         }
                            
         NearQuery nearQuery = NearQuery.near(p).maxDistance(d).query(query);

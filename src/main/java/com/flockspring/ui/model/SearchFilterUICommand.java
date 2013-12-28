@@ -16,7 +16,7 @@ import com.flockspring.domain.types.ServiceDay;
  * @date Oct 20, 2013
  *
  */
-public class AjaxSearchFilterRequest
+public class SearchFilterUICommand
 {
 
     private Set<Affiliation> affiliations;
@@ -33,7 +33,36 @@ public class AjaxSearchFilterRequest
     private Integer atmosphereDressAttireCeiling;
     private boolean gayAfirming;
     private double[] location;
+    
+    public SearchFilterUICommand()
+    {
+        super();
+    }
    
+    public SearchFilterUICommand(Set<Affiliation> affiliations, Set<Language> languages, Set<ServiceTimeRange> serviceTimes,
+            Set<ServiceDay> serviceDays, Set<CongregationSize> congregationSize, Set<Programs> programsAndMinistries,
+            Integer atmosphereServiceStyleFloor, Integer atmosphereServiceStyleCeiling, Integer atmosphereMusicStyleFloor,
+            Integer atmosphereMusicStyleCeiling, Integer atmosphereDressAttireFloor, Integer atmosphereDressAttireCeiling, boolean gayAfirming,
+            double[] location)
+    {
+        super();
+        
+        this.affiliations = affiliations;
+        this.languages = languages;
+        this.serviceTimes = serviceTimes;
+        this.serviceDays = serviceDays;
+        this.congregationSize = congregationSize;
+        this.programsAndMinistries = programsAndMinistries;
+        this.atmosphereServiceStyleFloor = atmosphereServiceStyleFloor;
+        this.atmosphereServiceStyleCeiling = atmosphereServiceStyleCeiling;
+        this.atmosphereMusicStyleFloor = atmosphereMusicStyleFloor;
+        this.atmosphereMusicStyleCeiling = atmosphereMusicStyleCeiling;
+        this.atmosphereDressAttireFloor = atmosphereDressAttireFloor;
+        this.atmosphereDressAttireCeiling = atmosphereDressAttireCeiling;
+        this.gayAfirming = gayAfirming;
+        this.location = location;
+    }
+
     public Set<Affiliation> getAffiliations()
     {
         return affiliations;

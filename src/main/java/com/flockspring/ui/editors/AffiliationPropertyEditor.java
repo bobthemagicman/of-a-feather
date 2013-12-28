@@ -1,11 +1,11 @@
 /*
  * Copyright 2013 flockspring Inc. All rights reserved
  */
-package com.flockspring.ui.controller;
+package com.flockspring.ui.editors;
 
 import java.beans.PropertyEditorSupport;
 
-import com.flockspring.domain.types.MusicStyle;
+import com.flockspring.domain.types.Affiliation;
 
 /**
  * MusicStylePropertyEditor.java
@@ -14,11 +14,11 @@ import com.flockspring.domain.types.MusicStyle;
  * @date Jul 31, 2013
  *
  */
-public class MusicStylePropertyEditor extends PropertyEditorSupport
+public class AffiliationPropertyEditor extends PropertyEditorSupport
 {
     @Override
     public void setAsText(String musicStyleAsText) throws IllegalArgumentException
     {
-        setValue(MusicStyle.valueOf(musicStyleAsText.toUpperCase()));
+        setValue(Affiliation.valueOf(musicStyleAsText.toUpperCase()));
     }
 }

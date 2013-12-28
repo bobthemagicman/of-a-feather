@@ -11,7 +11,7 @@ import java.util.TreeSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.flockspring.domain.types.AccessabilitySupport;
+import com.flockspring.domain.types.AccessibilitySupport;
 import com.flockspring.domain.types.Affiliation;
 import com.flockspring.domain.types.Language;
 import com.flockspring.domain.types.Leader;
@@ -173,13 +173,13 @@ public class OrganizationUIModelMapper
         return new OrganizationOverviewUIModel(organization.getName(), organization.getDenomination().getLocalizedStringCode(),
                 subDenominationLocalizationCode, organization.getYearFounded(), leadPastor.getName(), atmosphere.getCongregationSize(), phoneNumber,
                 organization.getSocialMedia().getWebsiteUrl(), serviceTimesShort, isUserFavorite, socialMedia, address, distance,
-                getParkingLotInfo(organization.getAccessabilitySupport()));
+                getParkingLotInfo(organization.getAccessibilitySupport()));
     }
 
-    private boolean getParkingLotInfo(Set<AccessabilitySupport> accessabilitySupports)
+    private boolean getParkingLotInfo(Set<AccessibilitySupport> accessibilitySupports)
     {
-        return accessabilitySupports.contains(AccessabilitySupport.PARKING_GARAGE)
-                || accessabilitySupports.contains(AccessabilitySupport.PARKING_LOT);
+        return accessibilitySupports.contains(AccessibilitySupport.PARKING_GARAGE)
+                || accessibilitySupports.contains(AccessibilitySupport.PARKING_LOT);
     }
 
     private Leader getLeadPastor(Set<Leader> leadershipTeam)

@@ -19,7 +19,7 @@ import com.flockspring.domain.types.ServiceDetails;
 import com.flockspring.domain.types.impl.AddressImpl;
 import com.flockspring.domain.types.impl.Atmosphere;
 import com.flockspring.domain.types.impl.OrganizationImpl;
-import com.flockspring.ui.model.AjaxSearchFilterRequest;
+import com.flockspring.ui.model.SearchFilterUICommand;
 import com.flockspring.ui.model.MultimediaUIModel;
 import com.flockspring.ui.model.SearchResultUIModel;
 import com.flockspring.ui.model.SearchResultsUIModel;
@@ -47,17 +47,17 @@ public class SearchResultsUIModelMapper
 
     public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, Address address)
     {
-        return map(geoPageResult, address, new AjaxSearchFilterRequest());
+        return map(geoPageResult, address, new SearchFilterUICommand());
     }
 
-    public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, AjaxSearchFilterRequest filterRequest)
+    public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, SearchFilterUICommand filterRequest)
     {
         AddressImpl address = new AddressImpl("", "", "", "", "", "", filterRequest.getLocation());
        
         return map(geoPageResult, address, filterRequest);
     }
     
-    private SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, Address address, AjaxSearchFilterRequest filterRequest)
+    private SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, Address address, SearchFilterUICommand filterRequest)
     {
         
         NavigableSet<SearchResultUIModel> results = new TreeSet<>();
@@ -83,7 +83,7 @@ public class SearchResultsUIModelMapper
                 address.getLatitude(), address.getLongitude());
     }
 
-    public SearchResultUIModel map(GeoResult<OrganizationImpl> geoResult, AjaxSearchFilterRequest filterRequest)
+    public SearchResultUIModel map(GeoResult<OrganizationImpl> geoResult, SearchFilterUICommand filterRequest)
     {
         
         Organization organization = geoResult.getContent();
@@ -101,7 +101,7 @@ public class SearchResultsUIModelMapper
                 getDressAttireSliderValue(serviceDetails));
     }
 
-    private ServiceDetails getMatchingServiceDetails(Atmosphere atmosphere, AjaxSearchFilterRequest filterRequest)
+    private ServiceDetails getMatchingServiceDetails(Atmosphere atmosphere, SearchFilterUICommand filterRequest)
     {
         ServiceDetails sd = null;
         Set<ServiceDetails> serviceDetailsSet = atmosphere.getServiceDetails();
