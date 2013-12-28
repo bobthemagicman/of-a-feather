@@ -7,7 +7,6 @@ import java.util.Arrays;
 import java.util.Set;
 
 import org.joda.time.LocalDateTime;
-import org.joda.time.LocalTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.flockspring.domain.service.OrganizationDiscoveryService;
-import com.flockspring.domain.types.AccessabilitySupport;
+import com.flockspring.domain.types.AccessibilitySupport;
 import com.flockspring.domain.types.Affiliation;
 import com.flockspring.domain.types.DressAttire;
 import com.flockspring.domain.types.GlobalRegionType;
@@ -38,6 +37,7 @@ import com.flockspring.domain.types.impl.MultimediaObjectImpl;
 import com.flockspring.domain.types.impl.MusicalInstruments;
 import com.flockspring.domain.types.impl.OrganizationImpl;
 import com.flockspring.domain.types.impl.SocialMediaImpl;
+import com.flockspring.ui.exception.PageNotFoundException;
 import com.flockspring.ui.mapper.OrganizationUIModelMapper;
 import com.flockspring.ui.model.CongregationSize;
 import com.flockspring.ui.model.OrganizationUIModel;
@@ -89,7 +89,7 @@ public class ProfilePageController
         Set<LeaderImpl> leadershipTeam = Sets.newTreeSet(Arrays.asList(leader1, leader2));
         
         Set<Programs> programsOffered = Sets.newTreeSet(Arrays.asList(Programs.ADDICTION_RECOVERY_COUNSELING, Programs.AGE_GROUPS_AND_CREATIVE_ARTS));
-        Set<AccessabilitySupport> accessabilitysupport = Sets.newTreeSet(Arrays.asList(AccessabilitySupport.WHEELCHAIR_ACCESS, AccessabilitySupport.CARPOOL));
+        Set<AccessibilitySupport> accessabilitysupport = Sets.newTreeSet(Arrays.asList(AccessibilitySupport.WHEELCHAIR_ACCESS, AccessibilitySupport.CARPOOL));
         
         OrganizationImpl organization = new OrganizationImpl(null, 1999, "test save time", "mission statement", "statement of faith", 
                 "welcome Message", address, atmosphere, socialMedia, Affiliation.NONDENOMINATIONAL, Affiliation.NONE, null, multimedia, 

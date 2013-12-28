@@ -12,7 +12,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import com.flockspring.domain.types.AccessabilitySupport;
+import com.flockspring.domain.types.AccessibilitySupport;
 import com.flockspring.domain.types.Address;
 import com.flockspring.domain.types.Affiliation;
 import com.flockspring.domain.types.Leader;
@@ -49,12 +49,12 @@ public class OrganizationImpl implements Organization, Serializable
     private Set<MultimediaObjectImpl> multimedia;
     private Set<LeaderImpl> leadershipTeam;
     private Set<Programs> programsOffered;
-    private Set<AccessabilitySupport> accessabilitysupport;
+    private Set<AccessibilitySupport> accessabilitysupport;
 
     public OrganizationImpl(String id, Integer yearFounded, String name, String missionStatement, String statementOfFaith, String welcomeMessage,
             AddressImpl address, AtmosphereImpl atmosphere, SocialMediaImpl socialMedia, Affiliation denomination, Affiliation subDenomination,
             Affiliation primaryAffiliation, Set<MultimediaObjectImpl> multimedia, Set<LeaderImpl> leadershipTeam,
-            Set<Programs> programsOffered, Set<AccessabilitySupport> accessabilitysupport)
+            Set<Programs> programsOffered, Set<AccessibilitySupport> accessabilitysupport)
     {
         super();
         
@@ -239,7 +239,7 @@ public class OrganizationImpl implements Organization, Serializable
         this.programsOffered = programmsOffered;
     }
 
-    public void setAccessabilitysupport(Set<AccessabilitySupport> accessabilitysupport)
+    public void setAccessabilitysupport(Set<AccessibilitySupport> accessabilitysupport)
     {
         this.accessabilitysupport = accessabilitysupport;
     }
@@ -263,7 +263,7 @@ public class OrganizationImpl implements Organization, Serializable
     }
 
     @Override
-    public Set<AccessabilitySupport> getAccessabilitySupport()
+    public Set<AccessibilitySupport> getAccessibilitySupport()
     {
         return accessabilitysupport;
     }

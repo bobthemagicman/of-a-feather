@@ -9,11 +9,11 @@ import java.util.TreeSet;
 import org.springframework.stereotype.Component;
 
 import com.flockspring.domain.OrganizationFilter;
-import com.flockspring.domain.types.AccessabilitySupport;
+import com.flockspring.domain.types.AccessibilitySupport;
 import com.flockspring.domain.types.DressAttire;
 import com.flockspring.domain.types.MusicStyle;
 import com.flockspring.domain.types.ServiceStyle;
-import com.flockspring.ui.model.AjaxSearchFilterRequest;
+import com.flockspring.ui.model.SearchFilterUICommand;
 
 /**
  * OrganizationFilterMapper.java
@@ -26,10 +26,10 @@ import com.flockspring.ui.model.AjaxSearchFilterRequest;
 public class OrganizationFilterMapper
 {
 
-    public OrganizationFilter map(AjaxSearchFilterRequest filterRequest)
+    public OrganizationFilter map(SearchFilterUICommand filterRequest)
     {
 
-        Set<AccessabilitySupport> accessabilitySupports = null;
+        Set<AccessibilitySupport> accessibilitySupports = null;
         Set<DressAttire> dressAttires = getDressAttireValues(filterRequest.getAtmosphereDressAttireFloor(),
                 filterRequest.getAtmosphereDressAttireCeiling());
 
@@ -41,7 +41,7 @@ public class OrganizationFilterMapper
 
         OrganizationFilter organizationFilter = new OrganizationFilter(filterRequest.getServiceDays(), filterRequest.getServiceTimes(),
                 filterRequest.getAffiliations(), filterRequest.getLanguages(), filterRequest.getProgramsAndMinistries(),
-                filterRequest.getCongregationSize(), accessabilitySupports, dressAttires, musicStyles, serviceStyles, filterRequest.isGayAfirming(),
+                filterRequest.getCongregationSize(), accessibilitySupports, dressAttires, musicStyles, serviceStyles, filterRequest.isGayAfirming(),
                 filterRequest.getLocation());
 
         return organizationFilter;

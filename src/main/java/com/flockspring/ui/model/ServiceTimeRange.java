@@ -14,11 +14,11 @@ import org.joda.time.LocalDateTime;
  */
 public enum ServiceTimeRange implements LocalizedEnum
 {
-    EARLY_MORNING("service.time.early.morning", new LocalDateTime(1, 1, 1, 0, 0, 0), new LocalDateTime(1, 1, 1, 9, 0, 1)),
-    MID_MORNING("service.time.mid.morning", new LocalDateTime(1, 1, 1, 9, 0, 2), new LocalDateTime(1, 1, 1, 10, 45, 1)),
-    LATE_MORNING("service.time.late.morning", new LocalDateTime(1, 1, 1, 10, 45, 2), new LocalDateTime(1, 1, 1, 12, 45, 1)),
-    AFTERNOON("service.time.afternoon", new LocalDateTime(1, 1, 1, 12, 45, 2), new LocalDateTime(1, 1, 1, 16, 0, 0)),
-    EVENING("service.time.evening", new LocalDateTime(1, 1, 1, 16, 0, 1), new LocalDateTime(1, 1, 1, 23, 59, 59));
+    EARLY_MORNING("service.time.early.morning", new LocalDateTime(1970, 12, 30, 0, 0, 0), new LocalDateTime(1970, 12, 30, 9, 0, 1)),
+    MID_MORNING("service.time.mid.morning", new LocalDateTime(1970, 12, 30, 9, 0, 2), new LocalDateTime(1970, 12, 30, 10, 45, 1)),
+    LATE_MORNING("service.time.late.morning", new LocalDateTime(1970, 12, 30, 10, 45, 2), new LocalDateTime(1970, 12, 30, 12, 45, 1)),
+    AFTERNOON("service.time.afternoon", new LocalDateTime(1970, 12, 30, 12, 45, 2), new LocalDateTime(1970, 12, 30, 16, 0, 0)),
+    EVENING("service.time.evening", new LocalDateTime(1970, 12, 30, 16, 0, 1), new LocalDateTime(1970, 12, 30, 23, 59, 59));
     
     private final String localizationStringCode;
     private final LocalDateTime rangeStart;
@@ -29,7 +29,7 @@ public enum ServiceTimeRange implements LocalizedEnum
     {
         
         this.localizationStringCode = localizationStringCode;
-        this.rangeStart = rangeEnd;
+        this.rangeStart = rangeStart;
         this.rangeEnd = rangeEnd;
     }
 

@@ -6,13 +6,13 @@ package com.flockspring.domain.types;
 import com.flockspring.ui.model.LocalizedEnum;
 
 /**
- * AccessabilitySupport.java
+ * AccessibilitySupport.java
  *
  * @author Justen L. Britain
  * @date Nov 9, 2013
  *
  */
-public enum AccessabilitySupport implements LocalizedEnum
+public enum AccessibilitySupport implements LocalizedEnum
 {
     WHEELCHAIR_ACCESS("accessability.support.wheelchair.access"),
     DEAF_TRANSLATOR("accessability.support.deaf.translator"),
@@ -23,7 +23,7 @@ public enum AccessabilitySupport implements LocalizedEnum
     
     private String localizationStringCode;
     
-    private AccessabilitySupport(String localizationStringCode)
+    private AccessibilitySupport(String localizationStringCode)
     {
         this.localizationStringCode = localizationStringCode;
     }

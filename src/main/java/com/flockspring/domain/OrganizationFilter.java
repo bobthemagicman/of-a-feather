@@ -8,7 +8,7 @@ import java.util.TreeSet;
 
 import org.springframework.data.mongodb.core.geo.Point;
 
-import com.flockspring.domain.types.AccessabilitySupport;
+import com.flockspring.domain.types.AccessibilitySupport;
 import com.flockspring.domain.types.Affiliation;
 import com.flockspring.domain.types.DressAttire;
 import com.flockspring.domain.types.Language;
@@ -34,7 +34,7 @@ public class OrganizationFilter
     private Set<Language> languages = new TreeSet<>();
     private Set<Programs> programs = new TreeSet<>();
     private Set<CongregationSize> congregationSizes = new TreeSet<>();
-    private Set<AccessabilitySupport> accessabilitySupports = new TreeSet<>();
+    private Set<AccessibilitySupport> accessibilitySupports = new TreeSet<>();
     private Set<DressAttire> dressAttires = new TreeSet<>();
     private Set<MusicStyle> musicStyles = new TreeSet<>();
     private Set<ServiceStyle> serviceStyles = new TreeSet<>();
@@ -43,7 +43,7 @@ public class OrganizationFilter
     private Set<ServiceTimeRange> serviceTimes;
 
     public OrganizationFilter(Set<ServiceDay> serviceDays, Set<ServiceTimeRange> serviceTimes, Set<Affiliation> denominations, Set<Language> languages,
-            Set<Programs> programs, Set<CongregationSize> congregationSizes, Set<AccessabilitySupport> accessabilitySupports,
+            Set<Programs> programs, Set<CongregationSize> congregationSizes, Set<AccessibilitySupport> accessibilitySupports,
             Set<DressAttire> dressAttires, Set<MusicStyle> musicStyles, Set<ServiceStyle> serviceStyles, boolean gayAfirming, double[] location)
     {
         super();
@@ -53,7 +53,7 @@ public class OrganizationFilter
         this.languages = languages;
         this.programs = programs;
         this.congregationSizes = congregationSizes;
-        this.accessabilitySupports = accessabilitySupports;
+        this.accessibilitySupports = accessibilitySupports;
         this.dressAttires = dressAttires;
         this.musicStyles = musicStyles;
         this.serviceStyles = serviceStyles;
@@ -108,7 +108,7 @@ public class OrganizationFilter
 
     public boolean hasFilteredAccessibilityNeeds()
     {
-        return accessabilitySupports != null && !accessabilitySupports.isEmpty();
+        return accessibilitySupports != null && !accessibilitySupports.isEmpty();
     }
     
     public boolean hasFilteredServiceTimeRange()
@@ -137,9 +137,9 @@ public class OrganizationFilter
         return congregationSizes;
     }
 
-    public Set<AccessabilitySupport> getFilteredAccessabilitySupport()
+    public Set<AccessibilitySupport> getFilteredAccessibilitySupport()
     {
-        return accessabilitySupports;
+        return accessibilitySupports;
     }
 
     public Set<DressAttire> getFilteredDressAttire()
