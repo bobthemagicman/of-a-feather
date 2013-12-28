@@ -1938,9 +1938,7 @@ a {
             background-color: @light-gray-color;
             height: 500px;
             padding: 10px;
-            .rounded-corners-top-left;
-            .rounded-corners-top-right;
-            .rounded-corners-bottom-right;
+            .rounded-corners;
             &.active-media {
                 display: block;
             }
@@ -1972,14 +1970,39 @@ a {
                     }
                 }
                 .carousel-inner {
+                    background-color: @darkest-gray-color;
+                    line-height: 480px;
                     img {
                         .rounded-corners;
-                        min-width: 535px;
-                        max-width: 750px;
-                        min-height: 535px;
-                        max-height: 750px;
-                        display: block;
+                        //min-height: 500px;
+                        width: 100%;
+                        height: auto;
+                        //min-width: 535px;
+                        //max-width: 750px;
+                        //min-height: 535px;
+                        //max-height: 750px;
+                        display: inline-block;
+                        vertical-align: middle;
                         margin: auto;
+                    }
+                    .video-placeholder {
+                        position: relative;
+                        .play-button {
+                            cursor: pointer;
+                            position: absolute;
+                            top: 200px;
+                            left: 225px;
+                            width: 0px;
+                            height: 0px;
+                            border-style: solid;
+                            border-width: 50px 0 50px 86.6px;
+                            border-color: transparent transparent transparent #7cba2b;
+                            .translucent(90);
+                            .transition-effects;
+                            &:hover {
+                                .translucent(100);
+                            }
+                        }
                     }
                 }
             }
@@ -1987,100 +2010,87 @@ a {
         }
 
         .media-icons-container {
-            .make-row();
-            margin-top: -5px;
             text-align: center;
-            
-            .media-thumbnails-container {
-                text-align: center;
+
+            .thumbnails-left-arrow, .thumbnails-right-arrow {
                 display: inline-block;
-                width: 450px;
-            }       
-            
-            .thumbnails-carousel-container {
-                .hidden-sm;
-                //.make-xs-column(10);
-                display: inline-block !important;
-                margin-left: -15px;
-                padding-top: 5px;
-                height: 70px;
-                .rounded-corners-top-left;
-                text-align: center;
-                .thumbnails-carousel {
-                    
-                    display: inline-block;
-                    
-                    height: 100%;
-                    text-align: center;
-                    .thumbnails-left-arrow, .thumbnails-right-arrow {
-                        display: inline-block;
-                        height: 80px;
-                        width: 25px;
-                        position: relative;
-                        cursor: pointer;
-                        img {
-                            .transition-effects;
-                            position: absolute;
-                            top: 31.5px;
-                            left: 10.5px;
-                            &.arrow-hover {
-                                .translucent(0);
-                            }
-                        }
-                        &:hover {
-                            img {
-                                .translucent(0);
-                                &.arrow-hover {
-                                    .translucent(100);
-                                }
-                            }
-                        }  
+                height: 80px;
+                width: 25px;
+                position: relative;
+                cursor: pointer;
+                img {
+                    .transition-effects;
+                    position: absolute;
+                    top: 31.5px;
+                    left: 8px;
+                    &.arrow-hover {
+                        .translucent(0);
                     }
-                    .carousel-inner {
-                        display: inline-block;
-                        margin: 0px;
-                        width: auto;
-                        item {
-                            margin: 0px;
-                        }
-                    }
-                    
-
-                    .thumbnails {
-                        
-                        //height: 100%;
-                        //display: block;
-                        //padding: 0px;
-
-                        .thumbnail-container {
-                            width: 70px;
-                            height: 70px;
-                            background-color: @darkest-gray-color;
-                            display: inline-block;
-                            margin: 5px 0px 5px 5px;
-                            .rounded-corners;
-                            padding: 0px;
-                            overflow: hidden;
-                            img {
-                                min-height: 70px;
-                                min-width: 70px;
-                                max-height: 100px;
-                                max-width: 100px;
-                                .rounded-corners;
-                                .transition-effects;
-                                &:hover {
-                                    .translucent(70);
-                                    cursor: pointer;
-                                }
-                            }
-                        }
-
-                    }
-
                 }
-
+                &:hover {
+                    img {
+                        .translucent(0);
+                        &.arrow-hover {
+                            .translucent(100);
+                        }
+                    }
+                }  
             }
+            .carousel-inner {
+                display: inline-block;
+                margin-top: 5px;
+                width: auto;
+            }
+            .thumbnails-group {
+                .photo-thumb, .video-thumb {
+                    background-color: @darkest-gray-color;
+                    width: 70px;
+                    height: 70px;
+                    display: inline-block;
+                    overflow: hidden;
+                    margin: 2px;
+                    .rounded-corners;
 
+                    img {
+                        display: inline-block;
+                        min-height: 70px;
+                        min-width: 70px;
+                        max-height: 100px;
+                        max-width: 100px;
+                        .rounded-corners;
+                        .transition-effects;
+                        &:hover {
+                            .translucent(70);
+                            cursor: pointer;
+                        }
+                    }
+                }
+                .video-thumb {
+                    position: relative;
+                    &:hover {
+                        .play-button {
+                            .translucent(100);
+                        }
+                    }
+                    .play-button {
+                        cursor: pointer;
+                        position: absolute;
+                        top: 15px;
+                        left: 20px;
+                        width: 0px;
+                        height: 0px;
+                        border-style: solid;
+                        border-width: 20px 0 20px 34.6px;
+                        border-color: transparent transparent transparent #7cba2b;
+                        .translucent(90);
+                        .transition-effects;
+                        &:hover {
+                            .translucent(100);
+                        }                        
+                    }
+                }
+                
+            }
         }
 
     }
@@ -2262,6 +2272,8 @@ a {
 */
 
 .profile-bottom {
+
+    margin-top: 75px;
 
     .details-nav-container {
         margin-bottom: -5px;

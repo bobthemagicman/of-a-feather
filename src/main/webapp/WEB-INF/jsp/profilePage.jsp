@@ -24,17 +24,13 @@
 
         <spring:url value="/static/images/site/calendar_icon.png" var="calendarIcon"/>
         <spring:url value="/static/images/site/check_icon.png" var="checkIcon"/>
-        <spring:url value="/static/images/site/choir_icon.png" var="choirIcon"/>
         <spring:url value="/static/images/site/church_icon.png" var="churchIcon"/>
         <spring:url value="/static/images/site/clock_icon.png" var="clockIcon"/>
         <spring:url value="/static/images/site/document_icon.png" var="documentIcon"/>
-        <spring:url value="/static/images/site/drums_icon.png" var="drumsIcon"/>
-        <spring:url value="/static/images/site/electric_guitar_icon.png" var="electricGuitarIcon"/>
         <spring:url value="/static/images/site/envelope_icon.png" var="envelopeIcon"/>
         <spring:url value="/static/images/site/facebook_icon.png" var="facebookIcon"/>
         <spring:url value="/static/images/site/youtube_icon.png" var="youtubeIcon"/>
         <spring:url value="/static/images/site/google_plus_icon.png" var="googlePlusIcon"/>
-        <spring:url value="/static/images/site/guitar_icon.png" var="guitarIcon"/>
         <spring:url value="/static/images/site/heart_icon.png" var="heartIcon"/>
         <spring:url value="/static/images/site/heart_icon_filled_gray.png" var="heartIconFilled"/>
         <spring:url value="/static/images/site/info_icon.png" var="infoIcon"/>
@@ -44,14 +40,11 @@
         <spring:url value="/static/images/site/left_arrow_large.png" var="leftArrowLarge"/>
         <spring:url value="/static/images/site/magnifying_glass_icon.png" var="magnifyingGlassIcon"/>
         <spring:url value="/static/images/site/person_icon.png" var="personIcon"/>
-        <spring:url value="/static/images/site/piano_icon.png" var="pianoIcon"/>
         <spring:url value="/static/images/site/right_arrow.png" var="rightArrow"/>
         <spring:url value="/static/images/site/right_arrow_hover.png" var="rightArrowHover"/>
         <spring:url value="/static/images/site/right_arrow_large.png" var="rightArrowLarge"/>
-        <spring:url value="/static/images/site/saxophone_icon.png" var="saxophoneIcon"/>
         <spring:url value="/static/images/site/small_checkmark.png" var="smallCheckmark"/>
         <spring:url value="/static/images/site/twitter_icon.png" var="twitterIcon"/>
-        <spring:url value="/static/images/site/violin_icon.png" var="violinIcon"/>
         <spring:url value="/static/images/site/visiting_icon.png" var="visitingIcon"/>
 
         <div class="main">
@@ -69,6 +62,52 @@
                                     <img src="${leftArrowLarge}" />
                                 </div>
                                 <div class="carousel-inner">
+                                    <div class="item active">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image1.jpg" data-thumbnail-page="0" />
+                                    </div>
+                                    <div class="item">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image2.jpg" data-thumbnail-page="0" />
+                                    </div>
+                                    <div class="item">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image3.jpg" data-thumbnail-page="0" />
+                                    </div>
+                                    <div class="item">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image4.jpg" data-thumbnail-page="0" />
+                                    </div>
+                                    <div class="item">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image5.jpg" data-thumbnail-page="0" />
+                                    </div>
+                                    <div class="item">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image6.jpg" data-thumbnail-page="0" />
+                                    </div>
+                                    <div class="item">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image7.jpg" data-thumbnail-page="1" />
+                                    </div>
+                                    <div class="item">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image8.jpg" data-thumbnail-page="1" />
+                                    </div>
+                                    <div class="item">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image9.jpg" data-thumbnail-page="1" />
+                                    </div>
+                                    <div class="item">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image10.jpg" data-thumbnail-page="1" />
+                                    </div>
+                                    <div class="item">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image11.jpg" data-thumbnail-page="1" />
+                                    </div>
+                                    <div class="item">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image12.jpg" data-thumbnail-page="1" />
+                                    </div>
+                                    <div class="item">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image13.jpg" data-thumbnail-page="2" />
+                                    </div>
+                                    <div class="item">
+                                        <div class="video-placeholder" data-video-code="j73gbEFYHTs" data-video-type="YT" data-thumbnail-page="2"></div>
+                                    </div>
+                                    <div class="item">
+                                        <div class="video-placeholder" data-video-code="w9we7h78q7U" data-video-type="YT" data-thumbnail-page="2"></div>
+                                    </div>
+                                    <%--
                                     <c:forEach items="${organization.multimedia}" var="multimediaObject" varStatus="index">
                                         <c:set var="class" value="item" />
                                         <c:if test="${index.first}">
@@ -83,9 +122,10 @@
                                         </c:if>
 
                                         <c:if test="${multimediaObject.video}">
-                                            <%-- TODO: Video objects go here --%>
+                                            <%-- TODO: Video objects go here
                                         </c:if>
                                     </c:forEach>
+                                    --%>        
                                 </div>
                                 <div class="media-right-arrow" data-slide="next">
                                     <img src="${rightArrowLarge}" />
@@ -94,70 +134,64 @@
 
                         </div>
 
-                        <div class="video-player-container">
-                            <div id="videoPlayer"></div>
-                        </div>
-
-                        <div class="media-icons-container">
-                            <div class="media-thumbnails-container">
-                                <div class="thumbnails-carousel-container">
-                                    <div class="thumbnails-carousel carousel slide">
-                                        <div class="thumbnails-left-arrow" data-slide="prev">
-                                            <img src="${leftArrow}" />
-                                            <img class="arrow-hover" src="${leftArrowHover}" />
-                                        </div>
-                                        <div class="photos carousel-inner">
-                                            <div class="thumbnails item active">
-                                                <div class="thumbnail-container">
-                                                    <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image1.jpg" data-slide-link="0" />
-                                                </div>    
-                                                <div class="thumbnail-container">
-                                                    <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image2.jpg" data-slide-link="1" />
-                                                </div>
-                                                <div class="thumbnail-container">
-                                                    <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image3.jpg" data-slide-link="2" />
-                                                </div>
-                                                <div class="thumbnail-container">
-                                                    <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image4.jpg" data-slide-link="3" />
-                                                </div>
-                                                <div class="thumbnail-container">
-                                                    <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image5.jpg" data-slide-link="4" />
-                                                </div>
-                                                <div class="thumbnail-container">
-                                                    <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image5.jpg" data-slide-link="5" />
-                                                </div>                                           
-                                            </div>
-                                            <div class="thumbnails item">
-                                                <div class="thumbnail-container">
-                                                    <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image5.jpg" data-slide-link="4" />
-                                                </div>    
-                                                <div class="thumbnail-container">
-                                                    <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image4.jpg" data-slide-link="3" />
-                                                </div>
-                                                <div class="thumbnail-container">
-                                                    <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image3.jpg" data-slide-link="2" />
-                                                </div>
-                                                <div class="thumbnail-container">
-                                                    <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image2.jpg" data-slide-link="1" />
-                                                </div>
-                                                <div class="thumbnail-container">
-                                                    <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image3.jpg" data-slide-link="2" />
-                                                </div>
-                                            </div>
-                                            <div class="thumbnails item">
-                                                <div class="thumbnail-container video">
-                                                    <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image3.jpg" data-video-code="EwwPwQ8Zt8I" data-video-type="YT" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="thumbnails-right-arrow" data-slide="next">
-                                            <img src="${rightArrow}" />
-                                            <img class="arrow-hover" src="${rightArrowHover}" />
-                                        </div>
+                        <div class="media-icons-container carousel slide">
+                            <div class="thumbnails-left-arrow" data-slide="prev">
+                                <img src="${leftArrow}" />
+                                <img class="arrow-hover" src="${leftArrowHover}" />
+                            </div>
+                            <div class="carousel-inner">
+                                <div class="thumbnails-group item active">
+                                    <div class="photo-thumb">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image1.jpg" data-slide-link="0" />
+                                    </div>
+                                    <div class="photo-thumb">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image2.jpg" data-slide-link="1" />
+                                    </div>  
+                                    <div class="photo-thumb">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image3.jpg" data-slide-link="2" />
+                                    </div>
+                                    <div class="photo-thumb">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image4.jpg" data-slide-link="3" />
+                                    </div>
+                                    <div class="photo-thumb">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image5.jpg" data-slide-link="4" />
+                                    </div>
+                                    <div class="photo-thumb">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image6.jpg" data-slide-link="5" />
                                     </div>
                                 </div>
+                                <div class="thumbnails-group item">
+                                    <div class="photo-thumb">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image7.jpg" data-slide-link="6" />
+                                    </div>
+                                    <div class="photo-thumb">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image8.jpg" data-slide-link="7" />
+                                    </div>  
+                                    <div class="photo-thumb">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image9.jpg" data-slide-link="8" />
+                                    </div>
+                                    <div class="photo-thumb">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image10.jpg" data-slide-link="9" />
+                                    </div>
+                                    <div class="photo-thumb">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image11.jpg" data-slide-link="10" />
+                                    </div>
+                                    <div class="photo-thumb">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image12.jpg" data-slide-link="11" />
+                                    </div>
+                                </div>
+                                <div class="thumbnails-group item">
+                                    <div class="photo-thumb">
+                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image13.jpg" data-slide-link="12" />
+                                    </div>
+                                    <div class="video-thumb" data-video-code="j73gbEFYHTs" data-video-type="YT" data-slide-link="13"></div>
+                                    <div class="video-thumb" data-video-code="w9we7h78q7U" data-video-type="YT" data-slide-link="14"></div>                                    
+                                </div>
                             </div>
-
+                            <div class="thumbnails-right-arrow" data-slide="next">
+                                <img src="${rightArrow}" />
+                                <img class="arrow-hover" src="${rightArrowHover}" />
+                            </div>
                         </div>
 
                     </div>
