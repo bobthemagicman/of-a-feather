@@ -2009,6 +2009,57 @@ a {
 
         }
 
+        .elastislide-wrapper {
+            box-shadow: none;
+            nav {
+                span {
+                    background: none;
+                    background-repeat: no-repeat;
+                    top: 55%;
+                    .rounded-corners(0px);
+                }
+            }
+            .elastislide-prev {
+                background-image: url("http://ofafeather-testing.appwebmasters.com/images/cal_designs/left_arrow.png");
+                &:hover {
+                    background-image: url("http://ofafeather-testing.appwebmasters.com/images/cal_designs/left_arrow_hover.png");
+                }
+                left: 20px;
+            }
+            .elastislide-next {
+                background-image: url("http://ofafeather-testing.appwebmasters.com/images/cal_designs/right_arrow.png");
+                &:hover {
+                    background-image: url("http://ofafeather-testing.appwebmasters.com/images/cal_designs/right_arrow_hover.png");
+                }
+                right: 5px;
+            }
+        }
+
+        .elastislide-list {
+            box-shadow: 0px;
+            li {
+                background-color: @darkest-gray-color;
+                cursor: pointer;
+                display: inline-block;
+                height: 70px;
+                width: 70px;
+                margin: 3px;
+                overflow: hidden;
+                .rounded-corners;
+            }
+            img {
+                display: inline-block;
+                min-width: 76px;
+                height: 76px;
+                margin: 0px;
+                .rounded-corners;
+                .transition-effects;
+                &:hover {
+                    .translucent(70);
+                }
+            }
+        }
+
         .media-icons-container {
             text-align: center;
 
