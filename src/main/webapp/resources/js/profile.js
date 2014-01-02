@@ -9,7 +9,13 @@ $(document).ready(function() {
    
     initializeVideoThumbnails();
     
+    initializeTooltips();
+    
 });
+
+function initializeTooltips() {
+    $(".has-tooltip").tooltip({'placement': 'top'});
+}
 
 function initializeSliders() {
     

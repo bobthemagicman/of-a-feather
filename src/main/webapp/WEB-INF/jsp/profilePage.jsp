@@ -302,11 +302,11 @@
 
                 <div class="container details-nav-container">
                     <ul class="nav nav-tabs details-nav">
-                        <li class="active"><a href="#tab1" data-toggle="tab"><img src="${personIcon}" /></a><br /><div class="arrow-up"></div></li>
-                        <li><a href="#tab2" data-toggle="tab"><img src="${documentIcon}" /></a><br /><div class="arrow-up"></div></li>
-                        <li><a href="#tab3" data-toggle="tab"><img src="${clockIcon}" /></a><br /><div class="arrow-up"></div></li>
-                        <li><a href="#tab4" data-toggle="tab"><img src="${churchIcon}" /></a><br /><div class="arrow-up"></div></li>
-                        <li><a href="#tab5" data-toggle="tab"><img src="${checkIcon}" /></a><br /><div class="arrow-up"></div></li>
+                        <li class="active has-tooltip" title="Church Leadership"><a href="#tab1" data-toggle="tab"><img src="${personIcon}" /></a><br /><div class="arrow-up"></div></li>
+                        <li class="has-tooltip" title="Statement of Faith"><a href="#tab2" data-toggle="tab"><img src="${documentIcon}" /></a><br /><div class="arrow-up"></div></li>
+                        <li class="has-tooltip" title="Service Times"><a href="#tab3" data-toggle="tab"><img src="${clockIcon}" /></a><br /><div class="arrow-up"></div></li>
+                        <li class="has-tooltip" title="Church Atmosphere"><a href="#tab4" data-toggle="tab"><img src="${churchIcon}" /></a><br /><div class="arrow-up"></div></li>
+                        <li class="has-tooltip" title="Programs &amp; Ministries"><a href="#tab5" data-toggle="tab"><img src="${checkIcon}" /></a><br /><div class="arrow-up"></div></li>
                     </ul>
                 </div>
 

@@ -42,3 +42,8 @@
         .queueScript("${bootstrapJS}")
         .queueScript("http://code.jquery.com/ui/1.10.3/jquery-ui.js");    
 </script>
+
+<spring:url value="/static/" var="resourceBaseURL" />
+<script type="text/javascript">
+    var resourceBaseURL = '${resourceBaseURL}';
+</script>
