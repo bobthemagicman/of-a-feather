@@ -7,14 +7,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 
 import com.flockspring.dataaccess.mongodb.CustomRegionRepository;
 import com.flockspring.domain.types.Region;
 import com.flockspring.domain.types.impl.GlobalRegionImpl;
 import com.flockspring.domain.types.impl.OrganizationImpl;
-import com.flockspring.domain.types.impl.RegionType;
 
 /**
  * RegionRepositoryImpl.java

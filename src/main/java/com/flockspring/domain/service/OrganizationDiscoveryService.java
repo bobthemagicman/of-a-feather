@@ -3,8 +3,6 @@
  */
 package com.flockspring.domain.service;
 
-import java.util.NavigableSet;
-
 import org.springframework.data.mongodb.core.geo.GeoPage;
 
 import com.flockspring.domain.OrganizationFilter;

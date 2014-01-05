@@ -3,11 +3,13 @@
  */
 package com.flockspring.ui.mapper;
 
+import java.util.Locale;
 import java.util.NavigableSet;
 import java.util.Set;
 import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.data.mongodb.core.geo.GeoPage;
 import org.springframework.data.mongodb.core.geo.GeoResult;
 import org.springframework.stereotype.Component;
@@ -19,8 +21,8 @@ import com.flockspring.domain.types.ServiceDetails;
 import com.flockspring.domain.types.impl.AddressImpl;
 import com.flockspring.domain.types.impl.Atmosphere;
 import com.flockspring.domain.types.impl.OrganizationImpl;
-import com.flockspring.ui.model.SearchFilterUICommand;
 import com.flockspring.ui.model.MultimediaUIModel;
+import com.flockspring.ui.model.SearchFilterUICommand;
 import com.flockspring.ui.model.SearchResultUIModel;
 import com.flockspring.ui.model.SearchResultsUIModel;
 
@@ -35,35 +37,37 @@ import com.flockspring.ui.model.SearchResultsUIModel;
 public class SearchResultsUIModelMapper
 {
 
+    private MessageSource messageSource;
     private MultimediaUIModelMapper imageUIModelMapper;
     
     @Autowired    
-    public SearchResultsUIModelMapper(MultimediaUIModelMapper imageUIModelMapper)
+    public SearchResultsUIModelMapper(MultimediaUIModelMapper imageUIModelMapper, MessageSource messageSource)
     {
         super();
         
         this.imageUIModelMapper = imageUIModelMapper;
+        this.messageSource = messageSource;
     }
 
-    public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, Address address)
+    public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, Address address, Locale locale)
     {
-        return map(geoPageResult, address, new SearchFilterUICommand());
+        return map(geoPageResult, address, new SearchFilterUICommand(), locale);
     }
 
-    public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, SearchFilterUICommand filterRequest)
+    public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, SearchFilterUICommand filterRequest, Locale locale)
     {
         AddressImpl address = new AddressImpl("", "", "", "", "", "", filterRequest.getLocation());
        
-        return map(geoPageResult, address, filterRequest);
+        return map(geoPageResult, address, filterRequest, locale);
     }
     
-    private SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, Address address, SearchFilterUICommand filterRequest)
+    private SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, Address address, SearchFilterUICommand filterRequest, Locale locale)
     {
         
         NavigableSet<SearchResultUIModel> results = new TreeSet<>();
         for(GeoResult<OrganizationImpl> geoResult : geoPageResult)
         {
-            results.add(map(geoResult, filterRequest));
+            results.add(map(geoResult, filterRequest, locale));
         }
         
         int currentPage = geoPageResult.getNumber();
@@ -83,7 +87,7 @@ public class SearchResultsUIModelMapper
                 address.getLatitude(), address.getLongitude());
     }
 
-    public SearchResultUIModel map(GeoResult<OrganizationImpl> geoResult, SearchFilterUICommand filterRequest)
+    public SearchResultUIModel map(GeoResult<OrganizationImpl> geoResult, SearchFilterUICommand filterRequest, Locale locale)
     {
         
         Organization organization = geoResult.getContent();
@@ -92,9 +96,10 @@ public class SearchResultsUIModelMapper
         MultimediaUIModel image = imageUIModelMapper.map(getPrimaryOrganizationImage(organization.getMultimedia()));
         Address address = organization.getAddress();
         ServiceDetails serviceDetails = getMatchingServiceDetails(atmosphere, filterRequest);
-        
+        String denominationString = messageSource.getMessage(organization.getDenomination().getLocalizedStringCode(), null, locale);
+                
         return new SearchResultUIModel(image, organization.getName(),  
-                organization.getDenomination().getLocalizedStringCode(), organization.getId(), geoResult.getDistance().getValue(),
+                denominationString, organization.getId(), geoResult.getDistance().getValue(),
                 isOrganizationFeatured(organization), isOrganizationUserFavorite(organization), address.getCity(), 
                 address.getState(), address.getPostalCode(), address.getLatitude(), address.getLongitude(), 
                 getMusicStyleSliderValue(serviceDetails), getServiceStyleSliderValue(serviceDetails), 

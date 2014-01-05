@@ -1,0 +1,20 @@
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+    version="2.0">
+ 
+    <tlib-version>2.0</tlib-version>
+    <uri>http://www.your-domain.com/taglib</uri>
+ 
+    <function>
+        <name>collectionContains</name>
+        <function-class>com.flockspring.ui.tags.JSTLCustomFunctions</function-class>
+         <function-signature>boolean collectionContains(java.util.Collection, java.lang.Object)</function-signature>
+    </function>
+    
+    <function>
+        <name>createList</name>
+        <function-class>com.flockspring.ui.tags.JSTLCustomFunctions</function-class>
+         <function-signature>java.util.List createList(java.lang.Object[])</function-signature>
+    </function>
+</taglib>

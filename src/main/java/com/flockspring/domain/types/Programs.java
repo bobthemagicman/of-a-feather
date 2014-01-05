@@ -1,7 +1,9 @@
 /*
  * Copyright 2013 FlockSpring Inc. All rights reserved
  */
-package com.flockspring.ui.model;
+package com.flockspring.domain.types;
+
+import com.flockspring.ui.model.LocalizedEnum;
 
 /**
  * Programs.java
@@ -10,7 +12,7 @@ package com.flockspring.ui.model;
  * @date Oct 27, 2013
  *
  */
-public enum Programs implements LocalizedEnum
+public enum Programs implements LocalizedEnum, Category<Programs>
 {
     NUSRSERY_CARE_AND_EDUCATIONAL(null, "programs.nursery.care.and.educational"),    
     SUPPORT_AND_OUTREACH(null, "programs.support.and.outreach"),
@@ -70,6 +72,7 @@ public enum Programs implements LocalizedEnum
         this.localizedStringCode = localizedStringCode;
     }
     
+    @Override
     public Programs getCategory()
     {
         return category;

@@ -35,13 +35,13 @@ public class OrganizationFilterMapper
 
         Set<MusicStyle> musicStyles = getMusicStyleValues(filterRequest.getAtmosphereMusicStyleFloor(),
                 filterRequest.getAtmosphereMusicStyleCeiling());
-        
-        Set<ServiceStyle> serviceStyles = getServiceStyleValues(filterRequest.getAtmosphereServiceStyleFloor(), 
+
+        Set<ServiceStyle> serviceStyles = getServiceStyleValues(filterRequest.getAtmosphereServiceStyleFloor(),
                 filterRequest.getAtmosphereServiceStyleCeiling());
 
         OrganizationFilter organizationFilter = new OrganizationFilter(filterRequest.getServiceDays(), filterRequest.getServiceTimes(),
                 filterRequest.getAffiliations(), filterRequest.getLanguages(), filterRequest.getProgramsAndMinistries(),
-                filterRequest.getCongregationSize(), accessibilitySupports, dressAttires, musicStyles, serviceStyles, filterRequest.isGayAfirming(),
+                filterRequest.getCongregationSizes(), accessibilitySupports, dressAttires, musicStyles, serviceStyles, filterRequest.isGayAffirming(),
                 filterRequest.getLocation());
 
         return organizationFilter;
@@ -49,12 +49,18 @@ public class OrganizationFilterMapper
 
     private Set<DressAttire> getDressAttireValues(Integer atmosphereDressAttireFloor, Integer atmosphereDressAttireCeiling)
     {
+
         Set<DressAttire> dressAttireSet = new TreeSet<>();
-        
-        int x = atmosphereDressAttireFloor;
-        while(x < atmosphereDressAttireCeiling)
+
+        // if you remove SPECTRUM_MIN and MAX add ordinal math here as the UI is not zero based
+        if (atmosphereDressAttireCeiling != null && atmosphereDressAttireFloor != null &&
+            atmosphereDressAttireFloor != DressAttire.FORMAL_1.ordinal() + 1 && atmosphereDressAttireCeiling != DressAttire.CASUAL_10.ordinal() + 1)
         {
-            dressAttireSet.add(DressAttire.values()[(x++)-1]);            
+            int x = atmosphereDressAttireFloor - 1;
+            while (x < atmosphereDressAttireCeiling)
+            {
+                dressAttireSet.add(DressAttire.values()[(x++)]);
+            }
         }
         
         return dressAttireSet;
@@ -64,11 +70,16 @@ public class OrganizationFilterMapper
     {
 
         Set<MusicStyle> musicStyleSet = new TreeSet<>();
-        
-        int x = atmosphereMusicStyleFloor;
-        while(x < atmosphereMusicStyleCeiling)
+
+        // if you remove SPECTRUM_MIN and MAX add ordinal math here as the UI is not zero based
+        if(atmosphereMusicStyleFloor != null && atmosphereMusicStyleCeiling != null && 
+           atmosphereMusicStyleFloor != MusicStyle.TRADITIONAL_1.ordinal() + 1 && atmosphereMusicStyleCeiling != MusicStyle.CONTEMPORARY_8.ordinal() + 1)
         {
-            musicStyleSet.add(MusicStyle.values()[(x++)-1]);            
+            int x = atmosphereMusicStyleFloor - 1;
+            while (x < atmosphereMusicStyleCeiling)
+            {
+                musicStyleSet.add(MusicStyle.values()[(x++)]);
+            }
         }
         
         return musicStyleSet;
@@ -78,11 +89,16 @@ public class OrganizationFilterMapper
     {
 
         Set<ServiceStyle> serviceStyleSet = new TreeSet<>();
-        
-        int x = atmosphereServiceStyleFloor;
-        while(x < atmosphereServiceStyleCeiling)
+
+        if(atmosphereServiceStyleFloor != null && atmosphereServiceStyleCeiling != null &&
+           atmosphereServiceStyleFloor != ServiceStyle.CONSERVATIVE_1.ordinal() && atmosphereServiceStyleCeiling != ServiceStyle.HIGH_ENERGY_10.ordinal())
         {
-            serviceStyleSet.add(ServiceStyle.values()[(x++)-1]);            
+            int x = atmosphereServiceStyleFloor - 1;
+            while (x < atmosphereServiceStyleCeiling)
+            {
+                serviceStyleSet.add(ServiceStyle.values()[(x++)]);
+            }
+
         }
         
         return serviceStyleSet;

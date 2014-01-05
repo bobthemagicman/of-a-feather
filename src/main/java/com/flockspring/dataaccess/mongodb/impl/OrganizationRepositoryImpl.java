@@ -20,7 +20,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import com.flockspring.dataaccess.mongodb.CustomOrganizationRepository;
 import com.flockspring.domain.OrganizationFilter;
 import com.flockspring.domain.types.impl.OrganizationImpl;
-import com.flockspring.ui.model.ServiceTimeRange;
 
 /**
  * OrganizationRepositoryImpl.java
@@ -54,23 +53,7 @@ public class OrganizationRepositoryImpl implements CustomOrganizationRepository<
         
         if(o.hasFilteredServiceTimeRange())
         {
-            Criteria timeRangeCriteria = Criteria.where("atmosphere.serviceDetails.timeAndDay.startTime");
-            
-            boolean first = true;
-            for(ServiceTimeRange str : o.getFilteredServiceTimes())
-            {
-                if(first)
-                {
-                    timeRangeCriteria.gte(str.getRangeStart().toDate()).lte(str.getRangeEnd().toDate());
-                    first = false;
-                }
-                else
-                {
-                    timeRangeCriteria.orOperator(timeRangeCriteria.gte(str.getRangeStart().toDate()).lte(str.getRangeEnd().toDate()));                    
-                }                
-            }
-            
-            query.addCriteria(timeRangeCriteria);
+            query.addCriteria(Criteria.where("atmosphere.serviceDetails.timeAndDay.serviceTimeRange").in(convertEnumsToStrings(o.getFilteredServiceTimes())));
         }
         
         if(o.hasFilteredServiceDays())
@@ -85,17 +68,17 @@ public class OrganizationRepositoryImpl implements CustomOrganizationRepository<
         
         if(o.hasFilteredDressAttire())
         {
-            query.addCriteria(Criteria.where("atmosphere.dressAttire").in(convertEnumsToStrings(o.getFilteredDressAttire())));
+            query.addCriteria(Criteria.where("atmosphere.serviceDetails.dressAttire").in(convertEnumsToStrings(o.getFilteredDressAttire())));
         }
         
         if(o.hasFilteredServiceStyle())
         {
-            query.addCriteria(Criteria.where("atmosphere.serviceStyle").in(convertEnumsToStrings(o.getFilteredServiceStyle())));
+            query.addCriteria(Criteria.where("atmosphere.serviceDetails.serviceStyle").in(convertEnumsToStrings(o.getFilteredServiceStyle())));
         }
         
         if(o.hasFilteredMusicStyle())
         {
-            query.addCriteria(Criteria.where("atmosphere.musicStyle").in(convertEnumsToStrings(o.getFilteredMusicStyle())));
+            query.addCriteria(Criteria.where("atmosphere.serviceDetails.musicStyle").in(convertEnumsToStrings(o.getFilteredMusicStyle())));
         }
         
         if(o.isGayAfirming())

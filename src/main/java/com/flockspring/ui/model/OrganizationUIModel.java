@@ -10,6 +10,8 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
+import com.flockspring.domain.types.Category;
+import com.flockspring.domain.types.Programs;
 import com.google.common.collect.ComparisonChain;
 
 /**
@@ -30,11 +32,11 @@ public class OrganizationUIModel implements Comparable<OrganizationUIModel>
     private final OrganizationStatementUIModel statements;
     private final ServiceOverviewUIModel servicesOverview;
     private final Set<ServiceDetailUIModel> serviceDetails;
-    private final Map<Programs, Set<Programs>> programsOffered;
+    private final Map<Category<Programs>, Set<Programs>> programsOffered;
         
     public OrganizationUIModel(String id, OrganizationOverviewUIModel overview, Set<MultimediaUIModel> multimedia, 
             Set<LeaderUIModel> leadershipTeam, OrganizationStatementUIModel statements, ServiceOverviewUIModel servicesOverviews,
-            Set<ServiceDetailUIModel> serviceDetails, Map<Programs, Set<Programs>> programsOffered)
+            Set<ServiceDetailUIModel> serviceDetails, Map<Category<Programs>, Set<Programs>> programsOffered2)
     {
         super();
 
@@ -45,7 +47,7 @@ public class OrganizationUIModel implements Comparable<OrganizationUIModel>
         this.statements = statements;
         this.servicesOverview = servicesOverviews;
         this.serviceDetails = serviceDetails;
-        this.programsOffered = programsOffered;
+        this.programsOffered = programsOffered2;
     }
 
     public String getId()
@@ -83,7 +85,7 @@ public class OrganizationUIModel implements Comparable<OrganizationUIModel>
         return serviceDetails;
     }
 
-    public Map<Programs, Set<Programs>> getProgramsOffered()
+    public Map<Category<Programs>, Set<Programs>> getProgramsOffered()
     {
         return programsOffered;
     }

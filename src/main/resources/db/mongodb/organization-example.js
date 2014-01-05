@@ -17,6 +17,7 @@ var org1 = {
 	},
 	atmosphere : {
 		congregationSize : "MEGA", //Options are SMALL, MEDIUM, LARGE, MEGA, UNKNOWN
+		serviceSchedule : "",
 		serviceDetails : [ { //brackets mean that the following is a comma separated list of same things
 			musicStyle : 'CONTEMPORARY_3', // See available values below
 			serviceStyle : 'HIGH_ENERGY_3', //See available values below
@@ -26,8 +27,9 @@ var org1 = {
 			durationInMinutes : 90, //no quotes, must be a whole number
 			serviceName: '9:20 Service', //Name of the service, will be displayed under Church Atmosphere on the profile page
 			timeAndDay : {
-				startTime : '???????',
-				serviceDay : 'SUNDAY' 
+				startTime : 'ISODate("0000-12-30T09:20:00Z")',
+				serviceDay : 'SUNDAY',
+				serviceTimeRange : 'MID_MORNING' //See available values below
 			},
 			languages : ['ENGLISH', 'AMERICAN_SIGN_LANGUAGE', 'SPANISH']
 		}, {
@@ -39,8 +41,9 @@ var org1 = {
 			durationInMinutes : 90,
 			serviceName : '11am Service',
 			timeAndDay : {
-				startTime : '??????',
-				serviceDay : 'SUNDAY' 
+				startTime : 'ISODate("0000-12-30T11:00:00Z")?',
+				serviceDay : 'SUNDAY',
+				serviceTimeRange : 'LATE_MORNING'
 			},
 			languages : ['ENGLISH', 'AMERICAN_SIGN_LANGUAGE', 'SPANISH']
 		}, {
@@ -52,8 +55,9 @@ var org1 = {
 			durationInMinutes : 90,
 			serviceName : 'Sunday Evening Service',
 			timeAndDay : {
-				startTime : '?????',
-				serviceDay : 'SUNDAY' 
+				startTime : 'ISODate("0000-12-30T18:00:00Z")',
+				serviceDay : 'SUNDAY',
+				serviceTimeRange : 'EVENING'
 			},
 			languages : ['ENGLISH', 'AMERICAN_SIGN_LANGUAGE', 'SPANISH']
 		} ],
@@ -152,78 +156,69 @@ var org1 = {
  * so the necessary changes can be made in the code to reflect the new values.
  * 
  * Full List of Denominations:
- * 		
- * 		NONDENOMINATIONAL
- * 	    CATHOLICISM
- *     	EASTERN_ORTHODOX
- *     	ORIENTAL_ORTHODOX
- *     	PROTESTANTISM
- *     	LUTHERANISM
- *     	ANGLICANISM
- *     	CALVINISM
- *     	PRESBYTERIANISM
- *     	CONGREGATIONALIST
- *     	ANABAPTISTS
- *     	BRETHREN
- *     	METHODISTS
- *     	PRIESTS_AND_HOLINESS
- *     	BAPTISTS
- *     	APISTOLIC
- *     	PENTECOSTALISM
- *     	CHARISMATICS    
- *     	AFRICAN_INITIATED  
- *     	MESSIANIC_JUDAISM    
- *      UNITED_AND_UNITING   
- *      QUAKER    
- *      STONE_CAMPBELL_RESTORATION    
- *      SOUTHCOTTITES   
- *      LATTER_DAY_SAINTS    
- *      ONENESS_PENTACOSTALISM    
- *      UNITARIAN   
- *      BIBLE_STUDENT_GROUPS    
- *      CHRISTIAN_SCIENCE    
- *      NEW_THOUGHT    
- *      ESOTERICISM    
- *      ASSEMBLIES_OF_GOD   
- *      CHURCH_OF_GOD    
- *      DISCIPLES_OF_CHRIST    
- *      FOURSQUARE   
- *      JEHOVAS_WITNESS   
- *      MENNONITE    
- *      NAZARENE    
- *      OPEN_BIBLE  
- *      REFORMED_CHURCHES    
- *      SEVENTH_DAY_ADVENTIST    
- *      UNITED_CHURCH_OF_CHRIST   
- *      NONE
+ * 
+ * AMERICAN_BAPTIST
+ *  	BAPTIST
+ *  	SOUTHERN_BAPTIST
+ *  	PRESBYTERIAN
+ *  	PRESBYTERIAN_PCUSA
+ *  	PRESBYTERIAN_PCA
+ *  	APOSTOLIC
+ *  	ASSEMBLIES_OF_GOD
+ *  	CATHOLIC
+ *  	CHRISTIAN_SCIENCE
+ *  	CHURCH_OF_GOD
+ *  	CHURCH_OF_THE_BRETHREN
+ *  	DISCIPLES_OF_CHRIST
+ *  	EPISCOPAL_ANGLICAN
+ *  	EVANGELICAL
+ *  	FOURSQUARE
+ *  	JEHOVAH_WITNESS
+ *  	LUTHERAN
+ *  	MENNONITE
+ *  	MESSIANIC
+ *  	METHODIST
+ *  	LATTER_DAY_SAINTS_MORMON
+ *  	NAZARENE
+ *  	NON_DENOMINATIONAL
+ *  	OPEN_BIBLE
+ *  	ORTHODOX
+ *  	PENTECOSTAL
+ *  	QUAKER_FRIENDS
+ *  	REFORMED
+ *  	SEVENTH_DAY_ADVENTIST
+ *  	UNITARIAN_UNIVERSALIST
+ *  	UNITED_CHURCH_OF_CHRIST
+ *  	OTHER
  * 
  * 
  * Full List of ProgramsOffered values:
  *	 	INFANT_CARE    
- *		TODDLER_CARE    
- *		SUNDAY_SCHOOL   
+ *	 	TODDLER_CARE    
+ *	 	SUNDAY_SCHOOL   
  * 		BIBLE_STUDY    
  * 		ADULT_EDUCATION   
  *  	SPIRITUAL_CLASSES    
- *  	PRE_SCHOOL   
+ *	  	PRE_SCHOOL   
  *   	PRIMARY_SCHOOL    
  *   	SECONDARY_SCHOOL   
- *    	GRADUATE_STUDIES    
+ *   	GRADUATE_STUDIES    
  *    	CHILDRENS_GROUP   
  *     	MIDDLE_SCHOOL_GROUP   
  *      HIGH_SCHOOL_GROUP    
- *      YOUNG_ADULT_GROUP    
+ *      COLLEGE_AGE_GROUP 
+ *      POST_COLLEGE_GROUP    
  *      ADULT_GROUP    
  *      SENIOR_GROUP    
  *      MENS_GROUP    
  *      WOMENS_GROUP    
- *      CHIOR    
+ *      CHOIR    
  *      DANCE    
  *      MUSIC_MINISTRY   
  *      DRAMA    
  *      CREATIVE_ARTS    
- *      SPROTS   
- *      SOCAIL_EVENTS    
+ *      SPORTS   
+ *      SOCIAL_EVENTS    
  *      SMALL_GROUPS    
  *      SINGLES_GROUPS    
  *      PRAYER_GROUPS    
@@ -231,7 +226,6 @@ var org1 = {
  *      PROPHETIC_MINISTRY   
  *      WORSHIP_MINISTRY   
  *      PRE_MARITIAL_COUNSELING   
- *      COUPLES_COUNSELING   
  *      GENERAL_COUNSELING    
  *      DIVORCE_GRIEF_COUNSELING
  *      ADDICTION_RECOVERY_COUNSELING 
@@ -245,47 +239,55 @@ var org1 = {
  *        
  * 
  * Full List of ServiceStyle values:
- * 		CONSERVATIVE_4
- *     	CONSERVATIVE_3    
+ * 		CONSERVATIVE_1
  *     	CONSERVATIVE_2    
- *     	CONSERVATIVE_1    
- *     	NEUTRAL    
- *     	HIGH_ENERGY_1    
- *     	HIGH_ENERGY_2    
- *     	HIGH_ENERGY_3    
- *     	HIGH_ENERGY_4
+ *     	CONSERVATIVE_3    
+ *     	CONSERVATIVE_4   
+ *	    NEUTRAL_5  
+ *	    NEUTRAL_6  
+ *		HIGH_ENERGY_7    
+ *  	HIGH_ENERGY_8    
+ *  	HIGH_ENERGY_9   
+ *  	HIGH_ENERGY_10	
  *
  *     
  * Full List of MusicStyle values:
- * 		TRADITIONAL_4    
- * 		TRADITIONAL_3   
- * 		TRADITIONAL_2  
- *    	NEUTRAL   
- *     	CONTEMPORARY_2    
- *     	CONTEMPORARY_3    
- *     	CONTEMPORARY_4
+ * 		TRADITIONAL_1    
+ * 		TRADITIONAL_2   
+ * 		TRADITIONAL_3 
+ *      TRADITIONAL_4 
+ *    	NEUTRAL_5  
+ *    	NEUTRAL_6  
+ *     	CONTEMPORARY_7    
+ *     	CONTEMPORARY_8    
+ *     	CONTEMPORARY_9
+ *     	CONTEMPORARY_10
  *     
  *     
  * Full List of DressAttire values:
- * 		FORMAL_4    
- * 		FORMAL_3 
- *    	FORMAL_2  
- *      FORMAL_1    
- *      NEUTRAL    
- *      CASUAL_1   
- *      CASUAL_2    
- * 		CASUAL_3
- *     	CASUAL_4
+ * 		FORMAL_1    
+ * 		FORMAL_2 
+ *    	FORMAL_3  
+ *      FORMAL_4    
+ *      NEUTRAL_5  
+ *      NEUTRAL_6   
+ *      CASUAL_7  
+ *      CASUAL_8    
+ * 		CASUAL_9
+ *     	CASUAL_10
  *     
  *
  * Full List of AgeDemographics values:
- *  	YOUTH_3
+ *  	YOUTH_1
  *      YOUTH_2
- *      YOUTH_1
- *      NEUTRAL
- *      MATURE_1
- *      MATURE_2
- *      MATURE_3  
+ *      YOUTH_3
+ *      YOUTH_4
+ *      NEUTRAL_5
+ *      NEUTRAL_6
+ *      MATURE_7
+ *      MATURE_8
+ *      MATURE_9
+ *      MATURE_10   
  *      
  * Full List of ServiceTimes
  * 		EARLY_MORNING  
@@ -305,7 +307,7 @@ var org1 = {
  *      SUNDAY
  *      
  *      
- * Full List of accessibilitySupport     
+ * Full List of Accessibility Support      
  * 		WHEELCHAIR_ACCESS   
  *  	DEAF_TRANSLATOR   
  *   	PARKING_LOT   
@@ -313,5 +315,5 @@ var org1 = {
  *    	PARKING_GARAGE   
  *     	CARPOOL
  *     
- */
-
+ */	
+	

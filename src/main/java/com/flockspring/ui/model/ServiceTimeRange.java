@@ -3,6 +3,8 @@
  */
 package com.flockspring.ui.model;
 
+import java.util.Date;
+
 import org.joda.time.LocalDateTime;
 
 /**
@@ -60,9 +62,19 @@ public enum ServiceTimeRange implements LocalizedEnum
     {
         return rangeStart;
     }
+    
+    public Date getRangeStartAsDate()
+    {
+        return rangeStart.toDate();
+    }
 
     public LocalDateTime getRangeEnd()
     {
         return rangeEnd;
+    }
+    
+    public Date getRangeEndAsDate()
+    {
+        return rangeEnd.toDate();
     }
 }

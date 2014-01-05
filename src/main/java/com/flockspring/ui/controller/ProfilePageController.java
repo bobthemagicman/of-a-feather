@@ -23,6 +23,7 @@ import com.flockspring.domain.types.GlobalRegionType;
 import com.flockspring.domain.types.Language;
 import com.flockspring.domain.types.MusicStyle;
 import com.flockspring.domain.types.Organization;
+import com.flockspring.domain.types.Programs;
 import com.flockspring.domain.types.Region;
 import com.flockspring.domain.types.ServiceDay;
 import com.flockspring.domain.types.ServiceDetailsImpl;
@@ -41,7 +42,6 @@ import com.flockspring.ui.exception.PageNotFoundException;
 import com.flockspring.ui.mapper.OrganizationUIModelMapper;
 import com.flockspring.ui.model.CongregationSize;
 import com.flockspring.ui.model.OrganizationUIModel;
-import com.flockspring.ui.model.Programs;
 import com.google.common.collect.Sets;
 
 @Controller
@@ -69,8 +69,8 @@ public class ProfilePageController
         
         TimeAndDay timeAndDay = new TimeAndDay(new LocalDateTime(1, 1, 1, 9, 20), ServiceDay.SUNDAY);
         Set<MusicalInstruments> instruments = Sets.newTreeSet();
-        ServiceDetailsImpl serviceDetailsImpl1 = new ServiceDetailsImpl(MusicStyle.NEUTRAL_4, ServiceStyle.HIGH_ENERGY_6, DressAttire.FORMAL_2, AgeDemographics.NEUTRAL_4, instruments ,
-                90, timeAndDay, "Service 1", Sets.newTreeSet(Arrays.asList(Language.ENGLISH, Language.SPANISH)));
+        ServiceDetailsImpl serviceDetailsImpl1 = new ServiceDetailsImpl(MusicStyle.NEUTRAL_5, ServiceStyle.HIGH_ENERGY_8, DressAttire.FORMAL_2, AgeDemographics.NEUTRAL_4, instruments ,
+                90, timeAndDay, "Service 1", Sets.newTreeSet(Arrays.asList(Language.SPANISH)));
         Set<ServiceDetailsImpl> services = Sets.newTreeSet(Arrays.asList(serviceDetailsImpl1));
         
         AtmosphereImpl atmosphere = new AtmosphereImpl(CongregationSize.LARGE, services, false, false, 90);

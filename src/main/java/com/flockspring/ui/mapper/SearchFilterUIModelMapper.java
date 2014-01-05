@@ -37,7 +37,7 @@ public class SearchFilterUIModelMapper
                 getAtmosphereMusicSyleCeiling(organizationFilter.getFilteredMusicStyle()),
                 getAtmosphereDressAttireFloor(organizationFilter.getFilteredDressAttire()),
                 getAtmosphereDressAttireCeiling(organizationFilter.getFilteredDressAttire()), organizationFilter.isGayAfirming(), organizationFilter
-                        .getSearchPoint().asArray());
+                        .getSearchPoint().asArray(), organizationFilter.getFilteredAccessibilitySupport());
     }
 
     private Integer getAtmosphereMusicSyleFloor(Set<MusicStyle> filteredMusicStyle)
@@ -49,13 +49,14 @@ public class SearchFilterUIModelMapper
     {
         for (Iterator<MusicStyle> i = filteredMusicStyle.iterator(); i.hasNext();)
         {
+            MusicStyle m = i.next();
             if (!i.hasNext())
             {
-                return i.next().ordinal() + 1;
+                return m.ordinal() + 1;
             }
         }
 
-        return MusicStyle.CONTEMPORARY_5.ordinal() + 1;
+        return MusicStyle.CONTEMPORARY_8.ordinal() + 1;
     }
     
     private Integer getAtmosphereDressAttireFloor(Set<DressAttire> filteredDressAttire)
@@ -67,13 +68,14 @@ public class SearchFilterUIModelMapper
     {
         for (Iterator<DressAttire> i = filteredDressAttire.iterator(); i.hasNext();)
         {
+            DressAttire d = i.next();
             if (!i.hasNext())
             {
-                return i.next().ordinal() + 1;
+                return d.ordinal() + 1;
             }
         }
 
-        return DressAttire.CASUAL_6.ordinal() + 1;
+        return DressAttire.CASUAL_10.ordinal() + 1;
     }
 
     private Integer getAtmosphereServiceStyleFloor(Set<ServiceStyle> filteredServiceStyle)
@@ -85,12 +87,13 @@ public class SearchFilterUIModelMapper
     {
         for (Iterator<ServiceStyle> i = filteredServiceStyle.iterator(); i.hasNext();)
         {
+            ServiceStyle s = i.next();
             if (!i.hasNext())
             {
-                return i.next().ordinal() + 1;
+                return s.ordinal() + 1;
             }
         }
 
-        return ServiceStyle.HIGH_ENERGY_9.ordinal() + 1;
+        return ServiceStyle.HIGH_ENERGY_10.ordinal() + 1;
     }
 }
