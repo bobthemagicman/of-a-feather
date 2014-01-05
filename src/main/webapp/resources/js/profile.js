@@ -1,4 +1,6 @@
 
+var thumbnailsCarousel;
+
 $(document).ready(function() {
    
     initializeCarousels();
@@ -7,7 +9,13 @@ $(document).ready(function() {
    
     initializeVideoThumbnails();
     
+    initializeTooltips();
+    
 });
+
+function initializeTooltips() {
+    $(".has-tooltip").tooltip({'placement': 'top'});
+}
 
 function initializeSliders() {
     
@@ -30,6 +38,8 @@ function initializeCarousels() {
     
     $(".carousel").carousel({'interval': false});
    
+   thumbnailsCarousel = $(".elastislide-list").elastislide();
+   
    $("[data-slide='next']").click(function() {
       $(this).parent(".carousel").carousel('next'); 
    });
@@ -39,15 +49,18 @@ function initializeCarousels() {
    });
    
    $(".media-carousel").on('slid.bs.carousel', function () {
-       var thumbnailPage = parseInt($(this).find(".item.active img, .item.active .video-placeholder").attr("data-thumbnail-page"));
-       $(".media-icons-container").carousel(thumbnailPage);
+       var currentImage = $(this).find(".item.active").index();
        
-       $("#videoPlayer").remove();
-       $(".video-placeholder").show();
+       thumbnailsCarousel.setCurrent(currentImage);
+       
+       //$(".media-icons-container").carousel(thumbnailPage);
+       
+       //$("#videoPlayer").remove();
+       //$(".video-placeholder").show();
        
    });
    
-   $(".photo-thumb img").click(function() {
+   $(".elastislide-list li.photo").click(function() {
        
        var slideNumber = parseInt($(this).attr("data-slide-link"));
        

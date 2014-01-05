@@ -990,24 +990,28 @@ div.footer {
     }
 }
 
-.search-results {   
+
    
-    .showing-results {
-        text-align: left;
-        display: block;
-        width: 100%;
-        color: @dark-gray-color;
-        margin-left: 25px;
-        text-transform: uppercase;
-        line-height: (2 * @standard-margin);
-        .now-showing, .total-results {
-            font-weight: 900;
-            margin: 0px 5px;
-        }
+.showing-results {
+    text-align: left;
+    display: block;
+    width: 100%;
+    color: @dark-gray-color;
+    margin-left: 25px;
+    text-transform: uppercase;
+    line-height: (2 * @standard-margin);
+    .now-showing, .total-results {
+        font-weight: 900;
+        margin: 0px 5px;
     }
 }
 
+
 .search-result-entry {
+    display: none;
+    &.show-result {
+        display: block;
+    }
     .transition-effects;
     .make-row();
     cursor: pointer;
@@ -1034,10 +1038,11 @@ div.footer {
     
     .search-result-image-container {
         .make-sm-column(3);
-
+        padding: 15px;
         img {
             .img-responsive;
-            padding: 15px 0px;
+            .rounded-corners;
+            padding: 0px;
         }
     }
     
@@ -1054,6 +1059,7 @@ div.footer {
             display: block;
             font-size: 1.5em;
             text-transform: uppercase;
+            .transition-effects;
         }
 
         .church-denomination {
@@ -1162,18 +1168,21 @@ div.pagination ul {
         &.active {
             a {
                 color: @dark-gray-color;
-                border: 1px solid @dark-gray-color;
+                background-color: darken(@light-gray-color, 15%) !important;
+                border: none;
+                &:hover {
+                    background-color: darken(@light-gray-color, 15%) !important;
+                }
             }
         }
         > a {
             font-size: 1em;
             border: none !important;
-            border: 1px solid @gray-color !important;
             background-color: @light-gray-color !important;
             color: @color1;
             display: inline-block;
             font-weight: 900;
-            padding: 5px 10px;
+            padding: 5px 12px;
             margin: 5px;
             .rounded-corners(50px);
             &.active {
@@ -1190,7 +1199,6 @@ div.pagination ul {
 
 .pagination {
     li {
-       
         a {
             cursor: pointer;
         }
@@ -2009,6 +2017,57 @@ a {
 
         }
 
+        .elastislide-wrapper {
+            box-shadow: none;
+            nav {
+                span {
+                    background: none;
+                    background-repeat: no-repeat;
+                    top: 55%;
+                    .rounded-corners(0px);
+                }
+            }
+            .elastislide-prev {
+                background-image: url("http://ofafeather-testing.appwebmasters.com/images/cal_designs/left_arrow.png");
+                &:hover {
+                    background-image: url("http://ofafeather-testing.appwebmasters.com/images/cal_designs/left_arrow_hover.png");
+                }
+                left: 20px;
+            }
+            .elastislide-next {
+                background-image: url("http://ofafeather-testing.appwebmasters.com/images/cal_designs/right_arrow.png");
+                &:hover {
+                    background-image: url("http://ofafeather-testing.appwebmasters.com/images/cal_designs/right_arrow_hover.png");
+                }
+                right: 5px;
+            }
+        }
+
+        .elastislide-list {
+            box-shadow: 0px;
+            li {
+                background-color: @darkest-gray-color;
+                cursor: pointer;
+                display: inline-block;
+                height: 70px;
+                width: 70px;
+                margin: 3px;
+                overflow: hidden;
+                .rounded-corners;
+            }
+            img {
+                display: inline-block;
+                min-width: 76px;
+                height: 76px;
+                margin: 0px;
+                .rounded-corners;
+                .transition-effects;
+                &:hover {
+                    .translucent(70);
+                }
+            }
+        }
+
         .media-icons-container {
             text-align: center;
 
@@ -2586,6 +2645,24 @@ a {
 
     }
 
+}
+
+.plain-text {
+    h1 {
+        font-size: 2em;
+        color: @darkest-gray-color;
+        text-align: center;
+        margin: 30px 0px 20px 0px;
+    }
+    h2 {
+        font-size: 1.5em;
+        color: @darkest-gray-color;
+        text-align: left;
+    }
+    p {
+        font-size: 1em;
+        color: @dark-gray-color;
+    }
 }
 
 

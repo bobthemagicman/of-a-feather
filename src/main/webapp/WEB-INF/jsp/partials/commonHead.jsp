@@ -12,7 +12,7 @@
 <spring:url value="/static/js/less-1.4.1.min.js" var="lessJS" />
 <script type="text/javascript" src="${lessJS}" />
 
-<link href="${customStyleCSS}" rel="stylesheet" type="text/css" />
+<!-- link href="${customStyleCSS}" rel="stylesheet" type="text/css"  -->
 <link href="${ofAFeatherIcon}" rel="icon" />
 
 <spring:url value="/static/js/iepngfix_tilebg.js" var="iePngFx_tileBg" />
@@ -41,4 +41,9 @@
     $LAB.queueScript("http://code.jquery.com/jquery-latest.js")
         .queueScript("${bootstrapJS}")
         .queueScript("http://code.jquery.com/ui/1.10.3/jquery-ui.js");    
+</script>
+
+<spring:url value="/static/" var="resourceBaseURL" />
+<script type="text/javascript">
+    var resourceBaseURL = '${resourceBaseURL}';
 </script>

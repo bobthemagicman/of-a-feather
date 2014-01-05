@@ -9,9 +9,13 @@
         <%@ include file="/WEB-INF/jsp/partials/commonHead.jsp"%>
         
         <spring:url value="/static/js/search.js" var="searchJS" />
+        <spring:url value="/static/js/bootstrap-paginator.min.js" var="bootstrapPaginatorJS" />
+        <spring:url value="/static/js/mustache.js" var="mustacheJS" />
         <script type="text/javascript">
             $LAB.queueScript("${searchJS}")
                 .queueScript("https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=initializeMap")
+                .queueScript("${mustacheJS}")
+                .queueScript("${bootstrapPaginatorJS}")
                 .runQueue();
         </script>
         
@@ -639,11 +643,13 @@
             </div><!-- /.left-column -->
             
             <div class="col-sm-8 right-column">
-				
+		
+                <div class="showing-results">Showing Results <span class="now-showing">${results.pageStartIndex} - ${results.pageEndIndex}</span> of <span class="total-results">${results.totalNumberOfResults}</span></div>
+            
+                
                 <div class="search-results">
 
-                    <div class="showing-results">Showing Results <span class="now-showing">${results.pageStartIndex} - ${results.pageEndIndex}</span> of <span class="total-results">${results.totalNumberOfResults}</span></div>
-            
+                    
                     <spring:url value="/static/images/site/right_arrow.png" var="rightArrow" />
                     <spring:url value="/static/images/site/heart_icon.png" var="heartIcon" />
                     
@@ -653,7 +659,7 @@
                     		<spring:url value="/static/images/site/heart_favorited_icon.png" var="heartIcon" />
                     	</c:if>
                                             
-                        <div class="search-result-entry show-result" data-result-id="${p_tracker.index + 1}" data-church-name="${result.organizationName}" data-latitude="${result.latitude}" data-longitude="${result.longitude}">
+                        <div class="search-result-entry" data-result-id="${result.id}" data-church-name="${result.organizationName}" data-latitude="${result.latitude}" data-longitude="${result.longitude}">
 
                             <div class="search-result-image-container">
                                 <img src="${imagePath}" alt="${result.displayImage.alt}" title="${result.displayImage.title}" />
