@@ -226,8 +226,8 @@
                                     <c:set var="serviceStyleMin" value="" />
                                     <c:set var="serviceStyleMax" value="" />
                                     <c:if test="${not empty filters}">
-                                        <c:set var="serviceStyleMin" value="${filters.serviceStyleFloor}" />
-                                        <c:set var="serviceStyleMax" value="${filters.serviceStyleCeiling}" />
+                                        <c:set var="serviceStyleMin" value="${filters.atmosphereServiceStyleFloor}" />
+                                        <c:set var="serviceStyleMax" value="${filters.atmosphereServiceStyleCeiling}" />
                                     </c:if>
                                     
                                     <h5 class="slider-heading">SERVICE STYLE</h5>
@@ -242,8 +242,8 @@
                                     <c:set var="musicStyleMin" value="" />
                                     <c:set var="musicStyleMax" value="" />
                                     <c:if test="${not empty filters}">
-                                        <c:set var="musicStyleMin" value="${filters.musicStyleFloor}" />
-                                        <c:set var="musicStyleMax" value="${filters.musicStyleCeiling}" />
+                                        <c:set var="musicStyleMin" value="${filters.atmosphereMusicStyleFloor}" />
+                                        <c:set var="musicStyleMax" value="${filters.atmosphereMusicStyleCeiling}" />
                                     </c:if>
                                     
                                     <h5 class="slider-heading">MUSIC</h5>
@@ -259,8 +259,8 @@
                                     <c:set var="dressAttireeMin" value="" />
                                     <c:set var="dressAttireMax" value="" />
                                     <c:if test="${not empty filters}">
-                                        <c:set var="dressAttireeMin" value="${filters.dressAttireFloor}" />
-                                        <c:set var="dressAttireMax" value="${filters.dressAttireCeiling}" />
+                                        <c:set var="dressAttireeMin" value="${filters.atmosphereDressAttireFloor}" />
+                                        <c:set var="dressAttireMax" value="${filters.atmosphereDressAttireCeiling}" />
                                     </c:if>
                                     
                                     <h5 class="slider-heading">DRESS ATTIRE</h5>
@@ -298,27 +298,33 @@
                                     <div class="row">
                                         <div class="col-sm-5">
                                             <h5>Nursery Care</h5>
-                                            
-                                            <c:set var="checked" value=""/><c:if test=""><c:set var="checked" value=" checked"/></c:if>
-                                            <label class="checkbox${checked}" for="childCare1"><input id="childCare1" type="checkbox" data-linked-checkbox="childCareModal1" data-filter-option="INFANT_CARE" />Infant Care</label>
-                                            
-                                            
-                                            <label class="checkbox${checked}" for="childCare2"><input id="childCare2" type="checkbox" data-linked-checkbox="childCareModal2" data-filter-option="TODDLER_CARE" />Toddler Care</label>
+                                            <c:forEach items="${nurseryValues}" var="n_program">
+                                               <c:set var="checked" value=""/>
+                                               <c:if test="${not empty filters and cfn:collectionContains(filters.programsAndMinistries, n_program) }">
+                                                   <c:set var="checked" value=" checked"/>
+                                               </c:if>
+                                               <label class="checkbox${checked}" for="nursery-education-list-${fn:toLowerCase(n_program.name)}">
+                                                   <input id="nursery-education-list-${fn:toLowerCase(n_program.name)}" type="checkbox" data-linked-checkbox="nursery-education-${fn:toLowerCase(n_program.name)}" data-filter-option="${n_program.name}" />
+                                                   <spring:message code="${n_program.localizedStringCode}" />
+                                                </label>
+                                            </c:forEach>
+
                                         </div>
                                         <div class="col-sm-7">
                                             <h5>Educational</h5>
-                                            
-                                            
-                                            <label class="checkbox${checked}" for="education1"><input id="education1" type="checkbox" data-linked-checkbox="educationModal1" data-filter-option="SUNDAY_SCHOOL" />Sunday School</label>
-                                            
-                                            
-                                            <label class="checkbox${checked}" for="education2"><input id="education2" type="checkbox" data-linked-checkbox="educationModal2" data-filter-option="BIBLE_STUDY" />Bible Studies</label>
-                                            
-                                            
-                                            <label class="checkbox${checked}" for="education3"><input id="education3" type="checkbox" data-linked-checkbox="educationModal3" data-filter-option="SPIRITUAL_CLASSES" />Spiritual Classes</label>
-                                            
-                                            
-                                            <label class="checkbox adult-education" for="education4"><input id="education4" type="checkbox" data-linked-checkbox="educationModal4" data-filter-option="ADULT_EDUCATION" />Adult Education <span class="glyphicon glyphicon-info-sign"></span></label>
+                                            <c:forEach items="${educationValues}" var="n_program">
+	                                           <c:set var="checked" value=""/>
+	                                           <c:if test="${not empty filters and cfn:collectionContains(filters.programsAndMinistries, n_program) }">
+	                                               <c:set var="checked" value=" checked"/>
+	                                           </c:if>
+	                                           <label class="checkbox${checked}" for="nursery-education-list-${fn:toLowerCase(n_program.name)}">
+	                                               <input id="nursery-education-list-${fn:toLowerCase(n_program.name)}" type="checkbox" data-linked-checkbox="nursery-education-${fn:toLowerCase(n_program.name)}" data-filter-option="${n_program.name}" />
+	                                               <spring:message code="${n_program.localizedStringCode}" />
+	                                               <c:if test="${n_program.name eq 'ADULT_EDUCATION'}">
+	                                                   <span class="glyphicon glyphicon-info-sign"></span>
+	                                               </c:if>
+	                                            </label>
+                                            </c:forEach>
                                         </div>
                                     </div>
                                     <br />
@@ -375,11 +381,11 @@
                                                                     <c:forEach items="${programsValues}" var="entry">
                                                                         <c:if test="${cfn:collectionContains(ageGenderMusicArts, entry.key.name) }">
                                                                          <c:choose>
-                                                                            <c:when test="${not empty category and category ne entry.key.name and category ne 'MUSIC_AND_ARTS'}">
+                                                                            <c:when test="${not empty category and category ne entry.key.name and category ne 'GENDER_GROUPS'}">
                                                                 </div>
                                                                 <div class="col-sm-3">
                                                                             </c:when>
-                                                                            <c:when test="${not empty category and category ne entry.key.name and category eq 'MUSIC_AND_ARTS'}">
+                                                                            <c:when test="${not empty category and category ne entry.key.name and category eq 'GENDER_GROUPS'}">
                                                                 </div>
                                                                 <div class="col-sm-4">
                                                                             </c:when>
@@ -656,7 +662,7 @@
             </div><!-- /.right-column -->
             
         </div><!-- /.main -->
-
+        
         <%@ include file="/WEB-INF/jsp/partials/siteFooter.jsp"%> 
     </body>
 </html>

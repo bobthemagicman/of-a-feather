@@ -97,7 +97,7 @@ public class SearchFilterUICommand
         return programsAndMinistries;
     }
     
-    public Set<AccessibilitySupport> getAccessabilitAccessibilitySupports()
+    public Set<AccessibilitySupport> getAccessibilitySupports()
     {
         return accessibilitySupports;
     }

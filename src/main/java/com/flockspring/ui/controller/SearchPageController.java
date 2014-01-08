@@ -3,6 +3,7 @@
  */
 package com.flockspring.ui.controller;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import scala.sys.process.processInternal;
 
 import com.flockspring.dataaccess.service.client.MapQuestServiceClient;
 import com.flockspring.dataaccess.service.client.USPSAddressAPIService;
@@ -131,6 +134,8 @@ public class SearchPageController
         model.put("programsValues", getProgramValuesMap());
         model.put("accessibilitySupportValues", getAccessibilitySupportValuesMap());
         model.put("languageValues", Language.values());
+        model.put("nurseryValues", Arrays.asList(Programs.INFANT_CARE, Programs.TODDLER_CARE));
+        model.put("educationValues", Arrays.asList(Programs.SENIOR_GROUP, Programs.BIBLE_STUDY, Programs.SPIRITUAL_CLASSES, Programs.ADULT_EDUCATION));
             
         return new ModelAndView("searchResultsPage", model);
     }

@@ -5,7 +5,7 @@ package com.flockspring.ui.mapper;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -19,12 +19,12 @@ import com.flockspring.domain.types.Category;
  * @date Jan 1, 2014
  * 
  */
-public class CategoryUIMapConverter<T extends Category<T>>
+public class CategoryUIMapConverter<T extends Enum<T> & Category<T>>
 {
 
     public Map<Category<T>, Set<T>> convertCategoryToMap(Collection<T> convertables)
     {
-        Map<Category<T>, Set<T>> convertedMap = new HashMap<>();
+        Map<Category<T>, Set<T>> convertedMap = new LinkedHashMap<>();
         for (T c : convertables)
         {
             if(c.getCategory() != null)
