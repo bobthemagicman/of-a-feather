@@ -18,41 +18,47 @@ var nonDenominational = {
 	atmosphere : {
 		congregationSize : "MEGA",
 		serviceDetails : [ {
-			musicStyle : 'CONTEMPORARY_5',
-			serviceStyle : 'HIGH_ENERGY_6',
+			musicStyle : 'CONTEMPORARY_8',
+			serviceStyle : 'HIGH_ENERGY_7',
 			dressAttire : 'CASUAL_7',
 			ageDemographics : 'NEUTRAL_4',
 			instruments : [],
 			durationInMinutes : 90,
 			serviceName : '9:20 Service',
+			languages : ['AMERICAN_SIGN_LANGUAGE', 'SPANISH'],
 			timeAndDay : {
 				startTime : ISODate("0000-12-30T09:20:00Z"),
-				serviceDay : 'SUNDAY' 
+				serviceDay : 'SUNDAY', 
+				serviceTimeRange : 'MID_MORNING'
 			}
 		}, {
-			musicStyle : 'CONTEMPORARY_5',
-			serviceStyle : 'HIGH_ENERGY_6',
+			musicStyle : 'CONTEMPORARY_8',
+			serviceStyle : 'HIGH_ENERGY_7',
 			dressAttire : 'CASUAL_7',
 			ageDemographics : 'NEUTRAL_4',
 			instruments : [],
 			durationInMinutes : 90,
 			serviceName : '11am Service',
+			languages : ['AMERICAN_SIGN_LANGUAGE', 'SPANISH'],
 			timeAndDay : {
 				startTime : ISODate("0000-12-30T11:00:00Z"),
-				serviceDay : 'SUNDAY' 
+				serviceDay : 'SUNDAY',
+				serviceTimeRange : 'LATE_MORNING'
 			}
 		}, {
-			musicStyle : 'CONTEMPORARY_5',
-			serviceStyle : 'HIGH_ENERGY_6',
+			musicStyle : 'CONTEMPORARY_8',
+			serviceStyle : 'HIGH_ENERGY_7',
 			dressAttire : 'CASUAL_7',
 			ageDemographics : 'NEUTRAL_4',
 			instruments : [],
 			durationInMinutes : 90,
 			
 			serviceName : 'Sunday Evening Service',
+			languages : ['AMERICAN_SIGN_LANGUAGE', 'SPANISH'],
 			timeAndDay : {
 				startTime : ISODate("0000-12-30T18:00:00Z"),
-				serviceDay : 'SUNDAY' 
+				serviceDay : 'SUNDAY',
+				serviceTimeRange : 'EVENING'	
 			}
 		} ],
 		gayAffirming : false,
@@ -113,13 +119,9 @@ var nonDenominational = {
 		emailAddress : '',
 		yearStarted : ''
 	} ],
-	serviceTimes : [ 'EARLY_MORNING', 'MID_MORNING', 'EVENING' ],
-	serviceDays : [ 'SUNDAY' ],
-	languages : [ 'ENGLISH', 'AMERICAN_SIGN_LANGUAGE', 'SPANISH' ],
 	programsOffered : [ 'INFANT_CARE', 'TODDLER_CARE', 'SUNDAY_SCHOOL',
 			'BIBLE_STUDY', 'ADULT_EDUCATION', 'SPIRITUAL_CLASSES',
-			'PRE_SCHOOL', 'PRIMARY_SCHOOL', 'SECONDARY_SCHOOL',
-			'GRADUATE_STUDIES', 'CHILDRENS_GROUPS', 'MIDDLE_SCHOOL_GROUP',
+			'CHILDRENS_GROUPS', 'MIDDLE_SCHOOL_GROUP',
 			'HIGH_SCHOOL_GROUP', 'YOUNG_ADULT_GROUP', 'ADULT_GROUP',
 			'MENS_GROUP', 'WOMENS_GROUP' ],
 	accessabilitysupport : [ 'WHEELCHAIR_ACCESS', 'DEAF_TRANSLATOR',
@@ -145,8 +147,8 @@ var nonDenominationalEveningOnly = {
 		atmosphere : {
 			congregationSize : "MEGA",
 			serviceDetails : [ {
-				musicStyle : 'CONTEMPORARY_5',
-				serviceStyle : 'HIGH_ENERGY_6',
+				musicStyle : 'CONTEMPORARY_8',
+				serviceStyle : 'HIGH_ENERGY_7',
 				dressAttire : 'CASUAL_7',
 				ageDemographics : 'NEUTRAL_4',
 				instruments : [],
@@ -155,7 +157,8 @@ var nonDenominationalEveningOnly = {
 				serviceName : 'Sunday Evening Service',
 				timeAndDay : {
 					startTime : ISODate("0000-12-30T18:00:00Z"),
-					serviceDay : 'SUNDAY' 
+					serviceDay : 'SUNDAY',
+					serviceTimeRange : 'EVENING'
 				}
 			} ],
 			gayAffirming : false,
@@ -218,11 +221,10 @@ var nonDenominationalEveningOnly = {
 		} ],
 		serviceTimes : [ 'EARLY_MORNING', 'MID_MORNING', 'EVENING' ],
 		serviceDays : [ 'SUNDAY' ],
-		languages : [ 'ENGLISH', 'AMERICAN_SIGN_LANGUAGE', 'SPANISH' ],
+		languages : [ 'AMERICAN_SIGN_LANGUAGE', 'SPANISH' ],
 		programsOffered : [ 'INFANT_CARE', 'TODDLER_CARE', 'SUNDAY_SCHOOL',
 				'BIBLE_STUDY', 'ADULT_EDUCATION', 'SPIRITUAL_CLASSES',
-				'PRE_SCHOOL', 'PRIMARY_SCHOOL', 'SECONDARY_SCHOOL',
-				'GRADUATE_STUDIES', 'CHILDRENS_GROUPS', 'MIDDLE_SCHOOL_GROUP',
+				'CHILDRENS_GROUPS', 'MIDDLE_SCHOOL_GROUP',
 				'HIGH_SCHOOL_GROUP', 'YOUNG_ADULT_GROUP', 'ADULT_GROUP',
 				'MENS_GROUP', 'WOMENS_GROUP' ],
 		accessabilitysupport : [ 'WHEELCHAIR_ACCESS', 'DEAF_TRANSLATOR',
@@ -248,8 +250,8 @@ var lutheran = {
 		atmosphere : {
 			congregationSize : "MEGA",
 			serviceDetails : [ {
-				musicStyle : 'CONTEMPORARY_5',
-				serviceStyle : 'HIGH_ENERGY_6',
+				musicStyle : 'CONTEMPORARY_8',
+				serviceStyle : 'HIGH_ENERGY_7',
 				dressAttire : 'CASUAL_7',
 				ageDemographics : 'NEUTRAL_4',
 				instruments : [],
@@ -257,11 +259,12 @@ var lutheran = {
 				serviceName : '9:20 Service',
 				timeAndDay : {
 					startTime : ISODate("0000-12-30T09:20:00Z"),
-					serviceDay : 'SUNDAY' 
+					serviceDay : 'SUNDAY',
+					serviceTimeRange : 'MID_MORNING'
 				}
 			}, {
-				musicStyle : 'CONTEMPORARY_5',
-				serviceStyle : 'HIGH_ENERGY_6',
+				musicStyle : 'CONTEMPORARY_8',
+				serviceStyle : 'HIGH_ENERGY_7',
 				dressAttire : 'CASUAL_7',
 				ageDemographics : 'NEUTRAL_4',
 				instruments : [],
@@ -269,11 +272,12 @@ var lutheran = {
 				serviceName : '11am Service',
 				timeAndDay : {
 					startTime : ISODate("0000-12-30T11:00:00Z"),
-					serviceDay : 'SUNDAY' 
+					serviceDay : 'SUNDAY',
+					serviceTimeRange : 'LATE_MORNING'
 				}
 			}, {
-				musicStyle : 'CONTEMPORARY_5',
-				serviceStyle : 'HIGH_ENERGY_6',
+				musicStyle : 'CONTEMPORARY_8',
+				serviceStyle : 'HIGH_ENERGY_7',
 				dressAttire : 'CASUAL_7',
 				ageDemographics : 'NEUTRAL_4',
 				instruments : [],
@@ -282,7 +286,8 @@ var lutheran = {
 				serviceName : 'Sunday Evening Service',
 				timeAndDay : {
 					startTime : ISODate("0000-12-30T18:00:00Z"),
-					serviceDay : 'SUNDAY' 
+					serviceDay : 'SUNDAY',
+					serviceTimeRange : 'EVENING'
 				}
 			} ],
 			gayAffirming : false,
@@ -345,11 +350,10 @@ var lutheran = {
 		} ],
 		serviceTimes : [ 'EARLY_MORNING', 'MID_MORNING', 'EVENING' ],
 		serviceDays : [ 'SUNDAY' ],
-		languages : [ 'ENGLISH', 'AMERICAN_SIGN_LANGUAGE', 'SPANISH' ],
+		languages : [ 'AMERICAN_SIGN_LANGUAGE', 'SPANISH' ],
 		programsOffered : [ 'INFANT_CARE', 'TODDLER_CARE', 'SUNDAY_SCHOOL',
 				'BIBLE_STUDY', 'ADULT_EDUCATION', 'SPIRITUAL_CLASSES',
-				'PRE_SCHOOL', 'PRIMARY_SCHOOL', 'SECONDARY_SCHOOL',
-				'GRADUATE_STUDIES', 'CHILDRENS_GROUPS', 'MIDDLE_SCHOOL_GROUP',
+				'CHILDRENS_GROUPS', 'MIDDLE_SCHOOL_GROUP',
 				'HIGH_SCHOOL_GROUP', 'YOUNG_ADULT_GROUP', 'ADULT_GROUP',
 				'MENS_GROUP', 'WOMENS_GROUP' ],
 		accessabilitysupport : [ 'WHEELCHAIR_ACCESS', 'DEAF_TRANSLATOR',
@@ -375,8 +379,8 @@ var baptist = {
 		atmosphere : {
 			congregationSize : "MEGA",
 			serviceDetails : [ {
-				musicStyle : 'CONTEMPORARY_5',
-				serviceStyle : 'HIGH_ENERGY_6',
+				musicStyle : 'CONTEMPORARY_8',
+				serviceStyle : 'HIGH_ENERGY_7',
 				dressAttire : 'CASUAL_7',
 				ageDemographics : 'NEUTRAL_4',
 				instruments : [],
@@ -384,11 +388,12 @@ var baptist = {
 				serviceName : '9:20 Service',
 				timeAndDay : {
 					startTime : ISODate("0000-12-30T09:20:00Z"),
-					serviceDay : 'SUNDAY' 
+					serviceDay : 'SUNDAY',
+					serviceTimeRange : 'MID_MORNING'
 				}
 			}, {
-				musicStyle : 'CONTEMPORARY_5',
-				serviceStyle : 'HIGH_ENERGY_6',
+				musicStyle : 'CONTEMPORARY_8',
+				serviceStyle : 'HIGH_ENERGY_7',
 				dressAttire : 'CASUAL_7',
 				ageDemographics : 'NEUTRAL_4',
 				instruments : [],
@@ -396,11 +401,12 @@ var baptist = {
 				serviceName : '11am Service',
 				timeAndDay : {
 					startTime : ISODate("0000-12-30T11:00:00Z"),
-					serviceDay : 'SUNDAY' 
+					serviceDay : 'SUNDAY',
+					serviceTimeRange : 'LATE_MORNING'
 				}
 			}, {
-				musicStyle : 'CONTEMPORARY_5',
-				serviceStyle : 'HIGH_ENERGY_6',
+				musicStyle : 'CONTEMPORARY_8',
+				serviceStyle : 'HIGH_ENERGY_7',
 				dressAttire : 'CASUAL_7',
 				ageDemographics : 'NEUTRAL_4',
 				instruments : [],
@@ -409,7 +415,8 @@ var baptist = {
 				serviceName : 'Sunday Evening Service',
 				timeAndDay : {
 					startTime : ISODate("0000-12-30T18:00:00Z"),
-					serviceDay : 'SUNDAY' 
+					serviceDay : 'SUNDAY',
+					serviceTimeRange : 'EVENING'
 				}
 			} ],
 			gayAffirming : false,
@@ -472,11 +479,10 @@ var baptist = {
 		} ],
 		serviceTimes : [ 'EARLY_MORNING', 'MID_MORNING', 'EVENING' ],
 		serviceDays : [ 'SUNDAY' ],
-		languages : [ 'ENGLISH', 'AMERICAN_SIGN_LANGUAGE', 'SPANISH' ],
+		languages : [ 'AMERICAN_SIGN_LANGUAGE', 'SPANISH' ],
 		programsOffered : [ 'INFANT_CARE', 'TODDLER_CARE', 'SUNDAY_SCHOOL',
 				'BIBLE_STUDY', 'ADULT_EDUCATION', 'SPIRITUAL_CLASSES',
-				'PRE_SCHOOL', 'PRIMARY_SCHOOL', 'SECONDARY_SCHOOL',
-				'GRADUATE_STUDIES', 'CHILDRENS_GROUPS', 'MIDDLE_SCHOOL_GROUP',
+				'CHILDRENS_GROUPS', 'MIDDLE_SCHOOL_GROUP',
 				'HIGH_SCHOOL_GROUP', 'YOUNG_ADULT_GROUP', 'ADULT_GROUP',
 				'MENS_GROUP', 'WOMENS_GROUP' ],
 		accessabilitysupport : [ 'WHEELCHAIR_ACCESS', 'DEAF_TRANSLATOR',

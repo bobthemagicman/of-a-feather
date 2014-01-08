@@ -7,7 +7,6 @@ import java.util.Set;
 
 import com.flockspring.domain.types.impl.Atmosphere;
 import com.flockspring.domain.types.impl.SocialMedia;
-import com.flockspring.ui.model.Programs;
 
 
 public interface Organization

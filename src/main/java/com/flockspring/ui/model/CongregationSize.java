@@ -12,10 +12,10 @@ package com.flockspring.ui.model;
  */
 public enum CongregationSize implements LocalizedEnum
 {
-    SMALL(0, 300, "congregation.size.small"),
-    MEDIUM(301, 800, "congregation.size.medium"),
-    LARGE(801, 1500, "congregation.size.large"),
-    MEGA(1501, -1, "congregation.size.mega"),
+    SMALL(0, 100, "congregation.size.small"),
+    MEDIUM(101, 400, "congregation.size.medium"),
+    LARGE(401, 2000, "congregation.size.large"),
+    MEGA(2001, -1, "congregation.size.mega"),
     UNKNOWN(0, 0, "congregation.size.unknown");
     
     private int lowThreshold;
@@ -41,6 +41,16 @@ public enum CongregationSize implements LocalizedEnum
         
         //this should never happen
         return UNKNOWN;
+    }
+    
+    public int getLowThreshold()
+    {
+        return lowThreshold;
+    }
+    
+    public int getHighThreshold()
+    {
+        return highThreshold;
     }
     
     @Override

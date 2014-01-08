@@ -18,7 +18,7 @@ import com.flockspring.domain.types.Affiliation;
 import com.flockspring.domain.types.Leader;
 import com.flockspring.domain.types.MultimediaObject;
 import com.flockspring.domain.types.Organization;
-import com.flockspring.ui.model.Programs;
+import com.flockspring.domain.types.Programs;
 
 /**
  * OrganizationImpl.java

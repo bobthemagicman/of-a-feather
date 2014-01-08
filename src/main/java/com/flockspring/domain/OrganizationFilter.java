@@ -13,10 +13,10 @@ import com.flockspring.domain.types.Affiliation;
 import com.flockspring.domain.types.DressAttire;
 import com.flockspring.domain.types.Language;
 import com.flockspring.domain.types.MusicStyle;
+import com.flockspring.domain.types.Programs;
 import com.flockspring.domain.types.ServiceDay;
 import com.flockspring.domain.types.ServiceStyle;
 import com.flockspring.ui.model.CongregationSize;
-import com.flockspring.ui.model.Programs;
 import com.flockspring.ui.model.ServiceTimeRange;
 
 /**

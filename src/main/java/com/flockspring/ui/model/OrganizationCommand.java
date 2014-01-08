@@ -3,10 +3,6 @@
  */
 package com.flockspring.ui.model;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
 import org.springframework.util.AutoPopulatingList;
 
 import com.flockspring.domain.types.AccessibilitySupport;
@@ -15,17 +11,12 @@ import com.flockspring.domain.types.DressAttire;
 import com.flockspring.domain.types.Language;
 import com.flockspring.domain.types.MusicStyle;
 import com.flockspring.domain.types.Organization;
+import com.flockspring.domain.types.Programs;
 import com.flockspring.domain.types.ServiceDay;
 import com.flockspring.domain.types.ServiceStyle;
 import com.flockspring.domain.types.impl.AddressImpl;
 import com.flockspring.domain.types.impl.AgeDemographics;
-import com.flockspring.domain.types.impl.AtmosphereImpl;
-import com.flockspring.domain.types.impl.MultimediaObjectImpl;
-import com.flockspring.domain.types.impl.LeaderImpl;
 import com.flockspring.domain.types.impl.MusicalInstruments;
-import com.flockspring.domain.types.impl.OrganizationImpl;
-import com.flockspring.domain.types.impl.SocialMediaImpl;
-import com.google.common.collect.Sets;
 
 /**
  * OrganizationCommand.java

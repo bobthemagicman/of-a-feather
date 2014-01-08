@@ -3,7 +3,6 @@
  */
 package com.flockspring.ui.mapper;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -13,9 +12,10 @@ import org.springframework.stereotype.Component;
 
 import com.flockspring.domain.types.AccessibilitySupport;
 import com.flockspring.domain.types.Affiliation;
-import com.flockspring.domain.types.Language;
+import com.flockspring.domain.types.Category;
 import com.flockspring.domain.types.Leader;
 import com.flockspring.domain.types.Organization;
+import com.flockspring.domain.types.Programs;
 import com.flockspring.domain.types.ServiceDetails;
 import com.flockspring.domain.types.impl.Atmosphere;
 import com.flockspring.ui.model.AddressUIModel;
@@ -25,7 +25,6 @@ import com.flockspring.ui.model.MultimediaUIModel;
 import com.flockspring.ui.model.OrganizationOverviewUIModel;
 import com.flockspring.ui.model.OrganizationStatementUIModel;
 import com.flockspring.ui.model.OrganizationUIModel;
-import com.flockspring.ui.model.Programs;
 import com.flockspring.ui.model.ServiceDetailUIModel;
 import com.flockspring.ui.model.ServiceOverviewUIModel;
 import com.flockspring.ui.model.SocialMediaUIModel;
@@ -43,17 +42,15 @@ public class OrganizationUIModelMapper
     private final AddressUIModelMapper addressUIModelMapper;
     private final MultimediaUIModelMapper multimediaUIModelMapper;
     private final LeaderUIModelMapper leaderUIModelMapper;
-    private final LanguageUIModelMapper languageUIModelMapper;
     private final SocialMediaUIModelMapper socialMediaUIModelMapper;
 
     @Autowired
     public OrganizationUIModelMapper(AddressUIModelMapper addressUIModelMapper, MultimediaUIModelMapper multimediaUIModelMapper,
-            LeaderUIModelMapper leaderUIModelMapper, LanguageUIModelMapper languageUIModelMapper, SocialMediaUIModelMapper socialMediaUIModelMapper)
+            LeaderUIModelMapper leaderUIModelMapper, SocialMediaUIModelMapper socialMediaUIModelMapper)
     {
         this.addressUIModelMapper = addressUIModelMapper;
         this.multimediaUIModelMapper = multimediaUIModelMapper;
         this.leaderUIModelMapper = leaderUIModelMapper;
-        this.languageUIModelMapper = languageUIModelMapper;
         this.socialMediaUIModelMapper = socialMediaUIModelMapper;
     }
 
@@ -81,7 +78,8 @@ public class OrganizationUIModelMapper
                 getServiceSchedule(organization));
 
         Set<ServiceDetailUIModel> serviceDetails = getServiceDetails(organization);
-        Map<Programs, Set<Programs>> programsOffered = getProgramsOffered(organization);
+        CategoryUIMapConverter<Programs> programConverter = new CategoryUIMapConverter<>();
+        Map<Category<Programs>, Set<Programs>> programsOffered = programConverter.convertCategoryToMap(organization.getProgramsOffered());
 
         OrganizationUIModel model = new OrganizationUIModel(organization.getId(), overview, multimedia, leadershipTeam, statements, servicesOverview,
                 serviceDetails, programsOffered);
@@ -93,24 +91,6 @@ public class OrganizationUIModelMapper
     {
         
         return null;
-    }
-
-    private Map<Programs, Set<Programs>> getProgramsOffered(Organization organization)
-    {
-        Map<Programs, Set<Programs>> programsMap = new HashMap<>();
-        for (Programs p : organization.getProgramsOffered())
-        {
-            if (programsMap.containsKey(p.getCategory()))
-            {
-                programsMap.get(p.getCategory()).add(p);
-            } else
-            {
-                Set<Programs> programSet = new TreeSet<Programs>();
-                programsMap.put(p.getCategory(), programSet);
-            }
-        }
-
-        return programsMap;
     }
 
     private int getServiceDuration(Atmosphere atmosphere)

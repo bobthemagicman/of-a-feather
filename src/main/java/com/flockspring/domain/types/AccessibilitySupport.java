@@ -12,20 +12,26 @@ import com.flockspring.ui.model.LocalizedEnum;
  * @date Nov 9, 2013
  *
  */
-public enum AccessibilitySupport implements LocalizedEnum
+public enum AccessibilitySupport implements LocalizedEnum, Category<AccessibilitySupport>
 {
-    WHEELCHAIR_ACCESS("accessability.support.wheelchair.access"),
-    DEAF_TRANSLATOR("accessability.support.deaf.translator"),
-    PARKING_LOT("accessability.support.parking.lot"),
-    STREET_PARKING("accessability.support.street.parking"),
-    PARKING_GARAGE("accessability.support.parking.garage"),
-    CARPOOL("accessability.support.carpool");
+    SPECIAL_NEEDS(null, "accessability.support.special.needs"),
+    TRANSPORTATION(null,"accessability.support.transportation"),
+    
+    WHEELCHAIR_ACCESS(SPECIAL_NEEDS, "accessability.support.wheelchair.access"),
+    DEAF_TRANSLATOR(SPECIAL_NEEDS, "accessability.support.deaf.translator"),
+    HEARING_LOOP(SPECIAL_NEEDS, "accessability.support.hearing.loop"),
+    PARKING_LOT(TRANSPORTATION, "accessability.support.parking.lot"),
+    STREET_PARKING(TRANSPORTATION, "accessability.support.street.parking"),
+    PARKING_GARAGE(TRANSPORTATION, "accessability.support.parking.garage"),
+    CARPOOL(TRANSPORTATION, "accessability.support.carpool");
     
     private String localizationStringCode;
+    private AccessibilitySupport category;
     
-    private AccessibilitySupport(String localizationStringCode)
+    private AccessibilitySupport(AccessibilitySupport category, String localizationStringCode)
     {
         this.localizationStringCode = localizationStringCode;
+        this.category = category;
     }
     
     @Override
@@ -44,5 +50,10 @@ public enum AccessibilitySupport implements LocalizedEnum
     public int getOrdinal()
     {
         return this.ordinal();
+    }
+    
+    public AccessibilitySupport getCategory()
+    {
+        return category;
     }
 }
