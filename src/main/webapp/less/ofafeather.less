@@ -130,6 +130,10 @@ html, body{
     height: 100%
 }
 
+a {
+    .transition-effects;
+}
+
 .page-container {
     min-height: 100%;
     position: relative;
@@ -209,6 +213,15 @@ html, body{
     background-color: @light-gray-color;
     clear: right;
     margin-bottom: 0px;
+    .navbar-form-wrapper {
+        display: none;
+    }
+    &.navbar-search-enabled {
+        .navbar-fixed-top;
+        .navbar-form-wrapper {
+            display: block;
+        }
+    }   
 }
 
 .open .dropdown-toggle {
@@ -983,7 +996,7 @@ div.footer {
 
 
 .left-column, .right-column {
-    margin: 80px 0px 40px 0px;
+    margin: 100px 0px 40px 0px;
     position: static;
     .ajax-loader {
         position: absolute;
@@ -991,7 +1004,17 @@ div.footer {
 }
 
 
-   
+.results-message {
+    text-align: center;
+    line-height: 1.5em;
+    &:first-line {
+        font-size: 2em;
+        color: @color1;
+        font-weight: bold;
+        line-height: 3em;
+    }
+}   
+
 .showing-results {
     text-align: left;
     display: block;
@@ -1911,10 +1934,21 @@ a {
 *   CHURCH PROFILE (TOP SECTION)
 */
 
+.back-to-results-link {
+    position: absolute;
+    top: 75px;
+    left: 10px;
+    a.btn.btn-primary {
+        font-size: 0.9em;
+        padding: 0.2em 0.4em;
+        border: none;
+    }
+}
+
 .profile-top {
 
     .make-row();
-    margin-top: 40px;
+    margin-top: 45px;
 
     .media-container {
         .make-sm-column(6);

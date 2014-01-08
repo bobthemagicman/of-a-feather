@@ -12,7 +12,6 @@
 <!-- <spring:url value="/static/js/less-1.4.1.min.js" var="lessJS" /> -->
 <%-- <script type="text/javascript" src="${lessJS}" /> --%>
 
-<!-- link href="${customStyleCSS}" rel="stylesheet" type="text/css"  -->
 <link href="${ofAFeatherIcon}" rel="icon" />
 
 <spring:url value="/static/js/iepngfix_tilebg.js" var="iePngFx_tileBg" />
@@ -47,3 +46,5 @@
 <script type="text/javascript">
     var resourceBaseURL = '${resourceBaseURL}';
 </script>
+
+<c:set var="navSearchEnabled" value="false" /> 

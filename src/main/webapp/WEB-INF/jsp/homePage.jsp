@@ -36,6 +36,8 @@
         <spring:url value="/static/images/features/testimonial_photo_hines.jpg" var="testimonialPhoto2"/>
         <spring:url value="/static/images/features/testimonial_photo_paddock.jpg" var="testimonialPhoto3"/>
 
+        <spring:url value="/search" var="searchAction" />
+        
         <div class="main">    
 
             <div class="header">
@@ -51,12 +53,14 @@
                         <h4>Personalized church search</h4>
                     </div>
                     <div class="blur"><img src="${blurImage}" /></div>
-                    <div class="input-group" data-toggle="popover" >
-                        <input id="search-bar" type="text" class="form-control button-on-right" autofocus="autofocus" placeholder="Find Churches Near (City, State Zip)">
-                        <span id="search-button" class="input-group-btn">
-                            <button type="button" id="searchButton" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
-                        </span>
-                    </div>
+                    <form action="${searchAction}" method="GET">
+                        <div class="input-group">
+                            <input id="search-bar" name="search-bar" type="text" class="form-control button-on-right" autofocus="autofocus" placeholder="Find Churches Near (City, State Zip)">
+                            <span id="search-button" class="input-group-btn">
+                                <button type="submit" id="searchButton" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+                            </span>
+                        </div>
+                    </form>    
                     <a href="${addYourChurchLink}" class="btn btn-primary">Add Your Church!</a>
                 </div>
 

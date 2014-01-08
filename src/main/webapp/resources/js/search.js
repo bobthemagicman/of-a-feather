@@ -3,6 +3,7 @@
  * and open the template in the editor.
  */
 
+var resultsPerPage = 2;
 
 $(document).ready(function() {
 
@@ -31,7 +32,7 @@ function initializeSearchPage() {
 
     initializeFilterFunctions();
 
-    paginate(2);
+    paginate(resultsPerPage);
 
 }
 
@@ -228,31 +229,36 @@ function paginate(resultsPerPage) {
 
     var numPages = assignPages(resultsPerPage);
 
-    var options = {
-        currentPage: 1,
-        totalPages: numPages,
-        alignment: 'center',
-        onPageClicked: function(e, originalEvent, type, page) {
+    if(numPages > 0) {
 
-            e.stopImmediatePropagation();
+        var options = {
+            currentPage: 1,
+            totalPages: numPages,
+            alignment: 'center',
+            onPageClicked: function(e, originalEvent, type, page) {
 
-            var currentTarget = $(e.currentTarget);
+                e.stopImmediatePropagation();
 
-            var pages = currentTarget.bootstrapPaginator("getPages");
+                var currentTarget = $(e.currentTarget);
 
-            currentTarget.bootstrapPaginator("show", page);
+                var pages = currentTarget.bootstrapPaginator("getPages");
 
-            var pages = currentTarget.bootstrapPaginator("getPages");
+                currentTarget.bootstrapPaginator("show", page);
 
-            displayPage(pages.current, numPages);
+                var pages = currentTarget.bootstrapPaginator("getPages");
 
-        }
-    };
+                displayPage(pages.current, numPages);
 
-    $('.pagination').bootstrapPaginator(options);
+            }
+        };
 
-    displayPage(1);
+        $('.pagination').bootstrapPaginator(options);
 
+        displayPage(1);
+    }
+    else {
+        noResults();
+    }
 }
 
 
@@ -290,7 +296,7 @@ function loadingScreenToggle() {
         $(".ajax-loader").fadeTo(1000, 1);
     }
 
-    paginate(10);
+    paginate(resultsPerPage);
 
 }
 
@@ -470,8 +476,7 @@ function placeMarkers() {
             marker[index].setMap(null);
             
             delete marker[index];
-            
-            console.log('deleting ' + index);
+        
         }
         
     }
@@ -520,44 +525,60 @@ function updateResults(filterResult) {
     
     var i;
 
-    for(i = 0; i < filterResult.organizations.items.length; i++) {
+    if(filterResult.organizations !== null) {
+        $(".results-message").hide();
+        $(".showing-results").show();
+        $(".pagination").show();
+        
+        for(i = 0; i < filterResult.organizations.items.length; i++) {
 
-        var existingResult = $(".search-result-entry[data-result-id='" + filterResult.organizations.items[i].id + "']");
+            var existingResult = $(".search-result-entry[data-result-id='" + filterResult.organizations.items[i].id + "']");
 
-        if(!existingResult.length) {
-            
-            var nodeForInsertion = $(".search-result-entry").filter(function() {
-               return $(this).find(".distance").html() < filterResult.organizations.items[i].distanceFromSearchPoint; 
-            });
-            
-            //$(".search-results").append(generateSearchResultEntry(filterResult.organizations.items[i]));
-            
-            nodeForInsertion = nodeForInsertion.last();
-            
-            if(nodeForInsertion.length === 0) {
-                $(".search-results").prepend(generateSearchResultEntry(filterResult.organizations.items[i]));
+            if(!existingResult.length) {
+
+                var nodeForInsertion = $(".search-result-entry").filter(function() {
+                   return $(this).find(".distance").html() < filterResult.organizations.items[i].distanceFromSearchPoint; 
+                });
+
+                //$(".search-results").append(generateSearchResultEntry(filterResult.organizations.items[i]));
+
+                nodeForInsertion = nodeForInsertion.last();
+
+                if(nodeForInsertion.length === 0) {
+                    $(".search-results").prepend(generateSearchResultEntry(filterResult.organizations.items[i]));
+                }
+                else {
+                    nodeForInsertion.after(generateSearchResultEntry(filterResult.organizations.items[i]));
+                }
             }
             else {
-                nodeForInsertion.after(generateSearchResultEntry(filterResult.organizations.items[i]));
+                existingResult.attr("data-current-result", "true");
             }
         }
-        else {
-            existingResult.attr("data-current-result", "true");
-        }
+
+        $(".search-result-entry[data-current-result='false']").remove();
+
+        $(".main").attr("data-latitude", filterResult.organizations.searchLatitude).attr("data-longitude", filterResult.organizations.searchLongitude);
+
+        initializeInfoSliders();
+
+        $(".now-showing").html('1 - ' + filterResult.organizations.totalNumberOfResults);
+
+        $(".total-results").html(filterResult.organizations.totalNumberOfResults);
+
+        paginate(resultsPerPage);
     }
-    
-    $(".search-result-entry[data-current-result='false']").remove();
-    
-    $(".main").attr("data-latitude", filterResult.organizations.searchLatitude).attr("data-longitude", filterResult.organizations.searchLongitude);
-    
-    initializeInfoSliders();
-    
-    $(".now-showing").html('1 - ' + filterResult.organizations.totalNumberOfResults);
-    
-    $(".total-results").html(filterResult.organizations.totalNumberOfResults);
+    else {
+        noResults();
+    }
+}
 
-    paginate(2);
-
+function noResults() {
+    $(".search-result-entry").remove();
+    $(".results-message").html("Sorry!<br />We were unable to find any results matching your criteria.<br />Please try broadening your search.");
+    $(".results-message").show();
+    $(".pagination").hide();
+    $(".showing-results").hide();
 }
 
 function filterRequest() {
@@ -578,6 +599,7 @@ function filterRequest() {
             xhr.setRequestHeader("Content-Type", "application/json");
         },
         success: function(data) {
+            console.log(JSON.stringify(data));
             updateResults(data);
         }
     });
