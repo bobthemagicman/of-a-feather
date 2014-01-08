@@ -88,7 +88,7 @@ public class ProfilePageController
         LeaderImpl leader2 = new LeaderImpl("Leader 2", "Leader 2 bio", "Community Pastor", LeaderRole.PASTOR, leaderImage2, true, false, "test2@test.com", "509-991-0111", 2010);
         Set<LeaderImpl> leadershipTeam = Sets.newTreeSet(Arrays.asList(leader1, leader2));
         
-        Set<Programs> programsOffered = Sets.newTreeSet(Arrays.asList(Programs.ADDICTION_RECOVERY_COUNSELING, Programs.AGE_GROUPS_AND_CREATIVE_ARTS));
+        Set<Programs> programsOffered = Sets.newTreeSet(Arrays.asList(Programs.ADDICTION_RECOVERY_COUNSELING, Programs.AGE_GROUPS));
         Set<AccessibilitySupport> accessabilitysupport = Sets.newTreeSet(Arrays.asList(AccessibilitySupport.WHEELCHAIR_ACCESS, AccessibilitySupport.CARPOOL));
         
         OrganizationImpl organization = new OrganizationImpl(null, 1999, "test save time", "mission statement", "statement of faith", 
