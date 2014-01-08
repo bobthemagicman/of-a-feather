@@ -6,11 +6,11 @@
 
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
 
-<spring:url value="/static/less/ofafeather.less" var="customStyleLESS" />
-<!-- link href="${customStyleCSS}" rel="stylesheet" type="text/css" / -->
-<link href="${customStyleLESS}" rel="stylesheet/less" type="text/css" />
-<spring:url value="/static/js/less-1.4.1.min.js" var="lessJS" />
-<script type="text/javascript" src="${lessJS}" />
+<spring:url value="/static/css/ofafeather.css" var="customStyleCSS" />
+<link href="${customStyleCSS}" rel="stylesheet" type="text/css" />
+<%-- <link href="${customStyleLESS}" rel="stylesheet/less" type="text/css" /> --%>
+<!-- <spring:url value="/static/js/less-1.4.1.min.js" var="lessJS" /> -->
+<%-- <script type="text/javascript" src="${lessJS}" /> --%>
 
 <!-- link href="${customStyleCSS}" rel="stylesheet" type="text/css"  -->
 <link href="${ofAFeatherIcon}" rel="icon" />

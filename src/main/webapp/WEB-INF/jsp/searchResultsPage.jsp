@@ -660,7 +660,6 @@
                 <div class="pagination pagination-centered"></div>
                 
             </div><!-- /.right-column -->
-            
         </div><!-- /.main -->
         
         <%@ include file="/WEB-INF/jsp/partials/siteFooter.jsp"%> 
