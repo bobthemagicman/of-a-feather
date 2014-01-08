@@ -186,7 +186,7 @@
                                 <div id="congsizeOptions" class="panel-body checkbox-group filter" data-filter-type="congregationSize">
                                     <c:forEach items="${congregationSizeValues}" var="congregationSize" varStatus="p_tracker">
                                         <c:set var="checked" value=""/>
-                                        <c:if test="${not empty filters and cfn:collectionContains(filters.congregationSize, congregationSize)}">
+                                        <c:if test="${not empty filters and cfn:collectionContains(filters.congregationSizes, congregationSize)}">
                                             <c:set var="checked" value=" checked"/>
                                         </c:if>
                                             
@@ -342,163 +342,123 @@
                                                         <div class="tab-pane fade active in" id="careEducationTab">
                                                             <div class="row">
                                                                 <div class="col-sm-5 col-sm-offset-1">
-                                                                    <h5>Nursery Care</h5>
-                                                                    
-<%--                                                                     <c:set var="checked" value=""/><c:if test=""><c:set var="checked" value=" checked"/></c:if> --%>
-                                                                    <label class="checkbox${checked}" for="childCareModal1"><input id="childCareModal1" type="checkbox" data-linked-checkbox="childCare1" data-filter-option="INFANT_CARE" />Infant Care</label>
-                                                                    
-                                                                    <c:set var="checked" value=""/><c:if test=""><c:set var="checked" value=" checked"/></c:if>
-                                                                    <label class="checkbox${checked}" for="childCareModal2"><input id="childCareModal2" type="checkbox" data-linked-checkbox="childCare2" data-filter-option="TODDLER_CARE" />Toddler Care</label>
+                                                                    <c:set var="nurseryAndEducation" value="${cfn:createList(fn:split('NURSERY_CARE,EDUCATION', ','))}" />
+                                                                    <c:set var="category" value="" />
+                                                                    <c:forEach items="${programsValues}" var="entry">
+                                                                        <c:if test="${cfn:collectionContains(nurseryAndEducation, entry.key.name) }">
+                                                                            <c:if test="${not empty category and category ne entry.key.name}">
                                                                 </div>
                                                                 <div class="col-sm-5 col-sm-offset-1">
-                                                                    <h5>Education</h5>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="educationModal1"><input id="educationModal1" type="checkbox" data-linked-checkbox="education1" data-filter-option="SUNDAY_SCHOOL" />Sunday School</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="educationModal2"><input id="educationModal2" type="checkbox" data-linked-checkbox="education2" data-filter-option="BIBLE_STUDY" />Bible Studies</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="educationModal3"><input id="educationModal3" type="checkbox" data-linked-checkbox="education3" data-filter-option="SPIRITUAL_CLASSES" />Spiritual Classes</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox adult-education" for="educationModal4"><input id="educationModal4" type="checkbox" data-linked-checkbox="education4" data-filter-option="ADULT_EDUCATION" />Adult Education <span class="glyphicon glyphicon-info-sign"></span></label>
+                                                                            </c:if>
+                                                                            <c:set var="category" value="${entry.key.name}" />
+                                                                            <h5><spring:message code="${entry.key.localizedStringCode}" /></h5>
+	                                                                        <c:forEach items="${entry.value}" var="program">
+	                                                                            <c:set var="checked" value=""/>
+			                                                                    <c:if test="${not empty filters and cfn:collectionContains(filters.programsAndMinistries, program) }">
+			                                                                      <c:set var="checked" value=" checked"/>
+			                                                                    </c:if>
+			                                                                    <label class="checkbox${checked}" for="nursery-education-${fn:toLowerCase(program.name)}">
+		                                                                          <input id="nursery-education-${fn:toLowerCase(program.name)}" type="checkbox" data-linked-checkbox="nursery-education-list-${fn:toLowerCase(program.name)}" data-filter-option="${program.name}" />
+		                                                                          <spring:message code="${program.localizedStringCode}" />
+			                                                                    </label>
+			                                                                </c:forEach>
+	                                                                   </c:if>
+                                                                    </c:forEach>
                                                                 </div>
                                                             </div>
                                                         </div><!-- /.tab-pane -->
                                                         <div class="tab-pane fade" id="ageGenderTab">
                                                             <div class="row">
                                                                 <div class="col-sm-5">
-                                                                    <h5>Age Groups</h5>
-                                                                    
-                                                                    <label class="checkbox${checked}" for="ageGender1"><input id="ageGender1" type="checkbox" data-filter-option="CHILDRENS_GROUP" />Children&apos;s</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="ageGender2"><input id="ageGender2" type="checkbox" data-filter-option="MIDDLE_SCHOOL_GROUP" />Middle School/Junior High</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="ageGender3"><input id="ageGender3" type="checkbox" data-filter-option="HIGH_SCHOOL_GROUP" />High School</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="ageGender4"><input id="ageGender4" type="checkbox" data-filter-option="" />College</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="ageGender10"><input id="ageGender10" type="checkbox" data-filter-option="YOUNG_ADULT_GROUP" />Post College/Young Professionals</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="ageGender5"><input id="ageGender5" type="checkbox" data-filter-option="ADULT_GROUP" />Adult</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="ageGender6"><input id="ageGender6" type="checkbox" data-filter-option="SENIOR_GROUP" />Senior Citizens</label>
+                                                                    <c:set var="ageGenderMusicArts" value="${cfn:createList(fn:split('AGE_GROUPS,GENDER_GROUPS,MUSIC_AND_ARTS', ','))}" />
+                                                                    <c:set var="category" value="" />
+                                                                    <c:forEach items="${programsValues}" var="entry">
+                                                                        <c:if test="${cfn:collectionContains(ageGenderMusicArts, entry.key.name) }">
+                                                                         <c:choose>
+                                                                            <c:when test="${not empty category and category ne entry.key.name and category ne 'MUSIC_AND_ARTS'}">
                                                                 </div>
                                                                 <div class="col-sm-3">
-                                                                    <h5>Gender Groups</h5>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="ageGender8"><input id="ageGender8" type="checkbox" data-filter-option="MENS_GROUP" />Men&apos;s</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="ageGender9"><input id="ageGender9" type="checkbox" data-filter-option="WOMENS_GROUP" />Women&apos;s</label>
+                                                                            </c:when>
+                                                                            <c:when test="${not empty category and category ne entry.key.name and category eq 'MUSIC_AND_ARTS'}">
                                                                 </div>
-
                                                                 <div class="col-sm-4">
-                                                                    <h5>Music &amp; Arts</h5>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="musicArts1"><input id="musicArts1" type="checkbox" data-filter-option="CHIOR" />Choir Group</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="musicArts2"><input id="musicArts2" type="checkbox" data-filter-option="DANCE" />Dance Team</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="musicArts3"><input id="musicArts3" type="checkbox" data-filter-option="MUSIC_MINISTRY" />Music Ministry</label>
-                                                                    
-
-                                                                    <label class="checkbox${checked}" for="musicArts4"><input id="musicArts4" type="checkbox" data-filter-option="DRAMA" />Drama Team</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="musicArts5"><input id="musicArts5" type="checkbox" data-filter-option="CREATIVE_ARTS" />Creative Arts Ministry</label>
+                                                                            </c:when>
+                                                                            <c:otherwise></c:otherwise>
+                                                                            </c:choose>
+                                                                            <c:set var="category" value="${entry.key.name}" />
+                                                                        <h5><spring:message code="${entry.key.localizedStringCode}" /></h5>
+                                                                            <c:forEach items="${entry.value}" var="program">
+                                                                                <c:set var="checked" value=""/>
+                                                                                <c:if test="${not empty filters and cfn:collectionContains(filters.programsAndMinistries, program) }">
+                                                                                  <c:set var="checked" value=" checked"/>
+                                                                                </c:if>
+                                                                                <label class="checkbox${checked}" for="music-gender-arts-${fn:toLowerCase(program.name)}">
+                                                                                  <input id="music-gender-arts-${fn:toLowerCase(program.name)}" type="checkbox" data-linked-checkbox="music-gender-arts-list-${fn:toLowerCase(program.name)}" data-filter-option="${program.name}" />
+                                                                                  <spring:message code="${program.localizedStringCode}" />
+                                                                                </label>
+                                                                            </c:forEach>    
+                                                                           
+                                                                       </c:if>
+                                                                    </c:forEach>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="tab-pane fade" id="socialSpiritualTab">
                                                             <div class="row">
                                                                 <div class="col-sm-5 col-sm-offset-1">
-                                                                    <h5>Social</h5>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="socialSpiritual2"><input id="socialSpiritual2" type="checkbox" data-filter-option="SPROTS" />Sports Activities</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="socialSpiritual3"><input id="socialSpiritual3" type="checkbox" data-filter-option="SOCAIL_EVENTS" />Member Social Events</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="socialSpiritual4"><input id="socialSpiritual4" type="checkbox" data-filter-option="SMALL_GROUPS" />Small Groups</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="socialSpiritual5"><input id="socialSpiritual5" type="checkbox" data-filter-option="SINGLES_GROUPS" />Singles Events</label>
+                                                                    <c:set var="socialSpiritual" value="${cfn:createList(fn:split('SOCIAL,SPIRITUAL', ','))}" />
+                                                                    <c:set var="category" value="" />
+                                                                    <c:forEach items="${programsValues}" var="entry">
+                                                                        <c:if test="${cfn:collectionContains(socialSpiritual, entry.key.name) }">
+                                                                        <c:if test="${not empty category and category ne entry.key.name}">
                                                                 </div>
                                                                 <div class="col-sm-5 col-sm-offset-1">
-                                                                    <h5>Spiritual</h5>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="socialSpiritual9"><input id="socialSpiritual9" type="checkbox" data-filter-option="PRAYER_GROUPS" />Prayer Groups</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="socialSpiritual6"><input id="socialSpiritual6" type="checkbox" data-filter-option="HEALING_MINISTRY" />Healing Ministry</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="socialSpiritual7"><input id="socialSpiritual7" type="checkbox" data-filter-option="PHOPHETIC_MINISTRY" />Prophetic Ministry</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="socialSpiritual8"><input id="socialSpiritual8" type="checkbox" data-filter-option="WORSHIP_MINISTRY" />Worship Ministry</label>
+                                                                        </c:if>
+                                                                        <c:set var="category" value="${entry.key.name}" />
+                                                                        <h5><spring:message code="${entry.key.localizedStringCode}" /></h5>
+                                                                            <c:forEach items="${entry.value}" var="program">
+                                                                                <c:set var="checked" value=""/>
+                                                                                <c:if test="${not empty filters and cfn:collectionContains(filters.programsAndMinistries, program) }">
+                                                                                  <c:set var="checked" value=" checked"/>
+                                                                                </c:if>
+                                                                                <label class="checkbox${checked}" for="social-spiritual-${fn:toLowerCase(program.name)}">
+                                                                                  <input id="social-spiritual-${fn:toLowerCase(program.name)}" type="checkbox" data-linked-checkbox="social-spiritual-list-${fn:toLowerCase(program.name)}" data-filter-option="${program.name}" />
+                                                                                  <spring:message code="${program.localizedStringCode}" />
+                                                                                </label>
+                                                                            </c:forEach>    
+                                                                            
+                                                                    </c:if>
+                                                                    </c:forEach>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="tab-pane fade" id="supportOutreachTab">
                                                             <div class="row">
                                                                 <div class="col-sm-5 col-sm-offset-1">
-                                                                    <h5>Support &amp; Counseling</h5>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="supportOutreach6"><input id="supportOutreach6" type="checkbox" data-filter-option="PRE_MARITAL_COUNSELING" />Pre-marital Services</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="supportOutreach7"><input id="supportOutreach7" type="checkbox" data-filter-option="COUPLES_COUNSELING" />Couples Counseling</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="supportOutreach8"><input id="supportOutreach8" type="checkbox" data-filter-option="GENERAL_COUNSELING" />General Counseling</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="supportOutreach9"><input id="supportOutreach9" type="checkbox" data-filter-option="DIVORCE_GRIEF_COUNSELING" />Divorce/Grief</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="supportOutreach10"><input id="supportOutreach10" type="checkbox" data-filter-option="ADDICTION_RECOVERY_COUNSELING" />Addiction/Recovery</label>
+                                                                    <c:set var="supportCounselingOutreach" value="${cfn:createList(fn:split('SUPPORT_AND_COUNSELING,OUTREACH', ','))}" />
+                                                                     <c:set var="col_tracker" value="false"/>
+                                                                    <c:set var="category" value="" />
+                                                                    <c:forEach items="${programsValues}" var="entry">
+                                                                        <c:if test="${cfn:collectionContains(supportCounselingOutreach, entry.key.name) }">
+                                                                        <c:if test="${not empty category and category ne entry.key.name}">
                                                                 </div>
                                                                 <div class="col-sm-5 col-sm-offset-1">
-                                                                    <h5>Outreach</h5>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="supportOutreach1"><input id="supportOutreach1" type="checkbox" data-filter-option="COMMUNITY_OUTREACH" />Community Service</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="supportOutreach2"><input id="supportOutreach2" type="checkbox" data-filter-option="EVANGELISM_OUTREACH" />Evangelism Outreach</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="supportOutreach3"><input id="supportOutreach3" type="checkbox" data-filter-option="FAMILY_OUTREACH" />Family Services</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="supportOutreach4"><input id="supportOutreach4" type="checkbox" data-filter-option="FOOD_PANTRY_OUTREACH" />Food Pantry</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="supportOutreach5"><input id="supportOutreach5" type="checkbox" data-filter-option="HOMELESS_OUTREACH" />Homeless Ministry</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="supportOutreach6"><input id="supportOutreach6" type="checkbox" data-filter-option="MISSION_OUTREACH" />Mission Trips</label>
-                                                                    
-                                                                    
-                                                                    <label class="checkbox${checked}" for="supportOutreach7"><input id="supportOutreach7" type="checkbox" data-filter-option="SOCIAL_JUSTICE_OUTREACH" />Social Justice/Activism</label>
+                                                                        </c:if>
+                                                                        <c:set var="category" value="${entry.key.name}" />
+                                                                        <h5><spring:message code="${entry.key.localizedStringCode}" /></h5>
+                                                                            <c:forEach items="${entry.value}" var="program">
+                                                                                <c:set var="checked" value=""/>
+                                                                                <c:if test="${not empty filters and cfn:collectionContains(filters.programsAndMinistries, program) }">
+                                                                                  <c:set var="checked" value=" checked"/>
+                                                                                </c:if>
+                                                                                <label class="checkbox${checked}" for="support-outreach-${fn:toLowerCase(program.name)}">
+                                                                                  <input id="support-outreach-${fn:toLowerCase(program.name)}" type="checkbox" data-linked-checkbox="support-outreach-list-${fn:toLowerCase(program.name)}" data-filter-option="${program.name}" />
+                                                                                  <spring:message code="${program.localizedStringCode}" />
+                                                                                </label>
+                                                                            </c:forEach>    
+                                                                            
+                                                                    </c:if>
+                                                                    </c:forEach>
                                                                 </div>
                                                             </div>
                                                         </div><!-- /.tab-pane -->
@@ -530,8 +490,8 @@
                                             <c:forEach items="${languageValues}" var="language" varStatus="p_tracker">
                                                 <c:if test="${cfn:collectionContains(primaryLanguages, language.name)}">
 		                                            <c:set var="checked" value=""/><c:if test=""><c:set var="checked" value=" checked"/></c:if>   
-		                                            <label class="checkbox${checked}" for="langList${p_tracker.index}">
-		                                                <input id="langList${p_tracker.index}" type="checkbox" data-linked-checkbox="lang-${fn:toLowerCase(language.name)}" data-filter-option="${language.name}" />
+		                                            <label class="checkbox${checked}" for="p-lang-list-${fn:toLowerCase(language.name)}">
+		                                                <input id="p-lang-list-${fn:toLowerCase(language.name)}" type="checkbox" data-linked-checkbox="lang-${fn:toLowerCase(language.name)}" data-filter-option="${language.name}" />
 		                                                    <spring:message code="${language.names[0]}" text="" />
 		                                            </label>
 		                                        </c:if>
@@ -548,8 +508,8 @@
                                                 <c:forEach items="${entry.value}" var="accessibilitySupport" varStatus="p_tracker">
                                                     <c:if test="${cfn:collectionContains(primaryAccessibilitySupports, accessibilitySupport.name) }">
                                                     <c:set var="checked" value=""/><c:if test=""><c:set var="checked" value=" checked"/></c:if>
-                                                    <label class="checkbox${checked}" for="accessibility-support-list-${fn:toLowerCase(accessibilitySupport.name)}">
-                                                        <input id="accessibility-support-list-${fn:toLowerCase(accessibilitySupport.name)}" type="checkbox" data-linked-checkbox="accessibility-support-${fn:toLowerCase(accessibilitySupport.name)}" data-filter-option="${accessibilitySupport.name}" />
+                                                    <label class="checkbox${checked}" for="p-accessibility-support-list-${fn:toLowerCase(accessibilitySupport.name)}">
+                                                        <input id="p-accessibility-support-list-${fn:toLowerCase(accessibilitySupport.name)}" type="checkbox" data-linked-checkbox="accessibility-support-${fn:toLowerCase(accessibilitySupport.name)}" data-filter-option="${accessibilitySupport.name}" />
                                                         <spring:message code="${accessibilitySupport.localizedStringCode}" />
                                                     </label>
                                                     </c:if>
@@ -584,11 +544,11 @@
                                                                 
                                                                 <c:set var="dataLink" value="" />
                                                                 <c:if test="${cfn:collectionContains(primaryLanguages, language.name) }">
-                                                                    <c:set var="dataLink" value=' data-linked-checkbox="lang-${fn:toLowerCase(language.name)}"' />
+                                                                    <c:set var="dataLink" value=' data-linked-checkbox="p-lang-list-${fn:toLowerCase(language.name)}"' />
                                                                 </c:if>
                                                                 
-                                                                <label class="checkbox${checked}" for="lang${p_tracker.index}">
-                                                                    <input id="lang${p_tracker.index}" type="checkbox" data-filter-option="${language.name}"${dataLink}/>
+                                                                <label class="checkbox${checked}" for="lang-${fn:toLowerCase(language.name)}">
+                                                                    <input id="lang-${fn:toLowerCase(language.name)}" type="checkbox" data-filter-option="${language.name}"${dataLink}/>
                                                                     <spring:message code="${language.names[0]}" />
                                                                 </label>
                                                                 
@@ -613,7 +573,7 @@
                                                                             
                                                                             <c:set var="dataLink" value="" />
                                                                             <c:if test="${cfn:collectionContains(primaryAccessibilitySupports, accessibilitySupport.name)}">
-			                                                                    <c:set var="dataLink" value=' data-linked-checkbox="accessibility-support-${fn:toLowerCase(accessibilitySupport.name)}"' />
+			                                                                    <c:set var="dataLink" value=' data-linked-checkbox="p-accessibility-support-list-${fn:toLowerCase(accessibilitySupport.name)}"' />
 			                                                                </c:if>
 		                                                                    
 		                                                                    <label class="checkbox${checked}" for="accessibility-support-${fn:toLowerCase(accessibilitySupport.name)}">
