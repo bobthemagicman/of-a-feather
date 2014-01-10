@@ -1,10 +1,11 @@
 <spring:url value="/addAChurch" var="addYourChurchLink" />
 <spring:url value="/about" var="aboutUsLink" />
 <spring:url value="/" var="homeLink" />
+<spring:url value="/search" var="searchAction" />
 
 <div class="page-container">
 
-    <nav class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-default <c:if test='${navSearchEnabled}'>navbar-search-enabled</c:if>" role="navigation">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -18,11 +19,21 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse">
-                    <ul class="nav navbar-nav navbar-right">
+                <div class="col-sm-4 navbar-form-wrapper">
+                    <form class="navbar-form navbar-left" action="${searchAction}" method="GET" role="search">
+                        <div class="input-group">
+                            <input type="text" name="search-bar" id="search-bar" class="form-control button-on-right" placeholder="Look Near (City, State Zip)">
+                            <span class="input-group-btn">
+                                <button class="btn icon-btn" type="submit" id="searchButton"><span class="glyphicon glyphicon-search"></span></button>
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
 
-                            <li><a href="${aboutUsLink}">ABOUT US</a></li>
-                            <li><a href="${addYourChurchLink}">ADD YOUR CHURCH</a></li>
-                    </ul>
+                    <li><a href="${aboutUsLink}">ABOUT US</a></li>
+                    <li><a href="${addYourChurchLink}">ADD YOUR CHURCH</a></li>
+                </ul>
             </div>
             <!-- /.navbar-collapse -->
     </nav>

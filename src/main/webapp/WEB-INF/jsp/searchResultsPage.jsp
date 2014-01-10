@@ -5,6 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        
         <%-- Common Metadata, scripts, and CSS --%>
         <%@ include file="/WEB-INF/jsp/partials/commonHead.jsp"%>
         
@@ -24,6 +25,7 @@
     <body>
 
         <%-- Site Header --%>
+        <c:set var="navSearchEnabled" value="true" />
         <%@ include file="/WEB-INF/jsp/partials/siteHeader.jsp"%>
 
         <div class="container main" data-search-latitude="${results.searchLatitude}" data-search-longitude="${results.searchLongitude}">
@@ -609,7 +611,7 @@
             </div><!-- /.left-column -->
             
             <div class="col-sm-8 right-column">
-		
+                <div class="results-message"></div>
                 <div class="showing-results">Showing Results <span class="now-showing">${results.pageStartIndex} - ${results.pageEndIndex}</span> of <span class="total-results">${results.totalNumberOfResults}</span></div>
             
                 

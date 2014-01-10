@@ -56,6 +56,8 @@
 
         <div class="main">
 
+            <div class="back-to-results-link"><a class="btn btn-primary" href="#"><span class="glyphicon glyphicon-arrow-left"></span> Back to Search Results</a></div>
+            
             <div class="container profile" data-church-name="${organization.overview.name}" data-latitude="${organization.overview.address.latitude}" data-longitude="${organization.overview.address.longitude}">
 
                 <div class="profile-top">
