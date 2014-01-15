@@ -131,7 +131,13 @@ html, body{
 }
 
 a {
-    .transition-effects;
+    &:not(.ui-slider-handle) {
+        .transition-effects;
+    }
+}
+
+.btn, .btn:focus {
+    outline-color: @color1;
 }
 
 .page-container {
@@ -224,6 +230,10 @@ a {
     }   
 }
 
+.navbar-toggle {
+    outline-color: @color1;
+}
+
 .open .dropdown-toggle {
     background: none !important;
 }
@@ -286,8 +296,17 @@ a {
     border-right: 0px;
 }
 
-ul.nav.navbar-nav {
+.navbar-collapse .navbar-nav {
+    @media(max-width: @screen-tablet) {
+        background-color: darken(@light-gray-color, 10%);
+        margin: 0px -15px;
+        padding: 0px;
+        border-bottom: 2px solid @gray-color;
+    }
+}
 
+ul.nav.navbar-nav {
+    
     a {
         .transition-effects;
         &:hover {
@@ -583,13 +602,18 @@ div.footer {
     @media (min-height: 900px) {
         top: (((@header-height + 3 * @header-height-adjust) / 2) - (@header-search-height / 2) + 50);
     }
-    width: 50%;
-    min-width: 400px;
-    left: 25%;
+    width: 100%;
+    //min-width: 400px;
+    left: 0;
     box-sizing: content-box;
     z-index: 3;
+    form {
+        max-width: 1000px;
+        margin: auto;
+    }
     .input-group {
         width: 80%;
+        max-width: 800px;
         margin: auto;
     }
     input.form-control {
@@ -663,6 +687,12 @@ div.footer {
     bottom: 15px;
     right: 15px;
     font-size: 1.5em;
+    @media(max-width: 800px) {
+        font-size: 1em;
+    }
+    @media(max-height: 800px) {
+        font-size: 1em;
+    }
     color: #ffffff;
     text-align: center;
     text-shadow: 2px 2px #444444;
@@ -674,7 +704,7 @@ div.footer {
     }
     .photographer-credit {
         font-size: 0.75em;
-        color: @gray-color;
+        color: darken(@light-gray-color, 10%);
     }
 }
 
@@ -799,12 +829,22 @@ div.footer {
                 background-position: 0 -20px;
                 color: @darkest-gray-color;
             }   
+            &.time-label {
+                @media(max-width: @screen-md) {
+                    margin-bottom: 25px;
+                }
+            }
         }
+
+        
 
         .time-description {
             float: right;
             clear: right;
             font-size: 0.8em;
+            @media(max-width: @screen-md) {
+                clear: both;
+            }
         }
 
     }
@@ -840,7 +880,8 @@ div.footer {
         text-indent: 0.5em;
         &.slider-heading {
             text-align: center;
-            margin: 20px 0px -5px 0px;
+            margin: 20px 0px 0px 0px;
+            
             text-indent: 0px;
             font-size: 1em;
             font-weight: 500;
@@ -938,6 +979,10 @@ div.footer {
         margin: 2px;
         .slider-label-container {
             .make-xs-column(4);
+            padding: 0px;
+            @media(max-width: @screen-md) {
+                font-size: 0.7em;
+            }
         }
     }
 
@@ -972,6 +1017,15 @@ div.footer {
         background-color: @color3;
     }
 
+}
+
+//mozilla hack
+body:not(:-moz-handler-blocked) .time-description
+{
+    margin-top: -20px;
+    @media(max-width: @screen-md) {
+        margin-top: 0px;
+    }
 }
 
 .map-panel {
@@ -1236,8 +1290,10 @@ div.pagination ul {
 .carousel.carousel-front-page {
     .make-row();
     min-height: 400px;
+    /* this works in Chrome
     .carousel-control {
-        .make-sm-column(1);
+        .make-xs-column(1);
+        position: static;
         background: none;
         height: 400px;
         padding: 0px;
@@ -1251,11 +1307,34 @@ div.pagination ul {
             font-family: Lato;
         }
     }
+    */
+
+    .carousel-control {
+        .make-xs-column(1);
+        position: absolute;
+        background: none;
+        height: 400px;
+        padding: 0px;
+        margin: 0px;
+        .icon-next, .icon-prev {
+            font-size: 3em;
+            color: @color1;
+            line-height: 400px;
+            position: static;
+            display: inline;
+            font-family: Lato;
+        }
+    }
+
     .carousel-inner {
-        .make-sm-column(10);
+        .make-xs-column(10);
+        position: relative;
+        left: 8.3333%;
+        
     }
     .carousel-inner-no-nav {
-        .make-sm-column(12);
+        .make-xs-column(12);
+        left: 0%;
     }
     .item {
         .make-row();
@@ -1263,7 +1342,7 @@ div.pagination ul {
         padding: 50px 0px;
         .carousel-caption {
             position: static !important;
-            .make-sm-column(12);
+            .make-xs-column(12);
             height: 300px;
             color: @lightest-gray-color;
             &.large-caption {
@@ -1275,7 +1354,7 @@ div.pagination ul {
     }
 
     .featured-church {
-        .make-sm-column(4);
+        .make-xs-column(4);
         a {
             display: block;
             max-width: 250px;
@@ -1314,24 +1393,24 @@ div.pagination ul {
                 .rounded-corners-bottom-right;
             }
             .featured-church-name {
-                font-size: 1.1em;
+                font-size: 0.9em;
                 line-height: 25px;
             }
             .featured-church-denomination {
-                font-size: 0.9em;
+                font-size: 0.8em;
             }
             .featured-church-location {
-                font-size: 0.9em;
+                font-size: 0.8em;
             }
         }
     }
 
     .testimonial {
         margin-top: 75px;
-        .make-sm-column(12);
+        .make-xs-column(12);
     }
     .testimonial-info {
-        .make-sm-column(7);
+        .make-xs-column(7);
         font-size: 1em;
         text-align: right;
         margin-top: 40px; 
@@ -1357,7 +1436,7 @@ div.pagination ul {
         }
     }
     .testimonial-text {
-            .make-sm-column(7);
+            .make-xs-column(7);
             text-indent: 0.6em;
             font-size: 1.25em;
             line-spacing: 0.25em;
@@ -1366,10 +1445,10 @@ div.pagination ul {
             color: white;
     }
     .testimonial-content {
-        .make-sm-column(5);
+        .make-xs-column(5);
     }
     .testimonial-image {
-        .make-sm-column(5);
+        .make-xs-column(5);
         padding: 0px;
         img {
             width: 2in;
@@ -1390,11 +1469,14 @@ ul.nav-tabs.features-nav {
     border: none;
     li {
         .transition-effects;
-        .make-sm-column(4);
+        .make-xs-column(4);
         text-align: center;
         a {
             padding: 5px 10px;
-            font-size: 2em;
+            font-size: 1.5em;
+            @media(min-width: 1000px) {
+                font-size: 2em;
+            }
             white-space: nowrap;
             display: inline-block;
             margin: auto;
@@ -1447,7 +1529,7 @@ ul.nav-tabs.features-nav {
 @featured-location-spacing: 50px;
 
 .featured-location-content {
-    .make-sm-column(6);
+    .make-xs-column(6);
 }
 
  .featured-location {
@@ -1859,6 +1941,7 @@ a {
     }
     .area-map {
         .rounded-corners;
+        .img-responsive;
         padding: 5px;
         border: 1px solid @dark-gray-color;
         background-color: @gray-color;
@@ -2699,4 +2782,20 @@ a {
     }
 }
 
+/*
+*   BROWSER SPECIFIC ISSUES
+*
+*/
 
+/*  FIREFOX (WINDOWS)
+*/ 
+
+a:focus, a:hover { 
+    outline: none; 
+    text-decoration: none;
+}
+
+
+button::-moz-focus-inner {
+  border: 0;
+}
