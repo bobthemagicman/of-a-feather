@@ -4,7 +4,11 @@
 package com.flockspring.ui.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
+
+import javax.servlet.http.HttpSession;
 
 import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +45,6 @@ import com.flockspring.domain.types.impl.SocialMediaImpl;
 import com.flockspring.ui.exception.PageNotFoundException;
 import com.flockspring.ui.mapper.OrganizationUIModelMapper;
 import com.flockspring.ui.model.CongregationSize;
-import com.flockspring.ui.model.OrganizationUIModel;
 import com.google.common.collect.Sets;
 
 @Controller
@@ -62,51 +65,51 @@ public class ProfilePageController
         this.organizationDiscoveryService = organizationDiscoveryService;
     }
 
-    @RequestMapping("/test-save")
-    public void renderOrganizationProfileByName()
-    {
-        AddressImpl address = new AddressImpl("123456 78th St", "", "97888", "NC", "South Bridge", "USA", new double[] {123.444, 56.123});
-        
-        TimeAndDay timeAndDay = new TimeAndDay(new LocalDateTime(1, 1, 1, 9, 20), ServiceDay.SUNDAY);
-        Set<MusicalInstruments> instruments = Sets.newTreeSet();
-        ServiceDetailsImpl serviceDetailsImpl1 = new ServiceDetailsImpl(MusicStyle.NEUTRAL_5, ServiceStyle.HIGH_ENERGY_8, DressAttire.FORMAL_2, AgeDemographics.NEUTRAL_4, instruments ,
-                90, timeAndDay, "Service 1", Sets.newTreeSet(Arrays.asList(Language.SPANISH)));
-        Set<ServiceDetailsImpl> services = Sets.newTreeSet(Arrays.asList(serviceDetailsImpl1));
-        
-        AtmosphereImpl atmosphere = new AtmosphereImpl(CongregationSize.LARGE, services, false, false, 90);
-        SocialMediaImpl socialMedia = new SocialMediaImpl("", "", "", "", "", "", "", "", "");
-        
-        MultimediaObjectImpl image1 = new MultimediaObjectImpl("Leader 1 picture", "5.jpg", "alt text", "title text", false, false);;
-        MultimediaObjectImpl image2 = new MultimediaObjectImpl("Leader 1 picture", "5.jpg", "alt text", "title text", false, false);;
-        MultimediaObjectImpl image3 = new MultimediaObjectImpl("Leader 1 picture", "5.jpg", "alt text", "title text", false, false);;
-        MultimediaObjectImpl image4 = new MultimediaObjectImpl("Leader 1 picture", "5.jpg", "alt text", "title text", false, false);;
-        Set<MultimediaObjectImpl> multimedia = Sets.newTreeSet(Arrays.asList(image1, image2, image3, image4));
-        
-        MultimediaObjectImpl leaderImage1 = new MultimediaObjectImpl("Leader 1 picture", "5.jpg", "alt text", "title text", false, false);;
-        MultimediaObjectImpl leaderImage2 = new MultimediaObjectImpl("Leader 2 picture", "5.jpg", "alt text", "title text", false, false);;
-        LeaderImpl leader1 = new LeaderImpl("Leader 1", "Leader 1 bio", "Lead pastor", LeaderRole.PASTOR, leaderImage1, false, true, "test@test.com", "509-991-0195", 2005);        
-        LeaderImpl leader2 = new LeaderImpl("Leader 2", "Leader 2 bio", "Community Pastor", LeaderRole.PASTOR, leaderImage2, true, false, "test2@test.com", "509-991-0111", 2010);
-        Set<LeaderImpl> leadershipTeam = Sets.newTreeSet(Arrays.asList(leader1, leader2));
-        
-        Set<Programs> programsOffered = Sets.newTreeSet(Arrays.asList(Programs.ADDICTION_RECOVERY_COUNSELING, Programs.AGE_GROUPS));
-        Set<AccessibilitySupport> accessabilitysupport = Sets.newTreeSet(Arrays.asList(AccessibilitySupport.WHEELCHAIR_ACCESS, AccessibilitySupport.CARPOOL));
-        
-        OrganizationImpl organization = new OrganizationImpl(null, 1999, "test save time", "mission statement", "statement of faith", 
-                "welcome Message", address, atmosphere, socialMedia, Affiliation.NONDENOMINATIONAL, Affiliation.NONE, null, multimedia, 
-                leadershipTeam, programsOffered, accessabilitysupport);
-        
-        organizationDiscoveryService.saveOrganization(organization);
-    }
+//    @RequestMapping("/test-save")
+//    public void renderOrganizationProfileByName()
+//    {
+//        AddressImpl address = new AddressImpl("123456 78th St", "", "97888", "NC", "South Bridge", "USA", new double[] {123.444, 56.123});
+//        
+//        TimeAndDay timeAndDay = new TimeAndDay(new LocalDateTime(1, 1, 1, 9, 20), ServiceDay.SUNDAY);
+//        Set<MusicalInstruments> instruments = Sets.newTreeSet();
+//        ServiceDetailsImpl serviceDetailsImpl1 = new ServiceDetailsImpl(MusicStyle.NEUTRAL_5, ServiceStyle.HIGH_ENERGY_8, DressAttire.FORMAL_2, AgeDemographics.NEUTRAL_4, instruments ,
+//                90, timeAndDay, "Service 1", Sets.newTreeSet(Arrays.asList(Language.SPANISH)));
+//        Set<ServiceDetailsImpl> services = Sets.newTreeSet(Arrays.asList(serviceDetailsImpl1));
+//        
+//        AtmosphereImpl atmosphere = new AtmosphereImpl(CongregationSize.LARGE, services, false, false, 90);
+//        SocialMediaImpl socialMedia = new SocialMediaImpl("", "", "", "", "", "", "", "", "");
+//        
+//        MultimediaObjectImpl image1 = new MultimediaObjectImpl("Leader 1 picture", "5.jpg", "alt text", "title text", false, false);;
+//        MultimediaObjectImpl image2 = new MultimediaObjectImpl("Leader 1 picture", "5.jpg", "alt text", "title text", false, false);;
+//        MultimediaObjectImpl image3 = new MultimediaObjectImpl("Leader 1 picture", "5.jpg", "alt text", "title text", false, false);;
+//        MultimediaObjectImpl image4 = new MultimediaObjectImpl("Leader 1 picture", "5.jpg", "alt text", "title text", false, false);;
+//        Set<MultimediaObjectImpl> multimedia = Sets.newTreeSet(Arrays.asList(image1, image2, image3, image4));
+//        
+//        MultimediaObjectImpl leaderImage1 = new MultimediaObjectImpl("Leader 1 picture", "5.jpg", "alt text", "title text", false, false);;
+//        MultimediaObjectImpl leaderImage2 = new MultimediaObjectImpl("Leader 2 picture", "5.jpg", "alt text", "title text", false, false);;
+//        LeaderImpl leader1 = new LeaderImpl("Leader 1", "Leader 1 bio", "Lead pastor", LeaderRole.PASTOR, leaderImage1, false, true, "test@test.com", "509-991-0195", 2005);        
+//        LeaderImpl leader2 = new LeaderImpl("Leader 2", "Leader 2 bio", "Community Pastor", LeaderRole.PASTOR, leaderImage2, true, false, "test2@test.com", "509-991-0111", 2010);
+//        Set<LeaderImpl> leadershipTeam = Sets.newTreeSet(Arrays.asList(leader1, leader2));
+//        
+//        Set<Programs> programsOffered = Sets.newTreeSet(Arrays.asList(Programs.ADDICTION_RECOVERY_COUNSELING, Programs.AGE_GROUPS));
+//        Set<AccessibilitySupport> accessabilitysupport = Sets.newTreeSet(Arrays.asList(AccessibilitySupport.WHEELCHAIR_ACCESS, AccessibilitySupport.CARPOOL));
+//        
+//        OrganizationImpl organization = new OrganizationImpl(null, 1999, "test save time", "mission statement", "statement of faith", 
+//                "welcome Message", address, atmosphere, socialMedia, Affiliation.NONDENOMINATIONAL, Affiliation.NONE, null, multimedia, 
+//                leadershipTeam, programsOffered, accessabilitysupport);
+//        
+//        organizationDiscoveryService.saveOrganization(organization);
+//    }
     
     @RequestMapping("/{statRegionName}/{cityRegionName}/{neighborhoodRegionName}/{organizationName}")
     public ModelAndView renderOrganizationProfileByName(@PathVariable String organizationName, @PathVariable String stateRegionName,
-            @PathVariable String cityRegionName, @PathVariable String neighborhoodRegionName)
+            @PathVariable String cityRegionName, @PathVariable String neighborhoodRegionName, HttpSession session)
     {
         // TODO: sanitize organizationId
         Organization organization = organizationDiscoveryService.getOrganizationByRegionAndOrganizationNames(organizationName, stateRegionName,
                 cityRegionName, neighborhoodRegionName);
 
-        return buildModelAndView(organization, -1);
+        return buildModelAndView(organization, -1, session);
     }
 
     @RequestMapping("/{stateRegionName}/{cityRegionName}/{organizationName}")
@@ -120,19 +123,21 @@ public class ProfilePageController
         return null;
     }
 
-    private ModelAndView buildModelAndView(Organization organization, double distance)
+    private ModelAndView buildModelAndView(Organization organization, double distance, HttpSession session)
     {
-        ModelAndView mav = new ModelAndView(VIEW_NAME);
+        SiteSearchHelper searchHelper = new SiteSearchHelper(session);
         
-        OrganizationUIModel organizationUI = organizationUIModelMapper.map(organization, distance);
-        mav.addObject("organization", organizationUI);
-
-        return mav;
+        Map<String, Object> model = new HashMap<>();
+        model.put("organization", organizationUIModelMapper.map(organization, distance));
+        model.put("hasPreviousSearch", searchHelper.hasPreviousSearch());
+        model.put("searchQuery", searchHelper.getSearchQuery());
+        
+        return new ModelAndView(VIEW_NAME, model);
     }
 
     @RequestMapping("/{organizationId}")
     public ModelAndView renderOrganizationProfileById(@PathVariable String organizationId, 
-            @RequestParam(value = "dist", required = false) String distance)
+            @RequestParam(value = "dist", required = false) String distance, HttpSession session)
     {
         double dist = -1;
         if(StringUtils.hasText(distance))
@@ -151,7 +156,7 @@ public class ProfilePageController
 
         throwExceptionIfOrganizationIsNull(organization, organizationId);
 
-        return buildModelAndView(organization, dist); 
+        return buildModelAndView(organization, dist, session); 
     }
 
 //    private ModelAndView buildRedirectUrl(Organization organization)

@@ -29,7 +29,10 @@
         <mvc:view-controller path="/profile" view-name="profilePage" />
         <mvc:view-controller path="/privacyPolicy" view-name="privacyPolicyPage" />
         <mvc:view-controller path="/termsConditions" view-name="termsConditionsPage" />
-        
+    
+    <context:property-placeholder
+        location="classpath:ui.properties" />
+            
 	<bean id="messageSource"
 		class="org.springframework.context.support.ResourceBundleMessageSource"
 		p:basename="messages/messages" />

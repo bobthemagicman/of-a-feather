@@ -1,4 +1,4 @@
-<spring:url value="/addAChurch" var="addYourChurchLink" />
+<spring:url value="/addYourChurch" var="addYourChurchLink" />
 <spring:url value="/about" var="aboutUsLink" />
 <spring:url value="/" var="homeLink" />
 <spring:url value="/search" var="searchAction" />
@@ -22,7 +22,7 @@
                 <div class="col-sm-4 navbar-form-wrapper">
                     <form class="navbar-form navbar-left" action="${searchAction}" method="GET" role="search">
                         <div class="input-group">
-                            <input type="text" name="search-bar" id="search-bar" class="form-control button-on-right" placeholder="Look Near (City, State Zip)">
+                            <input type="text" name="search-bar" id="search-bar" class="form-control button-on-right" placeholder="Look Near (City and State, Zip, or Neighborhood)">
                             <span class="input-group-btn">
                                 <button class="btn icon-btn" type="submit" id="searchButton"><span class="glyphicon glyphicon-search"></span></button>
                             </span>

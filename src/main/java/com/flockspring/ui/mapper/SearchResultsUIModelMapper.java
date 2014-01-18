@@ -49,19 +49,20 @@ public class SearchResultsUIModelMapper
         this.messageSource = messageSource;
     }
 
-    public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, Address address, Locale locale)
+    public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, Address address, Locale locale, String query)
     {
-        return map(geoPageResult, address, new SearchFilterUICommand(), locale);
+        return map(geoPageResult, address, new SearchFilterUICommand(), locale, query);
     }
 
     public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, SearchFilterUICommand filterRequest, Locale locale)
     {
         AddressImpl address = new AddressImpl("", "", "", "", "", "", filterRequest.getLocation());
        
-        return map(geoPageResult, address, filterRequest, locale);
+        return map(geoPageResult, address, filterRequest, locale, "");
     }
     
-    private SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, Address address, SearchFilterUICommand filterRequest, Locale locale)
+    private SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, Address address, SearchFilterUICommand filterRequest, 
+            Locale locale, String query)
     {
         
         NavigableSet<SearchResultUIModel> results = new TreeSet<>();
@@ -74,8 +75,9 @@ public class SearchResultsUIModelMapper
         long totalResults = geoPageResult.getTotalElements();
         int numResultsOnPage = geoPageResult.getNumberOfElements();
         int numResultsPerPage = geoPageResult.getSize();
-        
+        int totalNumberOfPages = geoPageResult.getTotalPages();
         int pageStartIndex = 1;
+        
         if(!geoPageResult.isFirstPage())
         {
             pageStartIndex = (currentPage * numResultsPerPage); 
@@ -84,7 +86,7 @@ public class SearchResultsUIModelMapper
         int pageEndIndex = (pageStartIndex + numResultsOnPage) - 1;
         
         return new SearchResultsUIModel(results, currentPage, totalResults, pageStartIndex, pageEndIndex, 
-                address.getLatitude(), address.getLongitude());
+                address.getLatitude(), address.getLongitude(), query, totalNumberOfPages);
     }
 
     public SearchResultUIModel map(GeoResult<OrganizationImpl> geoResult, SearchFilterUICommand filterRequest, Locale locale)

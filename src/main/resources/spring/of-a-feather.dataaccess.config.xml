@@ -25,22 +25,6 @@
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
 	</bean>
-
-	<!-- USPS Service Config -->
-	<bean id="uspsRestTemplate" class="org.springframework.web.client.RestTemplate"
-		p:messageConverters-ref="uspsMessageConverters" />
-
-	<util:list id="uspsMessageConverters">
-		<ref bean="uspsAddressHttpMessageConverter" />
-	</util:list>
-
-	<!-- MapQuest Service Config -->
-	<bean id="mapQuestRestTemplate" class="org.springframework.web.client.RestTemplate"
-		p:messageConverters-ref="mapQuestMessageConverters" />
-
-	<util:list id="mapQuestMessageConverters">
-		<ref bean="mapQuestAddressHttpMessageConverter" />
-	</util:list>
-
+	
 	<bean id="xpathTemplate" class="org.springframework.xml.xpath.Jaxp13XPathTemplate" />
 </beans>

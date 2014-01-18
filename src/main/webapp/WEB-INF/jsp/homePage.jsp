@@ -55,7 +55,7 @@
                     <div class="blur"><img src="${blurImage}" /></div>
                     <form action="${searchAction}" method="GET">
                         <div class="input-group">
-                            <input id="search-bar" name="search-bar" type="text" class="form-control button-on-right" autofocus="autofocus" placeholder="Find Churches Near (City, State Zip)">
+                            <input id="search-bar" name="search-bar" type="text" class="form-control button-on-right" autofocus="autofocus" placeholder="Find Churches Near (City and State, Zip, or Neighborhood)">
                             <span id="search-button" class="input-group-btn">
                                 <button type="submit" id="searchButton" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
                             </span>

@@ -27,6 +27,7 @@
     <body>
 
         <%-- Site Header --%>
+        <c:set var="navSearchEnabled" value="true" />
         <%@ include file="/WEB-INF/jsp/partials/siteHeader.jsp"%>
 
         <spring:url value="/static/images/site/calendar_icon.png" var="calendarIcon"/>
@@ -56,12 +57,17 @@
 
         <div class="main">
 
-            <div class="back-to-results-link"><a class="btn btn-primary" href="#"><span class="glyphicon glyphicon-arrow-left"></span> Back to Search Results</a></div>
-            
             <div class="container profile" data-church-name="${organization.overview.name}" data-latitude="${organization.overview.address.latitude}" data-longitude="${organization.overview.address.longitude}">
-
+            
                 <div class="profile-top">
-
+    
+                    
+	                <spring:url value="/search" var="searchAction" />
+	                <div class="back-to-results-link">
+	                   <c:if test="${hasPreviousSearch}"><a class="btn btn-primary" href="${searchAction}${searchQuery}"><span class="glyphicon glyphicon-arrow-left"></span> Back to Search Results</a></c:if>
+                    </div>
+	               
+	                
                     <div class="media-container">
 
                         <div class="media-carousel-container active-media">

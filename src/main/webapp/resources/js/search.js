@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-var resultsPerPage = 2;
+var resultsPerPage = 6;
 
 $(document).ready(function() {
 
@@ -21,19 +21,11 @@ $(document).ready(function() {
 function initializeSearchPage() {
 
     initializeUserSliders();
-
     initializeInfoSliders();
-
     initializeSearchElements();
-
     initializeTooltips();
-
     initializeFavorites();
-
     initializeFilterFunctions();
-
-    paginate(resultsPerPage);
-
 }
 
 function initializeFilterFunctions() {
@@ -45,15 +37,12 @@ function initializeFilterFunctions() {
     $(".slider-filter").on("slidechange", function(event, ui) {
         filterRequest();
     });
-
 }
 
 function initializeUserSliders() {
 
     $(".slider-tooltip").fadeTo('slow',.01);
-
     $(".slider").slider({range: true, min: -500, max: 500, values: [-500,500]});
-
     $( ".slider" ).on( "slide", function( event, ui ) {
 
         var sliderTips = new Array;
@@ -101,9 +90,7 @@ function initializeUserSliders() {
         var sliderValues = $(this).slider("values");
 
         var values = new Array;
-
         values[0] = Math.round(sliderValues[0] * (9/1000) + 5.5);
-
         values[1] = Math.round(sliderValues[1] * (9/1000) + 5.5);
 
         var assocSlider = $(this).attr('id');
@@ -139,23 +126,17 @@ function initializeUserSliders() {
     } );
 
     $( ".slider" ).on( "slidestop", function( event, ui ) {
-
         $(".slider-tooltip[data-assoc-slider='" + $(this).attr('id') + "']").fadeTo('slow',.01);
-
     } );
 
     $( ".slider" ).on( "slidestart", function( event, ui ) {
-
         $(".slider-tooltip[data-assoc-slider='" + $(this).attr('id') + "']").fadeTo('slow',1);
-
     } );
 
 }
 
 function initializeInfoSliders() {
-
     $(".info-slider").each(function() {
-
        var sliderValue = $(this).attr("data-slider-value");
 
         $(this).slider({
@@ -166,17 +147,12 @@ function initializeInfoSliders() {
            step: 0.1,
            value: sliderValue
         });
-
     });
-
 }
 
 function initializeSearchElements() {
-
     $(".day-buttons").buttonset();
-
     $(".gay-affirming input").button();
-
     $(".checkbox-group label input[type=checkbox]").change(function() {
        $(this).parent().toggleClass("checked");
     });
@@ -191,7 +167,6 @@ function initializeSearchElements() {
         else {
             $(this).addClass("active");
         }
-
     });
 
     $(".panel-heading .accordion-toggle.map-toggle").click(function (){
@@ -199,16 +174,13 @@ function initializeSearchElements() {
     });
 
     $(".checkbox-group input[type='checkbox']").change(function() {
-
         var elementId = $(this).attr("data-linked-checkbox");
-
         $("#" + elementId).prop('checked',$(this).prop('checked'));
         $("label[for='" + elementId + "']").toggleClass('checked');
 
     });
 
     fixTabPanes();
-
 }
 
 function initializeTooltips() {
@@ -236,32 +208,20 @@ function paginate(resultsPerPage) {
             totalPages: numPages,
             alignment: 'center',
             onPageClicked: function(e, originalEvent, type, page) {
-
                 e.stopImmediatePropagation();
-
                 var currentTarget = $(e.currentTarget);
-
                 var pages = currentTarget.bootstrapPaginator("getPages");
-
                 currentTarget.bootstrapPaginator("show", page);
-
                 var pages = currentTarget.bootstrapPaginator("getPages");
-
                 displayPage(pages.current, numPages);
-
             }
         };
 
         $('.pagination').bootstrapPaginator(options);
 
         displayPage(1);
-    }
-    else {
-        noResults();
-    }
+    }    
 }
-
-
 
 function getMaxZindex() {
     var currentZIndex = 0, maxZIndex = 0;
@@ -575,7 +535,6 @@ function updateResults(filterResult) {
 
 function noResults() {
     $(".search-result-entry").remove();
-    $(".results-message").html("Sorry!<br />We were unable to find any results matching your criteria.<br />Please try broadening your search.");
     $(".results-message").show();
     $(".pagination").hide();
     $(".showing-results").hide();
