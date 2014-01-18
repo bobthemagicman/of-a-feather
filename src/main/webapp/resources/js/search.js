@@ -15,6 +15,12 @@ $(document).ready(function() {
     });
 
 
+    if(showOutsideRegionModal) {
+        var modalContent = '<div class="outside-beta-region-modal modal fade"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> <h4 class="modal-title">We&apos;re Sorry!</h4> </div> <div class="modal-body"> <p>We currently only have churches in the greater San Francisco area in our database.<br />Please enter your email address to be notified when we expand to [your area].</p> <form class="form-inline" role="form"> <div class="form-group"> <input type="text" placeholder="Your email address." class="form-control" /> </div> <button type="submit" class="btn btn-primary">Submit</button> </form>       </div> <div class="modal-footer"> Click <a href="'+resourceBaseURL+'../privacyPolicy">here</a> to view our privacy policy. </div> </div> </div> </div>';
+        $(".main").prepend(modalContent);
+        $(".outside-beta-region-modal").modal("show");
+    }
+
 });
 
 
@@ -48,55 +54,78 @@ function initializeFilterFunctions() {
 
 }
 
+var sliderTips = new Array;
+
+sliderTips[0] = new Array;
+sliderTips[1] = new Array;
+sliderTips[2] = new Array;
+
+sliderTips[0][0] = 'Traditional/Reverant';
+sliderTips[0][1] = 'Traditional/Reverant';
+sliderTips[0][2] = ' ';
+sliderTips[0][3] = ' ';
+sliderTips[0][4] = ' ';
+sliderTips[0][5] = 'Blend of Both';
+sliderTips[0][6] = ' ';
+sliderTips[0][7] = ' ';
+sliderTips[0][8] = ' ';
+sliderTips[0][9] = 'Lively';
+sliderTips[0][10] = 'Very Lively &amp; Spirited';
+
+sliderTips[1][0] = 'Classic Songs &amp; Sound';
+sliderTips[1][1] = 'Classic Songs &amp; Sound';
+sliderTips[1][2] = ' ';
+sliderTips[1][3] = 'Upbeat Classics/Gospel';
+sliderTips[1][4] = ' ';
+sliderTips[1][5] = 'Blend of Both';
+sliderTips[1][6] = ' ';
+sliderTips[1][7] = 'Contemporary Sound';
+sliderTips[1][8] = ' ';
+sliderTips[1][9] = 'Modern Songs';
+sliderTips[1][10] = 'Radically Modern';
+
+sliderTips[2][0] = 'Sunday Best';
+sliderTips[2][1] = 'Sunday Best';
+sliderTips[2][2] = ' ';
+sliderTips[2][3] = 'Business Casual';
+sliderTips[2][4] = ' ';
+sliderTips[2][5] = 'Blend of Both';
+sliderTips[2][6] = ' ';
+sliderTips[2][7] = 'Smart Casual';
+sliderTips[2][8] = ' ';
+sliderTips[2][9] = ' ';
+sliderTips[2][10] = 'Day at the Beach';
+
 function initializeUserSliders() {
 
     $(".slider-tooltip").fadeTo('slow',.01);
 
-    $(".slider").slider({range: true, min: -500, max: 500, values: [-500,500]});
+    $(".slider").each(function() {
+       var initMinValue = $(this).attr("data-min");
+       var initMaxValue = $(this).attr("data-max");
+       
+       if(initMinValue >= 1 && initMinValue <= 10) {
+           initMinValue = unscaleSliderValue(initMinValue);
+       }
+       else {
+           initMinValue = -500;
+       }
+       if(initMaxValue >= 1 && initMaxValue <= 10) {
+           initMaxValue = unscaleSliderValue(initMaxValue);
+       }
+       else {
+           initMaxValue = 500;
+       }
+       
+       console.log("min: " + initMinValue + ", max: " + initMaxValue);
+       
+       //if(parseInt(initMinValue) !== initMinValue) initMinValue = -500;
+       //if(parseInt(initMaxValue) !== initMaxValue) initMaxValue = 500;
+       
+       $(this).slider({range: true, min: -500, max: 500, values: [initMinValue, initMaxValue]});
+    });
 
     $( ".slider" ).on( "slide", function( event, ui ) {
-
-        var sliderTips = new Array;
-
-        sliderTips[0] = new Array;
-        sliderTips[1] = new Array;
-        sliderTips[2] = new Array;
-
-        sliderTips[0][0] = 'Traditional/Reverant';
-        sliderTips[0][1] = 'Traditional/Reverant';
-        sliderTips[0][2] = ' ';
-        sliderTips[0][3] = ' ';
-        sliderTips[0][4] = ' ';
-        sliderTips[0][5] = 'Blend of Both';
-        sliderTips[0][6] = ' ';
-        sliderTips[0][7] = ' ';
-        sliderTips[0][8] = ' ';
-        sliderTips[0][9] = 'Lively';
-        sliderTips[0][10] = 'Very Lively &amp; Spirited';
-
-        sliderTips[1][0] = 'Classic Songs &amp; Sound';
-        sliderTips[1][1] = 'Classic Songs &amp; Sound';
-        sliderTips[1][2] = ' ';
-        sliderTips[1][3] = 'Upbeat Classics/Gospel';
-        sliderTips[1][4] = ' ';
-        sliderTips[1][5] = 'Blend of Both';
-        sliderTips[1][6] = ' ';
-        sliderTips[1][7] = 'Contemporary Sound';
-        sliderTips[1][8] = ' ';
-        sliderTips[1][9] = 'Modern Songs';
-        sliderTips[1][10] = 'Radically Modern';
-
-        sliderTips[2][0] = 'Sunday Best';
-        sliderTips[2][1] = 'Sunday Best';
-        sliderTips[2][2] = ' ';
-        sliderTips[2][3] = 'Business Casual';
-        sliderTips[2][4] = ' ';
-        sliderTips[2][5] = 'Blend of Both';
-        sliderTips[2][6] = ' ';
-        sliderTips[2][7] = 'Smart Casual';
-        sliderTips[2][8] = ' ';
-        sliderTips[2][9] = ' ';
-        sliderTips[2][10] = 'Day at the Beach';
 
         var sliderValues = $(this).slider("values");
 
@@ -212,7 +241,7 @@ function initializeSearchElements() {
 }
 
 function initializeTooltips() {
-    var tooltipElement = $(".adult-education");
+    var tooltipElement = $(".adult-education-tooltip");
 
     tooltipElement.attr("data-toggle","tooltip");
     tooltipElement.attr("title","non-spiritual, life skills, financial, etc.");
@@ -255,6 +284,13 @@ function paginate(resultsPerPage) {
         $('.pagination').bootstrapPaginator(options);
 
         displayPage(1);
+        
+        if(numPages === 1) {
+            $(".pagination").hide();
+        }
+        else {
+            $(".pagination").show();
+        }
     }
     else {
         noResults();
@@ -599,7 +635,7 @@ function filterRequest() {
             xhr.setRequestHeader("Content-Type", "application/json");
         },
         success: function(data) {
-            console.log(JSON.stringify(data));
+            //console.log(JSON.stringify(data));
             updateResults(data);
         }
     });
@@ -690,6 +726,10 @@ function constructJSON() {
 
 function scaleSliderValue(v) {
     return Math.round(v * (9/1000) + 5.5);
+}
+
+function unscaleSliderValue(v) {
+    return Math.round((v - 5.5) * (1000/9));
 }
 
 Number.prototype.round = function(places) {

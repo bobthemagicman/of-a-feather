@@ -2,6 +2,8 @@
 <spring:url value="/about" var="aboutUsLink" />
 <spring:url value="/" var="homeLink" />
 <spring:url value="/search" var="searchAction" />
+<spring:url value="/privacyPolicy" var="privacyPolicy" />
+<spring:url value="/contact" var="contactUsLink" />
 
 <div class="page-container">
 
