@@ -5,28 +5,26 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <c:set var="isTestRegionSearch" value="false" />
         <%-- Common Metadata, scripts, and CSS --%>
         <%@ include file="/WEB-INF/jsp/partials/commonHead.jsp"%>
 
         <spring:url value="/static/js/search.js" var="searchJS" />
         <spring:url value="/static/js/bootstrap-paginator.min.js" var="bootstrapPaginatorJS" />
         <spring:url value="/static/js/mustache.js" var="mustacheJS" />
+        
         <script type="text/javascript">
             $LAB.queueScript("${searchJS}")
-                    .queueScript("https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=initializeMap")
+                    .queueScript("https://maps.googleapis.com/maps/api/js?libraries=places&v=3.exp&sensor=false&callback=initializeMap")
                     .queueScript("${mustacheJS}")
                     .queueScript("${bootstrapPaginatorJS}")
                     .runQueue();
 
-            var showOutsideRegionModal = false;
+            var showOutsideRegionModal = ${not empty error and error eq 'user_search_out_of_region'};
+            
+        	
         </script>
 
-        <c:if test="${!isTestRegionSearch}">
-            <script type="text/javascript">
-                showOutsideRegionModal = true;
-            </script>
-        </c:if>
+        
 
         <title>Of A Feather - Search Results</title>	
     </head>

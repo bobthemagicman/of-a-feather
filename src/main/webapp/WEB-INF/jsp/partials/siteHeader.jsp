@@ -21,6 +21,7 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse">
+                <c:if test="${not empty hideSearchBar && !hideSearchBar}">
                 <div class="col-sm-4 navbar-form-wrapper">
                     <form class="navbar-form navbar-left" action="${searchAction}" method="GET" role="search">
                         <div class="input-group">
@@ -31,6 +32,7 @@
                         </div>
                     </form>
                 </div>
+                </c:if>
                 <ul class="nav navbar-nav navbar-right">
 
                     <li><a href="${aboutUsLink}">ABOUT US</a></li>

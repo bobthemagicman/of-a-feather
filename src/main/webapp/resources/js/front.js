@@ -23,9 +23,12 @@ $(document).ready(function() {
     fixTabPanes();
     
     $(".header-search .input-group").popover();
-    
 });
 
+function initAutoComplete()
+{
+	$("#search-bar").geocomplete({country: 'us'});
+}
 
 function cycleImage() {
    var currentImage, nextImage;

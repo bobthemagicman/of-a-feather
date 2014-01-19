@@ -252,7 +252,7 @@ public class SearchPageController
         {
             if (component.getTypes().contains(componentName))
             {
-                return component.getShortName();
+                return component.getLongName();
             }
         }
 

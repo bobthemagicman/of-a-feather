@@ -3,6 +3,9 @@
  */
 package com.flockspring.ui.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,8 +23,10 @@ public class HomePageController {
 
 	@RequestMapping("/")
 	public ModelAndView renderDefaultHomePage() {
-
-	    ModelAndView mav = new ModelAndView("homePage");
+	    Map<String, Object> model = new HashMap<String, Object>();
+	    model.put("hideSearchBar", true);
+	    
+	    ModelAndView mav = new ModelAndView("homePage", model);
 	  
 	
 		return mav;

@@ -9,9 +9,13 @@
         <%@ include file="/WEB-INF/jsp/partials/commonHead.jsp"%>
 
         <spring:url value="/static/js/front.js" var="frontJS" />
+        <spring:url value="/static/js/jquery.geocomplete.js" var="geoCompletePlugin" />
         <script type="text/javascript">
-            $LAB.queueScript("${frontJS}")
-                    .runQueue();
+            $LAB.queueScript("http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&callback=initAutoComplete")
+                .queueScript("${geoCompletePlugin}")        
+                .queueScript("${frontJS}")
+                .runQueue();
+            
         </script>
 
         <title>Of A Feather - Find your new church home today</title>	

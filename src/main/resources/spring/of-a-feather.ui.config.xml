@@ -51,9 +51,9 @@
 		<prop key="com.flockspring.ui.controller.PageNotFoundException">404Page</prop>
 	</util:properties>
 	
-	<bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping"
-    	p:flowRegistry-ref="flowRegistry"
-    	p:order="0" />
+<!-- 	<bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping" -->
+<!--     	p:flowRegistry-ref="flowRegistry" -->
+<!--     	p:order="0" /> -->
     
     <bean id="jsr303Validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
     
