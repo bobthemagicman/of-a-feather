@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-var resultsPerPage = 6;
+var resultsPerPage = 2;
 
 $(document).ready(function() {
 
@@ -15,17 +15,31 @@ $(document).ready(function() {
     });
 
 
+    if(showOutsideRegionModal) {
+        var modalContent = '<div class="outside-beta-region-modal modal fade"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button> <h4 class="modal-title">We&apos;re Sorry!</h4> </div> <div class="modal-body"> <p>We currently only have churches in the greater San Francisco area in our database.<br />Please enter your email address to be notified when we expand to [your area].</p> <form class="form-inline" role="form"> <div class="form-group"> <input type="text" placeholder="Your email address." class="form-control" /> </div> <button type="submit" class="btn btn-primary">Submit</button> </form>       </div> <div class="modal-footer"> Click <a href="'+resourceBaseURL+'../privacyPolicy">here</a> to view our privacy policy. </div> </div> </div> </div>';
+        $(".main").prepend(modalContent);
+        $(".outside-beta-region-modal").modal("show");
+    }
+
 });
 
 
 function initializeSearchPage() {
 
     initializeUserSliders();
+
     initializeInfoSliders();
+
     initializeSearchElements();
+
     initializeTooltips();
+
     initializeFavorites();
+
     initializeFilterFunctions();
+
+    paginate(resultsPerPage);
+
 }
 
 function initializeFilterFunctions() {
@@ -37,60 +51,88 @@ function initializeFilterFunctions() {
     $(".slider-filter").on("slidechange", function(event, ui) {
         filterRequest();
     });
+
 }
+
+var sliderTips = new Array;
+
+sliderTips[0] = new Array;
+sliderTips[1] = new Array;
+sliderTips[2] = new Array;
+
+sliderTips[0][0] = 'Traditional/Reverant';
+sliderTips[0][1] = 'Traditional/Reverant';
+sliderTips[0][2] = ' ';
+sliderTips[0][3] = ' ';
+sliderTips[0][4] = ' ';
+sliderTips[0][5] = 'Blend of Both';
+sliderTips[0][6] = ' ';
+sliderTips[0][7] = ' ';
+sliderTips[0][8] = ' ';
+sliderTips[0][9] = 'Lively';
+sliderTips[0][10] = 'Very Lively &amp; Spirited';
+
+sliderTips[1][0] = 'Classic Songs &amp; Sound';
+sliderTips[1][1] = 'Classic Songs &amp; Sound';
+sliderTips[1][2] = ' ';
+sliderTips[1][3] = 'Upbeat Classics/Gospel';
+sliderTips[1][4] = ' ';
+sliderTips[1][5] = 'Blend of Both';
+sliderTips[1][6] = ' ';
+sliderTips[1][7] = 'Contemporary Sound';
+sliderTips[1][8] = ' ';
+sliderTips[1][9] = 'Modern Songs';
+sliderTips[1][10] = 'Radically Modern';
+
+sliderTips[2][0] = 'Sunday Best';
+sliderTips[2][1] = 'Sunday Best';
+sliderTips[2][2] = ' ';
+sliderTips[2][3] = 'Business Casual';
+sliderTips[2][4] = ' ';
+sliderTips[2][5] = 'Blend of Both';
+sliderTips[2][6] = ' ';
+sliderTips[2][7] = 'Smart Casual';
+sliderTips[2][8] = ' ';
+sliderTips[2][9] = ' ';
+sliderTips[2][10] = 'Day at the Beach';
 
 function initializeUserSliders() {
 
     $(".slider-tooltip").fadeTo('slow',.01);
-    $(".slider").slider({range: true, min: -500, max: 500, values: [-500,500]});
+
+    $(".slider").each(function() {
+       var initMinValue = $(this).attr("data-min");
+       var initMaxValue = $(this).attr("data-max");
+       
+       if(initMinValue >= 1 && initMinValue <= 10) {
+           initMinValue = unscaleSliderValue(initMinValue);
+       }
+       else {
+           initMinValue = -500;
+       }
+       if(initMaxValue >= 1 && initMaxValue <= 10) {
+           initMaxValue = unscaleSliderValue(initMaxValue);
+       }
+       else {
+           initMaxValue = 500;
+       }
+       
+       console.log("min: " + initMinValue + ", max: " + initMaxValue);
+       
+       //if(parseInt(initMinValue) !== initMinValue) initMinValue = -500;
+       //if(parseInt(initMaxValue) !== initMaxValue) initMaxValue = 500;
+       
+       $(this).slider({range: true, min: -500, max: 500, values: [initMinValue, initMaxValue]});
+    });
+
     $( ".slider" ).on( "slide", function( event, ui ) {
-
-        var sliderTips = new Array;
-
-        sliderTips[0] = new Array;
-        sliderTips[1] = new Array;
-        sliderTips[2] = new Array;
-
-        sliderTips[0][0] = 'Traditional/Reverant';
-        sliderTips[0][1] = 'Traditional/Reverant';
-        sliderTips[0][2] = ' ';
-        sliderTips[0][3] = ' ';
-        sliderTips[0][4] = ' ';
-        sliderTips[0][5] = 'Blend of Both';
-        sliderTips[0][6] = ' ';
-        sliderTips[0][7] = ' ';
-        sliderTips[0][8] = ' ';
-        sliderTips[0][9] = 'Lively';
-        sliderTips[0][10] = 'Very Lively &amp; Spirited';
-
-        sliderTips[1][0] = 'Classic Songs &amp; Sound';
-        sliderTips[1][1] = 'Classic Songs &amp; Sound';
-        sliderTips[1][2] = ' ';
-        sliderTips[1][3] = 'Upbeat Classics/Gospel';
-        sliderTips[1][4] = ' ';
-        sliderTips[1][5] = 'Blend of Both';
-        sliderTips[1][6] = ' ';
-        sliderTips[1][7] = 'Contemporary Sound';
-        sliderTips[1][8] = ' ';
-        sliderTips[1][9] = 'Modern Songs';
-        sliderTips[1][10] = 'Radically Modern';
-
-        sliderTips[2][0] = 'Sunday Best';
-        sliderTips[2][1] = 'Sunday Best';
-        sliderTips[2][2] = ' ';
-        sliderTips[2][3] = 'Business Casual';
-        sliderTips[2][4] = ' ';
-        sliderTips[2][5] = 'Blend of Both';
-        sliderTips[2][6] = ' ';
-        sliderTips[2][7] = 'Smart Casual';
-        sliderTips[2][8] = ' ';
-        sliderTips[2][9] = ' ';
-        sliderTips[2][10] = 'Day at the Beach';
 
         var sliderValues = $(this).slider("values");
 
         var values = new Array;
+
         values[0] = Math.round(sliderValues[0] * (9/1000) + 5.5);
+
         values[1] = Math.round(sliderValues[1] * (9/1000) + 5.5);
 
         var assocSlider = $(this).attr('id');
@@ -126,17 +168,23 @@ function initializeUserSliders() {
     } );
 
     $( ".slider" ).on( "slidestop", function( event, ui ) {
+
         $(".slider-tooltip[data-assoc-slider='" + $(this).attr('id') + "']").fadeTo('slow',.01);
+
     } );
 
     $( ".slider" ).on( "slidestart", function( event, ui ) {
+
         $(".slider-tooltip[data-assoc-slider='" + $(this).attr('id') + "']").fadeTo('slow',1);
+
     } );
 
 }
 
 function initializeInfoSliders() {
+
     $(".info-slider").each(function() {
+
        var sliderValue = $(this).attr("data-slider-value");
 
         $(this).slider({
@@ -147,12 +195,17 @@ function initializeInfoSliders() {
            step: 0.1,
            value: sliderValue
         });
+
     });
+
 }
 
 function initializeSearchElements() {
+
     $(".day-buttons").buttonset();
+
     $(".gay-affirming input").button();
+
     $(".checkbox-group label input[type=checkbox]").change(function() {
        $(this).parent().toggleClass("checked");
     });
@@ -167,6 +220,7 @@ function initializeSearchElements() {
         else {
             $(this).addClass("active");
         }
+
     });
 
     $(".panel-heading .accordion-toggle.map-toggle").click(function (){
@@ -174,17 +228,20 @@ function initializeSearchElements() {
     });
 
     $(".checkbox-group input[type='checkbox']").change(function() {
+
         var elementId = $(this).attr("data-linked-checkbox");
+
         $("#" + elementId).prop('checked',$(this).prop('checked'));
         $("label[for='" + elementId + "']").toggleClass('checked');
 
     });
 
     fixTabPanes();
+
 }
 
 function initializeTooltips() {
-    var tooltipElement = $(".adult-education");
+    var tooltipElement = $(".adult-education-tooltip");
 
     tooltipElement.attr("data-toggle","tooltip");
     tooltipElement.attr("title","non-spiritual, life skills, financial, etc.");
@@ -208,20 +265,39 @@ function paginate(resultsPerPage) {
             totalPages: numPages,
             alignment: 'center',
             onPageClicked: function(e, originalEvent, type, page) {
+
                 e.stopImmediatePropagation();
+
                 var currentTarget = $(e.currentTarget);
+
                 var pages = currentTarget.bootstrapPaginator("getPages");
+
                 currentTarget.bootstrapPaginator("show", page);
+
                 var pages = currentTarget.bootstrapPaginator("getPages");
+
                 displayPage(pages.current, numPages);
+
             }
         };
 
         $('.pagination').bootstrapPaginator(options);
 
         displayPage(1);
-    }    
+        
+        if(numPages === 1) {
+            $(".pagination").hide();
+        }
+        else {
+            $(".pagination").show();
+        }
+    }
+    else {
+        noResults();
+    }
 }
+
+
 
 function getMaxZindex() {
     var currentZIndex = 0, maxZIndex = 0;
@@ -535,6 +611,7 @@ function updateResults(filterResult) {
 
 function noResults() {
     $(".search-result-entry").remove();
+    $(".results-message").html("Sorry!<br />We were unable to find any results matching your criteria.<br />Please try broadening your search.");
     $(".results-message").show();
     $(".pagination").hide();
     $(".showing-results").hide();
@@ -558,7 +635,7 @@ function filterRequest() {
             xhr.setRequestHeader("Content-Type", "application/json");
         },
         success: function(data) {
-            console.log(JSON.stringify(data));
+            //console.log(JSON.stringify(data));
             updateResults(data);
         }
     });
@@ -649,6 +726,10 @@ function constructJSON() {
 
 function scaleSliderValue(v) {
     return Math.round(v * (9/1000) + 5.5);
+}
+
+function unscaleSliderValue(v) {
+    return Math.round((v - 5.5) * (1000/9));
 }
 
 Number.prototype.round = function(places) {
