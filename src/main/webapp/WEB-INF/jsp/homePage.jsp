@@ -9,9 +9,13 @@
         <%@ include file="/WEB-INF/jsp/partials/commonHead.jsp"%>
 
         <spring:url value="/static/js/front.js" var="frontJS" />
+        <spring:url value="/static/js/jquery.geocomplete.js" var="geoCompletePlugin" />
         <script type="text/javascript">
-            $LAB.queueScript("${frontJS}")
-                    .runQueue();
+            $LAB.queueScript("http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&callback=initAutoComplete")
+                .queueScript("${geoCompletePlugin}")        
+                .queueScript("${frontJS}")
+                .runQueue();
+            
         </script>
 
         <title>Of A Feather - Find your new church home today</title>	
@@ -55,7 +59,7 @@
                     <div class="blur"><img src="${blurImage}" /></div>
                     <form action="${searchAction}" method="GET">
                         <div class="input-group">
-                            <input id="search-bar" name="search-bar" type="text" class="form-control button-on-right" autofocus="autofocus" placeholder="Find Churches Near (City, State Zip)">
+                            <input id="search-bar" name="search-bar" type="text" class="form-control button-on-right" autofocus="autofocus" placeholder="Find Churches Near (City and State, Zip, or Neighborhood)">
                             <span id="search-button" class="input-group-btn">
                                 <button type="submit" id="searchButton" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
                             </span>

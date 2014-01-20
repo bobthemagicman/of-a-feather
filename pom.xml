@@ -66,11 +66,10 @@
 		<mongodb.dbName>ofAFeather</mongodb.dbName>
 		<mongodb.username>flockSpring</mongodb.username>
 		<mongodb.password>fl0ckSpr!ng</mongodb.password>
-		<usps.api.username>827FLOCK5747</usps.api.username>
-		<usps.api.password>813BA15RE419</usps.api.password>
-		<mapquest.api.app.key>Fmjtd%7Cluub250rnq%2C85%3Do5-9u8wq0</mapquest.api.app.key>
-		<mapquest.api.url>www.mapquestapi.com</mapquest.api.url>
-		<mapquest.api.maxResults>1</mapquest.api.maxResults>
+		
+		<!-- API dependencies -->
+		<google-api.version>0.15</google-api.version>
+		
 	</properties>
 
 	<profiles>
@@ -85,8 +84,6 @@
 
 				<mongodb.port>27017</mongodb.port>
 				<mongodb.host>localhost</mongodb.host>
-
-				<usps.api.url>http://production.shippingapis.com/ShippingAPITest.dll</usps.api.url>
 
 				<!-- Log Levels -->
 				<com.flockspring.level>DEBUG</com.flockspring.level>
@@ -111,7 +108,6 @@
 				<mongodb.port>33617</mongodb.port>
 				<mongodb.host>ds033617-internal.mongolab.com</mongodb.host>
 
-				<usps.api.url>http://production.shippingapis.com/ShippingAPITest.dll</usps.api.url>
 				<!-- Log Levels -->
 				<com.flockspring.level>ERROR</com.flockspring.level>
 				<org.springframework.level>ERROR</org.springframework.level>
@@ -123,20 +119,25 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>com.google.code.geocoder-java</groupId>
+			<artifactId>geocoder-java</artifactId>
+			<version>${google-api.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>commons-fileupload</groupId>
 			<artifactId>commons-fileupload</artifactId>
 			<version>${commons-fileupload.version}</version>
 		</dependency>
-		            
+
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 			<version>${guava.version}</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.hibernate</groupId>
-		    <artifactId>hibernate-validator</artifactId>
-		    <version>${hibernate-validation.version}</version>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate-validation.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -157,11 +158,6 @@
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>${jackson.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.mindfreez</groupId>
-			<artifactId>usps-client</artifactId>
-			<version>1.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.mongodb</groupId>
@@ -353,24 +349,24 @@
 				</configuration>
 			</plugin>
 			<plugin>
-			    <groupId>org.lesscss</groupId>
-			    <artifactId>lesscss-maven-plugin</artifactId>
-			    <version>1.3.3</version>
-			    <configuration>
-			        <sourceDirectory>${project.basedir}/src/main/webapp/less</sourceDirectory>
-			        <outputDirectory>${project.build.directory}/${project.build.finalName}/resources/css</outputDirectory>
-			        <compress>true</compress>
-			        <includes>
-			            <include>ofafeather.less</include>
-			        </includes>
-			    </configuration>
-			    <executions>
-			        <execution>
-			            <goals>
-			                <goal>compile</goal>
-			            </goals>
-			        </execution>
-			    </executions>
+				<groupId>org.lesscss</groupId>
+				<artifactId>lesscss-maven-plugin</artifactId>
+				<version>1.3.3</version>
+				<configuration>
+					<sourceDirectory>${project.basedir}/src/main/webapp/less</sourceDirectory>
+					<outputDirectory>${project.build.directory}/${project.build.finalName}/resources/css</outputDirectory>
+					<compress>true</compress>
+					<includes>
+						<include>ofafeather.less</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -429,20 +425,6 @@
 					<port>9966</port>
 					<path>/${build.finalName}</path>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>2.6</version>
-				<executions>
-					<execution>
-						<id>install</id>
-						<phase>install</phase>
-						<goals>
-							<goal>sources</goal>
-						</goals>
-					</execution>
-				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

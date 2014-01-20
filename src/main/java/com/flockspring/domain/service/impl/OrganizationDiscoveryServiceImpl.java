@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.flockspring.dataaccess.mongodb.OrganizationRepository;
-import com.flockspring.dataaccess.service.client.MapQuestServiceClient;
-import com.flockspring.dataaccess.service.client.USPSAddressAPIService;
 import com.flockspring.domain.OrganizationFilter;
 import com.flockspring.domain.service.OrganizationDiscoveryService;
 import com.flockspring.domain.types.Address;
@@ -35,10 +33,9 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
     private final int defaultPageSize;
 
     @Autowired
-    public OrganizationDiscoveryServiceImpl(final OrganizationRepository organizationRepository, final USPSAddressAPIService uspsAddressAPIService,
+    public OrganizationDiscoveryServiceImpl(final OrganizationRepository organizationRepository,
             @Value("${com.flockspring.domain.service.organization.default.distance}") final int defaultDistance,
-            @Value("${com.flockspring.domain.service.organization.default.pageSize}") final int defaultPageSize,
-            final MapQuestServiceClient mapQuestServiceClient)
+            @Value("${com.flockspring.domain.service.organization.default.pageSize}") final int defaultPageSize)
     {
         super();
 

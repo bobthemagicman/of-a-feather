@@ -5,28 +5,26 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <c:set var="isTestRegionSearch" value="false" />
         <%-- Common Metadata, scripts, and CSS --%>
         <%@ include file="/WEB-INF/jsp/partials/commonHead.jsp"%>
 
         <spring:url value="/static/js/search.js" var="searchJS" />
         <spring:url value="/static/js/bootstrap-paginator.min.js" var="bootstrapPaginatorJS" />
         <spring:url value="/static/js/mustache.js" var="mustacheJS" />
+        
         <script type="text/javascript">
             $LAB.queueScript("${searchJS}")
-                    .queueScript("https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=initializeMap")
+                    .queueScript("https://maps.googleapis.com/maps/api/js?libraries=places&v=3.exp&sensor=false&callback=initializeMap")
                     .queueScript("${mustacheJS}")
                     .queueScript("${bootstrapPaginatorJS}")
                     .runQueue();
 
-            var showOutsideRegionModal = false;
+            var showOutsideRegionModal = ${not empty error and error eq 'user_search_out_of_region'};
+            
+        	
         </script>
 
-        <c:if test="${!isTestRegionSearch}">
-            <script type="text/javascript">
-                showOutsideRegionModal = true;
-            </script>
-        </c:if>
+        
 
         <title>Of A Feather - Search Results</title>	
     </head>
@@ -622,10 +620,16 @@
             </div><!-- /.left-column -->
 
             <div class="col-sm-8 right-column">
-                <div class="results-message"></div>
-                <div class="showing-results">Showing Results <span class="now-showing">${results.pageStartIndex} - ${results.pageEndIndex}</span> of <span class="total-results">${results.totalNumberOfResults}</span></div>
 
-
+                <c:set var="resultsMessageHidden" value="" />
+                <c:set var="showingResultsHidden" value=" hidden" />
+                <c:if test="${fn:length(results.items) ne 0}">
+                    <c:set var="resultsMessageHidden" value=" hidden" />
+                    <c:set var="showingResultsHidden" value="" />
+                </c:if>
+                <div class="results-message${resultsMessageHidden}">"Sorry!<br />We were unable to find any results matching your criteria.<br />Please try broadening your search."</div>
+                <div class="showing-results${showingResultsHidden}">Showing Results <span class="now-showing">${results.pageStartIndex} - ${results.pageEndIndex}</span> of <span class="total-results">${results.totalNumberOfResults}</span> for <span class="user-search">&#34;${results.userInputQuery}&#34;</span></div>
+                                
                 <div class="search-results">
 
 
@@ -670,8 +674,33 @@
                     </c:forEach>
 
                 </div><!-- end search-results -->
-                <div class="pagination pagination-centered"></div>
-
+                <!-- Pagination -->
+<!--                 <div class="pagination pagination-centered"> -->
+<%--                     <ul data-total-pages="${results.totalNumberOfPages}"> --%>
+<%--                     <c:if test="${!results.firstPage}"> --%>
+<!--                         <li><a title="Go to first page">&lt;&lt;</a></li> -->
+<!--                         <li><a title="Go to previous page">&lt;</a></li> -->
+<%--                     </c:if> --%>
+                        
+<%--                     <c:forEach begin="1" end="${results.pageLoopEnd}" varStatus="p_tracker"> --%>
+<%--                         <c:set var="classInfo" value="" /> --%>
+<%--                         <c:set var="titleInfo" value="" /> --%>
+                        
+<%--                         <c:if test="${p_tracker.index == results.number}"> --%>
+<%--                             <c:set var="classInfo" value=" class=\"active\"" /> --%>
+<%--                             <c:set var="titleInfo" value="Current page is ${p_tracker.index}"/> --%>
+<%--                         </c:if> --%>
+<%--                         <li${classInfo}><a title="${titleInfo}">${p_tracker.index}</a></li> --%>
+<%--                     </c:forEach> --%>
+                    
+<%--                     <c:if test="${!results.lastPage}"> --%>
+<!--                         <li><a title="Go to next page">&gt;</a></li> -->
+<!--                         <li><a title="Go to last page">&gt;&gt;</a></li> -->
+<%--                     </c:if> --%>
+<!--                     </ul> -->
+                    
+<!--                 </div> -->
+               
             </div><!-- /.right-column -->
         </div><!-- /.main -->
 

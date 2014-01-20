@@ -18,6 +18,7 @@ import com.flockspring.domain.types.ServiceDay;
 import com.flockspring.domain.types.ServiceStyle;
 import com.flockspring.ui.model.CongregationSize;
 import com.flockspring.ui.model.ServiceTimeRange;
+import com.google.common.base.Strings;
 
 /**
  * OrganizationFilter.java
@@ -41,29 +42,77 @@ public class OrganizationFilter
     private boolean gayAfirming = false;
     private Point searchPoint = null;
     private Set<ServiceTimeRange> serviceTimes;
+    private String userQuery;
 
+    public OrganizationFilter()
+    {
+        super();
+    }
+    
     public OrganizationFilter(Set<ServiceDay> serviceDays, Set<ServiceTimeRange> serviceTimes, Set<Affiliation> denominations, Set<Language> languages,
             Set<Programs> programs, Set<CongregationSize> congregationSizes, Set<AccessibilitySupport> accessibilitySupports,
-            Set<DressAttire> dressAttires, Set<MusicStyle> musicStyles, Set<ServiceStyle> serviceStyles, boolean gayAfirming, double[] location)
+            Set<DressAttire> dressAttires, Set<MusicStyle> musicStyles, Set<ServiceStyle> serviceStyles, boolean gayAfirming, double[] location,
+            String userQuery)
     {
         super();
         
-        this.serviceDays = serviceDays;
-        this.denominations = denominations;
-        this.languages = languages;
-        this.programs = programs;
-        this.congregationSizes = congregationSizes;
-        this.accessibilitySupports = accessibilitySupports;
-        this.dressAttires = dressAttires;
-        this.musicStyles = musicStyles;
-        this.serviceStyles = serviceStyles;
-        this.gayAfirming = gayAfirming;
-        this.serviceTimes = serviceTimes;
+        if(serviceDays != null)
+        {
+            this.serviceDays = serviceDays;
+        }
+        
+        if(denominations != null)
+        {
+            this.denominations = denominations;
+        }
+        
+        if(languages != null)
+        {
+            this.languages = languages;
+        }
+        
+        if(programs != null)
+        {
+            this.programs = programs;
+        }
+        
+        if(congregationSizes != null)
+        {
+            this.congregationSizes = congregationSizes;
+        }
+        
+        if(accessibilitySupports != null)
+        {
+            this.accessibilitySupports = accessibilitySupports;
+        }
+        
+        if(dressAttires != null)
+        {
+            this.dressAttires = dressAttires;
+        }
+        
+        if(musicStyles != null)
+        {
+            this.musicStyles = musicStyles;
+        }
+        
+        if(serviceStyles != null)
+        {
+            this.serviceStyles = serviceStyles;
+        }
+        
+        if(serviceTimes != null)
+        {
+            this.serviceTimes = serviceTimes;
+        }
         
         if(location != null && location.length == 2)
         {
             this.searchPoint = new Point(location[0], location[1]);
         }
+        
+        this.gayAfirming = gayAfirming;
+        this.userQuery = Strings.emptyToNull(userQuery);
     }
 
     public boolean hasFilteredServiceDays()
@@ -172,6 +221,11 @@ public class OrganizationFilter
         return searchPoint;
     }
 
+    public String getUserQuery()
+    {
+        return userQuery;
+    }
+    
     public Set<ServiceTimeRange> getFilteredServiceTimes()
     {
         return serviceTimes;

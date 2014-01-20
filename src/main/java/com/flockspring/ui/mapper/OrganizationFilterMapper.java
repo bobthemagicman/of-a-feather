@@ -26,7 +26,7 @@ import com.flockspring.ui.model.SearchFilterUICommand;
 public class OrganizationFilterMapper
 {
 
-    public OrganizationFilter map(SearchFilterUICommand filterRequest)
+    public OrganizationFilter map(SearchFilterUICommand filterRequest, String query)
     {
 
         Set<AccessibilitySupport> accessibilitySupports = null;
@@ -42,7 +42,7 @@ public class OrganizationFilterMapper
         OrganizationFilter organizationFilter = new OrganizationFilter(filterRequest.getServiceDays(), filterRequest.getServiceTimes(),
                 filterRequest.getAffiliations(), filterRequest.getLanguages(), filterRequest.getProgramsAndMinistries(),
                 filterRequest.getCongregationSizes(), accessibilitySupports, dressAttires, musicStyles, serviceStyles, filterRequest.isGayAffirming(),
-                filterRequest.getLocation());
+                filterRequest.getLocation(), query);
 
         return organizationFilter;
     }
