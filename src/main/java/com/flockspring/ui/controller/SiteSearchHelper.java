@@ -3,9 +3,14 @@
  */
 package com.flockspring.ui.controller;
 
+import java.util.UUID;
+
 import javax.servlet.http.HttpSession;
 
+import org.springframework.util.StringUtils;
+
 import com.flockspring.domain.OrganizationFilter;
+import com.google.common.base.Strings;
 
 /**
  * SiteSearchHelper.java
@@ -18,6 +23,7 @@ public final class SiteSearchHelper
 {
 
     private static final String ORG_FILTER = "com.flockspring.organization.filters";
+    private static final String USER_KEY = "com.flockspring.ui.session.user.key";
     private static final String SEARCH_PARAM_NAME = "search-bar";
 
     private final HttpSession session;
@@ -29,7 +35,12 @@ public final class SiteSearchHelper
 
     public OrganizationFilter getOrganizationFilterFromSession()
     {
-        OrganizationFilter filter = (OrganizationFilter) session.getAttribute(ORG_FILTER);
+        OrganizationFilter filter = null;
+        Object filterObj = session.getAttribute(ORG_FILTER);
+        if(filterObj != null && filterObj instanceof OrganizationFilter)
+        {
+             filter = (OrganizationFilter) filterObj;
+        }
         
         return filter == null ? new OrganizationFilter() : filter;
     }
@@ -50,6 +61,31 @@ public final class SiteSearchHelper
         StringBuilder query = new StringBuilder("?").append(SEARCH_PARAM_NAME).append("=").append(filter.getUserQuery());
 
         return query.toString();
+    }
+
+    public String createAndSaveUUIDIfNoneExists()
+    {
+        String uuid = getUUID();
+        if(!StringUtils.hasText(uuid))
+        {
+            uuid = UUID.randomUUID().toString();
+        }
+                
+        session.setAttribute(USER_KEY, uuid);
+        
+        return uuid;
+    }
+
+    public String getUUID()
+    {
+        String uuid = null;
+        Object uuidObj =  session.getAttribute(USER_KEY);
+        if(uuidObj != null && uuidObj instanceof String)
+        {
+            uuid = (String)uuidObj;
+        }
+        
+        return Strings.emptyToNull(uuid);
     }
 
 }
