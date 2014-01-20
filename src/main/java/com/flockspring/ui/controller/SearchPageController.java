@@ -12,6 +12,7 @@ import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.geo.GeoPage;
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.flockspring.domain.OrganizationFilter;
 import com.flockspring.domain.service.OrganizationDiscoveryService;
+import com.flockspring.domain.service.UserService;
 import com.flockspring.domain.types.AccessibilitySupport;
 import com.flockspring.domain.types.Address;
 import com.flockspring.domain.types.Affiliation;
@@ -35,6 +37,7 @@ import com.flockspring.domain.types.Programs;
 import com.flockspring.domain.types.ServiceDay;
 import com.flockspring.domain.types.impl.AddressImpl;
 import com.flockspring.domain.types.impl.OrganizationImpl;
+import com.flockspring.domain.types.impl.UpdateEmailImpl;
 import com.flockspring.ui.mapper.CategoryUIMapConverter;
 import com.flockspring.ui.mapper.OrganizationFilterMapper;
 import com.flockspring.ui.mapper.SearchFilterUIModelMapper;
@@ -51,6 +54,7 @@ import com.google.code.geocoder.model.GeocoderAddressComponent;
 import com.google.code.geocoder.model.GeocoderRequest;
 import com.google.code.geocoder.model.GeocoderResult;
 import com.google.code.geocoder.model.LatLng;
+import com.google.common.base.Strings;
 
 /**
  * SearchPageController.java
@@ -63,6 +67,10 @@ import com.google.code.geocoder.model.LatLng;
 @RequestMapping("/search")
 public class SearchPageController
 {
+    /**
+     * 
+     */
+    private static final String USER_KEY = "userKey";
     /**
      * 
      */
@@ -79,7 +87,8 @@ public class SearchPageController
     private final SearchResultsUIModelMapper searchResultsModelMapper;
     private final OrganizationFilterMapper organizationFilterMapper;
     private final SearchFilterUIModelMapper searchFilterUIModelMapper;
-
+    private final UserService userService;
+    
     @Value("#{'${search.allowedZipCodes}'.split(',')}")
     private List<Integer> allowedZipCodeList;
     
@@ -89,7 +98,7 @@ public class SearchPageController
     @Autowired
     public SearchPageController(final OrganizationDiscoveryService organizationDiscoveryService,
             final SearchResultsUIModelMapper searchResultsModelMapper, final OrganizationFilterMapper organizationFilterMapper,
-            final SearchFilterUIModelMapper searchFilterUIModelMapper)
+            final SearchFilterUIModelMapper searchFilterUIModelMapper, final UserService userService)
     {
         super();
 
@@ -97,6 +106,7 @@ public class SearchPageController
         this.searchResultsModelMapper = searchResultsModelMapper;
         this.organizationFilterMapper = organizationFilterMapper;
         this.searchFilterUIModelMapper = searchFilterUIModelMapper;
+        this.userService = userService;
     }
 
     @RequestMapping("/search")
@@ -105,7 +115,7 @@ public class SearchPageController
     {
         SiteSearchHelper searchHelper = new SiteSearchHelper(session);
         OrganizationFilter organizationFilter = searchHelper.getOrganizationFilterFromSession();
-
+        
         if (!StringUtils.hasText(query) && !StringUtils.hasText(organizationFilter.getUserQuery()))
         {
             // return no results scenario here
@@ -127,12 +137,15 @@ public class SearchPageController
 
         Map<String, Object> model = new HashMap<>();
 
+        String uuid = searchHelper.createAndSaveUUIDIfNoneExists();
+        model.put(USER_KEY, uuid);
+        
         final Geocoder geocoder = new Geocoder();
         GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(query).setLanguage("en").getGeocoderRequest();
         GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
 
         List<GeocoderResult> googleResults = geocoderResponse.getResults();
-        if (googleResults.size() > 1 || googleResults.size() == 0)
+        if (googleResults.size() != 1)
         {
             // return error state to search results page asking user to select
             // address
@@ -145,15 +158,20 @@ public class SearchPageController
             return buildSearchModelAndView(model);
         }
 
-        if (!queryInAllowedRegion(googleResults))
+        //There can only be one result in the results list here 
+        GeocoderResult resolvedResult = googleResults.get(0);
+        if (resolvedResult == null || !queryInAllowedRegion(resolvedResult))
         {
             model.put("error", ERROR_STATE_BAD_REGION);
             model.put("results", new SearchResultsUIModel(null, 0, 0L, 0, 0, 37.7749295, -122.4194155, query, 0));
             
+            String resolvedSearchTerm = getCityForSearchTerm(resolvedResult);
+            model.put("errorSearchTerm", StringUtils.hasText(resolvedSearchTerm) ? resolvedSearchTerm : query);
+            
             return buildSearchModelAndView(model);
         }
 
-        Address address = mapGoogleResultToAddress(googleResults.get(0));
+        Address address = mapGoogleResultToAddress(resolvedResult);
 
         GeoPage<OrganizationImpl> geoPageResult;
         if (!StringUtils.hasText(organizationFilter.getUserQuery()) && organizationFilter.getSearchPoint() == null)
@@ -173,6 +191,11 @@ public class SearchPageController
         model.put("paging", createPagingModel(geoPageResult));
 
         return buildSearchModelAndView(model);
+    }
+
+    private String getCityForSearchTerm(GeocoderResult resolvedResult)
+    {
+        return Strings.emptyToNull(findGeometryComponentFromResult(resolvedResult, LOCALITY));
     }
 
     private ModelAndView buildSearchModelAndView(Map<String, Object> model)
@@ -232,18 +255,10 @@ public class SearchPageController
         return new AddressImpl(new StringBuilder(streetNumber).append(route).toString(), "", postalCode, state, city, country, location);
     }
 
-    private boolean queryInAllowedRegion(List<GeocoderResult> googleResults)
+    private boolean queryInAllowedRegion(GeocoderResult result)
     {
-        for (GeocoderResult result : googleResults)
-        {
-            if (this.allowedZipCodeList.contains(findGeometryComponentFromResult(result, POSTAL_CODE))
-                    || this.allowedCityList.contains(findGeometryComponentFromResult(result, LOCALITY)))
-            {
-                return true;
-            }
-        }
-
-        return false;
+            return this.allowedZipCodeList.contains(findGeometryComponentFromResult(result, POSTAL_CODE))
+                    || this.allowedCityList.contains(findGeometryComponentFromResult(result, LOCALITY));
     }
 
     private String findGeometryComponentFromResult(GeocoderResult result, String componentName)
@@ -279,6 +294,23 @@ public class SearchPageController
         return new CategoryUIMapConverter<Programs>().convertCategoryToMap(Programs.values());
     }
 
+    @RequestMapping(value = "/ajax/out-of-region-search")
+    public void saveUserEmail(@RequestParam(value = "email-address") String email, @RequestParam(value = "user-key") String userKey,
+            @RequestParam(value = "user-search-city") String userSearchCity, HttpSession session, HttpServletRequest request)
+    {
+        SiteSearchHelper searchHelper = new SiteSearchHelper(session);
+        String userKeyFromSession = searchHelper.getUUID();
+        
+        if(userKeyFromSession.equals(userKey))
+        {
+            userService.saveUpdateEmail(new UpdateEmailImpl(email, userSearchCity, new DateTime()));
+        }
+        else
+        {
+            //log event here for posterity
+        }
+    }
+    
     @RequestMapping(value = "/ajax/filter-results", method = RequestMethod.POST, headers =
     { "content-type=application/json" })
     public @ResponseBody
