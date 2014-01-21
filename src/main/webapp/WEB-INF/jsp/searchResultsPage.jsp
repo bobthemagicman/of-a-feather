@@ -676,32 +676,36 @@
                     </c:forEach>
 
                 </div><!-- end search-results -->
-                <!-- Pagination -->
-<!--                 <div class="pagination pagination-centered"> -->
-<%--                     <ul data-total-pages="${results.totalNumberOfPages}"> --%>
-<%--                     <c:if test="${!results.firstPage}"> --%>
-<!--                         <li><a title="Go to first page">&lt;&lt;</a></li> -->
-<!--                         <li><a title="Go to previous page">&lt;</a></li> -->
-<%--                     </c:if> --%>
+                <!--  Pagination -->
+                <spring:url value="/search?" var="baseUrl" />
+                <div class="pagination pagination-centered">
+                    <ul data-total-pages="${results.totalNumberOfPages}">
+                    <c:if test="${leftElipsis}">
+                        <li><a title="Go to first page" href="${baseUrl}${pageContext.request.queryString}&page=0">&lt;&lt;</a></li>
+                        <li><a title="Go to previous page" href="${baseUrl}${pageContext.request.queryString}&page=${p_tracker.index - 2}">&lt;</a></li>
+                        <li>...</li>
+                    </c:if>
                         
-<%--                     <c:forEach begin="1" end="${results.pageLoopEnd}" varStatus="p_tracker"> --%>
-<%--                         <c:set var="classInfo" value="" /> --%>
-<%--                         <c:set var="titleInfo" value="" /> --%>
+                    <c:forEach begin="${pageLoopBegin}" end="${pageLoopEnd}" varStatus="p_tracker">
+                        <c:set var="classInfo" value="" />
+                        <c:set var="titleInfo" value="" />
                         
-<%--                         <c:if test="${p_tracker.index == results.number}"> --%>
-<%--                             <c:set var="classInfo" value=" class=\"active\"" /> --%>
-<%--                             <c:set var="titleInfo" value="Current page is ${p_tracker.index}"/> --%>
-<%--                         </c:if> --%>
-<%--                         <li${classInfo}><a title="${titleInfo}">${p_tracker.index}</a></li> --%>
-<%--                     </c:forEach> --%>
+                        <c:if test="${p_tracker.index -1 == results.currentPage}">
+                            <c:set var="classInfo" value=" class=\"active\"" />
+                            <c:set var="titleInfo" value="Current page is ${p_tracker.index}"/>
+                        </c:if>
+                        
+                        <li${classInfo}><a title="${titleInfo}" href="${baseUrl}${pageContext.request.queryString}&page=${p_tracker.index - 1}">${p_tracker.index}</a></li>
+                    </c:forEach>
                     
-<%--                     <c:if test="${!results.lastPage}"> --%>
-<!--                         <li><a title="Go to next page">&gt;</a></li> -->
-<!--                         <li><a title="Go to last page">&gt;&gt;</a></li> -->
-<%--                     </c:if> --%>
-<!--                     </ul> -->
+                    <c:if test="${rightElipsis}">
+                        <li>...</li>
+                        <li><a title="Go to next page" href="${baseUrl}${pageContext.request.queryString}&page=${p_tracker.index}">&gt;</a></li>
+                        <li><a title="Go to last page" href="${baseUrl}${pageContext.request.queryString}&page=${results.totalNumberOfPages -1}">&gt;&gt;</a></li>
+                    </c:if>
+                    </ul>
                     
-<!--                 </div> -->
+                </div>
                
             </div><!-- /.right-column -->
         </div><!-- /.main -->

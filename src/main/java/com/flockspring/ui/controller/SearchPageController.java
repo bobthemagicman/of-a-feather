@@ -188,7 +188,7 @@ public class SearchPageController
 
         SearchResultsUIModel searchResultsUIModel = searchResultsModelMapper.map(geoPageResult, address, request.getLocale(), query);
         model.put("results", searchResultsUIModel);
-        model.put("paging", createPagingModel(geoPageResult));
+        addPagingInfoToModel(geoPageResult, model);
 
         return buildSearchModelAndView(model);
     }
@@ -274,14 +274,46 @@ public class SearchPageController
         return "";
     }
 
-    private int createPagingModel(GeoPage<OrganizationImpl> geoPageResult)
+    private void addPagingInfoToModel(GeoPage<OrganizationImpl> geoPageResult, Map<String, Object> model)
     {
-        if (geoPageResult.getTotalPages() > 9)
+        //TODO: put this in configuration somewhere
+        final int numberOfPagesToDisplay = 10;
+        final int totalNumPages = geoPageResult.getTotalPages();
+        final int current = geoPageResult.getNumber();
+        
+        int pageLoopEnd = totalNumPages;
+        int pageLoopBegin = 0;
+        boolean leftElipsis = false;
+        boolean rightElipsis = false;
+        
+        if(current - numberOfPagesToDisplay >= pageLoopBegin)
         {
-            return 9;
+            if(current - numberOfPagesToDisplay == pageLoopBegin)
+            {
+                leftElipsis = false;
+            }
+            if(current + ((numberOfPagesToDisplay -1)/2) > totalNumPages)
+            {
+                pageLoopEnd = current + ((numberOfPagesToDisplay -1)/2);
+                pageLoopBegin = current - ((numberOfPagesToDisplay -1)/2);
+                leftElipsis = true;
+                rightElipsis = true;
+            }
+            else
+            {
+                pageLoopBegin = totalNumPages - numberOfPagesToDisplay;
+                rightElipsis = false;                
+            }
         }
-
-        return geoPageResult.getTotalPages();
+        else
+        {
+            pageLoopEnd = pageLoopBegin + numberOfPagesToDisplay;
+        }
+        
+        model.put("leftElipsis", leftElipsis);
+        model.put("rightElipsis", rightElipsis);
+        model.put("pageLoopBegin", pageLoopBegin);
+        model.put("pageLoopEnd", pageLoopEnd);
     }
 
     private Map<Category<AccessibilitySupport>, Set<AccessibilitySupport>> getAccessibilitySupportValuesMap()
@@ -301,7 +333,7 @@ public class SearchPageController
         SiteSearchHelper searchHelper = new SiteSearchHelper(session);
         String userKeyFromSession = searchHelper.getUUID();
         
-        if(userKeyFromSession.equals(userKey))
+        if(userKeyFromSession != null && userKeyFromSession.equals(userKey))
         {
             userService.saveUpdateEmail(new UpdateEmailImpl(email, userSearchCity, new DateTime()));
         }
