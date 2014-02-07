@@ -63,7 +63,6 @@
 		<commons-io.version>2.4</commons-io.version>
 
 		<!-- Build Properties -->
-		<mongodb.dbName>ofAFeather</mongodb.dbName>
 		<mongodb.username>flockSpring</mongodb.username>
 		<mongodb.password>fl0ckSpr!ng</mongodb.password>
 		
@@ -79,9 +78,10 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<build.finalName>ofAFeather</build.finalName>
+			    <build.finalName>ofAFeather</build.finalName>
 				<build.environment>dev</build.environment>
 
+                <mongodb.dbName>ofAFeather</mongodb.dbName>
 				<mongodb.port>27017</mongodb.port>
 				<mongodb.host>localhost</mongodb.host>
 
@@ -105,6 +105,7 @@
 				<build.finalName>ROOT</build.finalName>
 				<build.environment>prod</build.environment>
 
+                <mongodb.dbName>flockspring</mongodb.dbName>
 				<mongodb.port>33617</mongodb.port>
 				<mongodb.host>ds033617-internal.mongolab.com</mongodb.host>
 
