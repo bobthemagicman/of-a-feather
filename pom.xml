@@ -8,7 +8,7 @@
 	<packaging>war</packaging>
 	<artifactId>of-a-feather</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
-
+	
 	<properties>
 		<!-- Generic properties -->
 		<java.version>1.7</java.version>
@@ -20,6 +20,8 @@
 		<spring-framework-xml.version>2.1.3.RELEASE</spring-framework-xml.version>
 		<spring-framework-webflow.version>2.3.1.RELEASE</spring-framework-webflow.version>
 		<spring-data-mongodb.version>1.3.0.RELEASE</spring-data-mongodb.version>
+		<spring-security.version>3.2.0.RELEASE</spring-security.version>
+		<spring-social.version>1.1.0.M4</spring-social.version>
 
 		<!-- Java EE / Java SE dependencies -->
 		<jsp.version>2.2</jsp.version>
@@ -65,10 +67,10 @@
 		<!-- Build Properties -->
 		<mongodb.username>flockSpring</mongodb.username>
 		<mongodb.password>fl0ckSpr!ng</mongodb.password>
-		
+
 		<!-- API dependencies -->
 		<google-api.version>0.15</google-api.version>
-		
+
 	</properties>
 
 	<profiles>
@@ -78,10 +80,10 @@
 				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-			    <build.finalName>ofAFeather</build.finalName>
+				<build.finalName>ofAFeather</build.finalName>
 				<build.environment>dev</build.environment>
 
-                <mongodb.dbName>ofAFeather</mongodb.dbName>
+				<mongodb.dbName>ofAFeather</mongodb.dbName>
 				<mongodb.port>27017</mongodb.port>
 				<mongodb.host>localhost</mongodb.host>
 
@@ -105,7 +107,7 @@
 				<build.finalName>ROOT</build.finalName>
 				<build.environment>prod</build.environment>
 
-                <mongodb.dbName>flockspring</mongodb.dbName>
+				<mongodb.dbName>flockspring</mongodb.dbName>
 				<mongodb.port>33617</mongodb.port>
 				<mongodb.host>ds033617-internal.mongolab.com</mongodb.host>
 
@@ -174,6 +176,36 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-mongodb</artifactId>
 			<version>${spring-data-mongodb.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-facebook</artifactId>
+			<version>${spring-social.version}</version>
+		</dependency>
+		<dependency>
+            <groupId>org.springframework.social</groupId>
+            <artifactId>spring-social-security</artifactId>
+            <version>${spring-social.version}</version>
+        </dependency>
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-web</artifactId>
+			<version>${spring-social.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.social</groupId>
+			<artifactId>spring-social-core</artifactId>
+			<version>${spring-social.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tomcat</groupId>
@@ -316,7 +348,7 @@
 	</dependencies>
 
 	<repositories>
-		<repository>
+	   <repository>
 			<id>spring-maven-milesone</id>
 			<url>http://repo.springsource.org/libs-milestone</url>
 		</repository>
