@@ -8,15 +8,18 @@
         <%-- Common Metadata, scripts, and CSS --%>
         <%@ include file="/WEB-INF/jsp/partials/commonHead.jsp"%>
 
+        <spring:url value="/static/js/jquery.geocomplete.js" var="geoCompletePlugin" />
         <spring:url value="/static/css/elastislide.css" var="elastislideCSS" />
         <link rel="stylesheet" type="text/css" href="${elastislideCSS}" />
         
         <spring:url value="/static/js/profile.js" var="profileJS" />
         <spring:url value="/static/js/jquery.elastislide.js" var="elastislideJS" />
         <spring:url value="/static/js/modernizr.custom.17475.js" var="modernizrJS" />
+        
         <script type="text/javascript">
             $LAB.queueScript("${profileJS}")
-                    .queueScript("https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=initializeMap")
+                    .queueScript("https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&callback=initializeMap")
+                    .queueScript("${geoCompletePlugin}")
                     .queueScript("${modernizrJS}")
                     .queueScript("${elastislideJS}")
                     .runQueue();
@@ -77,52 +80,8 @@
                                     <img src="${leftArrowLarge}" />
                                 </div>
                                 <div class="carousel-inner">
-                                    <div class="item active">
-                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image1.jpg" data-thumbnail-page="0" />
-                                    </div>
-                                    <div class="item">
-                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image2.jpg" data-thumbnail-page="0" />
-                                    </div>
-                                    <div class="item">
-                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image3.jpg" data-thumbnail-page="0" />
-                                    </div>
-                                    <div class="item">
-                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image4.jpg" data-thumbnail-page="0" />
-                                    </div>
-                                    <div class="item">
-                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image5.jpg" data-thumbnail-page="0" />
-                                    </div>
-                                    <div class="item">
-                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image6.jpg" data-thumbnail-page="0" />
-                                    </div>
-                                    <div class="item">
-                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image7.jpg" data-thumbnail-page="1" />
-                                    </div>
-                                    <div class="item">
-                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image8.jpg" data-thumbnail-page="1" />
-                                    </div>
-                                    <div class="item">
-                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image9.jpg" data-thumbnail-page="1" />
-                                    </div>
-                                    <div class="item">
-                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image10.jpg" data-thumbnail-page="1" />
-                                    </div>
-                                    <div class="item">
-                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image11.jpg" data-thumbnail-page="1" />
-                                    </div>
-                                    <div class="item">
-                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image12.jpg" data-thumbnail-page="1" />
-                                    </div>
-                                    <div class="item">
-                                        <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image13.jpg" data-thumbnail-page="2" />
-                                    </div>
-                                    <div class="item">
-                                        <div class="video-placeholder" data-video-code="j73gbEFYHTs" data-video-type="YT" data-thumbnail-page="2"></div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="video-placeholder" data-video-code="w9we7h78q7U" data-video-type="YT" data-thumbnail-page="2"></div>
-                                    </div>
-                                    <%--
+                                    <c:choose>
+                                    <c:when test="${not empty organization.multimedia}">
                                     <c:forEach items="${organization.multimedia}" var="multimediaObject" varStatus="index">
                                         <c:set var="class" value="item" />
                                         <c:if test="${index.first}">
@@ -132,15 +91,23 @@
                                         <c:if test="${multimediaObject.video ne true}">
                                             <spring:url value="/static/church-images/${organization.id}/${multimediaObject.path}" var="imgSrc"/>
                                             <div class="item active">
-                                                <img src="${imgSrc}" title="${multimediaObject.title}" alt="${multimediaObject.alt}"/>
+                                                <img src="${imgSrc}" title="${multimediaObject.title}" alt="${multimediaObject.alt}" data-thumbnail-page="0"/>
                                             </div>	                                
                                         </c:if>
 
                                         <c:if test="${multimediaObject.video}">
-                                            <%-- TODO: Video objects go here
+                                            <div class="item">
+		                                        <div class="video-placeholder" data-video-code="j73gbEFYHTs" data-video-type="YT" data-thumbnail-page="2"></div>
+		                                    </div>
                                         </c:if>
                                     </c:forEach>
-                                    --%>        
+                                    </c:when>
+                                    <c:otherwise>
+                                      <div class="item active">
+                                          <img src="http://placehold.it/535x535&text=Church+Images+Not+Provided" title="${multimediaObject.title}" alt="${multimediaObject.alt}" data-thumbnail-page="0"/>
+                                      </div>
+                                    </c:otherwise>
+                                    </c:choose>        
                                 </div>
                                 <div class="media-right-arrow" data-slide="next">
                                     <img src="${rightArrowLarge}" />
@@ -151,44 +118,8 @@
 
                         <ul class="elastislide-list">
                             <li class="photo" data-slide-link="0">
-                                <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image1.jpg" />
-                            </li>
-                            <li class="photo" data-slide-link="1">
-                                <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image2.jpg" />
-                            </li>
-                            <li class="photo" data-slide-link="2">
-                                <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image3.jpg" />
-                            </li>
-                            <li class="photo" data-slide-link="3">
-                                <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image4.jpg" />
-                            </li>
-                            <li class="photo" data-slide-link="4">
-                                <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image5.jpg" />
-                            </li>
-                            <li class="photo" data-slide-link="5">
-                                <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image6.jpg" />
-                            </li>
-                            <li class="photo" data-slide-link="6">
-                                <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image7.jpg" />
-                            </li>
-                            <li class="photo" data-slide-link="7">
-                                <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image8.jpg" />
-                            </li>
-                            <li class="photo" data-slide-link="8">
-                                <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image9.jpg" />
-                            </li>
-                            <li class="photo" data-slide-link="9">
-                                <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image10.jpg" />
-                            </li>
-                            <li class="photo" data-slide-link="10">
-                                <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image11.jpg" />
-                            </li>
-                            <li class="photo" data-slide-link="11">
-                                <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image12.jpg" />
-                            </li>
-                            <li class="photo" data-slide-link="12">
-                                <img src="http://ofafeather-testing.appwebmasters.com/images/cal_designs/sample_images/image13.jpg" />
-                            </li>
+                                <img src="http://placehold.it/100x100&text=Church+Images+Not+Provided" />
+                            </li>                           
                         </ul>
 
                     </div>
@@ -213,8 +144,11 @@
                                         <img src="${infoIcon}" />
                                     </div>
 
+                                    
+                                    
+                                        
                                     <div class="basic-info">
-                                        Founded in ${organization.overview.yearFounded}<br />
+                                        <c:if test="${organization.overview.yearFounded ne 0}">Founded in ${foundedYear}<br /></c:if>
                                         Pastor &gt; <span class="church-leader">${organization.overview.leadPastorName}</span><br />
                                         Size &gt; <spring:message code="${organization.overview.averageServiceCongregationSize.localizedStringCode}" />
                                     </div>
@@ -268,13 +202,16 @@
                                     <img src="${visitingIcon}" />
                                 </div>
                                 <div class="visit-us-text">
-                                    INTERESTED<br />IN VISITING?
+                                     INTERESTED<br />IN VISITING?
                                 </div>
                             </a>
 
                             <div class="visit-us-times">
                                 <img src="${leftArrow}" />
-                                <p>${organization.overview.serviceTimesShort}</p>
+                                <p>
+                                    ${organization.overview.serviceTimeShortString1}<br />
+                                    ${organization.overview.serviceTimeShortString2}
+                                </p>
                             </div>
 
                         </div>
@@ -321,53 +258,94 @@
                 <div class="details">
                     <div class="container">
                         <div class="tab-content">
+                        
+                            <%-- Leader Details Pane--%>
                             <div class="tab-pane active fade in" id="tab1">
-                                <c:forEach items="${organization.leadershipTeam}" var="leader">
+                                <c:forEach items="${organization.leadershipTeam}" var="leader" varStatus="p_tracker">
                                     <div class="pastor-info-container">
                                         <div class="pastor-photo">
                                             <spring:url value="/static/church-images/${organization.id}/${leader.image.path}" var="leaderImgSrc" />
+                                            <c:if test="${empty leader.image.path}">
+                                                <c:set var="leaderImgSrc" value="http://placehold.it/200x200&text=Pastor+Image+Not+Provided" />
+                                            </c:if>
                                             <img src="${leaderImgSrc}" alt="${leader.image.alt}" title="${leader.image.title}"/>
                                         </div>
                                         <div class="pastor-info">
-                                            <h2>${leader.title}</h2>
+                                            <c:set var="leaderTitle" value="${leader.title}" />
+                                            <c:if test="${empty leaderTitle and p_tracker.index eq 0}">
+                                                <c:set var="leaderTitle" value="Lead Pastor" />
+                                            </c:if>
+                                            <c:if test="${empty leaderTitle and p_tracker.index ne 0}">
+                                                <c:set var="leaderTitle" value="Pastor" />
+                                            </c:if>
+                                            <h2>${leaderTitle}</h2>
                                             <h3>${leader.name}</h3>
                                             <br />
-                                            <p>${leader.bio}</p>
+                                            
+                                            <c:choose>
+                                            <c:when test="${empty leader.bio}">
+                                                <p>We apologize but this organization has not provided us with a bio for this leader.</p>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <p>${leader.bio}</p>
+                                            </c:otherwise>
+                                            </c:choose>
+                                            
                                         </div>
                                     </div>
                                     <br />
                                 </c:forEach>
                             </div>
+                            
+                            <%-- Messages Pane--%>
                             <div class="tab-pane fade" id="tab2">
-                                <c:if test="${not empty organization.statements.missionStatement}">
-                                    <h2>Mission Statement</h2>
-                                    <hr />
-                                    <p>${organization.statements.missionStatement}</p>
-                                    <br />
-                                </c:if>
-
-                                <c:if test="${not empty organization.statements.statementOfFaith}">
-                                    <h2>Welcome Message</h2>
-                                    <hr />
-                                    <p>${organization.statements.welcomeMessage}</p>
-                                    <br />
-                                </c:if>
-
-                                <c:if test="${not empty organization.statements.statementOfFaith}">
-                                    <h2>Statement of Faith</h2>
-                                    <hr />
-                                    <p>${organization.statements.statementOfFaith}</p>                 
-                                </c:if>               
+                            
+                            <c:if test="${not empty organization.statements.welcomeMessage}">
+                                <h2>Welcome Message</h2>
+                                <hr />
+                                <p>${organization.statements.welcomeMessage}</p>
+                                <br />                                        
+                            </c:if>
+                                
+                                <h2>Mission Statement</h2>
+                                <hr />
+                            <c:choose>
+                                <c:when test="${not empty organization.statements.missionStatement}">
+                                <p>${organization.statements.missionStatement}</p>
+                                </c:when>
+                                <c:otherwise>
+                                <p class="not-provided">We apologize but this organization has not provided us with their Mission Statement</p>
+                                </c:otherwise>
+                            </c:choose>
+                                <br />
+                            
+                                <h2>Statement of Faith</h2>
+                                <hr />
+                            <c:choose>
+                                <c:when test="${not empty organization.statements.statementOfFaith}">
+                                <p>${organization.statements.statementOfFaith}</p>
+                                </c:when>
+                                <c:otherwise>
+                                <p class="not-provided">We apologize but this organization has not provided us with their Statement of Faith</p>
+                                </c:otherwise>                                        
+                            </c:choose>
                             </div>
+                            
+                            <%-- Service Times Pane--%>
                             <div class="tab-pane fade" id="tab3">
                                 <h2>Service Times</h2>
                                 <hr />
-                                <h3>Sunday</h3>
+                                
+                                <c:forEach items="${organization.serviceDayTimes}" var="entry">
+                                <h3><spring:message code="${entry.key}" /></h3>
                                 <ul>
-                                    <li>9am</li>
-                                    <li>11am (sign language translation available)</li>
-                                    <li>1pm (en Espa&ntilde;ol)
+                                    <c:forEach items="${entry.value}" var="time">
+                                    <li>${time}</li>
+                                    </c:forEach>
                                 </ul>
+                                </c:forEach>
+                                
+                                <c:if test="${not empty organization.servicesOverview.languages}">
                                 <p><span class="label">Languages:</span>&nbsp; 
                                     <c:forEach items="${organization.servicesOverview.languages}" var="lang">
                                         <span class="service-lang">
@@ -382,18 +360,21 @@
                                         </span>,&nbsp;
                                     </c:forEach>
                                 </p>
+                                </c:if>
 
                                 <c:set var="minutes" value="${organization.servicesOverview.durationInMinutes % 60 }" />
                                 <c:set var="hours" value="${(organization.servicesOverview.durationInMinutes - minutes) / 60}"/>
                                 <c:set var="hrString" value="hr" />
                                 <c:if test="${hours > 1}"><c:set var="hrString" value="hrs" /></c:if>
                                 <p><span class="label">Duration:</span> <fmt:formatNumber pattern="#" value="${hours}" /> ${hrString} <c:if test="${minutes ne 0}">${minutes} min</c:if></p>
-                                    <br />
-                                    <p><span class="label">Service Schedule:</span> 
-                                    ${organizaiton.servicesOverview.serviceSchedule}
-                                </p>
-
+                                <br />
+                                
+                                <c:if test="${not empty organization.servicesOverview.serviceSchedule}">
+                                <p><span class="label">Service Schedule:&nbsp;</span>${organization.servicesOverview.serviceSchedule}</p>
+                                </c:if>
                             </div>
+                            
+                            <%-- Atmosphere Pane--%>
                             <div class="tab-pane fade" id="tab4">
                                 <h2>Church Atmosphere</h2>
                                 <c:forEach items="${organization.serviceDetails}" var="serviceDetail">
@@ -479,10 +460,7 @@
                                                         <c:if test="${not empty serviceDetail.musicalInstruments}">
                                                             <div class="musical-instruments-container">
                                                                 <c:forEach items="${serviceDetail.musicalInstruments}" var="instrument">
-                                                                    <spring:message code="${instrument.localizationStringCode}" var="instrumentClass" />
-                                                                    <div class="musical-instrument ${instrumentClass}">
-                                                                        <img src="${violinIcon}" />
-                                                                    </div>
+                                                                    <div class="musical-instrument ${fn:toLowerCase(instrument)}"></div>
                                                                 </c:forEach>
                                                             </div>
                                                         </c:if>
@@ -493,6 +471,8 @@
                                     </div>
                                 </c:forEach>
                             </div>
+                            
+                            <%-- Program Details Pane--%>
                             <div class="tab-pane fade" id="tab5">
                                 <div class="programs-ministries">
 

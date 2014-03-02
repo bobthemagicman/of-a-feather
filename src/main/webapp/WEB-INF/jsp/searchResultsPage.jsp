@@ -12,13 +12,15 @@
         <spring:url value="/static/js/bootstrap-paginator.min.js" var="bootstrapPaginatorJS" />
         <spring:url value="/static/js/mustache.js" var="mustacheJS" />
         <spring:url value="/static/js/jquery.form.min.js" var="jqueryForm"/>
+        <spring:url value="/static/js/jquery.geocomplete.js" var="geoCompletePlugin" />
         
         <script type="text/javascript">
             $LAB.queueScript("${searchJS}")
-                    .queueScript("https://maps.googleapis.com/maps/api/js?libraries=places&v=3.exp&sensor=false&callback=initializeMap")
+                    .queueScript("https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&callback=initializeMap")
+                    .queueScript("${geoCompletePlugin}")
                     .queueScript("${mustacheJS}")
                     .queueScript("${jqueryForm}")
-                    .queueScript("${bootstrapPaginatorJS}")
+                    .queueScript("${bootstrapPaginatorJS}")                            
                     .runQueue();
 
             var showOutsideRegionModal = ${not empty error and error eq 'user_search_out_of_region'};
@@ -640,6 +642,9 @@
 
                     <c:forEach items="${results.items}" var="result" varStatus="p_tracker">
                         <spring:url value="/static/church-images/${result.id}/${result.displayImage.path}" var="imagePath"/>
+                        <c:if test="${empty result.displayImage.path}">
+                            <c:set var="imagePath" value="http://placehold.it/200x200" />   
+                        </c:if>
                         <c:if test="${result.usersFavorite}">
                             <spring:url value="/static/images/site/heart_favorited_icon.png" var="heartIcon" />
                         </c:if>
@@ -677,12 +682,15 @@
 
                 </div><!-- end search-results -->
                 <!--  Pagination -->
+                <c:if test="${results.totalNumberOfPages gt 1}">
                 <spring:url value="/search?" var="baseUrl" />
                 <div class="pagination pagination-centered">
                     <ul data-total-pages="${results.totalNumberOfPages}">
+                    <c:if test="${(results.currentPage + 1) ne pageLoopBegin }">
+                        <li><a title="Go to first page" href="${baseUrl}${pageRequestQueryString}&page=1">&lt;&lt;</a></li>
+                        <li><a title="Go to previous page" href="${baseUrl}${pageRequestQueryString}&page=${results.currentPage}">&lt;</a></li>
+                    </c:if>
                     <c:if test="${leftElipsis}">
-                        <li><a title="Go to first page" href="${baseUrl}${pageContext.request.queryString}&page=0">&lt;&lt;</a></li>
-                        <li><a title="Go to previous page" href="${baseUrl}${pageContext.request.queryString}&page=${p_tracker.index - 2}">&lt;</a></li>
                         <li>...</li>
                     </c:if>
                         
@@ -695,17 +703,21 @@
                             <c:set var="titleInfo" value="Current page is ${p_tracker.index}"/>
                         </c:if>
                         
-                        <li${classInfo}><a title="${titleInfo}" href="${baseUrl}${pageContext.request.queryString}&page=${p_tracker.index - 1}">${p_tracker.index}</a></li>
+                        <li${classInfo}><a title="${titleInfo}" <c:if test="${p_tracker.index -1 != results.currentPage}">href="${baseUrl}${pageRequestQueryString}&page=${p_tracker.index}"</c:if>>${p_tracker.index}</a></li>
                     </c:forEach>
                     
                     <c:if test="${rightElipsis}">
                         <li>...</li>
-                        <li><a title="Go to next page" href="${baseUrl}${pageContext.request.queryString}&page=${p_tracker.index}">&gt;</a></li>
-                        <li><a title="Go to last page" href="${baseUrl}${pageContext.request.queryString}&page=${results.totalNumberOfPages -1}">&gt;&gt;</a></li>
+                    </c:if>
+                    
+                    <c:if test="${results.currentPage + 1 ne pageLoopEnd}">
+                        <li><a title="Go to next page" href="${baseUrl}${pageRequestQueryString}&page=${results.currentPage + 2}">&gt;</a></li>
+                        <li><a title="Go to last page" href="${baseUrl}${pageRequestQueryString}&page=${results.totalNumberOfPages}">&gt;&gt;</a></li>
                     </c:if>
                     </ul>
                     
                 </div>
+	           </c:if>
                
             </div><!-- /.right-column -->
         </div><!-- /.main -->

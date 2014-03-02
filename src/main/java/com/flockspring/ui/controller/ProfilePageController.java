@@ -3,14 +3,13 @@
  */
 package com.flockspring.ui.controller;
 
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.joda.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -20,32 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.flockspring.domain.service.OrganizationDiscoveryService;
-import com.flockspring.domain.types.AccessibilitySupport;
-import com.flockspring.domain.types.Affiliation;
-import com.flockspring.domain.types.DressAttire;
 import com.flockspring.domain.types.GlobalRegionType;
-import com.flockspring.domain.types.Language;
-import com.flockspring.domain.types.MusicStyle;
 import com.flockspring.domain.types.Organization;
-import com.flockspring.domain.types.Programs;
 import com.flockspring.domain.types.Region;
-import com.flockspring.domain.types.ServiceDay;
-import com.flockspring.domain.types.ServiceDetailsImpl;
-import com.flockspring.domain.types.ServiceStyle;
-import com.flockspring.domain.types.TimeAndDay;
-import com.flockspring.domain.types.impl.AddressImpl;
-import com.flockspring.domain.types.impl.AgeDemographics;
-import com.flockspring.domain.types.impl.AtmosphereImpl;
-import com.flockspring.domain.types.impl.LeaderImpl;
-import com.flockspring.domain.types.impl.LeaderRole;
-import com.flockspring.domain.types.impl.MultimediaObjectImpl;
-import com.flockspring.domain.types.impl.MusicalInstruments;
-import com.flockspring.domain.types.impl.OrganizationImpl;
-import com.flockspring.domain.types.impl.SocialMediaImpl;
 import com.flockspring.ui.exception.PageNotFoundException;
 import com.flockspring.ui.mapper.OrganizationUIModelMapper;
-import com.flockspring.ui.model.CongregationSize;
-import com.google.common.collect.Sets;
 
 @Controller
 @RequestMapping("/church-profile")
@@ -92,24 +70,25 @@ public class ProfilePageController
 //        Set<LeaderImpl> leadershipTeam = Sets.newTreeSet(Arrays.asList(leader1, leader2));
 //        
 //        Set<Programs> programsOffered = Sets.newTreeSet(Arrays.asList(Programs.ADDICTION_RECOVERY_COUNSELING, Programs.AGE_GROUPS));
-//        Set<AccessibilitySupport> accessabilitysupport = Sets.newTreeSet(Arrays.asList(AccessibilitySupport.WHEELCHAIR_ACCESS, AccessibilitySupport.CARPOOL));
+//        Set<AccessibilitySupport> accessibilitysupport = Sets.newTreeSet(Arrays.asList(AccessibilitySupport.WHEELCHAIR_ACCESS, AccessibilitySupport.CARPOOL));
 //        
 //        OrganizationImpl organization = new OrganizationImpl(null, 1999, "test save time", "mission statement", "statement of faith", 
 //                "welcome Message", address, atmosphere, socialMedia, Affiliation.NONDENOMINATIONAL, Affiliation.NONE, null, multimedia, 
-//                leadershipTeam, programsOffered, accessabilitysupport);
+//                leadershipTeam, programsOffered, accessibilitysupport);
 //        
 //        organizationDiscoveryService.saveOrganization(organization);
 //    }
     
     @RequestMapping("/{statRegionName}/{cityRegionName}/{neighborhoodRegionName}/{organizationName}")
     public ModelAndView renderOrganizationProfileByName(@PathVariable String organizationName, @PathVariable String stateRegionName,
-            @PathVariable String cityRegionName, @PathVariable String neighborhoodRegionName, HttpSession session)
+            @PathVariable String cityRegionName, @PathVariable String neighborhoodRegionName, HttpSession session,
+            HttpServletRequest request)
     {
         // TODO: sanitize organizationId
         Organization organization = organizationDiscoveryService.getOrganizationByRegionAndOrganizationNames(organizationName, stateRegionName,
                 cityRegionName, neighborhoodRegionName);
 
-        return buildModelAndView(organization, -1, session);
+        return buildModelAndView(organization, -1, session, request.getLocale());
     }
 
     @RequestMapping("/{stateRegionName}/{cityRegionName}/{organizationName}")
@@ -123,21 +102,23 @@ public class ProfilePageController
         return null;
     }
 
-    private ModelAndView buildModelAndView(Organization organization, double distance, HttpSession session)
+    private ModelAndView buildModelAndView(Organization organization, double distance, HttpSession session, Locale locale)
     {
         SiteSearchHelper searchHelper = new SiteSearchHelper(session);
         
         Map<String, Object> model = new HashMap<>();
-        model.put("organization", organizationUIModelMapper.map(organization, distance));
+        model.put("organization", organizationUIModelMapper.map(organization, distance, locale));
         model.put("hasPreviousSearch", searchHelper.hasPreviousSearch());
         model.put("searchQuery", searchHelper.getSearchQuery());
+        model.put("navSearchEnabled", true);
         
         return new ModelAndView(VIEW_NAME, model);
     }
 
     @RequestMapping("/{organizationId}")
     public ModelAndView renderOrganizationProfileById(@PathVariable String organizationId, 
-            @RequestParam(value = "dist", required = false) String distance, HttpSession session)
+            @RequestParam(value = "dist", required = false) String distance, HttpSession session, 
+            HttpServletRequest request)
     {
         double dist = -1;
         if(StringUtils.hasText(distance))
@@ -156,7 +137,7 @@ public class ProfilePageController
 
         throwExceptionIfOrganizationIsNull(organization, organizationId);
 
-        return buildModelAndView(organization, dist, session); 
+        return buildModelAndView(organization, dist, session, request.getLocale()); 
     }
 
 //    private ModelAndView buildRedirectUrl(Organization organization)

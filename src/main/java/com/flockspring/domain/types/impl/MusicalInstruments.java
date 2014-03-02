@@ -14,8 +14,9 @@ import com.flockspring.ui.model.LocalizedEnum;
  */
 public enum MusicalInstruments implements LocalizedEnum
 {
-    CHIOR("musical.instruments.chior"),
+    CHOIR("musical.instruments.chior"),
     PIANO("musical.instruments.piano"),
+    KEYBOARD("musical.instruments.keyboard"),
     ORGAN("musical.instruments.organ"),
     VIOLIN("musical.instruments.violin"),
     ELECTRIC_GUITAR("musical.instruments.electric.guitar"),

@@ -5,6 +5,8 @@ package com.flockspring.ui.model;
 
 import java.util.Set;
 
+import org.springframework.data.mongodb.core.geo.Point;
+
 import com.flockspring.domain.types.AccessibilitySupport;
 import com.flockspring.domain.types.Affiliation;
 import com.flockspring.domain.types.Language;
@@ -137,6 +139,11 @@ public class SearchFilterUICommand
         return gayAfirming;
     }
 
+    public double[] getLocation()
+    {
+        return location;
+    }
+    
     public void setGayAfirming(boolean gayAfirming)
     {
         this.gayAfirming = gayAfirming;
@@ -206,9 +213,19 @@ public class SearchFilterUICommand
     {
         this.atmosphereDressAttireCeiling = atmosphereDressAttireCeiling;
     }
-
-    public double[] getLocation()
+    
+    public void setLocation(double[] location)
     {
-        return location;
+        this.location = location;
+    }
+
+    public Point getPoint()
+    {
+        if(location != null && location.length == 2 && location[0] != 0 && location[1] != 0)
+        {
+            return new Point(location[0], location[1]);
+        }
+        
+        return null;
     }
 }

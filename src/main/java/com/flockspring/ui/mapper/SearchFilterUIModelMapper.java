@@ -36,8 +36,8 @@ public class SearchFilterUIModelMapper
                 getAtmosphereMusicSyleFloor(organizationFilter.getFilteredMusicStyle()),
                 getAtmosphereMusicSyleCeiling(organizationFilter.getFilteredMusicStyle()),
                 getAtmosphereDressAttireFloor(organizationFilter.getFilteredDressAttire()),
-                getAtmosphereDressAttireCeiling(organizationFilter.getFilteredDressAttire()), organizationFilter.isGayAfirming(), organizationFilter
-                        .getSearchPoint().asArray(), organizationFilter.getFilteredAccessibilitySupport());
+                getAtmosphereDressAttireCeiling(organizationFilter.getFilteredDressAttire()), organizationFilter.isGayAfirming(), 
+                organizationFilter.getSearchPoint().asArray(), organizationFilter.getFilteredAccessibilitySupport());
     }
 
     private Integer getAtmosphereMusicSyleFloor(Set<MusicStyle> filteredMusicStyle)

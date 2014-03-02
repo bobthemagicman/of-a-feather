@@ -16,6 +16,7 @@ public enum Affiliation implements LocalizedEnum
 //    BRETHREN("affiliation.brethren"),
 //    BIBLE_STUDENT_GROUPS("affiliation.bible.student.groups"),
     CHRISTIAN_SCIENCE("affiliation.christian.science"),
+    CHRISTIAN_AND_MISSIONARY_ALLIANCE("affiliation.christian.and.missionary.alliance"),
 //    CONGREGATIONALIST("affiliation.congregationalist"),
     CATHOLIC("affiliation.catholicism"),
 //    CALVIN("affiliation.calvinism"),
@@ -24,6 +25,7 @@ public enum Affiliation implements LocalizedEnum
     DISCIPLES_OF_CHRIST("affiliation.disciples.of.christ"),
 //    ESOTERIC("affiliation.esotericism"),
 //    EASTERN_ORTHODOX("affiliation.eastern.orthodox"),
+    EVANGELICAL_COVENANT("affiliation.evangelical.covenant"),
     FOURSQUARE("affiliation.foursquare"),
     JEHOVAS_WITNESS("affiliation.jehovas.witness"),
     LUTHERAN("affiliation.lutheranism"),
@@ -51,8 +53,10 @@ public enum Affiliation implements LocalizedEnum
     SEVENTH_DAY_ADVENTIST("affiliation.seventh.day.adventist"),
 //    UNITED_AND_UNITING("affiliation.united.and.uniting"),
     UNITARIAN("affiliation.unitarian"),
-    UNITED_CHURCH_OF_CHRIST("affiliation.united.church.of.christ");
+    UNITED_CHURCH_OF_CHRIST("affiliation.united.church.of.christ"),
 
+    SOUTHERN_BAPTIST("affiliation.southern.baptist", BAPTIST),
+    AMERICAN_BAPTIST("affiliation.american.baptist", BAPTIST);
 
     private String localizationCode;
     private Affiliation[] affiliations;

@@ -5,13 +5,15 @@ package com.flockspring.ui.model;
 
 import java.util.Set;
 
+import org.joda.time.LocalDateTime;
+
 import com.flockspring.domain.types.DressAttire;
 import com.flockspring.domain.types.MusicStyle;
+import com.flockspring.domain.types.ServiceDay;
 import com.flockspring.domain.types.ServiceStyle;
 import com.flockspring.domain.types.impl.AgeDemographics;
 import com.flockspring.domain.types.impl.MusicalInstruments;
 import com.google.common.collect.ComparisonChain;
-import com.google.common.collect.Ordering;
 
 /**
  * ServiceDetailUIModel.java
@@ -28,9 +30,13 @@ public class ServiceDetailUIModel implements Comparable<ServiceDetailUIModel>
     private final ServiceStyle serviceStyle;
     private final AgeDemographics ageDemographics;
     private final DressAttire dressAttire;
+    
+    //these are for ordering only
+    private final ServiceDay serviceDay;
+    private final LocalDateTime serviceTime;
        
     public ServiceDetailUIModel(String serviceName, Set<MusicalInstruments> musicalInstruments, MusicStyle musicStyle, ServiceStyle serviceStyle,
-            AgeDemographics ageDemographics, DressAttire dressAttire)
+            AgeDemographics ageDemographics, DressAttire dressAttire, ServiceDay serviceDay, LocalDateTime serviceTime)
     {
         super();
         this.serviceName = serviceName;
@@ -39,6 +45,8 @@ public class ServiceDetailUIModel implements Comparable<ServiceDetailUIModel>
         this.serviceStyle = serviceStyle;
         this.ageDemographics = ageDemographics;
         this.dressAttire = dressAttire;
+        this.serviceDay = serviceDay;
+        this.serviceTime = serviceTime;
     }
 
     public String getServiceName()
@@ -76,11 +84,8 @@ public class ServiceDetailUIModel implements Comparable<ServiceDetailUIModel>
     {
         ServiceDetailUIModel left = this;
         return ComparisonChain.start()
-                .compare(left.getServiceName(), right.getServiceName(), Ordering.natural().nullsFirst())
-                .compare(left.getAgeDemographics(), right.getAgeDemographics(), Ordering.natural().nullsFirst())
-                .compare(left.getDressAttire(), right.getDressAttire(), Ordering.natural().nullsFirst())
-                .compare(left.getMusicStyle(), right.getMusicStyle(), Ordering.natural().nullsFirst())
-                .compare(left.getServiceStyle(), right.getServiceStyle(), Ordering.natural().nullsFirst())
+                .compare(left.serviceDay, right.serviceDay)
+                .compare(left.serviceTime, right.serviceTime)
                 .result();
     }
 }

@@ -6,7 +6,6 @@ package com.flockspring.domain.service;
 import org.springframework.data.mongodb.core.geo.GeoPage;
 
 import com.flockspring.domain.OrganizationFilter;
-import com.flockspring.domain.types.Address;
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.Region;
 import com.flockspring.domain.types.impl.OrganizationImpl;
@@ -30,9 +29,7 @@ public interface OrganizationDiscoveryService {
     
     Organization getOrganizationByRegionAndOrganizationNames(String organizationName, String stateRegionName, String cityRegionName);
 
-    GeoPage<OrganizationImpl> searchForOrganizations(Address address, int page);
-
-    GeoPage<OrganizationImpl> getFilteredOrganizations(OrganizationFilter filterRequest);
+    GeoPage<OrganizationImpl> getFilteredOrganizations(OrganizationFilter filterRequest, int page);
 
     void saveOrganization(OrganizationImpl organization);
         

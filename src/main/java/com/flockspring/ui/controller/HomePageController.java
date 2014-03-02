@@ -24,7 +24,7 @@ public class HomePageController {
 	@RequestMapping("/")
 	public ModelAndView renderDefaultHomePage() {
 	    Map<String, Object> model = new HashMap<String, Object>();
-	    model.put("hideSearchBar", true);
+	    model.put("navSearchEnabled", false);
 	    
 	    ModelAndView mav = new ModelAndView("homePage", model);
 	  

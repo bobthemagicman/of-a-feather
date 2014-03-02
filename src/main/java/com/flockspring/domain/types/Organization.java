@@ -20,8 +20,6 @@ public interface Organization
 
     Set<Programs> getProgramsOffered();
     
-    Set<AccessibilitySupport> getAccessibilitySupport();
-    
     Affiliation getPrimaryAffiliation();
 
     Affiliation getDenomination();
@@ -43,4 +41,8 @@ public interface Organization
     Address getAddress();
 
     Atmosphere getAtmosphere();
+
+    Set<AccessibilitySupport> getAccessibilitySupport();
+
+    String getExtraServiceDetails();
 }

@@ -3,6 +3,8 @@
  */
 package com.flockspring.domain.types;
 
+import java.util.List;
+
 import com.flockspring.domain.types.impl.LeaderRole;
 
 
@@ -28,7 +30,7 @@ public interface Leader
 
     boolean isPrimaryContact();
 
-    LeaderRole getLeaderRole();
+    List<LeaderRole> getLeaderRoles();
 
     int getYearStarted();
 

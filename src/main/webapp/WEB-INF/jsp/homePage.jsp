@@ -11,7 +11,7 @@
         <spring:url value="/static/js/front.js" var="frontJS" />
         <spring:url value="/static/js/jquery.geocomplete.js" var="geoCompletePlugin" />
         <script type="text/javascript">
-            $LAB.queueScript("http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&callback=initAutoComplete")
+            $LAB.queueScript("https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&callback=initAutoComplete")
                 .queueScript("${geoCompletePlugin}")        
                 .queueScript("${frontJS}")
                 .runQueue();
