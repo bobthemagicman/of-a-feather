@@ -22,6 +22,7 @@ public class ServiceOverviewUIModel
     public ServiceOverviewUIModel(int durationInMinutes, Set<LanguageUIModel> languages, String serviceSchedule)
     {
         super();
+        
         this.durationInMinutes = durationInMinutes;
         this.languages = languages;
         this.serviceSchedule = serviceSchedule;

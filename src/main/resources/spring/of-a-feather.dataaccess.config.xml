@@ -20,7 +20,7 @@
 	<!-- MongoDB Configuration -->
 	<mongo:repositories base-package="com.flockspring.dataaccess.mongodb" />
 	<mongo:db-factory dbname="${mongodb.dbName}" host="${mongodb.host}"
-		username="${mongodb.username}" password="${mongodb.password}" />
+		username="${mongodb.username}" password="${mongodb.password}" port="${mongodb.port}" />
 
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />

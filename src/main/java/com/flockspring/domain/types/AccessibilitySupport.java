@@ -14,16 +14,16 @@ import com.flockspring.ui.model.LocalizedEnum;
  */
 public enum AccessibilitySupport implements LocalizedEnum, Category<AccessibilitySupport>
 {
-    SPECIAL_NEEDS(null, "accessability.support.special.needs"),
-    TRANSPORTATION(null,"accessability.support.transportation"),
+    SPECIAL_NEEDS(null, "accessibility.support.special.needs"),
+    TRANSPORTATION(null,"accessibility.support.transportation"),
     
-    WHEELCHAIR_ACCESS(SPECIAL_NEEDS, "accessability.support.wheelchair.access"),
-    DEAF_TRANSLATOR(SPECIAL_NEEDS, "accessability.support.deaf.translator"),
-    HEARING_LOOP(SPECIAL_NEEDS, "accessability.support.hearing.loop"),
-    PARKING_LOT(TRANSPORTATION, "accessability.support.parking.lot"),
-    STREET_PARKING(TRANSPORTATION, "accessability.support.street.parking"),
-    PARKING_GARAGE(TRANSPORTATION, "accessability.support.parking.garage"),
-    CARPOOL(TRANSPORTATION, "accessability.support.carpool");
+    WHEELCHAIR_ACCESS(SPECIAL_NEEDS, "accessibility.support.wheelchair.access"),
+    DEAF_TRANSLATOR(SPECIAL_NEEDS, "accessibility.support.deaf.translator"),
+    HEARING_LOOP(SPECIAL_NEEDS, "accessibility.support.hearing.loop"),
+    PARKING_LOT(TRANSPORTATION, "accessibility.support.parking.lot"),
+    STREET_PARKING(TRANSPORTATION, "accessibility.support.street.parking"),
+    PARKING_GARAGE(TRANSPORTATION, "accessibility.support.parking.garage"),
+    CARPOOL(TRANSPORTATION, "accessibility.support.carpool");
     
     private String localizationStringCode;
     private AccessibilitySupport category;

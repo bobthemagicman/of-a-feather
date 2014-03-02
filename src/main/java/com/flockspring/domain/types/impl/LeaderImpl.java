@@ -4,6 +4,7 @@
 package com.flockspring.domain.types.impl;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -26,7 +27,7 @@ public class LeaderImpl implements Leader, Comparable<Leader>, Serializable
     private String name;
     private String bio;
     private String title;
-    private LeaderRole leaderRole;
+    private List<LeaderRole> leaderRoles;
     private MultimediaObjectImpl image;
     private boolean primaryContact;
     private boolean primaryLeader;
@@ -39,7 +40,7 @@ public class LeaderImpl implements Leader, Comparable<Leader>, Serializable
         super();
     }
     
-    public LeaderImpl(String name, String bio, String title, LeaderRole leaderRole, MultimediaObjectImpl image, boolean primaryContact,
+    public LeaderImpl(String name, String bio, String title, List<LeaderRole> leaderRoles, MultimediaObjectImpl image, boolean primaryContact,
             boolean primaryLeader, String emailAddress, String phoneNumber, int yearStarted)
     {
         super();
@@ -47,7 +48,7 @@ public class LeaderImpl implements Leader, Comparable<Leader>, Serializable
         this.name = name;
         this.bio = bio;
         this.title = title;
-        this.leaderRole = leaderRole;
+        this.leaderRoles = leaderRoles;
         this.image = image;
         this.primaryContact = primaryContact;
         this.primaryLeader = primaryLeader;
@@ -93,9 +94,9 @@ public class LeaderImpl implements Leader, Comparable<Leader>, Serializable
     }
     
     @Override
-    public LeaderRole getLeaderRole()
+    public List<LeaderRole> getLeaderRoles()
     {
-        return leaderRole;
+        return leaderRoles;
     }
 
     @Override
@@ -116,9 +117,9 @@ public class LeaderImpl implements Leader, Comparable<Leader>, Serializable
         return yearStarted;
     }
 
-    public void setLeaderRole(LeaderRole leaderRole)
+    public void setLeaderRole(List<LeaderRole> leaderRole)
     {
-        this.leaderRole = leaderRole;
+        this.leaderRoles = leaderRole;
     }
 
     public void setEmailAddress(String emailAddress)

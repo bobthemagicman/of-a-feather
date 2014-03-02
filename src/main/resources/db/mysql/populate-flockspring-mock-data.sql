@@ -11,7 +11,7 @@ var org1 = {address: {street1: '9900 Willows RD NE', city: 'Redmond', postalCode
  subDenomination: 'NONE',
  name: 'Overlake Christian Church',
  programs: ['INFANT_CARE', 'TODDLER_CARE', 'SUNDAY_SCHOOL', 'BIBLE_STUDY', 'ADULT_EDUCATION', 'SPIRITUAL_CLASSES', 'PRE_SCHOOL', 'PRIMARY_SCHOOL', 'SECONDARY_SCHOOL', 'GRADUATE_STUDIES', 'CHILDRENS_GROUPS', 'MIDDLE_SCHOOL_GROUP', 'HIGH_SCHOOL_GROUP', 'YOUNG_ADULT_GROUP', 'ADULT_GROUP', 'MENS_GROUP', 'WOMENS_GROUP'],
- accessabilityNeeds: ['WHEEL_CHAIR_ACCESS, DEAF_TRANSLATOR, PARKING_LOG'],
+ accessibilityNeeds: ['WHEEL_CHAIR_ACCESS, DEAF_TRANSLATOR, PARKING_LOG'],
  description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vulputate at justo quis molestie. Cras suscipit sagittis rutrum. In id libero quis urna consequat bibendum. Duis sed eros et ligula vestibulum congue. Praesent volutpat nibh eget ipsum tempor varius.',
  websiteUrl: 'http://www.occ.org',
  facebookUrl: 'https://www.facebook.com/OverlakeChristianChurch',

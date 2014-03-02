@@ -38,6 +38,7 @@ public class OrganizationImpl implements Organization, Serializable
     private String missionStatement;
     private String statementOfFaith;
     private String welcomeMessage;
+    private String extraServiceDetails;
 
     private AddressImpl address;
     private AtmosphereImpl atmosphere;
@@ -49,12 +50,12 @@ public class OrganizationImpl implements Organization, Serializable
     private Set<MultimediaObjectImpl> multimedia;
     private Set<LeaderImpl> leadershipTeam;
     private Set<Programs> programsOffered;
-    private Set<AccessibilitySupport> accessabilitysupport;
+    private Set<AccessibilitySupport> accessibilitySupport;
 
     public OrganizationImpl(String id, Integer yearFounded, String name, String missionStatement, String statementOfFaith, String welcomeMessage,
             AddressImpl address, AtmosphereImpl atmosphere, SocialMediaImpl socialMedia, Affiliation denomination, Affiliation subDenomination,
             Affiliation primaryAffiliation, Set<MultimediaObjectImpl> multimedia, Set<LeaderImpl> leadershipTeam,
-            Set<Programs> programsOffered, Set<AccessibilitySupport> accessabilitysupport)
+            Set<Programs> programsOffered, Set<AccessibilitySupport> accessibilitySupport, String extraServiceDetails)
     {
         super();
         
@@ -73,7 +74,8 @@ public class OrganizationImpl implements Organization, Serializable
         this.multimedia = multimedia;
         this.leadershipTeam = leadershipTeam;
         this.programsOffered = programsOffered;
-        this.accessabilitysupport = accessabilitysupport;
+        this.accessibilitySupport = accessibilitySupport;
+        this.extraServiceDetails = extraServiceDetails;
     }
 
     public OrganizationImpl()
@@ -96,7 +98,7 @@ public class OrganizationImpl implements Organization, Serializable
     @Override
     public Integer getYearFounded()
     {
-        return yearFounded;
+        return yearFounded == null ? 0 : yearFounded;
     }
 
     @Override
@@ -184,6 +186,23 @@ public class OrganizationImpl implements Organization, Serializable
         return this.atmosphere;
     }
 
+    @Override
+    public String getExtraServiceDetails()
+    {
+        return extraServiceDetails;
+    }
+
+    @Override
+    public Set<AccessibilitySupport> getAccessibilitySupport()
+    {
+        return accessibilitySupport;
+    }
+
+    public void setId(String id)
+    {
+        this.id = id;
+    }
+
     public void setYearFounded(Integer yearFounded)
     {
         this.yearFounded = yearFounded;
@@ -204,9 +223,29 @@ public class OrganizationImpl implements Organization, Serializable
         this.statementOfFaith = statementOfFaith;
     }
 
+    public void setWelcomeMessage(String welcomeMessage)
+    {
+        this.welcomeMessage = welcomeMessage;
+    }
+
+    public void setExtraServiceDetails(String extraServiceDetails)
+    {
+        this.extraServiceDetails = extraServiceDetails;
+    }
+
     public void setAddress(AddressImpl address)
     {
         this.address = address;
+    }
+
+    public void setAtmosphere(AtmosphereImpl atmosphere)
+    {
+        this.atmosphere = atmosphere;
+    }
+
+    public void setSocialMedia(SocialMediaImpl socialMedia)
+    {
+        this.socialMedia = socialMedia;
     }
 
     public void setDenomination(Affiliation denomination)
@@ -234,14 +273,14 @@ public class OrganizationImpl implements Organization, Serializable
         this.leadershipTeam = leadershipTeam;
     }
 
-    public void setProgramsOffered(Set<Programs> programmsOffered)
+    public void setProgramsOffered(Set<Programs> programsOffered)
     {
-        this.programsOffered = programmsOffered;
+        this.programsOffered = programsOffered;
     }
 
-    public void setAccessabilitysupport(Set<AccessibilitySupport> accessabilitysupport)
+    public void setAccessibilitysupport(Set<AccessibilitySupport> accessibilitySupport)
     {
-        this.accessabilitysupport = accessabilitysupport;
+        this.accessibilitySupport = accessibilitySupport;
     }
 
     @Override
@@ -260,11 +299,5 @@ public class OrganizationImpl implements Organization, Serializable
     public String toString()
     {
         return ToStringBuilder.reflectionToString(this);
-    }
-
-    @Override
-    public Set<AccessibilitySupport> getAccessibilitySupport()
-    {
-        return accessabilitysupport;
     }
 }

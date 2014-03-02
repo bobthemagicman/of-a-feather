@@ -105,8 +105,8 @@
 				<build.finalName>ROOT</build.finalName>
 				<build.environment>prod</build.environment>
 
-				<mongodb.port>33617</mongodb.port>
-				<mongodb.host>ds033617-internal.mongolab.com</mongodb.host>
+				<mongodb.port>27698</mongodb.port>
+				<mongodb.host>ds027698-internal.mongolab.com</mongodb.host>
 
 				<!-- Log Levels -->
 				<com.flockspring.level>ERROR</com.flockspring.level>
@@ -353,7 +353,7 @@
 				<artifactId>lesscss-maven-plugin</artifactId>
 				<version>1.3.3</version>
 				<configuration>
-					<sourceDirectory>${project.basedir}/src/main/webapp/less</sourceDirectory>
+					<sourceDirectory>${project.basedir}/src/main/resources/less</sourceDirectory>
 					<outputDirectory>${project.build.directory}/${project.build.finalName}/resources/css</outputDirectory>
 					<compress>true</compress>
 					<includes>
@@ -374,7 +374,7 @@
 				<version>2.3</version>
 				<configuration>
 					<nonFilteredFileExtensions>
-						<nonFilteredFileExtension>pdf,svg,css</nonFilteredFileExtension>
+						<nonFilteredFileExtension>pdf,svg,css,jsp,png,jpg,gif</nonFilteredFileExtension>
 					</nonFilteredFileExtensions>
 					<webResources>
 						<resource>
@@ -382,6 +382,7 @@
 							<targetPath>WEB-INF/classes</targetPath>
 							<include>**/**/*.properties</include>
 							<exclude>spring/*</exclude>
+							<exclude>less</exclude>
 							<filtering>true</filtering>
 						</resource>
 					</webResources>
