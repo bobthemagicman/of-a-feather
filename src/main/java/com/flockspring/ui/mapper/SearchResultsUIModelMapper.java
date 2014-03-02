@@ -56,7 +56,7 @@ public class SearchResultsUIModelMapper
 
     public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, SearchFilterUICommand filterRequest, Locale locale)
     {
-        AddressImpl address = new AddressImpl("", "", "", "", "", "", filterRequest.getLocation());
+        AddressImpl address = new AddressImpl("", "", "", "", "", "", new double[]{filterRequest.getPoint().getX(), filterRequest.getPoint().getY()});
        
         return map(geoPageResult, address, filterRequest, locale, "");
     }

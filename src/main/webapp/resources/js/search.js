@@ -43,8 +43,6 @@ function initializeSearchPage() {
     initializeTooltips();
     initializeFavorites();
     initializeFilterFunctions();
-    paginate(resultsPerPage);
-
 }
 
 function initializeFilterFunctions() {
@@ -457,6 +455,7 @@ var marker = new Array();
 function initializeMap() {
 
   $("#map-canvas").height($(".left-column").width());
+  $("#search-bar").geocomplete({country: 'us'});
 
   createMap();
 

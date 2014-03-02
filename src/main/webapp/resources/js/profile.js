@@ -4,11 +4,8 @@ var thumbnailsCarousel;
 $(document).ready(function() {
    
     initializeCarousels();
-   
     initializeSliders();
-   
     initializeVideoThumbnails();
-    
     initializeTooltips();
     
 });
@@ -88,7 +85,7 @@ var map;
 var marker;
 
 function initializeMap() {
-    
+  $("#search-bar").geocomplete({country: 'us'});  
   var lat, long;
   
   lat = $(".profile").attr("data-latitude");

@@ -42,7 +42,7 @@ public class OrganizationFilterMapper
         OrganizationFilter organizationFilter = new OrganizationFilter(filterRequest.getServiceDays(), filterRequest.getServiceTimes(),
                 filterRequest.getAffiliations(), filterRequest.getLanguages(), filterRequest.getProgramsAndMinistries(),
                 filterRequest.getCongregationSizes(), accessibilitySupports, dressAttires, musicStyles, serviceStyles, filterRequest.isGayAffirming(),
-                filterRequest.getLocation(), query);
+                filterRequest.getPoint(), query);
 
         return organizationFilter;
     }

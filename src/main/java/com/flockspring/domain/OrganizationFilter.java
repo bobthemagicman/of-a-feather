@@ -51,7 +51,7 @@ public class OrganizationFilter
     
     public OrganizationFilter(Set<ServiceDay> serviceDays, Set<ServiceTimeRange> serviceTimes, Set<Affiliation> denominations, Set<Language> languages,
             Set<Programs> programs, Set<CongregationSize> congregationSizes, Set<AccessibilitySupport> accessibilitySupports,
-            Set<DressAttire> dressAttires, Set<MusicStyle> musicStyles, Set<ServiceStyle> serviceStyles, boolean gayAfirming, double[] location,
+            Set<DressAttire> dressAttires, Set<MusicStyle> musicStyles, Set<ServiceStyle> serviceStyles, boolean gayAfirming, Point point,
             String userQuery)
     {
         super();
@@ -106,13 +106,15 @@ public class OrganizationFilter
             this.serviceTimes = serviceTimes;
         }
         
-        if(location != null && location.length == 2)
-        {
-            this.searchPoint = new Point(location[0], location[1]);
-        }
-        
+        this.searchPoint = point;
         this.gayAfirming = gayAfirming;
         this.userQuery = Strings.emptyToNull(userQuery);
+    }
+
+    public OrganizationFilter(String query, Point point)
+    {
+        this.searchPoint = point;
+        this.userQuery = query;
     }
 
     public boolean hasFilteredServiceDays()

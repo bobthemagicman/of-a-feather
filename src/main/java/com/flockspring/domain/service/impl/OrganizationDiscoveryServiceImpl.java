@@ -91,33 +91,12 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
     }
 
     @Override
-    public GeoPage<OrganizationImpl> searchForOrganizations(Address address, int page)
-    {
-        // Check Store/Cache for matching query(non-mvp)
-        if (address != null && address.getLatitude() != 0.0 && address.getLongitude() != 0.0)
-        {
-            // store in cache
-            Point point = new Point(address.getLongitude(), address.getLatitude()); 
-            Distance dist = new Distance(defaultDistance, Metrics.MILES);
-            Pageable pageRequest = new PageRequest(page, defaultPageSize);
-            
-            GeoPage<OrganizationImpl> results = organizationRepository.findByAddressLocationNear(point, dist, pageRequest);
-            
-            //TODO:jbritain figure out how to not pass the Impl class up to the UI layer!
-            return results;
-        }
-
-        return null;
-    }
-
-
-    @Override
-    public GeoPage<OrganizationImpl> getFilteredOrganizations(OrganizationFilter filter)
+    public GeoPage<OrganizationImpl> getFilteredOrganizations(OrganizationFilter filter, int pageNum)
     {
         
-        Distance d = new Distance(this.defaultDistance);
+        Distance d = new Distance(this.defaultDistance, Metrics.MILES);
         
-        PageRequest page = new PageRequest(0, defaultPageSize);
+        PageRequest page = new PageRequest(pageNum, defaultPageSize);
         return organizationRepository.findOrganizationsByFilteredCriteria(filter.getSearchPoint(), d, filter, page);
     }
 

@@ -16,6 +16,7 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.geo.GeoPage;
+import org.springframework.data.mongodb.core.geo.Point;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import scala.collection.mutable.StringBuilder;
 
 import com.flockspring.domain.OrganizationFilter;
 import com.flockspring.domain.service.OrganizationDiscoveryService;
@@ -67,17 +70,8 @@ import com.google.common.base.Strings;
 @RequestMapping("/search")
 public class SearchPageController
 {
-    /**
-     * 
-     */
     private static final String USER_KEY = "userKey";
-    /**
-     * 
-     */
     private static final String LOCALITY = "locality";
-    /**
-     * 
-     */
     private static final String POSTAL_CODE = "postal_code";
     private static final String VIEW_NAME = "searchResultsPage";
     private static final String ERROR_STATE_BAD_REGION = "user_search_out_of_region";
@@ -128,6 +122,7 @@ public class SearchPageController
         try
         {
             pageNum = Integer.parseInt(page);
+            pageNum = pageNum > 1 ? pageNum - 1 : 0;
         } catch (NumberFormatException nfe)
         {
             // well fuck
@@ -174,23 +169,45 @@ public class SearchPageController
         Address address = mapGoogleResultToAddress(resolvedResult);
 
         GeoPage<OrganizationImpl> geoPageResult;
-        if (!StringUtils.hasText(organizationFilter.getUserQuery()) && organizationFilter.getSearchPoint() == null)
+        if(organizationFilter == null || Strings.isNullOrEmpty(organizationFilter.getUserQuery()) ||
+                !organizationFilter.getUserQuery().equals(query))
         {
-            geoPageResult = organizationDiscoveryService.searchForOrganizations(address, pageNum);
-            searchHelper.setOrganizationFilter(new OrganizationFilter(null, null, null, null, null, null, null, null, null, null, false, address
-                    .getLocation(), query));
-        } else
-        {
-            geoPageResult = organizationDiscoveryService.getFilteredOrganizations(organizationFilter);
-            SearchFilterUICommand searchFilterUIModel = searchFilterUIModelMapper.map(organizationFilter);
-            model.put("filters", searchFilterUIModel);
+            Point point = new Point(address.getLongitude(), address.getLatitude());
+            organizationFilter = new OrganizationFilter(query, point);
+            searchHelper.setOrganizationFilter(organizationFilter);
         }
-
+        
+        geoPageResult = organizationDiscoveryService.getFilteredOrganizations(organizationFilter, pageNum);
+        
+        SearchFilterUICommand searchFilterUIModel = searchFilterUIModelMapper.map(organizationFilter);
         SearchResultsUIModel searchResultsUIModel = searchResultsModelMapper.map(geoPageResult, address, request.getLocale(), query);
+       
+        model.put("filters", searchFilterUIModel);
         model.put("results", searchResultsUIModel);
         addPagingInfoToModel(geoPageResult, model);
+        addPagingBaseUrlToModel(request, model);
 
         return buildSearchModelAndView(model);
+    }
+
+    private void addPagingBaseUrlToModel(HttpServletRequest request, Map<String, Object> model)
+    {
+
+        String queryString = request.getQueryString();
+        String finalString = queryString;
+
+        int start = queryString.indexOf("&page=");
+        
+        if(start != -1)
+        {
+            StringBuilder finalStringBuilder = new StringBuilder(queryString.substring(0, start))
+                    .append(queryString.substring(start + 7));
+            
+            finalString = finalStringBuilder.toString();
+        }
+        
+        model.put("pageRequestQueryString", finalString);
+        
     }
 
     private String getCityForSearchTerm(GeocoderResult resolvedResult)
@@ -210,6 +227,7 @@ public class SearchPageController
         model.put("languageValues", Language.values());
         model.put("nurseryValues", Arrays.asList(Programs.INFANT_CARE, Programs.TODDLER_CARE));
         model.put("educationValues", Arrays.asList(Programs.SENIOR_GROUP, Programs.BIBLE_STUDY, Programs.SPIRITUAL_CLASSES, Programs.ADULT_EDUCATION));
+        model.put("navSearchEnabled", true);
 
         return new ModelAndView(VIEW_NAME, model);
     }
@@ -277,12 +295,12 @@ public class SearchPageController
     private void addPagingInfoToModel(GeoPage<OrganizationImpl> geoPageResult, Map<String, Object> model)
     {
         //TODO: put this in configuration somewhere
-        final int numberOfPagesToDisplay = 10;
         final int totalNumPages = geoPageResult.getTotalPages();
-        final int current = geoPageResult.getNumber();
+        final int numberOfPagesToDisplay = totalNumPages > 9 ? 10 : totalNumPages;
+        final int current = geoPageResult.getNumber() + 1;
         
         int pageLoopEnd = totalNumPages;
-        int pageLoopBegin = 0;
+        int pageLoopBegin = 1;
         boolean leftElipsis = false;
         boolean rightElipsis = false;
         
@@ -307,13 +325,13 @@ public class SearchPageController
         }
         else
         {
-            pageLoopEnd = pageLoopBegin + numberOfPagesToDisplay;
+            pageLoopEnd = pageLoopBegin + numberOfPagesToDisplay - 1;
         }
         
         model.put("leftElipsis", leftElipsis);
         model.put("rightElipsis", rightElipsis);
         model.put("pageLoopBegin", pageLoopBegin);
-        model.put("pageLoopEnd", pageLoopEnd);
+        model.put("pageLoopEnd", pageLoopEnd);        
     }
 
     private Map<Category<AccessibilitySupport>, Set<AccessibilitySupport>> getAccessibilitySupportValuesMap()
@@ -353,7 +371,7 @@ public class SearchPageController
         organizationFilter = organizationFilterMapper.map(filterRequest, organizationFilter.getUserQuery());
         searchHelper.setOrganizationFilter(organizationFilter);
 
-        GeoPage<OrganizationImpl> geoResult = organizationDiscoveryService.getFilteredOrganizations(organizationFilter);
+        GeoPage<OrganizationImpl> geoResult = organizationDiscoveryService.getFilteredOrganizations(organizationFilter, 0);
 
         if (geoResult.getNumberOfElements() != 0)
         {

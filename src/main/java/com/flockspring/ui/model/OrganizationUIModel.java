@@ -3,6 +3,7 @@
  */
 package com.flockspring.ui.model;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -32,11 +33,13 @@ public class OrganizationUIModel implements Comparable<OrganizationUIModel>
     private final OrganizationStatementUIModel statements;
     private final ServiceOverviewUIModel servicesOverview;
     private final Set<ServiceDetailUIModel> serviceDetails;
+    private final Map<String, List<String>> serviceDayTimes;
     private final Map<Category<Programs>, Set<Programs>> programsOffered;
         
     public OrganizationUIModel(String id, OrganizationOverviewUIModel overview, Set<MultimediaUIModel> multimedia, 
             Set<LeaderUIModel> leadershipTeam, OrganizationStatementUIModel statements, ServiceOverviewUIModel servicesOverviews,
-            Set<ServiceDetailUIModel> serviceDetails, Map<Category<Programs>, Set<Programs>> programsOffered2)
+            Set<ServiceDetailUIModel> serviceDetails, Map<Category<Programs>, Set<Programs>> programsOffered, 
+            Map<String, List<String>> serviceDayTimes)
     {
         super();
 
@@ -47,7 +50,8 @@ public class OrganizationUIModel implements Comparable<OrganizationUIModel>
         this.statements = statements;
         this.servicesOverview = servicesOverviews;
         this.serviceDetails = serviceDetails;
-        this.programsOffered = programsOffered2;
+        this.programsOffered = programsOffered;
+        this.serviceDayTimes = serviceDayTimes;
     }
 
     public String getId()
@@ -100,6 +104,10 @@ public class OrganizationUIModel implements Comparable<OrganizationUIModel>
         return this.overview.getSocialMedia();
     }
     
+    public Map<String, List<String>> getServiceDayTimes()
+    {
+        return serviceDayTimes;
+    }
     
     @Override
     public int hashCode()

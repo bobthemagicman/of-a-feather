@@ -3,6 +3,7 @@
  */
 package com.flockspring.ui.model;
 
+
 /**
  * OrganizationOverviewUIModel.java
  *
@@ -20,7 +21,8 @@ public class OrganizationOverviewUIModel
     private final CongregationSize averageServiceCongregationSize;
     private final String phoneNumber;
     private final String websiteUrl;
-    private final String serviceTimesShort;
+    private final String serviceTimeShortString1;
+    private final String serviceTimeShortString2;
     private final boolean isUserFavorite;
     private final SocialMediaUIModel socialMedia;
     private final AddressUIModel address;
@@ -28,7 +30,7 @@ public class OrganizationOverviewUIModel
     private final boolean parkingLotAvailable;
    
     public OrganizationOverviewUIModel(String name, String denomination, String subDenomination, int yearFounded, String leadPastorName,
-            CongregationSize averageServiceCongregationSize, String phoneNumber, String websiteUrl, String serviceTimesShort, boolean isUserFavorite,
+            CongregationSize averageServiceCongregationSize, String phoneNumber, String websiteUrl, String serviceTimeShortString1, String serviceTimeShortString2, boolean isUserFavorite,
             SocialMediaUIModel socialMedia, AddressUIModel address, double distanceFromSearchPoint, boolean parkingLotAvailable)
     {
         super();
@@ -41,7 +43,8 @@ public class OrganizationOverviewUIModel
         this.averageServiceCongregationSize = averageServiceCongregationSize;
         this.phoneNumber = phoneNumber;
         this.websiteUrl = websiteUrl;
-        this.serviceTimesShort = serviceTimesShort;
+        this.serviceTimeShortString1 = serviceTimeShortString1;
+        this.serviceTimeShortString2 = serviceTimeShortString2;
         this.isUserFavorite = isUserFavorite;
         this.socialMedia = socialMedia;
         this.address = address;
@@ -89,9 +92,14 @@ public class OrganizationOverviewUIModel
         return websiteUrl;
     }
 
-    public String getServiceTimesShort()
+    public String getServiceTimeShortString1()
     {
-        return serviceTimesShort;
+        return serviceTimeShortString1;
+    }
+    
+    public String getServiceTimeShortString2()
+    {
+        return serviceTimeShortString2;
     }
 
     public boolean isUserFavorite()

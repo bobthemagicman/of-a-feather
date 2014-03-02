@@ -4,7 +4,7 @@
 package com.flockspring.domain.types.impl;
 
 import java.io.Serializable;
-import java.util.NavigableSet;
+import java.util.List;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -27,7 +27,7 @@ public class LeaderImpl implements Leader, Comparable<Leader>, Serializable
     private String name;
     private String bio;
     private String title;
-    private NavigableSet<LeaderRole> leaderRoles;
+    private List<LeaderRole> leaderRoles;
     private MultimediaObjectImpl image;
     private boolean primaryContact;
     private boolean primaryLeader;
@@ -94,7 +94,7 @@ public class LeaderImpl implements Leader, Comparable<Leader>, Serializable
     }
     
     @Override
-    public NavigableSet<LeaderRole> getLeaderRoles()
+    public List<LeaderRole> getLeaderRoles()
     {
         return leaderRoles;
     }
@@ -117,9 +117,9 @@ public class LeaderImpl implements Leader, Comparable<Leader>, Serializable
         return yearStarted;
     }
 
-    public void setLeaderRole(NavigableSet<LeaderRole> leaderRoles)
+    public void setLeaderRole(List<LeaderRole> leaderRole)
     {
-        this.leaderRoles = leaderRoles;
+        this.leaderRoles = leaderRole;
     }
 
     public void setEmailAddress(String emailAddress)

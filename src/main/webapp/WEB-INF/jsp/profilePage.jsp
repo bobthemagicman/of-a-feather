@@ -8,15 +8,18 @@
         <%-- Common Metadata, scripts, and CSS --%>
         <%@ include file="/WEB-INF/jsp/partials/commonHead.jsp"%>
 
+        <spring:url value="/static/js/jquery.geocomplete.js" var="geoCompletePlugin" />
         <spring:url value="/static/css/elastislide.css" var="elastislideCSS" />
         <link rel="stylesheet" type="text/css" href="${elastislideCSS}" />
         
         <spring:url value="/static/js/profile.js" var="profileJS" />
         <spring:url value="/static/js/jquery.elastislide.js" var="elastislideJS" />
         <spring:url value="/static/js/modernizr.custom.17475.js" var="modernizrJS" />
+        
         <script type="text/javascript">
             $LAB.queueScript("${profileJS}")
-                    .queueScript("https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=initializeMap")
+                    .queueScript("https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&callback=initializeMap")
+                    .queueScript("${geoCompletePlugin}")
                     .queueScript("${modernizrJS}")
                     .queueScript("${elastislideJS}")
                     .runQueue();
