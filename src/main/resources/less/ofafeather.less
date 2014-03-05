@@ -1870,21 +1870,34 @@ a {
     }
     .team-info-container {
         .make-row();
-        min-height: 180px;
+        min-height: 200px;
 
         .team-member-photo {
             .make-xs-column(3, 5px);
             img {
                 .img-responsive;
                 margin: auto;
+                margin-top: 35px;
                 .rounded-corners;
             }
         }
         .team-member-bio {
             .make-xs-column(9, 5px);
+            
             h5 {
                 font-size: 1.5em;
             }
+        }
+        
+    }
+    .team-info-container:nth-child(3) {
+        .team-member-bio {
+            margin-top: 35px;
+        }
+    }
+    .team-info-container:nth-child(4) {
+        .team-member-bio {
+            margin-top: 20px;
         }
     }
     ul > li 

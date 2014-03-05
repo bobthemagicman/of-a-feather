@@ -97,6 +97,33 @@ $(document).ready(function() {
     
     fixTabPanes();
 
+    //initializeSearchBar();
+
 });
+
+var enterPressCount = 0;
+
+function initializeSearchBar() {
+    
+    $(function() {
+        $(".search-bar").keypress(function (e) {
+            if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+                enterPressCount++;
+                if(enterPressCount > 1) {
+                    $('#searchButton').click();
+                }
+                return false;
+            } else {
+                return true;
+            }
+        });
+    });
+    
+    $('#searchButton').click(function() {
+        if($(".search-bar").val() != "") {
+            $("#searchForm").submit();
+        }
+    });
+}
 
 

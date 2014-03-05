@@ -57,15 +57,15 @@
                         <h4>Personalized church search</h4>
                     </div>
                     <div class="blur"><img src="${blurImage}" /></div>
-                    <form action="${searchAction}" method="GET">
+                    <form id="searchForm" action="${searchAction}" method="GET">
                         <div class="input-group">
-                            <input id="search-bar" name="search-bar" type="text" class="form-control button-on-right" autofocus="autofocus" placeholder="Find Churches Near (City and State, Zip, or Neighborhood)">
+                            <input id="search-bar" name="search-bar" type="text" class="form-control button-on-right" autofocus="autofocus" placeholder="Find Churches Near (City and State, Zip, or Neighborhood)" required="required">
                             <span id="search-button" class="input-group-btn">
                                 <button type="submit" id="searchButton" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
                             </span>
                         </div>
                     </form>    
-                    <a href="${addYourChurchLink}" class="btn btn-primary">Add Your Church!</a>
+                    <!-- a href="${addYourChurchLink}" class="btn btn-primary">Add Your Church!</a -->
                 </div>
 
                 <div class="header-label">
