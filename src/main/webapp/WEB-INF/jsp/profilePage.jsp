@@ -268,6 +268,12 @@
                                             <c:if test="${empty leader.image.path}">
                                                 <c:set var="leaderImgSrc" value="http://placehold.it/200x200&text=Pastor+Image+Not+Provided" />
                                             </c:if>
+                                            
+                                            <c:if test="${organization.overview.name eq 'Urban Grace'}">
+                                                <spring:url value="/static/church-images/temp/urban_grace/IMG_7521e.jpg" var="urbanGracePastorImg"/>
+                                                <c:set var="leaderImgSrc" value="${urbanGracePastorImg}" />
+                                            </c:if>
+                                            
                                             <img src="${leaderImgSrc}" alt="${leader.image.alt}" title="${leader.image.title}"/>
                                         </div>
                                         <div class="pastor-info">

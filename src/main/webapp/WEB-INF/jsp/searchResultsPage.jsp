@@ -645,6 +645,12 @@
                         <c:if test="${empty result.displayImage.path}">
                             <c:set var="imagePath" value="http://placehold.it/200x200" />   
                         </c:if>
+                        
+                        <c:if test="${result.organizationName eq 'Urban Grace'}">
+                            <spring:url value="/static/church-images/temp/urban_grace/IMG_7472e.jpg" var="urbanGracePath" />
+                            <c:set var="imagePath" value="${urbanGracePath}" />   
+                        </c:if>
+                        
                         <c:if test="${result.usersFavorite}">
                             <spring:url value="/static/images/site/heart_favorited_icon.png" var="heartIcon" />
                         </c:if>
