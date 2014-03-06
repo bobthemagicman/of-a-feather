@@ -40,7 +40,7 @@ public class LeaderImpl implements Leader, Comparable<Leader>, Serializable
         super();
     }
     
-    public LeaderImpl(String name, String bio, String title, NavigableSet<LeaderRole> leaderRoles, MultimediaObjectImpl image, boolean primaryContact,
+    public LeaderImpl(String name, String bio, String title, List<LeaderRole> leaderRoles, MultimediaObjectImpl image, boolean primaryContact,
             boolean primaryLeader, String emailAddress, String phoneNumber, int yearStarted)
     {
         super();
