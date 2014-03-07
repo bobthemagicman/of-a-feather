@@ -655,7 +655,7 @@
                             <spring:url value="/static/images/site/heart_favorited_icon.png" var="heartIcon" />
                         </c:if>
 
-                        <div class="search-result-entry" data-result-id="${result.id}" data-church-name="${result.organizationName}" data-latitude="${result.latitude}" data-longitude="${result.longitude}">
+                        <div class="search-result-entry show-result" data-result-id="${result.id}" data-church-name="${result.organizationName}" data-latitude="${result.latitude}" data-longitude="${result.longitude}">
 
                             <div class="search-result-image-container">
                                 <img src="${imagePath}" alt="${result.displayImage.alt}" title="${result.displayImage.title}" />
