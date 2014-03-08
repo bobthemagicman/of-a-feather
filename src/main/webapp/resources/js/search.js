@@ -431,8 +431,7 @@ function expandCollapseMap() {
     }
 
     createMap();
-    
-    placeMarkers();
+   
 
 }
 
@@ -473,6 +472,7 @@ function createMap() {
     marker = new Array();
     
     placeMarkers();
+    
 }
 
 function placeMarkers() {
@@ -480,7 +480,7 @@ function placeMarkers() {
     $(".search-result-entry.show-result").each(function(i) {
         //cycle through visible search result entries, creating map markers as necessary
         
-        if(typeof marker[$(this).attr("data-result-id")] == 'undefined') { 
+        if(marker.length == 0 || typeof marker[$(this).attr("data-result-id")] == 'undefined') { 
 
             var lat, long, churchName, markerLatLong, markerId, delay = 100;
 
