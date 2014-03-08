@@ -120,11 +120,6 @@ function initializeUserSliders() {
            initMaxValue = 500;
        }
        
-       console.log("min: " + initMinValue + ", max: " + initMaxValue);
-       
-       //if(parseInt(initMinValue) !== initMinValue) initMinValue = -500;
-       //if(parseInt(initMaxValue) !== initMaxValue) initMaxValue = 500;
-       
        $(this).slider({range: true, min: -500, max: 500, values: [initMinValue, initMaxValue]});
     });
 
@@ -436,8 +431,7 @@ function expandCollapseMap() {
     }
 
     createMap();
-    
-    placeMarkers();
+   
 
 }
 
@@ -477,6 +471,8 @@ function createMap() {
 
     marker = new Array();
     
+    placeMarkers();
+    
 }
 
 function placeMarkers() {
@@ -484,7 +480,7 @@ function placeMarkers() {
     $(".search-result-entry.show-result").each(function(i) {
         //cycle through visible search result entries, creating map markers as necessary
         
-        if(typeof marker[$(this).attr("data-result-id")] == 'undefined') { 
+        if(marker.length == 0 || typeof marker[$(this).attr("data-result-id")] == 'undefined') { 
 
             var lat, long, churchName, markerLatLong, markerId, delay = 100;
 
@@ -550,7 +546,8 @@ function generateSearchResultEntry(item) {
 
     item.distanceFromSearchPoint = parseFloat(item.distanceFromSearchPoint).round(2);
 
-    var searchResultTemplate = '<div class="search-result-entry show-result" data-result-id="{{id}}" data-current-result="true" data-church-name="{{organizationName}}" data-latitude="{{latitude}}" data-longitude="{{longitude}}"> <div class="search-result-image-container"> <img src="' + resourceBaseURL + 'church-images/{{id}}/{{displayImage.path}}" alt="{{displayImage.alt}}" title="{{displayImage.title}}" /> </div> <div class="search-result-info"> <div class="church-basic-info"> <a href="/church-profile/{{id}}?dist={{distanceFromSearchPoint}}"><span class="church-name">{{organizationName}}</span></a> <span class="church-denomination">{{denomination}}</span> <span class="church-location">{{city}}, {{state}} {{postalCode}} <img src="' + resourceBaseURL + 'images/site/right_arrow.png" /> <span class="distance">{{distanceFromSearchPoint}}</span> miles away </span> </div> <div class="church-sliders"> <div class="slider-container"> <div class="slider-label">Service Style</div> <div class="info-slider" data-slider-value="{{serviceStyleSliderValue}}"></div> </div> <div class="slider-container"> <div class="slider-label">Music</div> <div class="info-slider" data-slider-value="{{musicStyleSliderValue}}"></div> </div> <div class="slider-container"> <div class="slider-label">Dress Attire</div> <div class="info-slider" data-slider-value="{{dressAttireSliderValue}}"></div> </div> </div> </div> <div class="favorite-icon"> <img src="' + resourceBaseURL + 'images/site/heart_icon.png" /> </div> </div>';
+    //var searchResultTemplate = '<div class="search-result-entry show-result" data-result-id="{{id}}" data-current-result="true" data-church-name="{{organizationName}}" data-latitude="{{latitude}}" data-longitude="{{longitude}}"> <div class="search-result-image-container"> <img src="' + resourceBaseURL + 'church-images/{{id}}/{{displayImage.path}}" alt="{{displayImage.alt}}" title="{{displayImage.title}}" /> </div> <div class="search-result-info"> <div class="church-basic-info"> <a href="/church-profile/{{id}}?dist={{distanceFromSearchPoint}}"><span class="church-name">{{organizationName}}</span></a> <span class="church-denomination">{{denomination}}</span> <span class="church-location">{{city}}, {{state}} {{postalCode}} <img src="' + resourceBaseURL + 'images/site/right_arrow.png" /> <span class="distance">{{distanceFromSearchPoint}}</span> miles away </span> </div> <div class="church-sliders"> <div class="slider-container"> <div class="slider-label">Service Style</div> <div class="info-slider" data-slider-value="{{serviceStyleSliderValue}}"></div> </div> <div class="slider-container"> <div class="slider-label">Music</div> <div class="info-slider" data-slider-value="{{musicStyleSliderValue}}"></div> </div> <div class="slider-container"> <div class="slider-label">Dress Attire</div> <div class="info-slider" data-slider-value="{{dressAttireSliderValue}}"></div> </div> </div> </div> <div class="favorite-icon"> <img src="' + resourceBaseURL + 'images/site/heart_icon.png" /> </div> </div>';
+    var searchResultTemplate = '<div class="search-result-entry show-result" data-result-id="{{id}}" data-current-result="true" data-church-name="{{organizationName}}" data-latitude="{{latitude}}" data-longitude="{{longitude}}"> <div class="search-result-image-container"> <img src="{{displayImage.path}}" alt="{{displayImage.alt}}" title="{{displayImage.title}}" /> </div> <div class="search-result-info"> <div class="church-basic-info"> <a href="/church-profile/{{id}}?dist={{distanceFromSearchPoint}}"><span class="church-name">{{organizationName}}</span></a> <span class="church-denomination">{{denomination}}</span> <span class="church-location">{{city}}, {{state}} {{postalCode}} <img src="' + resourceBaseURL + 'images/site/right_arrow.png" /> <span class="distance">{{distanceFromSearchPoint}}</span> miles away </span> </div> <div class="church-sliders"> <div class="slider-container"> <div class="slider-label">Service Style</div> <div class="info-slider" data-slider-value="{{serviceStyleSliderValue}}"></div> </div> <div class="slider-container"> <div class="slider-label">Music</div> <div class="info-slider" data-slider-value="{{musicStyleSliderValue}}"></div> </div> <div class="slider-container"> <div class="slider-label">Dress Attire</div> <div class="info-slider" data-slider-value="{{dressAttireSliderValue}}"></div> </div> </div> </div> <div class="favorite-icon"> <img src="' + resourceBaseURL + 'images/site/heart_icon.png" /> </div> </div>';
 
     var html = Mustache.to_html(searchResultTemplate, item);
 
@@ -571,6 +568,15 @@ function updateResults(filterResult) {
         $(".pagination").show();
         
         for(i = 0; i < filterResult.organizations.items.length; i++) {
+
+            if(filterResult.organizations.items[i].displayImage === null) {
+                var di = { "path": "http://placehold.it/200x200", "alt": "No Image Available", "title": filterResult.organizations.items[i].organizationName } ;
+                
+                filterResult.organizations.items[i].displayImage = di;
+            }
+            else {
+                filterResult.organizations.items[i].displayImage.path = resourceBaseURL + 'church-images/' + filterResult.organizations.item[i].id + '/' + filterResult.organizations.item[i].displayImage.path;
+            }
 
             var existingResult = $(".search-result-entry[data-result-id='" + filterResult.organizations.items[i].id + "']");
 

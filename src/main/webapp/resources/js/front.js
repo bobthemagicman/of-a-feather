@@ -22,7 +22,10 @@ $(document).ready(function() {
     
     fixTabPanes();
     
-    $(".header-search .input-group").popover();
+    //$(".header-search .input-group").popover();
+    
+    initializeSearchBar();
+    
 });
 
 function initAutoComplete()
@@ -86,7 +89,7 @@ function fixTabPanes() {
  
     $(".carousel-inner").each(function() {
         curHeight = parseInt($(this).height());
-        console.log(curHeight);
+        
         if(curHeight > maxHeight) {
             maxHeight = curHeight;
         }
@@ -98,3 +101,18 @@ function fixTabPanes() {
     
 }
 
+function initializeSearchBar() {
+    
+    $('#search-bar').keydown(function (e) {
+        if(e.which == 13) {
+            //enter key is pressed
+            if($('.pac-container:visible').length || $("#search-bar").val() === "") {
+               //either suggestion list is visible OR search bar is empty 
+               return false;
+            }
+            $("#searchForm").submit();
+        }
+        
+    });
+    
+}

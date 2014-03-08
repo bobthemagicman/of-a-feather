@@ -11,6 +11,7 @@
                 <a href="http://blog.ofafeather.org">BLOG</a> |
                 <a href="#">SIGN UP</a> |
                 <a href="#">LOG IN</a> |
+				<a href="https://docs.google.com/forms/d/1z7UPHqIvfdLTmiy_U9HFsd9Pud6mXWjd-uWrUQwwFZo/viewform" target="_blank">LOCAL EVENTS</a> |
                 <a href="${aboutUsLink}">ABOUT US</a> | 
                 <a href="${addYourChurchLink}">ADD YOUR CHURCH</a> | 
                 <a href="${contactUsLink}">CONTACT</a> | 
