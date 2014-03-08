@@ -647,7 +647,7 @@
                         </c:if>
                         
                         <c:if test="${result.organizationName eq 'Urban Grace'}">
-                            <spring:url value="/static/church-images/temp/urban_grace/IMG_7472e.jpg" var="urbanGracePath" />
+                            <spring:url value="/static/church-images/temp/urban_grace/optimized/IMG_7472e-search.jpg" var="urbanGracePath" />
                             <c:set var="imagePath" value="${urbanGracePath}" />   
                         </c:if>
                         

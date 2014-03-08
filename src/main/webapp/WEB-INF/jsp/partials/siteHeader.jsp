@@ -34,7 +34,7 @@
                 </div>
                 </c:if>
                 <ul class="nav navbar-nav navbar-right">
-
+                    <li><a href="https://docs.google.com/forms/d/1z7UPHqIvfdLTmiy_U9HFsd9Pud6mXWjd-uWrUQwwFZo/viewform" target="_blank">LOCAL EVENTS</a>
                     <li><a href="${aboutUsLink}">ABOUT US</a></li>
                     <li><a href="${addYourChurchLink}">ADD YOUR CHURCH</a></li>
                 </ul>

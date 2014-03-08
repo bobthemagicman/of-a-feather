@@ -354,7 +354,7 @@
 				<version>1.3.3</version>
 				<configuration>
 					<sourceDirectory>${project.basedir}/src/main/resources/less</sourceDirectory>
-					<outputDirectory>${project.build.directory}/${project.build.finalName}/resources/css</outputDirectory>
+					<outputDirectory>${project.build.directory}/${build.finalName}/resources/css</outputDirectory>
 					<compress>true</compress>
 					<includes>
 						<include>ofafeather.less</include>

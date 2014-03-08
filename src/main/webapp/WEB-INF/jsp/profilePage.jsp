@@ -115,16 +115,16 @@
                                     </c:choose>
                                     
                                     
-                                     <% pageContext.setAttribute("urbanGracePhotos", new String[] {"IMG_7472e","IMG_7473e","IMG_7476e","IMG_7483e","IMG_7487e","IMG_7489e","IMG_7491e","IMG_7493e","IMG_7495e","IMG_7500e","IMG_7503e","IMG_7508e","IMG_7515e","IMG_7516e","IMG_7518e","IMG_7520e","IMG_7521e"} , pageContext.SESSION_SCOPE);   %>
+                                     <% pageContext.setAttribute("urbanGracePhotos", new String[] {"IMG_7472e","IMG_7473e","IMG_7476e","IMG_7483e","IMG_7487e","IMG_7489e","IMG_7491e","IMG_7493e","IMG_7495e","IMG_7500e","IMG_7503e","IMG_7508e","IMG_7515e","IMG_7516e","IMG_7518e","IMG_7520e"} , pageContext.SESSION_SCOPE);   %>
                                     
-                                     <c:if test="${organization.overview.name=='Urban Grace'}">
+                                     <c:if test="${organization.overview.name eq 'Urban Grace'}">
                                         <c:forEach items="${urbanGracePhotos}" var="photo" varStatus="index">
-                                            <c:set var="class" value="item" />
+                                            <c:set var="cssClass" value="item" />
                                             <c:if test="${index.first}">
-                                                <c:set var="class" value="item active" />
+                                                <c:set var="cssClass" value="item active" />
                                             </c:if>
                                             <spring:url value="/static/church-images/temp/urban_grace/optimized/${photo}.jpg" var="imgSrc"/>
-                                            <div class="${class}">
+                                            <div class="${cssClass}">
                                                 <img src="${imgSrc}" title="Urban Grace" alt="Urban Grace" data-thumbnail-page="${index.index}"/>
                                             </div>
                                             
@@ -308,7 +308,7 @@
                                             </c:if>
                                             
                                             <c:if test="${organization.overview.name eq 'Urban Grace'}">
-                                                <spring:url value="/static/church-images/temp/urban_grace/IMG_7521e.jpg" var="urbanGracePastorImg"/>
+                                                <spring:url value="/static/church-images/temp/urban_grace/optimized/IMG_7521e.jpg" var="urbanGracePastorImg"/>
                                                 <c:set var="leaderImgSrc" value="${urbanGracePastorImg}" />
                                             </c:if>
                                             
