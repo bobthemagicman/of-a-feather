@@ -26,11 +26,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import scala.collection.mutable.StringBuilder;
-
 import com.flockspring.domain.OrganizationFilter;
 import com.flockspring.domain.service.OrganizationDiscoveryService;
-import com.flockspring.domain.service.UserService;
+import com.flockspring.domain.service.user.UserService;
 import com.flockspring.domain.types.AccessibilitySupport;
 import com.flockspring.domain.types.Address;
 import com.flockspring.domain.types.Affiliation;
