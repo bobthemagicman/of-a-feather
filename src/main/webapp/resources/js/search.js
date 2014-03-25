@@ -575,7 +575,7 @@ function updateResults(filterResult) {
                 filterResult.organizations.items[i].displayImage = di;
             }
             else {
-                filterResult.organizations.items[i].displayImage.path = resourceBaseURL + 'church-images/' + filterResult.organizations.item[i].id + '/' + filterResult.organizations.item[i].displayImage.path;
+                filterResult.organizations.items[i].displayImage.path = resourceBaseURL + 'church-images/' + filterResult.organizations.items[i].id + '/' + filterResult.organizations.items[i].displayImage.path;
             }
 
             var existingResult = $(".search-result-entry[data-result-id='" + filterResult.organizations.items[i].id + "']");
