@@ -641,14 +641,9 @@
                     <spring:url value="/static/images/site/heart_icon.png" var="heartIcon" />
 
                     <c:forEach items="${results.items}" var="result" varStatus="p_tracker">
-                        <spring:url value="/static/church-images/${result.id}/${result.displayImage.path}" var="imagePath"/>
+                        <spring:url value="/static/images/church-images/${result.id}/sr-${result.displayImage.path}" var="imagePath"/>
                         <c:if test="${empty result.displayImage.path}">
                             <c:set var="imagePath" value="http://placehold.it/200x200" />   
-                        </c:if>
-                        
-                        <c:if test="${result.organizationName eq 'Urban Grace'}">
-                            <spring:url value="/static/church-images/temp/urban_grace/optimized/IMG_7472e-search.jpg" var="urbanGracePath" />
-                            <c:set var="imagePath" value="${urbanGracePath}" />   
                         </c:if>
                         
                         <c:if test="${result.usersFavorite}">

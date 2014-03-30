@@ -25,7 +25,7 @@
                     .runQueue();
         </script>
 
-        <title>Of A Feather - Find your new church home today</title>	
+        <title>Of A Feather - Find your new church home today</title>   
     </head>
     <body>
 
@@ -65,12 +65,12 @@
                 <div class="profile-top">
     
                     
-	                <spring:url value="/search" var="searchAction" />
-	                <div class="back-to-results-link">
-	                   <c:if test="${hasPreviousSearch}"><a class="btn btn-primary" href="${searchAction}${searchQuery}"><span class="glyphicon glyphicon-arrow-left"></span> Back to Search Results</a></c:if>
+                    <spring:url value="/search" var="searchAction" />
+                    <div class="back-to-results-link">
+                       <c:if test="${hasPreviousSearch}"><a class="btn btn-primary" href="${searchAction}${searchQuery}"><span class="glyphicon glyphicon-arrow-left"></span> Back to Search Results</a></c:if>
                     </div>
-	               
-	                
+                   
+                    
                     <div class="media-container">
 
                         <div class="media-carousel-container active-media">
@@ -82,54 +82,32 @@
                                 <div class="carousel-inner">
                                     <c:choose>
                                     <c:when test="${not empty organization.multimedia}">
-                                    <c:forEach items="${organization.multimedia}" var="multimediaObject" varStatus="index">
-                                        <c:set var="class" value="item" />
-                                        <c:if test="${index.first}">
-                                            <c:set var="class" value="item active" />
+                                    <c:forEach items="${organization.multimedia}" var="multimediaObject" varStatus="p_tracker">
+                                        <c:set var="cssClass" value="item" />
+                                        <c:if test="${p_tracker.first}">
+                                            <c:set var="cssClass" value="item active" />
                                         </c:if>
 
                                         <c:if test="${multimediaObject.video ne true}">
-                                            <spring:url value="/static/church-images/${organization.id}/${multimediaObject.path}" var="imgSrc"/>
-                                            <div class="${class}">
+                                            <spring:url value="/static/images/church-images/${organization.id}/${multimediaObject.path}" var="imgSrc"/>
+                                            <div class="${cssClass}">
                                                 <img src="${imgSrc}" title="${multimediaObject.title}" alt="${multimediaObject.alt}" data-thumbnail-page="0"/>
-                                            </div>	                                
+                                            </div>                                  
                                         </c:if>
-                                        
-                                        
-                                        
+
                                         <c:if test="${multimediaObject.video}">
                                             <div class="item">
-		                                        <div class="video-placeholder" data-video-code="j73gbEFYHTs" data-video-type="YT" data-thumbnail-page="2"></div>
-		                                    </div>
+                                                <div class="video-placeholder" data-video-code="j73gbEFYHTs" data-video-type="YT" data-thumbnail-page="2"></div>
+                                            </div>
                                         </c:if>
                                     </c:forEach>
-                                    
                                     </c:when>
                                     <c:otherwise>
-                                      <c:if test="${organization.overview.name!='Urban Grace'}">  
-                                          <div class="item active">
-                                              <img src="http://placehold.it/535x535&text=Church+Images+Not+Provided" title="${multimediaObject.title}" alt="${multimediaObject.alt}" data-thumbnail-page="0"/>
-                                          </div>
-                                      </c:if>
+                                      <div class="item active">
+                                          <img src="http://placehold.it/535x535&text=Church+Images+Not+Provided" title="${multimediaObject.title}" alt="${multimediaObject.alt}" data-thumbnail-page="0"/>
+                                      </div>
                                     </c:otherwise>
-                                    </c:choose>
-                                    
-                                    
-                                     <% pageContext.setAttribute("urbanGracePhotos", new String[] {"IMG_7472e","IMG_7473e","IMG_7476e","IMG_7483e","IMG_7487e","IMG_7489e","IMG_7491e","IMG_7493e","IMG_7495e","IMG_7500e","IMG_7503e","IMG_7508e","IMG_7515e","IMG_7516e","IMG_7518e","IMG_7520e"} , pageContext.SESSION_SCOPE);   %>
-                                    
-                                     <c:if test="${organization.overview.name eq 'Urban Grace'}">
-                                        <c:forEach items="${urbanGracePhotos}" var="photo" varStatus="index">
-                                            <c:set var="cssClass" value="item" />
-                                            <c:if test="${index.first}">
-                                                <c:set var="cssClass" value="item active" />
-                                            </c:if>
-                                            <spring:url value="/static/church-images/temp/urban_grace/optimized/${photo}.jpg" var="imgSrc"/>
-                                            <div class="${cssClass}">
-                                                <img src="${imgSrc}" title="Urban Grace" alt="Urban Grace" data-thumbnail-page="${index.index}"/>
-                                            </div>
-                                            
-                                        </c:forEach>    
-                                   </c:if>
+                                    </c:choose>        
                                 </div>
                                 <div class="media-right-arrow" data-slide="next">
                                     <img src="${rightArrowLarge}" />
@@ -137,29 +115,22 @@
                             </div>
 
                         </div>
-                                
-                         <c:if test="${organization.overview.name!='Urban Grace'}">
+
                         <ul class="elastislide-list">
-                            <li class="photo" data-slide-link="0">
-                                <spring:url value="http://placehold.it/75x75&text=No+Image+Provided" var="imgSrc"/>
-                                <img src="${imgSrc}" />
-                            </li>
+                            <c:choose>
+                                <c:when test="${not empty organization.multimedia}">
                             
+	                            <c:forEach items="${organization.multimedia}" var="multimediaObject" varStatus="p_tracker">
+	                               <spring:url value="/static/images/church-images/${organization.id}/${multimediaObject.path}" var="thumImgSrc"/>
+                            <li class="photo" data-slide-link="${p_tracker.index}"><img src="${thumImgSrc}" /></li>
+	                            </c:forEach>
+	                            </c:when>
+	                            <c:otherwise>
+	                        <li class="photo" data-slide-link="0"><img src="http://placehold.it/100x100&text=Church+Images+Not+Provided" /></li>    
+	                            </c:otherwise>
+	                        </c:choose>
                         </ul>
-                         </c:if>       
-                         <c:if test="${organization.overview.name=='Urban Grace'}">
-                        <ul class="elastislide-list">
-                            <c:forEach items="${urbanGracePhotos}" var="photo" varStatus="index">
-                                <li class="photo" data-slide-link="${index.index}">
-                                    <spring:url value="/static/church-images/temp/urban_grace/optimized/${photo}.jpg" var="imgSrc"/>
-                                    <img src="${imgSrc}" />
-                                </li>
-                            </c:forEach> 
-                            
-                        </ul>
-                         </c:if>
-                              
-                                        
+
                     </div>
 
                     <div class="vcard profile-top-info">
@@ -302,16 +273,10 @@
                                 <c:forEach items="${organization.leadershipTeam}" var="leader" varStatus="p_tracker">
                                     <div class="pastor-info-container">
                                         <div class="pastor-photo">
-                                            <spring:url value="/static/church-images/${organization.id}/${leader.image.path}" var="leaderImgSrc" />
+                                            <spring:url value="/static/images/church-images/${organization.id}/${leader.image.path}" var="leaderImgSrc" />
                                             <c:if test="${empty leader.image.path}">
                                                 <c:set var="leaderImgSrc" value="http://placehold.it/200x200&text=Pastor+Image+Not+Provided" />
                                             </c:if>
-                                            
-                                            <c:if test="${organization.overview.name eq 'Urban Grace'}">
-                                                <spring:url value="/static/church-images/temp/urban_grace/optimized/IMG_7521e.jpg" var="urbanGracePastorImg"/>
-                                                <c:set var="leaderImgSrc" value="${urbanGracePastorImg}" />
-                                            </c:if>
-                                            
                                             <img src="${leaderImgSrc}" alt="${leader.image.alt}" title="${leader.image.title}"/>
                                         </div>
                                         <div class="pastor-info">
