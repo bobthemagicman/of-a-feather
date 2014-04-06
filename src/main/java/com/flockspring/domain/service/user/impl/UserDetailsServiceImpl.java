@@ -8,12 +8,14 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.social.security.SocialUserDetails;
+import org.springframework.stereotype.Service;
 
 import com.flockspring.dataaccess.mongodb.EmailUpdateRepository;
 import com.flockspring.dataaccess.mongodb.UserRepository;
+import com.flockspring.dataaccess.mongodb.model.UserModel;
+import com.flockspring.domain.mapper.ApplicationUserModelMapper;
 import com.flockspring.domain.service.user.UserService;
 import com.flockspring.domain.types.impl.UpdateEmailImpl;
-import com.flockspring.ui.model.user.UserUIModel;
 
 /**
  * UserDetailsServiceImpl.java
@@ -22,6 +24,7 @@ import com.flockspring.ui.model.user.UserUIModel;
  * @date Feb 9, 2014
  *
  */
+@Service
 public class UserDetailsServiceImpl implements UserService
 {
     private EmailUpdateRepository emailUpdateRepository;
@@ -44,14 +47,14 @@ public class UserDetailsServiceImpl implements UserService
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
     {
-        UserUIModel user = userRepository.findByEmail(username);
+        UserModel user = userRepository.findByEmail(username);
         
         if(user == null)
         {
             throw new UsernameNotFoundException("Unable to load user with username \""+ username);
         }
         
-        return user;
+        return new ApplicationUserModelMapper().map(user);
     }
 
     @Override
@@ -59,13 +62,5 @@ public class UserDetailsServiceImpl implements UserService
     {
 
         emailUpdateRepository.save(updateEmailImpl);
-
-    }
-
-    @Override
-    public String getUserId()
-    {
-        // TODO Auto-generated method stub
-        return null;
     }
 }

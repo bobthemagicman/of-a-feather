@@ -1,14 +1,13 @@
 /*
  * Copyright 2013 FlockSpring Inc. All rights reserved
  */
-package com.flockspring.domain.types.user.impl;
+package com.flockspring.dataaccess.mongodb.model;
 
 import java.util.Set;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.flockspring.domain.types.user.SocialMediaProvider;
-import com.flockspring.domain.types.user.User;
 import com.flockspring.domain.types.user.UserRole;
 
 /**
@@ -19,7 +18,7 @@ import com.flockspring.domain.types.user.UserRole;
  *
  */
 @Document(collection = "users")
-public class UserImpl implements User
+public class UserModel
 {
     private String id;
     private String email;
@@ -29,7 +28,7 @@ public class UserImpl implements User
     private UserRole userRole;
     private Set<SocialMediaProvider> signInProviders;
   
-    public UserImpl(String id, String email, String firstName, String lastName, String password, UserRole userRole,
+    public UserModel(String id, String email, String firstName, String lastName, String password, UserRole userRole,
             Set<SocialMediaProvider> signInProviders)
     {
         super();

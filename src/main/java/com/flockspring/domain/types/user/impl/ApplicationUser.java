@@ -1,7 +1,7 @@
 /*
  * Copyright 2013 FlockSpring Inc. All rights reserved
  */
-package com.flockspring.ui.model.user;
+package com.flockspring.domain.types.user.impl;
 
 import java.util.Collection;
 import java.util.Set;
@@ -20,7 +20,7 @@ import com.flockspring.domain.types.user.SocialMediaProvider;
  * @date Feb 8, 2014
  *
  */
-public class UserUIModel extends SocialUser
+public class ApplicationUser extends SocialUser
 {
     private static final long serialVersionUID = 3247713418605012233L;
 
@@ -30,7 +30,7 @@ public class UserUIModel extends SocialUser
     private String lastName;
     private Set<SocialMediaProvider> signInProviders;
     
-    public UserUIModel(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired,
+    public ApplicationUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired,
             boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, String email, String firstName, String lastName,
             Set<SocialMediaProvider> signInProviders)
     {
@@ -42,7 +42,7 @@ public class UserUIModel extends SocialUser
         this.signInProviders = signInProviders;
     }
 
-    public UserUIModel(String id, String username, String password, Collection<? extends GrantedAuthority> authorities, String email, String firstName,
+    public ApplicationUser(String id, String username, String password, Collection<? extends GrantedAuthority> authorities, String email, String firstName,
             String lastName, Set<SocialMediaProvider> signInProviders)
     {
         super(username, password, authorities);
@@ -54,7 +54,7 @@ public class UserUIModel extends SocialUser
         this.signInProviders = signInProviders;        
     }
 
-    public UserUIModel(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+    public ApplicationUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
     }
 

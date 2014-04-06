@@ -4,7 +4,6 @@
 package com.flockspring.domain.service.user;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.social.UserIdSource;
 import org.springframework.social.security.SocialUserDetailsService;
 
 import com.flockspring.domain.types.impl.UpdateEmailImpl;
@@ -16,7 +15,7 @@ import com.flockspring.domain.types.impl.UpdateEmailImpl;
  * @date Jan 18, 2014
  *
  */
-public interface UserService extends UserDetailsService, SocialUserDetailsService, UserIdSource
+public interface UserService extends UserDetailsService, SocialUserDetailsService
 {
 
     void saveUpdateEmail(UpdateEmailImpl updateEmailImpl);

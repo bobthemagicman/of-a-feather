@@ -26,36 +26,36 @@ import org.springframework.social.security.SocialAuthenticationServiceLocator;
  */
 public class MongoUsersConnectionRepository implements UsersConnectionRepository
 {
-
-    private final UserSocialConnectionRepository userSocialConnectionRepository;
-    private final SocialAuthenticationServiceLocator socialAuthenticationServiceLocator;
     private final TextEncryptor textEncryptor;
     private ConnectionSignUp connectionSignUp;
-
-    public MongoUsersConnectionRepository(UserSocialConnectionRepository userSocialConnectionRepository,
-            SocialAuthenticationServiceLocator socialAuthenticationServiceLocator, TextEncryptor textEncryptor)
+    private final UserSocialConnectionRepository userSocialConnectionRepository;
+    private final SocialAuthenticationServiceLocator socialAuthenticationServiceLocator;
+    
+    public MongoUsersConnectionRepository(TextEncryptor textEncryptor, UserSocialConnectionRepository userSocialConnectionRepository,
+            SocialAuthenticationServiceLocator socialAuthenticationServiceLocator)
     {
+
+        this.textEncryptor = textEncryptor;
         this.userSocialConnectionRepository = userSocialConnectionRepository;
         this.socialAuthenticationServiceLocator = socialAuthenticationServiceLocator;
-        this.textEncryptor = textEncryptor;
     }
 
     public void setConnectionSignUp(ConnectionSignUp connectionSignUp)
     {
         this.connectionSignUp = connectionSignUp;
     }
-
+    
+    @Override
     public List<String> findUserIdsWithConnection(Connection<?> connection)
     {
         ConnectionKey key = connection.getKey();
-        List<UserSocialConnection> userSocialConnectionList = this.userSocialConnectionRepository.findByProviderIdAndProviderUserId(
+        List<UserSocialConnection> userSocialConnectionList = userSocialConnectionRepository.findByProviderIdAndProviderUserId(
                 key.getProviderId(), key.getProviderUserId());
         List<String> localUserIds = new ArrayList<String>();
-        for (UserSocialConnection userSocialConnection : userSocialConnectionList)
-        {
+        
+        for (UserSocialConnection userSocialConnection : userSocialConnectionList){
             localUserIds.add(userSocialConnection.getUserId());
         }
-
         if (localUserIds.size() == 0 && connectionSignUp != null)
         {
             String newUserId = connectionSignUp.execute(connection);
@@ -68,24 +68,27 @@ public class MongoUsersConnectionRepository implements UsersConnectionRepository
         return localUserIds;
     }
 
-    public Set<String> findUserIdsConnectedTo(String providerId, Set<String> providerUserIds)
-    {
+    @Override
+    public Set<String> findUserIdsConnectedTo(String providerId, Set<String> providerUserIds) {
         final Set<String> localUserIds = new HashSet<String>();
 
-        List<UserSocialConnection> userSocialConnectionList = this.userSocialConnectionRepository.findByProviderIdAndProviderUserIdIn(providerId,
-                providerUserIds);
-        for (UserSocialConnection userSocialConnection : userSocialConnectionList)
-        {
+        List<UserSocialConnection> userSocialConnectionList = userSocialConnectionRepository.findByProviderIdAndProviderUserIdIn(
+                providerId, providerUserIds);
+        for (UserSocialConnection userSocialConnection : userSocialConnectionList){
             localUserIds.add(userSocialConnection.getUserId());
         }
+        
         return localUserIds;
     }
 
-    public ConnectionRepository createConnectionRepository(String userId) {
-        if (userId == null) {
+    @Override
+    public ConnectionRepository createConnectionRepository(String userId)
+    {
+        if (userId == null)
+        {
             throw new IllegalArgumentException("userId cannot be null");
         }
         
-        return new MongoConnectionRepository(userId, userSocialConnectionRepository, socialAuthenticationServiceLocator, textEncryptor);
+        return new MongoConnectionRepository(userId, userSocialConnectionRepository, textEncryptor, socialAuthenticationServiceLocator);
     }
 }

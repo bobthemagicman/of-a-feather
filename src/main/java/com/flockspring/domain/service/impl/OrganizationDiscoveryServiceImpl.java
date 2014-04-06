@@ -6,18 +6,15 @@ package com.flockspring.domain.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.geo.Distance;
 import org.springframework.data.mongodb.core.geo.GeoPage;
 import org.springframework.data.mongodb.core.geo.Metrics;
-import org.springframework.data.mongodb.core.geo.Point;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.flockspring.dataaccess.mongodb.OrganizationRepository;
 import com.flockspring.domain.OrganizationFilter;
 import com.flockspring.domain.service.OrganizationDiscoveryService;
-import com.flockspring.domain.types.Address;
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.Region;
 import com.flockspring.domain.types.impl.OrganizationImpl;

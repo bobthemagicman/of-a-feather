@@ -34,7 +34,7 @@
             </c:if>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#" class="sign-up">SIGN UP</a></li>
-                <li><a href="#" class="log-in">LOG IN</a></li>
+                <li><a href="#" class="sign-in">SIGN IN</a></li>
                 <li><a href="http://blog.ofafeather.org">BLOG</a></li>
                 <li><a href="${aboutUsLink}">ABOUT US</a></li>
                 <li><a href="${addYourChurchLink}">ADD YOUR CHURCH</a></li>
