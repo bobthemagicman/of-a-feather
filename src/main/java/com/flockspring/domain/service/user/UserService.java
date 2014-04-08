@@ -6,7 +6,10 @@ package com.flockspring.domain.service.user;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.social.security.SocialUserDetailsService;
 
+import com.flockspring.domain.DuplicateEmailException;
+import com.flockspring.domain.service.user.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.impl.UpdateEmailImpl;
+import com.flockspring.ui.model.user.UserRegistrationUICommand;
 
 /**
  * UserService.java
@@ -19,5 +22,6 @@ public interface UserService extends UserDetailsService, SocialUserDetailsServic
 {
 
     void saveUpdateEmail(UpdateEmailImpl updateEmailImpl);
-
+    
+    ApplicationUserImpl registerNewUserAccount(UserRegistrationUICommand userAccountData) throws DuplicateEmailException;
 }
