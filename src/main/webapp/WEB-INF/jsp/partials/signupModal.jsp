@@ -1,4 +1,48 @@
-<div class="log-in-modal modal fade">
+<div class="sign-up-modal modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Sign up</h4>
+            </div>
+            <div id="sign-up-modal-body" class="modal-body">
+                <fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button>
+
+                <div class="or-separator">
+                    <h6 class="separator-text">or</h6>
+                    <hr>
+                </div>
+                <a href="#" class="email-sign-up">Sign up with Email</a>
+                <form accept-charset="UTF-8" action="/authenticate" class="sign-up-form" data-action="Signup" method="post" role="form" style="display: none">
+                    <div class="form-group">
+                        <input class="form-control" id="signup_firstname" name="firstname" placeholder="First Name" type="text">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" id="signup_lastname" name="lastname" placeholder="Last Name" type="text">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" id="signup_email" name="email" placeholder="Email Address" type="email">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" id="signup_password" name="password" placeholder="Password" type="password">
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" id="signup_password_confirm" name="password_confirm" placeholder="Confirm Password" type="password">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                </form>
+                <p class="agree-terms">By signing up, I agree to Of A Feather&apos;s <a href="#">Privacy Policy</a> and <a href="#">Terms &amp; Conditions</a>.</p>
+                    
+            </div>
+            <div class="modal-footer">
+                Already a member? <a href="#" class="switch-to-log-in-modal">Log in</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- div class="log-in-modal modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -37,4 +81,4 @@
             </div>
         </div>
     </div>
-</div>
+</div -->
