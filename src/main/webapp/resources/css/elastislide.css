@@ -60,7 +60,7 @@
 
 .elastislide-carousel ul li {
 	margin: 0;
-	-webkit-backface-visibility: hidden;
+/*	-webkit-backface-visibility: hidden; */
 }
 
 .elastislide-horizontal ul li {

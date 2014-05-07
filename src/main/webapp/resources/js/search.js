@@ -5,6 +5,10 @@
 
 var resultsPerPage = 2;
 
+var map;
+
+var marker = new Array();
+
 $(document).ready(function() {
 
     initializeSearchPage();
@@ -21,7 +25,6 @@ $(document).ready(function() {
         var options = {url : 'search/ajax/out-of-region-search', success: betaRegionEmailUpdateCallback}; 
         $("#email-submit-form").ajaxForm(options);
     }
-    
     
 });
 
@@ -400,6 +403,7 @@ function displayPage(pageToShow) {
 
 function expandCollapseMap() {
 
+    marker = [];
 
     var mapContainer = $(".map-container-outer, .map-container, #map-canvas");
 
@@ -442,9 +446,7 @@ function fixTabPanes() {
 }
 
 
-var map;
 
-var marker = new Array();
 
 function initializeMap() {
 
@@ -456,6 +458,7 @@ function initializeMap() {
 }
 
 function createMap() {
+    
     var lat = $(".main").attr("data-search-latitude");
     var long = $(".main").attr("data-search-longitude");
 
@@ -469,7 +472,7 @@ function createMap() {
 
     google.maps.visualRefresh = true;
 
-    marker = new Array();
+    
     
     placeMarkers();
     
@@ -496,8 +499,12 @@ function placeMarkers() {
 
             setTimeout(function() {
 
-                createMarker(markerId, markerLatLong, churchName, google.maps.Animation.DROP, resourceBaseURL + 'images/site/base_marker_small.png');
+                if(!(markerId in marker)) {
+                   
+                   createMarker(markerId, markerLatLong, churchName, google.maps.Animation.DROP, resourceBaseURL + 'images/site/base_marker_small.png');
 
+                }
+                   
             }, i * delay);
             
         }
@@ -510,6 +517,8 @@ function placeMarkers() {
         if(!$(".search-result-entry.show-result[data-result-id='" + index + "']").length) {
             
             marker[index].setMap(null);
+            
+            marker[index] = null;
             
             delete marker[index];
         
@@ -617,14 +626,21 @@ function updateResults(filterResult) {
     else {
         noResults();
     }
+    
+    //placeMarkers();
+    
 }
 
 function noResults() {
     $(".search-result-entry").remove();
-    $(".results-message").html("Sorry!<br />We were unable to find any results matching your criteria.<br />Please try broadening your search.");
+    var msg = 'Sorry!<br />We were unable to find any results matching your criteria.<br />Please try broadening your search.';
+    $(".results-message").html(msg);
     $(".results-message").show();
+    $(".results-message").removeClass('hidden');
     $(".pagination").hide();
     $(".showing-results").hide();
+    
+    placeMarkers();
 }
 
 function filterRequest() {

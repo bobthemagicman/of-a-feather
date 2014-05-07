@@ -631,7 +631,7 @@
                     <c:set var="resultsMessageHidden" value=" hidden" />
                     <c:set var="showingResultsHidden" value="" />
                 </c:if>
-                <div class="results-message${resultsMessageHidden}">"Sorry!<br />We were unable to find any results matching your criteria.<br />Please try broadening your search."</div>
+                <div class="results-message${resultsMessageHidden}">Sorry!<br />We were unable to find any results matching your criteria.<br />Please try broadening your search.</div>
                 <div class="showing-results${showingResultsHidden}">Showing Results <span class="now-showing">${results.pageStartIndex} - ${results.pageEndIndex}</span> of <span class="total-results">${results.totalNumberOfResults}</span> for <span class="user-search">&#34;${results.userInputQuery}&#34;</span></div>
                                 
                 <div class="search-results">
