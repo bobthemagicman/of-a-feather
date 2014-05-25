@@ -35,11 +35,13 @@
 <script type="text/javascript" src="${labJS}"></script>
 
 <spring:url value="/static/js/bootstrap.min.js" var="bootstrapJS" />
+<spring:url value="/static/js/uservoice.js" var="userVoiceJS" />
 <script type="text/javascript">
     $LAB.setOptions({AlwaysPreserveOrder:true});
     $LAB.queueScript("http://code.jquery.com/jquery-latest.js")
         .queueScript("${bootstrapJS}")
-        .queueScript("http://code.jquery.com/ui/1.10.3/jquery-ui.js");    
+        .queueScript("http://code.jquery.com/ui/1.10.3/jquery-ui.js")
+        .queueScript("${userVoiceJS}");
 </script>
 
 <spring:url value="/static/" var="resourceBaseURL" />

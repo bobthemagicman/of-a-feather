@@ -643,7 +643,7 @@
                     <c:forEach items="${results.items}" var="result" varStatus="p_tracker">
                         <spring:url value="/static/images/church-images/${result.id}/sr-${result.displayImage.path}" var="imagePath"/>
                         <c:if test="${empty result.displayImage.path}">
-                            <c:set var="imagePath" value="http://placehold.it/200x200" />   
+                            <c:set var="imagePath" value="http://maps.googleapis.com/maps/api/streetview?size=200x200&location=${result.latitude},${result.longitude}&fov=120&pitch=10&sensor=false" />   
                         </c:if>
                         
                         <c:if test="${result.usersFavorite}">
