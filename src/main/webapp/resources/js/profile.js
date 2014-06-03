@@ -85,6 +85,7 @@ var map;
 var marker;
 
 function initializeMap() {
+   
   $("#search-bar").geocomplete({country: 'us'});  
   var lat, long;
   
@@ -115,7 +116,7 @@ function placeMarker() {
 
     markerLatLong = new google.maps.LatLng(lat, long);
 
-    createMarker(markerLatLong, churchName, google.maps.Animation.DROP, 'http://ofafeather-testing.appwebmasters.com/images/base_marker_small.png');
+    createMarker(markerLatLong, churchName, google.maps.Animation.DROP, resourceBaseURL + 'images/site/base_marker_small.png');
  
 }
 

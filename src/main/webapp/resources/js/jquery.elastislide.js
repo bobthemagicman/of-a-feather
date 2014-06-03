@@ -394,13 +394,13 @@
 
 			// width for the items (%)
 			var w = this.options.orientation === 'horizontal' ? ( Math.floor( this.$carousel.width() / this.options.minItems ) * 100 ) / this.$carousel.width() : 100;
-			
+			/*
 			this.$items.css( {
 				'width' : w + '%',
 				'max-width' : this.imgSize.width,
 				'max-height' : this.imgSize.height
 			} );
-
+                        */
 			if( this.options.orientation === 'vertical' ) {
 			
 				this.$wrapper.css( 'max-width', this.imgSize.width + parseInt( this.$wrapper.css( 'padding-left' ) ) + parseInt( this.$wrapper.css( 'padding-right' ) ) );

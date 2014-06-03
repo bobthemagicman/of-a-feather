@@ -631,7 +631,7 @@
                     <c:set var="resultsMessageHidden" value=" hidden" />
                     <c:set var="showingResultsHidden" value="" />
                 </c:if>
-                <div class="results-message${resultsMessageHidden}">"Sorry!<br />We were unable to find any results matching your criteria.<br />Please try broadening your search."</div>
+                <div class="results-message${resultsMessageHidden}">Sorry!<br />We were unable to find any results matching your criteria.<br />Please try broadening your search.</div>
                 <div class="showing-results${showingResultsHidden}">Showing Results <span class="now-showing">${results.pageStartIndex} - ${results.pageEndIndex}</span> of <span class="total-results">${results.totalNumberOfResults}</span> for <span class="user-search">&#34;${results.userInputQuery}&#34;</span></div>
                                 
                 <div class="search-results">
@@ -643,7 +643,7 @@
                     <c:forEach items="${results.items}" var="result" varStatus="p_tracker">
                         <spring:url value="/static/images/church-images/${result.id}/sr-${result.displayImage.path}" var="imagePath"/>
                         <c:if test="${empty result.displayImage.path}">
-                            <c:set var="imagePath" value="http://placehold.it/200x200" />   
+                            <c:set var="imagePath" value="http://maps.googleapis.com/maps/api/streetview?size=200x200&location=${result.latitude},${result.longitude}&fov=120&pitch=10&sensor=false" />   
                         </c:if>
                         
                         <c:if test="${result.usersFavorite}">
