@@ -15,15 +15,17 @@ import org.springframework.social.config.annotation.EnableSocial;
 import org.springframework.social.config.annotation.SocialConfigurer;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionRepository;
+import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.web.ConnectController;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
 import org.springframework.social.security.AuthenticationNameUserIdSource;
 import org.springframework.social.security.SocialAuthenticationServiceLocator;
-import org.springframework.social.twitter.connect.TwitterConnectionFactory;
 
 import com.flockspring.dataaccess.mongodb.MongoUsersConnectionRepository;
 import com.flockspring.dataaccess.mongodb.UserSocialConnectionRepository;
+import com.flockspring.domain.service.impl.AutoConnectionSignUp;
+import com.flockspring.domain.service.user.UserService;
 
 /**
  * SocialConfig.java
@@ -39,11 +41,14 @@ public class SocialConfig implements SocialConfigurer
     @Inject
     private UserSocialConnectionRepository userSocialConnectionRepository;
     
+    @Inject
+    private UserService userDetailsService;
+    
     @Override
     public void addConnectionFactories(ConnectionFactoryConfigurer cfConfig, Environment env) {
-        String twitterKey = env.getProperty("twitter.consumer.key");
-        String twitterSecret = env.getProperty("twitter.consumer.secret");
-        cfConfig.addConnectionFactory(new TwitterConnectionFactory(twitterKey, twitterSecret));
+//        String twitterKey = env.getProperty("twitter.consumer.key");
+//        String twitterSecret = env.getProperty("twitter.consumer.secret");
+//        cfConfig.addConnectionFactory(new TwitterConnectionFactory(twitterKey, twitterSecret));
         
         String facebookAppId = env.getProperty("facebook.app.id");
         String facebookAppSecret = env.getProperty("facebook.app.secret");
@@ -62,9 +67,14 @@ public class SocialConfig implements SocialConfigurer
         MongoUsersConnectionRepository repository = new MongoUsersConnectionRepository(Encryptors.noOpText(), userSocialConnectionRepository, 
                 (SocialAuthenticationServiceLocator)connectionFactoryLocator);
         
-//        repository.setConnectionSignUp(autoConnectionSignUp());
+        repository.setConnectionSignUp(autoConnectionSignUp());
         
         return repository;
+    }
+    
+    @Bean
+    public ConnectionSignUp autoConnectionSignUp() {
+        return new AutoConnectionSignUp(userDetailsService);
     }
     
     @Bean

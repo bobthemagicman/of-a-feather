@@ -101,7 +101,7 @@ public class SearchPageController
         this.userService = userService;
     }
 
-    @RequestMapping("/search")
+    @RequestMapping("")
     public ModelAndView search(@RequestParam(value = "search-bar", required = false) String query,
             @RequestParam(value = "page", required = false, defaultValue = "0") String page, HttpSession session, HttpServletRequest request)
     {

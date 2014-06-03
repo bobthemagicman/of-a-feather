@@ -33,8 +33,16 @@
             </div>
             </c:if>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" class="sign-up">SIGN UP</a></li>
+                <sec:authorize access="isAuthenticated()">
+                <c:if test="${not empty user.displayName}">
+			    <li><c:if test="${not empty user.displayImageUrl}"><img src="${user.displayImageUrl}" /></c:if>${displayName}</li> 
+			    <li><a href="<c:url value="/signout" />" > SIGN OUT</a></li>  
+			    </c:if>
+                </sec:authorize>
+                <sec:authorize access="isAnonymous()">
+                <li><a href="/ofAFeather/user/register?moda=true" class="sign-up">SIGN UP</a></li>
                 <li><a href="#" class="sign-in">SIGN IN</a></li>
+                </sec:authorize>
                 <li><a href="http://blog.ofafeather.org">BLOG</a></li>
                 <li><a href="${aboutUsLink}">ABOUT US</a></li>
                 <li><a href="${addYourChurchLink}">ADD YOUR CHURCH</a></li>
@@ -44,4 +52,3 @@
 </nav>
 
 <%@ include file="/WEB-INF/jsp/partials/loginModal.jsp"%>
-<%@ include file="/WEB-INF/jsp/partials/signupModal.jsp"%>

@@ -1,9 +1,6 @@
 $(document).ready(function() {
-   
     initializeUserFramework();
-   
-    //initializeFacebookSDK();
-    
+    initializeFacebookSDK();
 });
 
 function initializeUserFramework() {
@@ -11,9 +8,19 @@ function initializeUserFramework() {
     $(".log-in-modal").modal({ show: false });
     $(".sign-up-modal").modal({ show: false });
     
-    $(".sign-up").click(function() {
-       $(".sign-up-modal").modal('show'); 
-    });
+    $(".sign-up").click(function(e) {
+        $(".sign-up-modal").modal('show'); 
+        
+        $.ajax({
+           url : "/ofAFeather/user/register?modal=true",
+           type: "GET",
+           success: function(response) {
+             $('<div class="sign-up-modal modal fade"></div>').html(response).modal();
+           }
+         });
+         
+         e.preventDefault();
+     });
     
     $(".sign-in").click(function() {
         $(".log-in-modal").modal('show');
@@ -54,7 +61,7 @@ function initializeFacebookSDK() {
     
   window.fbAsyncInit = function() {
   FB.init({
-    appId      : '{your-app-id}',
+    appId      : '154342344633893',
     status     : true, // check login status
     cookie     : true, // enable cookies to allow the server to access the session
     xfbml      : true  // parse XFBML

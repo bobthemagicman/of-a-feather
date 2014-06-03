@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/jsp/init.jsp"%>
 
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:fb="http://ogp.me/ns/fb#">
     <head>
         <%-- Common Metadata, scripts, and CSS --%>
         <%@ include file="/WEB-INF/jsp/partials/commonHead.jsp"%>

@@ -10,13 +10,13 @@ import java.util.TreeSet;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import com.flockspring.dataaccess.mongodb.model.UserModel;
-import com.flockspring.domain.service.user.impl.ApplicationUserImpl;
+import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.user.SocialMediaProvider;
 import com.flockspring.domain.types.user.UserRole;
 
 /**
  * UserUIModelMapper.java
- * 
+ *  
  * @author Justen L. Britain
  * @date Mar 8, 2014
  * 
@@ -24,7 +24,7 @@ import com.flockspring.domain.types.user.UserRole;
 public class ApplicationUserModelMapper
 {
 
-    private Set<SocialMediaProvider> signInProviders;
+    private TreeSet<SocialMediaProvider> signInProviders;
     private String encodedPassword;
     private String lastName;
     private String firstName;
@@ -41,9 +41,8 @@ public class ApplicationUserModelMapper
 
     public ApplicationUserImpl map(UserModel user)
     {
-        String password = "";
         
-        return new ApplicationUserImpl(user.getId(), user.getEmail(), password , createAuthorities(user.getUserRole()), user.getEmail(),
+        return new ApplicationUserImpl(user.getId(), user.getEmail(), user.getPassword() , createAuthorities(user.getUserRole()), user.getEmail(),
                 user.getFirstName(), user.getLastName(), user.getSignInProviders());        
     }
 
@@ -87,6 +86,6 @@ public class ApplicationUserModelMapper
      */
     public UserModel build()
     {
-        return new UserModel("", email, firstName, lastName, encodedPassword, UserRole.USER, signInProviders);
+        return new UserModel(null, email, firstName, lastName, encodedPassword, UserRole.USER, signInProviders);
     }
 }

@@ -43,11 +43,6 @@ public class UserRegistrationUICommand
 
     // Constructor is omitted for the of clarity.
 
-    public boolean isNormalRegistration()
-    {
-        return signInProvider == null;
-    }
-
     public boolean isSocialSignIn()
     {
         return signInProvider != null;

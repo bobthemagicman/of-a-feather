@@ -4,13 +4,13 @@
 package com.flockspring.ui.model.user;
 
 /**
- * UserUIModel.java
+ * SocialMediaProcessor.java
  *
  * @author Justen L. Britain
- * @date Apr 6, 2014
+ * @date May 10, 2014
  *
  */
-public class UserUIModel
+public interface SocialMediaProcessor
 {
 
 }

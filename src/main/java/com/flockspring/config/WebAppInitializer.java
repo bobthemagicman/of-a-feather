@@ -3,10 +3,15 @@
  */
 package com.flockspring.config;
 
+import javax.servlet.Filter;
+
+import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 import com.flockspring.dataaccess.config.MongoConfiguration;
 import com.flockspring.domain.config.DomainConfig;
+import com.flockspring.ui.config.SecurityConfig;
+import com.flockspring.ui.config.SocialConfig;
 import com.flockspring.ui.config.WebappConfig;
 
 
@@ -23,7 +28,7 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
     @Override
     protected Class<?>[] getRootConfigClasses()
     {
-        return new Class<?>[] { MongoConfiguration.class, DomainConfig.class };
+        return new Class<?>[] { MongoConfiguration.class, DomainConfig.class, SecurityConfig.class, SocialConfig.class };
     }
 
     @Override
@@ -38,4 +43,8 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
         return new String[] { "/" };
     }
 
+    @Override
+    protected Filter[] getServletFilters() {
+        return new Filter[] { new DelegatingFilterProxy("springSecurityFilterChain") };
+    }
 }

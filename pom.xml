@@ -60,7 +60,7 @@
 		<commons-fileupload.version>1.3</commons-fileupload.version>
 
 		<!-- Convenience dependencies -->
-		<guava.version>r09</guava.version>
+		<guava.version>17.0</guava.version>
 		<commons-lang3.version>3.1</commons-lang3.version>
 		<commons-io.version>2.4</commons-io.version>
 
@@ -83,10 +83,6 @@
 				<build.finalName>ofAFeather</build.finalName>
 				<build.environment>dev</build.environment>
 
-				<mongodb.dbName>ofAFeather</mongodb.dbName>
-				<mongodb.port>27017</mongodb.port>
-				<mongodb.host>localhost</mongodb.host>
-
 				<!-- Log Levels -->
 				<com.flockspring.level>DEBUG</com.flockspring.level>
 				<org.springframework.level>WARN</org.springframework.level>
@@ -106,9 +102,6 @@
 			<properties>
 				<build.finalName>ROOT</build.finalName>
 				<build.environment>prod</build.environment>
-
-				<mongodb.port>27698</mongodb.port>
-				<mongodb.host>ds027698-internal.mongolab.com</mongodb.host>
 
 				<!-- Log Levels -->
 				<com.flockspring.level>ERROR</com.flockspring.level>
@@ -256,6 +249,11 @@
             <artifactId>spring-social-twitter</artifactId>
             <version>${spring-social.version}</version>
         </dependency>
+        <dependency>
+		    <groupId>org.springframework.social</groupId>
+		    <artifactId>spring-social-google</artifactId>
+	        <version>1.0.0.M3</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.social</groupId>
 			<artifactId>spring-social-web</artifactId>
@@ -480,17 +478,56 @@
 					</additionalProjectnatures>
 				</configuration>
 			</plugin>
+<!-- 			<plugin> -->
+<!--                 <groupId>com.github.joelittlejohn.embedmongo</groupId> -->
+<!--                 <artifactId>embedmongo-maven-plugin</artifactId> -->
+<!--                 <version>0.1.10</version> -->
+<!--                 <executions> -->
+<!--                     <execution> -->
+<!--                         <id>start</id> -->
+<!--                         <goals> -->
+<!--                             <goal>start</goal> -->
+<!--                         </goals>                         -->
+<!--                     </execution> -->
+<!--                     <execution> -->
+<!--                         <id>stop</id> -->
+<!--                         <goals> -->
+<!--                             <goal>stop</goal> -->
+<!--                         </goals> -->
+<!--                     </execution> -->
+<!--                 </executions> -->
+<!--                 <configuration> -->
+<!--                  <fork>true</fork>  -->
+<!--               </configuration> -->
+<!--             </plugin> -->
 			<plugin>
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId>
-				<version>2.1</version>
+				<version>2.2</version>
+				<executions>
+                    <execution>
+                        <id>start</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                        </configuration>
+                    </execution>                    
+                </executions>
 				<configuration>
-					<url>http://localhost:8080/manager/text/</url>
-					<server>TomcatServer</server>
-					<password>mavenDeployer</password>
-					<username>mavenDeployer</username>
-					<port>9966</port>
-					<path>/${build.finalName}</path>
+<!--                     <port>8080</port> -->
+<!--                     <path>/</path> -->
+<!--                     <warSourceDirectory>${project.build.directory}/${build.finalName}</warSourceDirectory> -->
+<!--                     <systemProperties> -->
+<!--                         <spring.profiles.active>dev</spring.profiles.active> -->
+<!--                     </systemProperties> -->
+                    <url>http://localhost:8080/manager/text/</url>
+                    <server>TomcatServer</server>
+                    <password>mavenDeployer</password>
+                    <username>mavenDeployer</username>
+                    <port>9966</port>
+                    <path>/${build.finalName}</path>
 				</configuration>
 			</plugin>
 			<plugin>

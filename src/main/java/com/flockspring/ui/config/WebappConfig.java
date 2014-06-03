@@ -14,17 +14,21 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
+
+import com.flockspring.ui.controller.HeaderHandlerInterceptor;
+import com.flockspring.ui.mapper.user.HeaderUIModelMapper;
 
 /**
  * WebappConfig.java
@@ -36,9 +40,18 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc
 @ComponentScan(basePackages = { "com.flockspring.ui.controller", "com.flockspring.ui.mapper" })
 @Configuration
+@PropertySource("classpath:ui.properties")
 public class WebappConfig extends WebMvcConfigurerAdapter
 {
 
+    static @Bean  
+    public PropertySourcesPlaceholderConfigurer myPropertySourcesPlaceholderConfigurer()  
+    {  
+        return new PropertySourcesPlaceholderConfigurer();  
+    }
+
+    private ConnectionRepository connectionRepository;  
+    
     // @Autowired
     // private FlowExecutor flowExecutor;
     //
@@ -67,6 +80,19 @@ public class WebappConfig extends WebMvcConfigurerAdapter
         registry.addViewController("/profile").setViewName("profilePage");
         registry.addViewController("/privacyPolicy").setViewName("privacyPolicyPage");
         registry.addViewController("/termsConditions").setViewName("termsConditionsPage");
+        registry.addViewController("/signin").setViewName("signinPage");
+    }
+    
+    @Override
+    public void addInterceptors(InterceptorRegistry registry)
+    {
+        super.addInterceptors(registry);
+        registry.addInterceptor(new HeaderHandlerInterceptor(connectionRepository, getHeaderModelMapper()));
+    }
+
+    private HeaderUIModelMapper getHeaderModelMapper()
+    {
+        return new HeaderUIModelMapper();
     }
 
     @Bean
@@ -104,14 +130,14 @@ public class WebappConfig extends WebMvcConfigurerAdapter
         return resolver;
     }
 
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer properties() {
-        PropertySourcesPlaceholderConfigurer props = new PropertySourcesPlaceholderConfigurer();
-        props.setLocation(new ClassPathResource("ui.properties"));
-        
-        return props;
-    }
-    
+//    @Bean
+//    public static PropertySourcesPlaceholderConfigurer properties() {
+//        PropertySourcesPlaceholderConfigurer props = new PropertySourcesPlaceholderConfigurer();
+//        props.setLocation(new ClassPathResource("ui.properties"));
+//        
+//        return props;
+//    }
+//    
     // @Bean
     // public FlowHandlerAdapter flowHandlerAdapter()
     // {

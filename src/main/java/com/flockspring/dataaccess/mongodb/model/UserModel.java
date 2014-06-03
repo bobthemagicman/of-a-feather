@@ -3,7 +3,7 @@
  */
 package com.flockspring.dataaccess.mongodb.model;
 
-import java.util.Set;
+import java.util.TreeSet;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -26,10 +26,10 @@ public class UserModel
     private String lastName;
     private String password;
     private UserRole userRole;
-    private Set<SocialMediaProvider> signInProviders;
+    private TreeSet<SocialMediaProvider> signInProviders;
   
     public UserModel(String id, String email, String firstName, String lastName, String password, UserRole userRole,
-            Set<SocialMediaProvider> signInProviders)
+            TreeSet<SocialMediaProvider> signInProviders)
     {
         super();
         this.id = id;
@@ -71,42 +71,42 @@ public class UserModel
         return userRole;
     }
     
-    public Set<SocialMediaProvider> getSignInProviders()
+    public TreeSet<SocialMediaProvider> getSignInProviders()
     {
         return signInProviders;
     }
     
-    public void setId(String id)
+    public void TreeSetId(String id)
     {
         this.id = id;
     }
     
-    public void setEmail(String email)
+    public void TreeSetEmail(String email)
     {
         this.email = email;
     }
     
-    public void setFirstName(String firstName)
+    public void TreeSetFirstName(String firstName)
     {
         this.firstName = firstName;
     }
     
-    public void setLastName(String lastName)
+    public void TreeSetLastName(String lastName)
     {
         this.lastName = lastName;
     }
     
-    public void setPassword(String password)
+    public void TreeSetPassword(String password)
     {
         this.password = password;
     }
     
-    public void setUserRole(UserRole userRole)
+    public void TreeSetUserRole(UserRole userRole)
     {
         this.userRole = userRole;
     }
     
-    public void setSignInProviders(Set<SocialMediaProvider> signInProviders)
+    public void TreeSetSignInProviders(TreeSet<SocialMediaProvider> signInProviders)
     {
         this.signInProviders = signInProviders;
     }

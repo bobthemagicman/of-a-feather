@@ -1,10 +1,10 @@
 /*
  * Copyright 2013 FlockSpring Inc. All rights reserved
  */
-package com.flockspring.domain.service.user.impl;
+package com.flockspring.domain.types.impl;
 
 import java.util.Collection;
-import java.util.Set;
+import java.util.TreeSet;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -28,11 +28,11 @@ public class ApplicationUserImpl extends SocialUser
     private String email;
     private String firstName;
     private String lastName;
-    private Set<SocialMediaProvider> signInProviders;
+    private TreeSet<SocialMediaProvider> signInProviders;
     
     public ApplicationUserImpl(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired,
             boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, String email, String firstName, String lastName,
-            Set<SocialMediaProvider> signInProviders)
+            TreeSet<SocialMediaProvider> signInProviders)
     {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 
@@ -43,7 +43,7 @@ public class ApplicationUserImpl extends SocialUser
     }
 
     public ApplicationUserImpl(String id, String username, String password, Collection<? extends GrantedAuthority> authorities, String email, String firstName,
-            String lastName, Set<SocialMediaProvider> signInProviders)
+            String lastName, TreeSet<SocialMediaProvider> signInProviders)
     {
         super(username, password, authorities);
         
@@ -78,32 +78,32 @@ public class ApplicationUserImpl extends SocialUser
         return lastName;
     }
     
-    public Set<SocialMediaProvider> getSignInProviders()
+    public TreeSet<SocialMediaProvider> getSignInProviders()
     {
         return signInProviders;
     }
 
-    public void setId(String id)
+    public void TreeSetId(String id)
     {
         this.id = id;
     }
 
-    public void setEmail(String email)
+    public void TreeSetEmail(String email)
     {
         this.email = email;
     }
 
-    public void setFirstName(String firstName)
+    public void TreeSetFirstName(String firstName)
     {
         this.firstName = firstName;
     }
 
-    public void setLastName(String lastName)
+    public void TreeSetLastName(String lastName)
     {
         this.lastName = lastName;
     }
 
-    public void setSignInProviders(Set<SocialMediaProvider> signInProviders)
+    public void TreeSetSignInProviders(TreeSet<SocialMediaProvider> signInProviders)
     {
         this.signInProviders = signInProviders;
     }

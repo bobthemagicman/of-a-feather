@@ -3,13 +3,17 @@
  */
 package com.flockspring.ui.controller;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.TreeSet;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.UserProfile;
@@ -26,9 +30,10 @@ import org.springframework.web.context.request.WebRequest;
 
 import com.flockspring.domain.DuplicateEmailException;
 import com.flockspring.domain.service.user.UserService;
-import com.flockspring.domain.service.user.impl.ApplicationUserImpl;
+import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.user.SocialMediaProvider;
 import com.flockspring.ui.model.user.UserRegistrationUICommand;
+import com.google.common.base.Strings;
 
 /**
  * SignUpController.java
@@ -50,21 +55,18 @@ public class SignUpController
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
-    public String redirectRequestToRegistrationPage()
-    {
-        return "redirect:/user/register";
-    }
-
-    @RequestMapping(value = "/user/register", method = RequestMethod.GET)
     public String showUserRegistrationUICommand(WebRequest request, Model model)
     {
+        boolean isModalRequest = Boolean.valueOf(Strings.nullToEmpty(request.getParameter("modal")));
+        
         ProviderSignInUtils providerSignInUtils = new ProviderSignInUtils();
         Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
 
         UserRegistrationUICommand registration = createRegistrationDTO(connection);
         model.addAttribute("user", registration);
-
-        return "user/registrationForm";
+        model.addAttribute("isModalRequest", isModalRequest);
+        
+        return "signupPage";
     }
 
     private UserRegistrationUICommand createRegistrationDTO(Connection<?> connection)
@@ -85,20 +87,20 @@ public class SignUpController
         return dto;
     }
 
-    @RequestMapping(value = "/user/register", method = RequestMethod.POST)
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String registerUserAccount(@Valid @ModelAttribute("user") UserRegistrationUICommand userAccountData, BindingResult result,
             WebRequest request) throws DuplicateEmailException
     {
         if (result.hasErrors())
         {
-            return "user/registrationForm";
+            return "signupPage";
         }
 
         ApplicationUserImpl registered = createUserAccount(userAccountData, result);
 
         if (registered == null)
         {
-            return "user/registrationForm";
+            return "signupPage";
         }
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(registered, null, registered.getAuthorities());
@@ -110,17 +112,19 @@ public class SignUpController
 
     private ApplicationUserImpl createUserAccount(UserRegistrationUICommand userAccountData, BindingResult result)
     {
-        ApplicationUserImpl registered = null;
+        ApplicationUserImpl applicationUser = new ApplicationUserImpl("", userAccountData.getEmail(), userAccountData.getPassword(), 
+                Collections.<GrantedAuthority>emptySet(), userAccountData.getEmail(), userAccountData.getFirstName(), userAccountData.getLastName(), 
+                new TreeSet<SocialMediaProvider>());
 
         try
         {
-            registered = service.registerNewUserAccount(userAccountData);
+            applicationUser = service.registerNewUserAccount(applicationUser);
         } catch (DuplicateEmailException ex)
         {
             addFieldError("user", "email", userAccountData.getEmail(), "NotExist.user.email", result);
         }
 
-        return registered;
+        return applicationUser;
     }
 
     private void addFieldError(String objectName, String fieldName, String fieldValue, String errorCode, BindingResult result)

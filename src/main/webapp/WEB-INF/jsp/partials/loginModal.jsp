@@ -6,16 +6,20 @@
                 <h4 class="modal-title">Log in</h4>
             </div>
             <div id="log-in-modal-body" class="modal-body">
-                <fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button>
+                <div class="social-container">
+                    <a href="<c:url value="/auth/facebook"/>"><button class="btn btn-xlarge btn-facebook"><i class="fa fa-facebook"></i> | Connect with Facebook</button></a>
+                    <a href="<c:url value="/auth/twitter"/>"><button class="btn btn-xlarge btn-twitter"><i class="fa fa-twitter"></i> | Connect with Twitter</button></a>
+                </div>
 
                 <div class="or-separator">
                     <h6 class="separator-text">or</h6>
                     <hr>
                 </div>
 
-                <form accept-charset="UTF-8" action="/authenticate" class="signin-form login-form" data-action="Signin" method="post" role="form">
+                <form accept-charset="UTF-8" action="${pageContext.request.contextPath}/signin/authenticate" class="signin-form login-form" data-action="Signin" method="post" role="form">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div class="form-group">
-                        <input class="form-control" id="signin_email" name="email" placeholder="Email Address" type="email">
+                        <input class="form-control" id="user-email" name="username" placeholder="Email Address" type="email">
                     </div>
                     
                     <div class="form-group">

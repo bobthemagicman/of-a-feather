@@ -1,23 +1,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
-<spring:url value="/static/images/site/ofafeather_logo.png" var="ofafeatherLogo" />
-<spring:url value="/static/css/ofafeather.css" var="customStyleCSS" />
-<spring:url value="/static/images/ofAFeatherIcon.ico" var="ofAFeatherIcon" />
+<link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"/>
+<link rel="stylesheet" type="text/css" href="<spring:url value="/static/css/ofafeather.css"/>"  />
+<link rel="stylesheet" type="text/css" href="<spring:url value="/static/css/social-buttons.css"/>"  />
+<link rel="stylesheet" type="text/css" href="<spring:url value="/static/css/elastislide.css"/>"  />
 
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
+<link rel="icon" href="<spring:url value="/static/images/ofAFeatherIcon.ico" />" />
 
-<spring:url value="/static/css/ofafeather.css" var="customStyleCSS" />
-<link href="${customStyleCSS}" rel="stylesheet" type="text/css" />
-<%-- <link href="${customStyleLESS}" rel="stylesheet/less" type="text/css" /> --%>
-<!-- <spring:url value="/static/js/less-1.4.1.min.js" var="lessJS" /> -->
-<%-- <script type="text/javascript" src="${lessJS}" /> --%>
-
-<link href="${ofAFeatherIcon}" rel="icon" />
-
-<spring:url value="/static/js/iepngfix_tilebg.js" var="iePngFx_tileBg" />
-<spring:url value="/static/js/iepngfix.js" var="iePngFx" />
-<script type="text/javascript" src="${iePngFx }"></script>
-<script type="text/javascript" src="${iePngFx_tileBg }"></script>
+<script type="text/javascript" src="<spring:url value="/static/js/iepngfix_tilebg.js" />"></script>
+<script type="text/javascript" src="<spring:url value="/static/js/iepngfix.js" />"></script>
 
 <%-- Google Analytics Snippit --%>
 <script>
@@ -31,23 +23,21 @@
 
 </script>
 
-<spring:url value="/static/js/LAB-debug.min.js" var="labJS" />
-<script type="text/javascript" src="${labJS}"></script>
+<script type="text/javascript" src="<spring:url value="/static/js/LAB-debug.min.js" />"></script>
 
 <spring:url value="/static/js/user_framework.js" var="userFramework" />
-
-<spring:url value="/static/js/bootstrap.min.js" var="bootstrapJS" />
 <script type="text/javascript">
     $LAB.setOptions({AlwaysPreserveOrder:true});
     $LAB.queueScript("http://code.jquery.com/jquery-latest.js")
-        .queueScript("${bootstrapJS}")
+        .queueScript("//netdna.bootstrapcdn.com/bootstrap/2.3.2/js/bootstrap.min.js")
         .queueScript("http://code.jquery.com/ui/1.10.3/jquery-ui.js")
         .queueScript("${userFramework}");
 </script>
 
-<spring:url value="/static/" var="resourceBaseURL" />
+
 <script type="text/javascript">
-    var resourceBaseURL = '${resourceBaseURL}';
+    var resourceBaseURL = '<spring:url value="/static/" />';
 </script>
 
 <c:set var="navSearchEnabled" value="false" /> 
+<spring:url value="/static/images/site/ofafeather_logo.png" var="ofafeatherLogo" />

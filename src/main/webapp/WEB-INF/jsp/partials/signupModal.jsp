@@ -1,3 +1,5 @@
+<%@ include file="/WEB-INF/jsp/init.jsp"%>
+
 <div class="sign-up-modal modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -6,32 +8,63 @@
                 <h4 class="modal-title">Sign up</h4>
             </div>
             <div id="sign-up-modal-body" class="modal-body">
-                <fb:login-button show-faces="true" width="200" max-rows="1"></fb:login-button>
+                <div class="social-container">
 
+                    <button class="btn btn-xlarge btn-facebook register"><i class="fa fa-facebook"></i> | Connect with Facebook</button>
+                    <button class="btn btn-xlarge btn-twitter register"><i class="fa fa-twitter"></i> | Connect with Twitter</button>
+                
+                <form:form action="${pageContext.request.contextPath}/user/register" commandName="user" method="POST" enctype="utf8" role="form" class="sign-up-form" data-action="Signup" >    
+                    <%-- 
+                    <form:hidden path="signInProvider"/>
+                    <div class="form-group">
+                        <form:password id="user-password" path="password" cssClass="form-control" placeholder="Password"/>
+                        <form:errors id="error-password" path="password" cssClass="help-block"/>
+                    </div>
+                    <div class="form-group">
+                        <form:password id="user-passwordVerification" path="passwordVerification" cssClass="form-control" placeholder="Confirm Password"/>
+                        <form:errors id="error-passwordVerification" path="passwordVerification" cssClass="help-block"/>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+                    
+                    --%>
+                    </form:form>
+                </div>
+                
                 <div class="or-separator">
                     <h6 class="separator-text">or</h6>
                     <hr>
                 </div>
-                <a href="#" class="email-sign-up">Sign up with Email</a>
-                <form accept-charset="UTF-8" action="/authenticate" class="sign-up-form" data-action="Signup" method="post" role="form" style="display: none">
+                
+                <button class="btn btn-xlarge email-sign-up">Sign up with Email</button>
+                   
+<%--                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> --%>
+                    <form:form action="${pageContext.request.contextPath}/user/register" commandName="user" method="POST" enctype="utf8" role="form" class="sign-up-form" data-action="Signup" >
+                    <input type="hidden" path="${_csrf.parameterName}" value="${_csrf.token}" >
+                    
                     <div class="form-group">
-                        <input class="form-control" id="signup_firstname" name="firstname" placeholder="First Name" type="text">
+                        <form:input id="user-firstName" path="firstName" cssClass="form-control" placeholder="First Name"/>
+                        <form:errors id="error-firstName" path="firstName" cssClass="help-block"/>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" id="signup_lastname" name="lastname" placeholder="Last Name" type="text">
+                        <form:input id="user-lastName" path="lastName" cssClass="form-control" placeholder="Last Name"/>
+                        <form:errors id="error-lastName" path="lastName" cssClass="help-block"/>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" id="signup_email" name="email" placeholder="Email Address" type="email">
+                        <form:input id="user-email" path="email" cssClass="form-control" placeholder="Email Address"/>
+                        <form:errors id="error-email" path="email" cssClass="help-block"/>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" id="signup_password" name="password" placeholder="Password" type="password">
+                        <form:password id="user-password" path="password" cssClass="form-control" placeholder="Password"/>
+                        <form:errors id="error-password" path="password" cssClass="help-block"/>
                     </div>
                     <div class="form-group">
-                        <input class="form-control" id="signup_password_confirm" name="password_confirm" placeholder="Confirm Password" type="password">
+                        <form:password id="user-passwordVerification" path="passwordVerification" cssClass="form-control" placeholder="Confirm Password"/>
+                        <form:errors id="error-passwordVerification" path="passwordVerification" cssClass="help-block"/>
                     </div>
                     
                     <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
-                </form>
+                </form:form>
                 <p class="agree-terms">By signing up, I agree to Of A Feather&apos;s <a href="#">Privacy Policy</a> and <a href="#">Terms &amp; Conditions</a>.</p>
                     
             </div>

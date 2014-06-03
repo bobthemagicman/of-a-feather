@@ -6,8 +6,8 @@ package com.flockspring.domain.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -20,15 +20,14 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @ComponentScan(basePackages={"com.flockspring.domain.service"})
 @Configuration
+@PropertySource("classpath:com/flockspring/domain/service/config/organizationDiscoveryService.properties")
 public class DomainConfig
 {
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer properties() {
-        PropertySourcesPlaceholderConfigurer props = new PropertySourcesPlaceholderConfigurer();
-        props.setLocation(new ClassPathResource("com/flockspring/domain/service/config/organizationDiscoveryService.properties"));
-        
-        return props;
-    }
+    static @Bean  
+    public PropertySourcesPlaceholderConfigurer myPropertySourcesPlaceholderConfigurer()  
+    {  
+        return new PropertySourcesPlaceholderConfigurer();  
+    }  
     
     @Bean
     public PasswordEncoder passwordEncoder() {

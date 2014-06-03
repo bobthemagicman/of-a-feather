@@ -17,8 +17,8 @@ import com.flockspring.dataaccess.mongodb.model.UserModel;
 import com.flockspring.domain.DuplicateEmailException;
 import com.flockspring.domain.mapper.ApplicationUserModelMapper;
 import com.flockspring.domain.service.user.UserService;
+import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.impl.UpdateEmailImpl;
-import com.flockspring.ui.model.user.UserRegistrationUICommand;
 
 /**
  * UserDetailsServiceImpl.java
@@ -73,12 +73,12 @@ public class UserDetailsServiceImpl implements UserService
     }
     
     @Override
-    public ApplicationUserImpl registerNewUserAccount(UserRegistrationUICommand userAccountData) throws DuplicateEmailException {
+    public ApplicationUserImpl registerNewUserAccount(ApplicationUserImpl userAccountData) throws DuplicateEmailException {
         if (emailExist(userAccountData.getEmail())) {
             throw new DuplicateEmailException("The email address: " + userAccountData.getEmail() + " is already in use.");
         }
 
-        String encodedPassword = encodePassword(userAccountData);
+        String encodedPassword = passwordEncoder.encode(userAccountData.getPassword());
 
         ApplicationUserModelMapper modelMapper = new ApplicationUserModelMapper();
         modelMapper.withEmail(userAccountData.getEmail())
@@ -86,8 +86,8 @@ public class UserDetailsServiceImpl implements UserService
                 .withLastName(userAccountData.getLastName())
                 .withPassword(encodedPassword);
         
-        if (userAccountData.isSocialSignIn()) {
-            modelMapper.withSignInProvider(userAccountData.getSignInProvider());
+        if (userAccountData.getSignInProviders() != null && !userAccountData.getSignInProviders().isEmpty()) {
+            modelMapper.withSignInProvider(userAccountData.getSignInProviders().first());
         }
 
         UserModel registered = modelMapper.build();
@@ -103,15 +103,5 @@ public class UserDetailsServiceImpl implements UserService
         }
 
         return false;
-    }
-
-    private String encodePassword(UserRegistrationUICommand dto) {
-        String encodedPassword = null;
-
-        if (dto.isNormalRegistration()) {
-            encodedPassword = passwordEncoder.encode(dto.getPassword());
-        }
-
-        return encodedPassword;
     }
 }

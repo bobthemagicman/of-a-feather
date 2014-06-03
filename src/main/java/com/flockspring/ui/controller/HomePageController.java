@@ -26,9 +26,6 @@ public class HomePageController {
 	    Map<String, Object> model = new HashMap<String, Object>();
 	    model.put("navSearchEnabled", false);
 	    
-	    ModelAndView mav = new ModelAndView("homePage", model);
-	  
-	
-		return mav;
+	    return new ModelAndView("homePage", model);
 	}
 }

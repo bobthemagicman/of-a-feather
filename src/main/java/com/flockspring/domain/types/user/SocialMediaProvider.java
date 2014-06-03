@@ -3,6 +3,10 @@
  */
 package com.flockspring.domain.types.user;
 
+import org.springframework.social.facebook.api.Facebook;
+import org.springframework.social.google.api.Google;
+import org.springframework.social.twitter.api.Twitter;
+
 /**
  * SocialMediaService.java
  *
@@ -12,5 +16,6 @@ package com.flockspring.domain.types.user;
  */
 public enum SocialMediaProvider
 {
-    FACEBOOK, TWITTER, GOOGLE;
+    FACEBOOK, TWITTER, GOOGLE 
+    
 }
