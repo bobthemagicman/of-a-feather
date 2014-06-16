@@ -41,6 +41,8 @@ public class UserRegistrationUICommand
 
     private SocialMediaProvider signInProvider;
 
+    private String displayImageUrl;
+
     // Constructor is omitted for the of clarity.
 
     public boolean isSocialSignIn()
@@ -78,6 +80,11 @@ public class UserRegistrationUICommand
         return signInProvider;
     }
 
+    public String getDisplayImageUrl()
+    {
+        return this.displayImageUrl;
+    }
+    
     public void setEmail(String email)
     {
         this.email = email;
@@ -106,5 +113,10 @@ public class UserRegistrationUICommand
     public void setSignInProvider(SocialMediaProvider signInProvider)
     {
         this.signInProvider = signInProvider;
+    }
+
+    public void setDisplayImageUrl(String displayImageUrl)
+    {
+        this.displayImageUrl = displayImageUrl;
     }
 }

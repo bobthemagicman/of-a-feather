@@ -627,7 +627,7 @@
 
                 <c:set var="resultsMessageHidden" value="" />
                 <c:set var="showingResultsHidden" value=" hidden" />
-                <c:if test="${fn:length(results.items) ne 0}">
+                <c:if test="${fn:length(results.churchListings) ne 0}">
                     <c:set var="resultsMessageHidden" value=" hidden" />
                     <c:set var="showingResultsHidden" value="" />
                 </c:if>
@@ -635,91 +635,13 @@
                 <div class="showing-results${showingResultsHidden}">Showing Results <span class="now-showing">${results.pageStartIndex} - ${results.pageEndIndex}</span> of <span class="total-results">${results.totalNumberOfResults}</span> for <span class="user-search">&#34;${results.userInputQuery}&#34;</span></div>
                                 
                 <div class="search-results">
-
-
-                    <spring:url value="/static/images/site/right_arrow.png" var="rightArrow" />
-                    <spring:url value="/static/images/site/heart_icon.png" var="heartIcon" />
-
-                    <c:forEach items="${results.items}" var="result" varStatus="p_tracker">
-                        <spring:url value="/static/images/church-images/${result.id}/sr-${result.displayImage.path}" var="imagePath"/>
-                        <c:if test="${empty result.displayImage.path}">
-                            <c:set var="imagePath" value="http://maps.googleapis.com/maps/api/streetview?size=200x200&location=${result.latitude},${result.longitude}&fov=120&pitch=10&sensor=false" />   
-                        </c:if>
-                        
-                        <c:if test="${result.usersFavorite}">
-                            <spring:url value="/static/images/site/heart_favorited_icon.png" var="heartIcon" />
-                        </c:if>
-
-                        <div class="search-result-entry show-result" data-result-id="${result.id}" data-church-name="${result.organizationName}" data-latitude="${result.latitude}" data-longitude="${result.longitude}">
-
-                            <div class="search-result-image-container">
-                                <img src="${imagePath}" alt="${result.displayImage.alt}" title="${result.displayImage.title}" />
-                            </div>
-
-                            <div class="search-result-info">
-                                <div class="church-basic-info">
-                                    <spring:url value="/church-profile/${result.id}?dist=${result.distanceFromSearchPoint}" var="churchUrl" />
-                                    <a href="${churchUrl}"><span class="church-name">${result.organizationName}</span></a>
-                                    <span class="church-denomination">${result.denomination}</span>
-                                    <span class="church-location">${result.city}, ${result.state} ${result.postalCode}<img src="${rightArrow}" /> <span class="distance"><fmt:formatNumber maxFractionDigits="2" value="${result.distanceFromSearchPoint}" /></span> miles away</span>
-                                </div>
-                                <div class="church-sliders">
-                                    <div class="slider-container">
-                                        <div class="slider-label">Service Style</div><div class="info-slider" data-slider-value="${result.serviceStyleSliderValue}"></div>
-                                    </div>
-                                    <div class="slider-container">
-                                        <div class="slider-label">Music</div><div class="info-slider" data-slider-value="${result.musicStyleSliderValue }"></div>
-                                    </div>
-                                    <div class="slider-container">
-                                        <div class="slider-label">Dress Attire</div><div class="info-slider" data-slider-value="${result.dressAttireSliderValue }"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="favorite-icon">
-                                <img src="${heartIcon}" />
-                            </div>
-                        </div>                        
-                    </c:forEach>
-
+                    <ctg:churchListing items="${results.churchListings}" />
                 </div><!-- end search-results -->
+                
                 <!--  Pagination -->
-                <c:if test="${results.totalNumberOfPages gt 1}">
                 <spring:url value="/search?" var="baseUrl" />
-                <div class="pagination pagination-centered">
-                    <ul data-total-pages="${results.totalNumberOfPages}">
-                    <c:if test="${(results.currentPage + 1) ne pageLoopBegin }">
-                        <li><a title="Go to first page" href="${baseUrl}${pageRequestQueryString}&page=1">&lt;&lt;</a></li>
-                        <li><a title="Go to previous page" href="${baseUrl}${pageRequestQueryString}&page=${results.currentPage}">&lt;</a></li>
-                    </c:if>
-                    <c:if test="${leftElipsis}">
-                        <li>...</li>
-                    </c:if>
-                        
-                    <c:forEach begin="${pageLoopBegin}" end="${pageLoopEnd}" varStatus="p_tracker">
-                        <c:set var="classInfo" value="" />
-                        <c:set var="titleInfo" value="" />
-                        
-                        <c:if test="${p_tracker.index -1 == results.currentPage}">
-                            <c:set var="classInfo" value=" class=\"active\"" />
-                            <c:set var="titleInfo" value="Current page is ${p_tracker.index}"/>
-                        </c:if>
-                        
-                        <li${classInfo}><a title="${titleInfo}" <c:if test="${p_tracker.index -1 != results.currentPage}">href="${baseUrl}${pageRequestQueryString}&page=${p_tracker.index}"</c:if>>${p_tracker.index}</a></li>
-                    </c:forEach>
-                    
-                    <c:if test="${rightElipsis}">
-                        <li>...</li>
-                    </c:if>
-                    
-                    <c:if test="${results.currentPage + 1 ne pageLoopEnd}">
-                        <li><a title="Go to next page" href="${baseUrl}${pageRequestQueryString}&page=${results.currentPage + 2}">&gt;</a></li>
-                        <li><a title="Go to last page" href="${baseUrl}${pageRequestQueryString}&page=${results.totalNumberOfPages}">&gt;&gt;</a></li>
-                    </c:if>
-                    </ul>
-                    
-                </div>
-	           </c:if>
-               
+                <ctg:pagination baseUrl="${baseUrl}" currentPage="${results.currentPage}" numberOfPagesToShow="${numberOfPagesToDisplay}" totalPages="${results.totalNumberOfPages}" queryString="${pageRequestQueryString}"/>
+                
             </div><!-- /.right-column -->
         </div><!-- /.main -->
 

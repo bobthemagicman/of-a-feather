@@ -1,28 +1,24 @@
 /*
  * Copyright 2013 FlockSpring Inc. All rights reserved
  */
-package com.flockspring.ui.controller;
+package com.flockspring.ui.interceptor;
+
+import static com.flockspring.ui.IdentifiedPage.PAGE_ID_MAP_KEY;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionRepository;
-import org.springframework.social.facebook.api.Facebook;
-import org.springframework.social.facebook.api.FacebookProfile;
-import org.springframework.social.facebook.api.impl.FacebookTemplate;
-import org.springframework.social.twitter.api.Twitter;
-import org.springframework.social.twitter.api.TwitterProfile;
-import org.springframework.social.twitter.api.impl.TwitterTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.user.SocialMediaProvider;
-import com.flockspring.ui.mapper.user.HeaderUIModelMapper;
+import com.flockspring.ui.mapper.user.UserUIModelBuilder;
+import com.flockspring.ui.model.user.HeaderUIModel;
 import com.flockspring.ui.model.user.UserRegistrationUICommand;
 
 /**
@@ -36,27 +32,28 @@ public class HeaderHandlerInterceptor extends HandlerInterceptorAdapter implemen
 {
 
     private final ConnectionRepository connectionRepository;
-    private final HeaderUIModelMapper headerUIModelMapper;
-    
-    public HeaderHandlerInterceptor (final ConnectionRepository connectionRepository, final HeaderUIModelMapper headerUIModelMapper)
+        
+    public HeaderHandlerInterceptor (final ConnectionRepository connectionRepository)
     {
         this.connectionRepository = connectionRepository;
-        this.headerUIModelMapper = headerUIModelMapper;
+    
     }
     
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView mv) throws Exception
     {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Object obj = auth.getPrincipal();
-        if(obj == null || (obj.equals("anonymousUser")))
+        String pageId = (mv.getModel().containsKey(PAGE_ID_MAP_KEY) ? (String) mv.getModel().get(PAGE_ID_MAP_KEY) : "");
+        
+        if((obj == null || (obj.equals("anonymousUser"))) && (pageId != null && !pageId.equals("signUp")))
         {
-            setupHeaderForms(modelAndView, request);
+            setupHeaderForms(mv, request);
         }
         
         if(obj !=null && obj instanceof ApplicationUserImpl)
         {
-           createHeaderModels(modelAndView);
+           createHeaderModels(mv);
         }
     }
 
@@ -81,23 +78,28 @@ public class HeaderHandlerInterceptor extends HandlerInterceptorAdapter implemen
         
         if(user.getSignInProviders() != null && user.getSignInProviders().contains(SocialMediaProvider.FACEBOOK))
         {
-            Connection<Facebook> connection = connectionRepository.findPrimaryConnection(Facebook.class);
-            Facebook facebook = connection != null ? connection.getApi() : new FacebookTemplate();
-            FacebookProfile profile = facebook.userOperations().getUserProfile();
-    
-            modelAndView.addObject("user", headerUIModelMapper.map(profile));
+            UserUIModelBuilder userUIModelBuilder = SocialMediaProvider.FACEBOOK.mapProfile(new UserUIModelBuilder(), connectionRepository);
+            
+            modelAndView.addObject("user", userUIModelBuilder.buildHeaderUIModel());
         }
         else if(user.getSignInProviders() != null && user.getSignInProviders().contains(SocialMediaProvider.TWITTER))
         {
-            Connection<Twitter> connection = connectionRepository.findPrimaryConnection(Twitter.class);
-            Twitter twitter = connection != null ? connection.getApi() : new TwitterTemplate("");
-            TwitterProfile profile = twitter.userOperations().getUserProfile();
-    
-            modelAndView.addObject("user", headerUIModelMapper.map(profile));
+            UserUIModelBuilder userUIModelBuilder = SocialMediaProvider.TWITTER.mapProfile(new UserUIModelBuilder(), connectionRepository);
+            
+            modelAndView.addObject("user", userUIModelBuilder.buildHeaderUIModel());
+        }
+        else if(user.getSignInProviders() != null && user.getSignInProviders().contains(SocialMediaProvider.GOOGLE))
+        {
+            UserUIModelBuilder userUIModelBuilder = SocialMediaProvider.GOOGLE.mapProfile(new UserUIModelBuilder(), connectionRepository);
+            
+            modelAndView.addObject("user", userUIModelBuilder.buildHeaderUIModel());
         }
         else
         {
-            modelAndView.addObject("user", headerUIModelMapper.map(user));
+            HeaderUIModel userModel = new UserUIModelBuilder().withApplicationUserImpl(user)
+                    .buildHeaderUIModel();
+            
+            modelAndView.addObject("user", userModel);
         }
     }
 }

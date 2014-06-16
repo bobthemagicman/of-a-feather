@@ -15,7 +15,6 @@ import org.springframework.social.config.annotation.EnableSocial;
 import org.springframework.social.config.annotation.SocialConfigurer;
 import org.springframework.social.connect.ConnectionFactoryLocator;
 import org.springframework.social.connect.ConnectionRepository;
-import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UsersConnectionRepository;
 import org.springframework.social.connect.web.ConnectController;
 import org.springframework.social.facebook.connect.FacebookConnectionFactory;
@@ -24,7 +23,6 @@ import org.springframework.social.security.SocialAuthenticationServiceLocator;
 
 import com.flockspring.dataaccess.mongodb.MongoUsersConnectionRepository;
 import com.flockspring.dataaccess.mongodb.UserSocialConnectionRepository;
-import com.flockspring.domain.service.impl.AutoConnectionSignUp;
 import com.flockspring.domain.service.user.UserService;
 
 /**
@@ -67,15 +65,15 @@ public class SocialConfig implements SocialConfigurer
         MongoUsersConnectionRepository repository = new MongoUsersConnectionRepository(Encryptors.noOpText(), userSocialConnectionRepository, 
                 (SocialAuthenticationServiceLocator)connectionFactoryLocator);
         
-        repository.setConnectionSignUp(autoConnectionSignUp());
+//        repository.setConnectionSignUp(autoConnectionSignUp());
         
         return repository;
     }
     
-    @Bean
-    public ConnectionSignUp autoConnectionSignUp() {
-        return new AutoConnectionSignUp(userDetailsService);
-    }
+//    @Bean
+//    public ConnectionSignUp autoConnectionSignUp() {
+//        return new AutoConnectionSignUp(userDetailsService);
+//    }
     
     @Bean
     public ConnectController connectController(ConnectionFactoryLocator connectionFactoryLocator, ConnectionRepository connectionRepository) {

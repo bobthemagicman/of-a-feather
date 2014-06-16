@@ -23,4 +23,6 @@ public interface UserService extends UserDetailsService, SocialUserDetailsServic
     void saveUpdateEmail(UpdateEmailImpl updateEmailImpl);
     
     ApplicationUserImpl registerNewUserAccount(ApplicationUserImpl userAccountData) throws DuplicateEmailException;
+
+    ApplicationUserImpl saveUser(ApplicationUserImpl user);
 }

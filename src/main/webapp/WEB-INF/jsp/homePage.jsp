@@ -14,7 +14,6 @@
                 .queueScript("${geoCompletePlugin}")        
                 .queueScript("${frontJS}")
                 .runQueue();
-            
         </script>
 
         <title>Of A Feather - Find your new church home today</title>	
@@ -53,7 +52,7 @@
 	
 	                <div class="header-search">
 	                    <div class="header-text">
-	                        <h1>Find the Church for You.</h1>
+	                        <h1>Find the Church for You</h1>
 	                        <h4>Personalized church search</h4>
 	                    </div>
 	                    <div class="blur"><img src="${blurImage}" /></div>
@@ -64,8 +63,7 @@
 	                                <button type="submit" id="searchButton" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
 	                            </span>
 	                        </div>
-	                    </form>    
-	                    <a href="${addYourChurchLink}" class="btn btn-primary">Add Your Church!</a>
+	                    </form>
 	                </div>
 	
 	                <div class="header-label">

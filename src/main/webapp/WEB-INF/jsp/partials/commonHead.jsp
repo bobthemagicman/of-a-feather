@@ -32,7 +32,6 @@
     $LAB.queueScript("http://code.jquery.com/jquery-latest.js")
         .queueScript("//netdna.bootstrapcdn.com/bootstrap/2.3.2/js/bootstrap.min.js")
         .queueScript("http://code.jquery.com/ui/1.10.3/jquery-ui.js")
-        .queueScript("${userFramework}");
         .queueScript("${userVoiceJS}");
 </script>
 

@@ -3,6 +3,8 @@
  */
 package com.flockspring.ui.controller;
 
+import com.flockspring.ui.IdentifiedPage;
+
 /**
  * RegionPageController.java
  *
@@ -10,6 +12,15 @@ package com.flockspring.ui.controller;
  * @date May 18, 2013
  *
  */
-public class RegionPageController {
+public class RegionPageController extends IdentifiedPage
+{
+
+    private static final String PAGE_ID = "region";
+
+    @Override
+    protected String getPageId()
+    {
+        return PAGE_ID;
+    }
 
 }

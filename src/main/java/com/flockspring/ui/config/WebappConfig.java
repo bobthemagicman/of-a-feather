@@ -5,6 +5,7 @@ package com.flockspring.ui.config;
 
 import java.util.Properties;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.env.Environment;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.context.WebApplicationContext;
@@ -27,8 +29,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import com.flockspring.ui.controller.HeaderHandlerInterceptor;
-import com.flockspring.ui.mapper.user.HeaderUIModelMapper;
+import com.flockspring.domain.util.PropertiesUtil;
+import com.flockspring.ui.interceptor.HeaderHandlerInterceptor;
+import com.flockspring.ui.interceptor.SearchBarHandlerInterceptor;
 
 /**
  * WebappConfig.java
@@ -51,6 +54,9 @@ public class WebappConfig extends WebMvcConfigurerAdapter
     }
 
     private ConnectionRepository connectionRepository;  
+    
+    @Autowired
+    private Environment env;
     
     // @Autowired
     // private FlowExecutor flowExecutor;
@@ -87,12 +93,8 @@ public class WebappConfig extends WebMvcConfigurerAdapter
     public void addInterceptors(InterceptorRegistry registry)
     {
         super.addInterceptors(registry);
-        registry.addInterceptor(new HeaderHandlerInterceptor(connectionRepository, getHeaderModelMapper()));
-    }
-
-    private HeaderUIModelMapper getHeaderModelMapper()
-    {
-        return new HeaderUIModelMapper();
+        registry.addInterceptor(new HeaderHandlerInterceptor(connectionRepository));
+        registry.addInterceptor(new SearchBarHandlerInterceptor(PropertiesUtil.getPropertyAsList(env.getProperty("pages.with.no.search"))));
     }
 
     @Bean

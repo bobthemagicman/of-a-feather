@@ -22,17 +22,19 @@ import com.flockspring.domain.service.OrganizationDiscoveryService;
 import com.flockspring.domain.types.GlobalRegionType;
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.Region;
+import com.flockspring.ui.IdentifiedPage;
 import com.flockspring.ui.exception.PageNotFoundException;
 import com.flockspring.ui.mapper.OrganizationUIModelMapper;
 
 @Controller
 @RequestMapping("/church-profile")
-public class ProfilePageController
+public class ProfilePageController extends IdentifiedPage
 {
     private static final String VIEW_NAME = "profilePage";
+    private static final String PAGE_ID = "profile";
 
     private final OrganizationDiscoveryService organizationDiscoveryService;
-    private OrganizationUIModelMapper organizationUIModelMapper;
+    private final OrganizationUIModelMapper organizationUIModelMapper;
 
     @Autowired
     public ProfilePageController(final OrganizationDiscoveryService organizationDiscoveryService, OrganizationUIModelMapper organizationUIModelMapper)
@@ -43,42 +45,6 @@ public class ProfilePageController
         this.organizationDiscoveryService = organizationDiscoveryService;
     }
 
-//    @RequestMapping("/test-save")
-//    public void renderOrganizationProfileByName()
-//    {
-//        AddressImpl address = new AddressImpl("123456 78th St", "", "97888", "NC", "South Bridge", "USA", new double[] {123.444, 56.123});
-//        
-//        TimeAndDay timeAndDay = new TimeAndDay(new LocalDateTime(1, 1, 1, 9, 20), ServiceDay.SUNDAY);
-//        Set<MusicalInstruments> instruments = Sets.newTreeSet();
-//        ServiceDetailsImpl serviceDetailsImpl1 = new ServiceDetailsImpl(MusicStyle.NEUTRAL_5, ServiceStyle.HIGH_ENERGY_8, DressAttire.FORMAL_2, AgeDemographics.NEUTRAL_4, instruments ,
-//                90, timeAndDay, "Service 1", Sets.newTreeSet(Arrays.asList(Language.SPANISH)));
-//        Set<ServiceDetailsImpl> services = Sets.newTreeSet(Arrays.asList(serviceDetailsImpl1));
-//        
-//        AtmosphereImpl atmosphere = new AtmosphereImpl(CongregationSize.LARGE, services, false, false, 90);
-//        SocialMediaImpl socialMedia = new SocialMediaImpl("", "", "", "", "", "", "", "", "");
-//        
-//        MultimediaObjectImpl image1 = new MultimediaObjectImpl("Leader 1 picture", "5.jpg", "alt text", "title text", false, false);;
-//        MultimediaObjectImpl image2 = new MultimediaObjectImpl("Leader 1 picture", "5.jpg", "alt text", "title text", false, false);;
-//        MultimediaObjectImpl image3 = new MultimediaObjectImpl("Leader 1 picture", "5.jpg", "alt text", "title text", false, false);;
-//        MultimediaObjectImpl image4 = new MultimediaObjectImpl("Leader 1 picture", "5.jpg", "alt text", "title text", false, false);;
-//        Set<MultimediaObjectImpl> multimedia = Sets.newTreeSet(Arrays.asList(image1, image2, image3, image4));
-//        
-//        MultimediaObjectImpl leaderImage1 = new MultimediaObjectImpl("Leader 1 picture", "5.jpg", "alt text", "title text", false, false);;
-//        MultimediaObjectImpl leaderImage2 = new MultimediaObjectImpl("Leader 2 picture", "5.jpg", "alt text", "title text", false, false);;
-//        LeaderImpl leader1 = new LeaderImpl("Leader 1", "Leader 1 bio", "Lead pastor", LeaderRole.PASTOR, leaderImage1, false, true, "test@test.com", "509-991-0195", 2005);        
-//        LeaderImpl leader2 = new LeaderImpl("Leader 2", "Leader 2 bio", "Community Pastor", LeaderRole.PASTOR, leaderImage2, true, false, "test2@test.com", "509-991-0111", 2010);
-//        Set<LeaderImpl> leadershipTeam = Sets.newTreeSet(Arrays.asList(leader1, leader2));
-//        
-//        Set<Programs> programsOffered = Sets.newTreeSet(Arrays.asList(Programs.ADDICTION_RECOVERY_COUNSELING, Programs.AGE_GROUPS));
-//        Set<AccessibilitySupport> accessibilitysupport = Sets.newTreeSet(Arrays.asList(AccessibilitySupport.WHEELCHAIR_ACCESS, AccessibilitySupport.CARPOOL));
-//        
-//        OrganizationImpl organization = new OrganizationImpl(null, 1999, "test save time", "mission statement", "statement of faith", 
-//                "welcome Message", address, atmosphere, socialMedia, Affiliation.NONDENOMINATIONAL, Affiliation.NONE, null, multimedia, 
-//                leadershipTeam, programsOffered, accessibilitysupport);
-//        
-//        organizationDiscoveryService.saveOrganization(organization);
-//    }
-    
     @RequestMapping("/{statRegionName}/{cityRegionName}/{neighborhoodRegionName}/{organizationName}")
     public ModelAndView renderOrganizationProfileByName(@PathVariable String organizationName, @PathVariable String stateRegionName,
             @PathVariable String cityRegionName, @PathVariable String neighborhoodRegionName, HttpSession session,
@@ -197,5 +163,11 @@ public class ProfilePageController
         {
             throw new PageNotFoundException("Unable to find profile for organization with organizationId: " + id);
         }
+    }
+
+    @Override
+    protected String getPageId()
+    {
+        return PAGE_ID;
     }
 }

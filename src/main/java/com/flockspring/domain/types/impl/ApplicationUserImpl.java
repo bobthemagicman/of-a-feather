@@ -4,6 +4,7 @@
 package com.flockspring.domain.types.impl;
 
 import java.util.Collection;
+import java.util.NavigableSet;
 import java.util.TreeSet;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -29,6 +30,7 @@ public class ApplicationUserImpl extends SocialUser
     private String firstName;
     private String lastName;
     private TreeSet<SocialMediaProvider> signInProviders;
+    private NavigableSet<String> favoriteChurches;
     
     public ApplicationUserImpl(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired,
             boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, String email, String firstName, String lastName,
@@ -82,30 +84,45 @@ public class ApplicationUserImpl extends SocialUser
     {
         return signInProviders;
     }
+    
+    public NavigableSet<String> getFavoriteChurches()
+    {
+        return favoriteChurches;
+    }
 
     public void TreeSetId(String id)
     {
         this.id = id;
     }
 
-    public void TreeSetEmail(String email)
+    public void setId(String id)
+    {
+        this.id = id;
+    }
+
+    public void setEmail(String email)
     {
         this.email = email;
     }
 
-    public void TreeSetFirstName(String firstName)
+    public void setFirstName(String firstName)
     {
         this.firstName = firstName;
     }
 
-    public void TreeSetLastName(String lastName)
+    public void setLastName(String lastName)
     {
         this.lastName = lastName;
     }
 
-    public void TreeSetSignInProviders(TreeSet<SocialMediaProvider> signInProviders)
+    public void setSignInProviders(TreeSet<SocialMediaProvider> signInProviders)
     {
         this.signInProviders = signInProviders;
+    }
+
+    public void setFavoriteChurches(NavigableSet<String> favoriteChurches)
+    {
+        this.favoriteChurches = favoriteChurches;
     }
 
     @Override

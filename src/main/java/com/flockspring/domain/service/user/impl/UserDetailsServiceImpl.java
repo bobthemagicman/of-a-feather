@@ -73,26 +73,33 @@ public class UserDetailsServiceImpl implements UserService
     }
     
     @Override
-    public ApplicationUserImpl registerNewUserAccount(ApplicationUserImpl userAccountData) throws DuplicateEmailException {
-        if (emailExist(userAccountData.getEmail())) {
-            throw new DuplicateEmailException("The email address: " + userAccountData.getEmail() + " is already in use.");
+    public ApplicationUserImpl registerNewUserAccount(ApplicationUserImpl user) throws DuplicateEmailException {
+        if (emailExist(user.getEmail())) {
+            throw new DuplicateEmailException("The email address: " + user.getEmail() + " is already in use.");
         }
 
-        String encodedPassword = passwordEncoder.encode(userAccountData.getPassword());
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
 
         ApplicationUserModelMapper modelMapper = new ApplicationUserModelMapper();
-        modelMapper.withEmail(userAccountData.getEmail())
-                .withFirstName(userAccountData.getFirstName())
-                .withLastName(userAccountData.getLastName())
-                .withPassword(encodedPassword);
-        
-        if (userAccountData.getSignInProviders() != null && !userAccountData.getSignInProviders().isEmpty()) {
-            modelMapper.withSignInProvider(userAccountData.getSignInProviders().first());
-        }
-
-        UserModel registered = modelMapper.build();
+        UserModel registered = convertApplicationUserToUserModel(user, encodedPassword, modelMapper);
 
         return modelMapper.map(userRepository.save(registered));
+    }
+
+    private UserModel convertApplicationUserToUserModel(ApplicationUserImpl user, String encodedPassword,
+            ApplicationUserModelMapper modelMapper)
+    {
+        modelMapper.withEmail(user.getEmail())
+                .withFirstName(user.getFirstName())
+                .withLastName(user.getLastName())
+                .withPassword(encodedPassword);
+        
+        if (user.getSignInProviders() != null && !user.getSignInProviders().isEmpty()) {
+            modelMapper.withSignInProvider(user.getSignInProviders().first());
+        }
+
+        UserModel userModel = modelMapper.build();
+        return userModel;
     }
 
     private boolean emailExist(String email) {
@@ -103,5 +110,15 @@ public class UserDetailsServiceImpl implements UserService
         }
 
         return false;
+    }
+
+    @Override
+    public ApplicationUserImpl saveUser(ApplicationUserImpl user)
+    {
+        ApplicationUserModelMapper modelMapper = new ApplicationUserModelMapper();
+        
+        UserModel userModel = convertApplicationUserToUserModel(user, user.getPassword(), modelMapper);
+        
+        return modelMapper.map(userRepository.save(userModel));
     }
 }

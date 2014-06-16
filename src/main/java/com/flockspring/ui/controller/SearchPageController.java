@@ -39,6 +39,7 @@ import com.flockspring.domain.types.ServiceDay;
 import com.flockspring.domain.types.impl.AddressImpl;
 import com.flockspring.domain.types.impl.OrganizationImpl;
 import com.flockspring.domain.types.impl.UpdateEmailImpl;
+import com.flockspring.ui.IdentifiedPage;
 import com.flockspring.ui.mapper.CategoryUIMapConverter;
 import com.flockspring.ui.mapper.OrganizationFilterMapper;
 import com.flockspring.ui.mapper.SearchFilterUIModelMapper;
@@ -66,7 +67,7 @@ import com.google.common.base.Strings;
  */
 @Controller
 @RequestMapping("/search")
-public class SearchPageController
+public class SearchPageController extends IdentifiedPage
 {
     private static final String USER_KEY = "userKey";
     private static final String LOCALITY = "locality";
@@ -74,6 +75,7 @@ public class SearchPageController
     private static final String VIEW_NAME = "searchResultsPage";
     private static final String ERROR_STATE_BAD_REGION = "user_search_out_of_region";
     private static final String ERROR_STATE_BAD_INPUT = "user_input_error";
+    private static final String PAGE_ID = "search";
 
     private final OrganizationDiscoveryService organizationDiscoveryService;
     private final SearchResultsUIModelMapper searchResultsModelMapper;
@@ -295,41 +297,8 @@ public class SearchPageController
         //TODO: put this in configuration somewhere
         final int totalNumPages = geoPageResult.getTotalPages();
         final int numberOfPagesToDisplay = totalNumPages > 9 ? 10 : totalNumPages;
-        final int current = geoPageResult.getNumber() + 1;
         
-        int pageLoopEnd = totalNumPages;
-        int pageLoopBegin = 1;
-        boolean leftElipsis = false;
-        boolean rightElipsis = false;
-        
-        if(current - numberOfPagesToDisplay >= pageLoopBegin)
-        {
-            if(current - numberOfPagesToDisplay == pageLoopBegin)
-            {
-                leftElipsis = false;
-            }
-            if(current + ((numberOfPagesToDisplay -1)/2) > totalNumPages)
-            {
-                pageLoopEnd = current + ((numberOfPagesToDisplay -1)/2);
-                pageLoopBegin = current - ((numberOfPagesToDisplay -1)/2);
-                leftElipsis = true;
-                rightElipsis = true;
-            }
-            else
-            {
-                pageLoopBegin = totalNumPages - numberOfPagesToDisplay;
-                rightElipsis = false;                
-            }
-        }
-        else
-        {
-            pageLoopEnd = pageLoopBegin + numberOfPagesToDisplay - 1;
-        }
-        
-        model.put("leftElipsis", leftElipsis);
-        model.put("rightElipsis", rightElipsis);
-        model.put("pageLoopBegin", pageLoopBegin);
-        model.put("pageLoopEnd", pageLoopEnd);        
+        model.put("numberOfPagesToDisplay", numberOfPagesToDisplay);        
     }
 
     private Map<Category<AccessibilitySupport>, Set<AccessibilitySupport>> getAccessibilitySupportValuesMap()
@@ -381,5 +350,11 @@ public class SearchPageController
         }
 
         return new AjaxSearchFilterResponse();
+    }
+
+    @Override
+    protected String getPageId()
+    {
+        return PAGE_ID;
     }
 }

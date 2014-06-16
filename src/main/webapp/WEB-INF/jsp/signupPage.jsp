@@ -38,65 +38,78 @@
 	            </div>
 	            <div id="sign-up-modal-body" class="modal-body">
 	                <div class="social-container">
-	
-	                    <button class="btn btn-block btn-xlarge btn-facebook register"><i class="fa fa-facebook"></i> | Connect with Facebook</button>
-	                    <button class="btn btn-block btn-xlarge btn-twitter register"><i class="fa fa-twitter"></i> | Connect with Twitter</button>
-	                
-	                   <spring:url value="/signup" var="signupPostAction"/>
-	                   <form:form action="${signupPostAction}" commandName="user" method="POST" enctype="utf8" role="form" class="sign-up-form" data-action="Signup" >    
-	                    <%-- 
-	                    <form:hidden path="signInProvider"/>
-	                    <div class="form-group">
-	                        <form:password id="user-password" path="password" cssClass="form-control" placeholder="Password"/>
-	                        <form:errors id="error-password" path="password" cssClass="help-block"/>
-	                    </div>
-	                    <div class="form-group">
-	                        <form:password id="user-passwordVerification" path="passwordVerification" cssClass="form-control" placeholder="Confirm Password"/>
-	                        <form:errors id="error-passwordVerification" path="passwordVerification" cssClass="help-block"/>
-	                    </div>
-	                    
-	                    <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
-	                    
-	                    --%>
+	                   <c:if test="${not user.socialSignIn}">
+	                   <button class="btn btn-block btn-xlarge btn-facebook register"><i class="fa fa-facebook"></i> | Connect with Facebook</button>
+	                   <button class="btn btn-block btn-xlarge btn-twitter register"><i class="fa fa-twitter"></i> | Connect with Twitter</button>
+	                   </c:if>
+	                   
+	                   <spring:url value="/signup" var="actionURL"/>
+	                   
+	                   <c:if test="${user.socialSignIn}">
+	                   <div>
+	                       <img src="${user.displayImageUrl}">
+	                   </div>
+                       <form:form action="${actionURL}" commandName="user" method="POST" enctype="utf8" role="form" class="sign-up-form" data-action="Signup" >    
+		                    <form:hidden path="signInProvider"/>
+                            <input type="hidden" path="${_csrf.parameterName}" value="${_csrf.token}" >
+	                        
+	                        <div class="form-group">
+                                <form:input id="user-email" path="email" cssClass="form-control" placeholder="Email Address"/>
+                                <form:errors id="error-email" path="email" cssClass="help-block"/>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <form:password id="user-password" path="password" cssClass="form-control" placeholder="Password"/>
+	                            <form:errors id="error-password" path="password" cssClass="help-block"/>
+	                        </div>
+	                        
+	                        <div class="form-group">
+	                            <form:password id="user-passwordVerification" path="passwordVerification" cssClass="form-control" placeholder="Confirm Password"/>
+	                            <form:errors id="error-passwordVerification" path="passwordVerification" cssClass="help-block"/>
+	                        </div>
+                        
+	                       <button type="submit" class="btn btn-primary btn-block">Finish ${user.signInProvider.providerDisplayName} Signup</button>
 	                    </form:form>
+	                    </c:if>
 	                </div>
 	                
+	                <c:if test="${not user.socialSignIn}">
 	                <div class="or-separator">
 	                    <h6 class="separator-text">or</h6>
 	                    <hr>
 	                </div>
 	                
 	                <button class="btn btn-block btn-xlarge email-sign-up">Sign up with Email</button>
-	                   
-	<%--                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/> --%>
-                        <spring:url value="/signup" var="signupPostAction"/>
-                        <form:form action="${signupPostAction}" commandName="user" method="POST" enctype="utf8" role="form" class="sign-up-form" data-action="Signup" >
 	                    
-	                    <input type="hidden" path="${_csrf.parameterName}" value="${_csrf.token}" >
+                        <form:form action="${actionURL}" commandName="user" method="POST" enctype="utf8" role="form" class="sign-up-form" data-action="Signup" >
 	                    
-	                    <div class="form-group">
-	                        <form:input id="user-firstName" path="firstName" cssClass="form-control" placeholder="First Name"/>
-	                        <form:errors id="error-firstName" path="firstName" cssClass="help-block"/>
-	                    </div>
-	                    <div class="form-group">
-	                        <form:input id="user-lastName" path="lastName" cssClass="form-control" placeholder="Last Name"/>
-	                        <form:errors id="error-lastName" path="lastName" cssClass="help-block"/>
-	                    </div>
-	                    <div class="form-group">
-	                        <form:input id="user-email" path="email" cssClass="form-control" placeholder="Email Address"/>
-	                        <form:errors id="error-email" path="email" cssClass="help-block"/>
-	                    </div>
-	                    <div class="form-group">
-	                        <form:password id="user-password" path="password" cssClass="form-control" placeholder="Password"/>
-	                        <form:errors id="error-password" path="password" cssClass="help-block"/>
-	                    </div>
-	                    <div class="form-group">
-	                        <form:password id="user-passwordVerification" path="passwordVerification" cssClass="form-control" placeholder="Confirm Password"/>
-	                        <form:errors id="error-passwordVerification" path="passwordVerification" cssClass="help-block"/>
-	                    </div>
-	                    
-	                    <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
-	                </form:form>
+		                    <input type="hidden" path="${_csrf.parameterName}" value="${_csrf.token}" >
+		                    
+		                    <div class="form-group">
+		                        <form:input id="user-firstName" path="firstName" cssClass="form-control" placeholder="First Name"/>
+		                        <form:errors id="error-firstName" path="firstName" cssClass="help-block"/>
+		                    </div>
+		                    <div class="form-group">
+		                        <form:input id="user-lastName" path="lastName" cssClass="form-control" placeholder="Last Name"/>
+		                        <form:errors id="error-lastName" path="lastName" cssClass="help-block"/>
+		                    </div>
+		                    <div class="form-group">
+		                        <form:input id="user-email" path="email" cssClass="form-control" placeholder="Email Address"/>
+		                        <form:errors id="error-email" path="email" cssClass="help-block"/>
+		                    </div>
+		                    <div class="form-group">
+		                        <form:password id="user-password" path="password" cssClass="form-control" placeholder="Password"/>
+		                        <form:errors id="error-password" path="password" cssClass="help-block"/>
+		                    </div>
+		                    <div class="form-group">
+		                        <form:password id="user-passwordVerification" path="passwordVerification" cssClass="form-control" placeholder="Confirm Password"/>
+		                        <form:errors id="error-passwordVerification" path="passwordVerification" cssClass="help-block"/>
+		                    </div>
+		                    
+		                    <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+		                </form:form>
+		            </c:if>
+		            <br />
 	                <p class="agree-terms">By signing up, I agree to Of A Feather&apos;s <a href="#">Privacy Policy</a> and <a href="#">Terms &amp; Conditions</a>.</p>
 	                    
 	            </div>

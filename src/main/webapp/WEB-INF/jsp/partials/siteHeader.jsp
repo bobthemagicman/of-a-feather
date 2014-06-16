@@ -20,7 +20,7 @@
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse">
-            <c:if test="${not empty hideSearchBar && !hideSearchBar}">
+            <c:if test="${showHeaderSearch}">
             <div class="col-sm-4 navbar-form-wrapper">
                 <form class="navbar-form navbar-left" action="${searchAction}" method="GET" role="search">
                     <div class="input-group">
@@ -35,17 +35,16 @@
             <ul class="nav navbar-nav navbar-right">
                 <sec:authorize access="isAuthenticated()">
                 <c:if test="${not empty user.displayName}">
-			    <li><c:if test="${not empty user.displayImageUrl}"><img src="${user.displayImageUrl}" /></c:if>${displayName}</li> 
-			    <li><a href="<c:url value="/signout" />" > SIGN OUT</a></li>  
+			    <li><c:if test="${not empty user.displayImageUrl}"><img src="${user.displayImageUrl}" /></c:if>${user.displayName}</li> 
 			    </c:if>
+			    <li><a href="<c:url value="/signout" />" > SIGN OUT</a></li>
                 </sec:authorize>
                 <sec:authorize access="isAnonymous()">
-                <li><a href="/ofAFeather/user/register?moda=true" class="sign-up">SIGN UP</a></li>
-                <li><a href="#" class="sign-in">SIGN IN</a></li>
+                <li><a href="<spring:url value='/signup'/>" class="sign-up">SIGN UP</a></li>
+                <li><a href="<spring:url value='/signin'/>" class="sign-in">SIGN IN</a></li>
                 </sec:authorize>
+                <li><a href="https://docs.google.com/forms/d/1z7UPHqIvfdLTmiy_U9HFsd9Pud6mXWjd-uWrUQwwFZo/viewform" target="_blank">LOCAL EVENTS</a></li>
                 <li><a href="http://blog.ofafeather.org">BLOG</a></li>
-                <li><a href="${aboutUsLink}">ABOUT US</a></li>
-                <li><a href="${addYourChurchLink}">ADD YOUR CHURCH</a></li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->

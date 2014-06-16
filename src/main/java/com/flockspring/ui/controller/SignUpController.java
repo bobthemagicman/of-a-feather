@@ -3,7 +3,6 @@
  */
 package com.flockspring.ui.controller;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.TreeSet;
 
@@ -16,7 +15,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionKey;
-import org.springframework.social.connect.UserProfile;
 import org.springframework.social.connect.web.ProviderSignInUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,6 +30,9 @@ import com.flockspring.domain.DuplicateEmailException;
 import com.flockspring.domain.service.user.UserService;
 import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.user.SocialMediaProvider;
+import com.flockspring.domain.types.user.SocialMediaProviderConnectionRepositoryWrapper;
+import com.flockspring.ui.IdentifiedPage;
+import com.flockspring.ui.mapper.user.UserUIModelBuilder;
 import com.flockspring.ui.model.user.UserRegistrationUICommand;
 import com.google.common.base.Strings;
 
@@ -44,14 +45,16 @@ import com.google.common.base.Strings;
  */
 @Controller
 @SessionAttributes("user")
-public class SignUpController
+public class SignUpController extends IdentifiedPage
 {
-    private UserService service;
-
+    private static final String PAGE_ID = "signUp";
+    
+    private final UserService userService;
+    
     @Autowired
-    public SignUpController(UserService service)
+    public SignUpController(final UserService service)
     {
-        this.service = service;
+        this.userService = service;
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
@@ -61,7 +64,7 @@ public class SignUpController
         
         ProviderSignInUtils providerSignInUtils = new ProviderSignInUtils();
         Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
-
+        
         UserRegistrationUICommand registration = createRegistrationDTO(connection);
         model.addAttribute("user", registration);
         model.addAttribute("isModalRequest", isModalRequest);
@@ -71,20 +74,18 @@ public class SignUpController
 
     private UserRegistrationUICommand createRegistrationDTO(Connection<?> connection)
     {
-        UserRegistrationUICommand dto = new UserRegistrationUICommand();
+        UserUIModelBuilder userUIModelBuilder = new UserUIModelBuilder();
 
         if (connection != null)
         {
-            UserProfile socialMediaProfile = connection.fetchUserProfile();
-            dto.setEmail(socialMediaProfile.getEmail());
-            dto.setFirstName(socialMediaProfile.getFirstName());
-            dto.setLastName(socialMediaProfile.getLastName());
-
             ConnectionKey providerKey = connection.getKey();
-            dto.setSignInProvider(SocialMediaProvider.valueOf(providerKey.getProviderId().toUpperCase()));
+            SocialMediaProvider socialSigninProvider = SocialMediaProvider.valueOf(providerKey.getProviderId().toUpperCase());
+            
+            userUIModelBuilder = socialSigninProvider.mapProfile(userUIModelBuilder, new SocialMediaProviderConnectionRepositoryWrapper(connection));
+            userUIModelBuilder.withSocialSignInProvider(socialSigninProvider);
         }
 
-        return dto;
+        return userUIModelBuilder.buildUserRegistrationUICommand();
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
@@ -118,7 +119,7 @@ public class SignUpController
 
         try
         {
-            applicationUser = service.registerNewUserAccount(applicationUser);
+            applicationUser = userService.registerNewUserAccount(applicationUser);
         } catch (DuplicateEmailException ex)
         {
             addFieldError("user", "email", userAccountData.getEmail(), "NotExist.user.email", result);
@@ -133,5 +134,11 @@ public class SignUpController
         { errorCode }, new Object[] {}, errorCode);
 
         result.addError(error);
+    }
+
+    @Override
+    protected String getPageId()
+    {
+        return PAGE_ID;
     }
 }

@@ -42,7 +42,7 @@ public class AutoConnectionSignUp implements ConnectionSignUp
         UserProfile profile = connection.fetchUserProfile();
         
         ConnectionKey key = connection.getKey();
-        SocialMediaProvider provider = SocialMediaProvider.valueOf(key.getProviderId());
+        SocialMediaProvider provider = SocialMediaProvider.valueOf(key.getProviderId().toUpperCase());
         TreeSet<SocialMediaProvider> socialSigninProviders = Sets.newTreeSet(Arrays.asList(provider));
         
         ApplicationUserImpl applicaitonUser = new ApplicationUserImpl("", profile.getEmail(), "", Collections.<GrantedAuthority>emptySet(),

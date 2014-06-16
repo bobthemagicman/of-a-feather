@@ -16,7 +16,7 @@ import com.google.common.collect.Ordering;
  * @date May 18, 2013
  *
  */
-public class SearchResultUIModel implements Comparable<SearchResultUIModel>
+public class ChurchListingUIModel implements Comparable<ChurchListingUIModel>
 {
 
     private final MultimediaUIModel displayImage;
@@ -35,7 +35,7 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
     private final int serviceStyleSliderValue;
     private final int dressAttireSliderValue;
     
-    public SearchResultUIModel(MultimediaUIModel displayImage, String organizationName, String denomination,
+    public ChurchListingUIModel(MultimediaUIModel displayImage, String organizationName, String denomination,
             String id, double distanceFromSearchPoint, boolean featured, boolean usersFavorite, String city, String state, String postalCode,
             double latitude, double longitude, int musicStyleSliderValue, int serviceStyleSliderValue, int dressAttireSliderValue)
     {
@@ -146,10 +146,10 @@ public class SearchResultUIModel implements Comparable<SearchResultUIModel>
     }
 
     @Override
-    public int compareTo(SearchResultUIModel right)
+    public int compareTo(ChurchListingUIModel right)
     {
 
-        SearchResultUIModel left = this;
+        ChurchListingUIModel left = this;
         return ComparisonChain.start()
                 .compare(left.getDistanceFromSearchPoint(), right.getDistanceFromSearchPoint(), Ordering.natural().nullsFirst())
                 .compare(left.getOrganizationName(), right.getOrganizationName(), Ordering.natural().nullsFirst())

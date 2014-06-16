@@ -3,6 +3,8 @@
  */
 package com.flockspring.domain.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +20,7 @@ import com.flockspring.domain.service.OrganizationDiscoveryService;
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.Region;
 import com.flockspring.domain.types.impl.OrganizationImpl;
+import com.google.common.collect.Lists;
 
 @Service
 public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoveryService
@@ -108,5 +111,11 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
     {
         // TODO Auto-generated method stub
         
+    }
+
+    @Override
+    public List<OrganizationImpl> getOrganizationsByIds(Iterable<String> organizationIds)
+    {
+        return Lists.newArrayList(organizationRepository.findAll(organizationIds));        
     }
 }

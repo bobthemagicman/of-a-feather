@@ -3,6 +3,8 @@
  */
 package com.flockspring.domain.service;
 
+import java.util.List;
+
 import org.springframework.data.mongodb.core.geo.GeoPage;
 
 import com.flockspring.domain.OrganizationFilter;
@@ -32,5 +34,7 @@ public interface OrganizationDiscoveryService {
     GeoPage<OrganizationImpl> getFilteredOrganizations(OrganizationFilter filterRequest, int page);
 
     void saveOrganization(OrganizationImpl organization);
+    
+    List<OrganizationImpl> getOrganizationsByIds(Iterable<String> organizationIds);
         
 }
