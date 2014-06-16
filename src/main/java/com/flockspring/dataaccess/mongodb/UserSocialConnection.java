@@ -16,6 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "userSocialConnection")
 public class UserSocialConnection {
     
+    private String id;
     private String userId;
     private String providerId;
     private String providerUserId;
@@ -31,12 +32,13 @@ public class UserSocialConnection {
         super();
     }
 
-    public UserSocialConnection(String userId, String providerId, String providerUserId, int rank,
+    public UserSocialConnection(String id, String userId, String providerId, String providerUserId, int rank,
             String displayName, String profileUrl, String imageUrl, String accessToken, String secret,
             String refreshToken, Long expireTime) {
         
         super();
         
+        this.id = id;
         this.userId = userId;
         this.providerId = providerId;
         this.providerUserId = providerUserId;
@@ -49,6 +51,11 @@ public class UserSocialConnection {
         this.expireTime = expireTime;
     }
 
+    public String getId()
+    {
+        return id;
+    }
+    
     public String getUserId()
     {
         return userId;
@@ -99,6 +106,11 @@ public class UserSocialConnection {
         return expireTime;
     }
 
+    public void setId(String id)
+    {
+        this.id = id;
+    }
+    
     public void setUserId(String userId)
     {
         this.userId = userId;

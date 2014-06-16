@@ -101,7 +101,7 @@ public class UserUIModelBuilder
     
     public HeaderUIModel buildHeaderUIModel()
     {
-        if("".equals(displayName))
+        if("".equals(displayName) || displayName == null)
         {
             createDisplayName();
         }

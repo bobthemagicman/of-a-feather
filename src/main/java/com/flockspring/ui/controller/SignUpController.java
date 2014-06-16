@@ -113,9 +113,12 @@ public class SignUpController extends IdentifiedPage
 
     private ApplicationUserImpl createUserAccount(UserRegistrationUICommand userAccountData, BindingResult result)
     {
+        TreeSet<SocialMediaProvider> socialSignInProviders = new TreeSet<SocialMediaProvider>();
+        socialSignInProviders.add(userAccountData.getSignInProvider());
+        
         ApplicationUserImpl applicationUser = new ApplicationUserImpl("", userAccountData.getEmail(), userAccountData.getPassword(), 
                 Collections.<GrantedAuthority>emptySet(), userAccountData.getEmail(), userAccountData.getFirstName(), userAccountData.getLastName(), 
-                new TreeSet<SocialMediaProvider>());
+                socialSignInProviders);
 
         try
         {

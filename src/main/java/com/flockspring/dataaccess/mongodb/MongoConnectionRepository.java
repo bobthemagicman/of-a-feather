@@ -76,7 +76,7 @@ public class MongoConnectionRepository implements ConnectionRepository
         
         if (userSocialConnection == null) {
             ConnectionData data = connection.createData();
-            userSocialConnection = new UserSocialConnection(userId, data.getProviderId(), data.getProviderUserId(), 0,
+            userSocialConnection = new UserSocialConnection(null, userId, data.getProviderId(), data.getProviderUserId(), 0,
                     data.getDisplayName(), data.getProfileUrl(), data.getImageUrl(), encrypt(data.getAccessToken()),
                     encrypt(data.getSecret()), encrypt(data.getRefreshToken()), data.getExpireTime());
             userSocialConnectionRepository.save(userSocialConnection);

@@ -5,7 +5,8 @@ package com.flockspring.ui.config;
 
 import java.util.Properties;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.inject.Inject;
+
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -53,9 +54,10 @@ public class WebappConfig extends WebMvcConfigurerAdapter
         return new PropertySourcesPlaceholderConfigurer();  
     }
 
+    @Inject
     private ConnectionRepository connectionRepository;  
     
-    @Autowired
+    @Inject
     private Environment env;
     
     // @Autowired

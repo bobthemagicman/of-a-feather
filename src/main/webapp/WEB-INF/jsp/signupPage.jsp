@@ -47,7 +47,7 @@
 	                   
 	                   <c:if test="${user.socialSignIn}">
 	                   <div>
-	                       <img src="${user.displayImageUrl}">
+	                       <img src="${user.displayImageUrl}"><h3>${user.firstName} ${user.lastName}</h3>
 	                   </div>
                        <form:form action="${actionURL}" commandName="user" method="POST" enctype="utf8" role="form" class="sign-up-form" data-action="Signup" >    
 		                    <form:hidden path="signInProvider"/>
@@ -78,43 +78,44 @@
 	                    <h6 class="separator-text">or</h6>
 	                    <hr>
 	                </div>
-	                
+	                <c:if test="${isModalRequest}">
 	                <button class="btn btn-block btn-xlarge email-sign-up">Sign up with Email</button>
+                    </c:if>
+                    
+                   <form:form action="${actionURL}" commandName="user" method="POST" enctype="utf8" role="form" class="sign-up-form" data-action="Signup" >
+                    
+	                    <input type="hidden" path="${_csrf.parameterName}" value="${_csrf.token}" >
 	                    
-                        <form:form action="${actionURL}" commandName="user" method="POST" enctype="utf8" role="form" class="sign-up-form" data-action="Signup" >
+	                    <div class="form-group">
+	                        <form:input id="user-firstName" path="firstName" cssClass="form-control" placeholder="First Name"/>
+	                        <form:errors id="error-firstName" path="firstName" cssClass="help-block"/>
+	                    </div>
+	                    <div class="form-group">
+	                        <form:input id="user-lastName" path="lastName" cssClass="form-control" placeholder="Last Name"/>
+	                        <form:errors id="error-lastName" path="lastName" cssClass="help-block"/>
+	                    </div>
+	                    <div class="form-group">
+	                        <form:input id="user-email" path="email" cssClass="form-control" placeholder="Email Address"/>
+	                        <form:errors id="error-email" path="email" cssClass="help-block"/>
+	                    </div>
+	                    <div class="form-group">
+	                        <form:password id="user-password" path="password" cssClass="form-control" placeholder="Password"/>
+	                        <form:errors id="error-password" path="password" cssClass="help-block"/>
+	                    </div>
+	                    <div class="form-group">
+	                        <form:password id="user-passwordVerification" path="passwordVerification" cssClass="form-control" placeholder="Confirm Password"/>
+	                        <form:errors id="error-passwordVerification" path="passwordVerification" cssClass="help-block"/>
+	                    </div>
 	                    
-		                    <input type="hidden" path="${_csrf.parameterName}" value="${_csrf.token}" >
-		                    
-		                    <div class="form-group">
-		                        <form:input id="user-firstName" path="firstName" cssClass="form-control" placeholder="First Name"/>
-		                        <form:errors id="error-firstName" path="firstName" cssClass="help-block"/>
-		                    </div>
-		                    <div class="form-group">
-		                        <form:input id="user-lastName" path="lastName" cssClass="form-control" placeholder="Last Name"/>
-		                        <form:errors id="error-lastName" path="lastName" cssClass="help-block"/>
-		                    </div>
-		                    <div class="form-group">
-		                        <form:input id="user-email" path="email" cssClass="form-control" placeholder="Email Address"/>
-		                        <form:errors id="error-email" path="email" cssClass="help-block"/>
-		                    </div>
-		                    <div class="form-group">
-		                        <form:password id="user-password" path="password" cssClass="form-control" placeholder="Password"/>
-		                        <form:errors id="error-password" path="password" cssClass="help-block"/>
-		                    </div>
-		                    <div class="form-group">
-		                        <form:password id="user-passwordVerification" path="passwordVerification" cssClass="form-control" placeholder="Confirm Password"/>
-		                        <form:errors id="error-passwordVerification" path="passwordVerification" cssClass="help-block"/>
-		                    </div>
-		                    
-		                    <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
-		                </form:form>
+	                    <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+	                </form:form>
 		            </c:if>
 		            <br />
 	                <p class="agree-terms">By signing up, I agree to Of A Feather&apos;s <a href="#">Privacy Policy</a> and <a href="#">Terms &amp; Conditions</a>.</p>
 	                    
 	            </div>
 	            <div class="modal-footer">
-	                Already a member? <a href="#" class="switch-to-log-in-modal">Log in</a>
+	                Already a member? <a href='<spring:url value="/signin" />' class="switch-to-log-in-modal">Log in</a>
 	            </div>
 	        </div>
 	    </div>
