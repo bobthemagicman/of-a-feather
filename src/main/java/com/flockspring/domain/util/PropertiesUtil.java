@@ -3,7 +3,6 @@
  */
 package com.flockspring.domain.util;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

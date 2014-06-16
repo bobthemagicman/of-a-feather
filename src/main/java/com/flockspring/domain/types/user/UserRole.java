@@ -12,5 +12,5 @@ package com.flockspring.domain.types.user;
  */
 public enum UserRole
 {
-    USER, SUBSCRIBER, GUEST;
+    ROLE_USER, SUBSCRIBER, GUEST;
 }

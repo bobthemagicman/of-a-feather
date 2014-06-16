@@ -13,6 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.social.security.SocialUser;
 
 import com.flockspring.domain.types.user.SocialMediaProvider;
+import com.flockspring.domain.types.user.UserRole;
 
 /**
  * UserImpl.java
@@ -31,10 +32,11 @@ public class ApplicationUserImpl extends SocialUser
     private String lastName;
     private TreeSet<SocialMediaProvider> signInProviders;
     private NavigableSet<String> favoriteChurches;
+    private UserRole userRole;
     
     public ApplicationUserImpl(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired,
             boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, String email, String firstName, String lastName,
-            TreeSet<SocialMediaProvider> signInProviders)
+            TreeSet<SocialMediaProvider> signInProviders, UserRole userRole)
     {
         super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
 
@@ -42,10 +44,11 @@ public class ApplicationUserImpl extends SocialUser
         this.firstName = firstName;
         this.lastName = lastName;
         this.signInProviders = signInProviders;
+        this.userRole = userRole;
     }
 
     public ApplicationUserImpl(String id, String username, String password, Collection<? extends GrantedAuthority> authorities, String email, String firstName,
-            String lastName, TreeSet<SocialMediaProvider> signInProviders)
+            String lastName, TreeSet<SocialMediaProvider> signInProviders, UserRole userRole)
     {
         super(username, password, authorities);
         
@@ -54,6 +57,7 @@ public class ApplicationUserImpl extends SocialUser
         this.firstName = firstName;
         this.lastName = lastName;
         this.signInProviders = signInProviders;        
+        this.userRole = userRole;
     }
 
     public ApplicationUserImpl(String username, String password, Collection<? extends GrantedAuthority> authorities) {
@@ -90,6 +94,11 @@ public class ApplicationUserImpl extends SocialUser
         return favoriteChurches;
     }
 
+    public UserRole getUserRole()
+    {
+        return userRole;
+    }
+
     public void TreeSetId(String id)
     {
         this.id = id;
@@ -123,6 +132,11 @@ public class ApplicationUserImpl extends SocialUser
     public void setFavoriteChurches(NavigableSet<String> favoriteChurches)
     {
         this.favoriteChurches = favoriteChurches;
+    }
+    
+    public void setUserRole(UserRole userRole)
+    {
+        this.userRole = userRole;
     }
 
     @Override

@@ -29,6 +29,7 @@ public class ApplicationUserModelMapper
     private String lastName;
     private String firstName;
     private String email;
+    private UserRole role;
 
     private Set<SimpleGrantedAuthority> createAuthorities(UserRole userRole)
     {
@@ -43,7 +44,7 @@ public class ApplicationUserModelMapper
     {
         
         return new ApplicationUserImpl(user.getId(), user.getEmail(), user.getPassword() , createAuthorities(user.getUserRole()), user.getEmail(),
-                user.getFirstName(), user.getLastName(), user.getSignInProviders());        
+                user.getFirstName(), user.getLastName(), user.getSignInProviders(), role);        
     }
 
     public ApplicationUserModelMapper withEmail(String email)
@@ -69,6 +70,12 @@ public class ApplicationUserModelMapper
         this.encodedPassword = encodedPassword;
         return this;
     }
+    
+    public ApplicationUserModelMapper withRole(UserRole userRole)
+    {
+        this.role = userRole;
+        return this;
+    }
 
     public ApplicationUserModelMapper withSignInProvider(SocialMediaProvider signInProvider)
     {
@@ -86,6 +93,6 @@ public class ApplicationUserModelMapper
      */
     public UserModel build()
     {
-        return new UserModel(null, email, firstName, lastName, encodedPassword, UserRole.USER, signInProviders);
+        return new UserModel(null, email, firstName, lastName, encodedPassword, UserRole.ROLE_USER, signInProviders);
     }
 }

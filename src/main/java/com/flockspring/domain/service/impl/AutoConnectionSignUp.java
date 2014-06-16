@@ -17,6 +17,7 @@ import com.flockspring.domain.DuplicateEmailException;
 import com.flockspring.domain.service.user.UserService;
 import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.user.SocialMediaProvider;
+import com.flockspring.domain.types.user.UserRole;
 import com.google.common.collect.Sets;
 
 /**
@@ -46,7 +47,7 @@ public class AutoConnectionSignUp implements ConnectionSignUp
         TreeSet<SocialMediaProvider> socialSigninProviders = Sets.newTreeSet(Arrays.asList(provider));
         
         ApplicationUserImpl applicaitonUser = new ApplicationUserImpl("", profile.getEmail(), "", Collections.<GrantedAuthority>emptySet(),
-                profile.getEmail(), profile.getFirstName(), profile.getLastName(), socialSigninProviders);
+                profile.getEmail(), profile.getFirstName(), profile.getLastName(), socialSigninProviders, UserRole.ROLE_USER);
         
         try
         {

@@ -31,6 +31,7 @@ import com.flockspring.domain.service.user.UserService;
 import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.user.SocialMediaProvider;
 import com.flockspring.domain.types.user.SocialMediaProviderConnectionRepositoryWrapper;
+import com.flockspring.domain.types.user.UserRole;
 import com.flockspring.ui.IdentifiedPage;
 import com.flockspring.ui.mapper.user.UserUIModelBuilder;
 import com.flockspring.ui.model.user.UserRegistrationUICommand;
@@ -118,7 +119,7 @@ public class SignUpController extends IdentifiedPage
         
         ApplicationUserImpl applicationUser = new ApplicationUserImpl("", userAccountData.getEmail(), userAccountData.getPassword(), 
                 Collections.<GrantedAuthority>emptySet(), userAccountData.getEmail(), userAccountData.getFirstName(), userAccountData.getLastName(), 
-                socialSignInProviders);
+                socialSignInProviders, UserRole.ROLE_USER);
 
         try
         {
