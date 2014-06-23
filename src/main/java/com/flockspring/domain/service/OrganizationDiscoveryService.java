@@ -32,6 +32,8 @@ public interface OrganizationDiscoveryService {
     Organization getOrganizationByRegionAndOrganizationNames(String organizationName, String stateRegionName, String cityRegionName);
 
     GeoPage<OrganizationImpl> getFilteredOrganizations(OrganizationFilter filterRequest, int page);
+    
+    GeoPage<OrganizationImpl> getFilteredOrganizations(OrganizationFilter filterRequest, int page, int dist);
 
     void saveOrganization(OrganizationImpl organization);
     

@@ -3,10 +3,12 @@
  */
 package com.flockspring.ui.config;
 
+import java.util.List;
 import java.util.Properties;
 
 import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -30,7 +32,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import com.flockspring.domain.util.PropertiesUtil;
 import com.flockspring.ui.interceptor.HeaderHandlerInterceptor;
 import com.flockspring.ui.interceptor.SearchBarHandlerInterceptor;
 
@@ -54,6 +55,9 @@ public class WebappConfig extends WebMvcConfigurerAdapter
         return new PropertySourcesPlaceholderConfigurer();  
     }
 
+    @Value("#{'${pages.with.no.search}'.split(',')}")
+    private List<String> noSearchBarList;
+    
     @Inject
     private ConnectionRepository connectionRepository;  
     
@@ -96,7 +100,7 @@ public class WebappConfig extends WebMvcConfigurerAdapter
     {
         super.addInterceptors(registry);
         registry.addInterceptor(new HeaderHandlerInterceptor(connectionRepository));
-        registry.addInterceptor(new SearchBarHandlerInterceptor(PropertiesUtil.getPropertyAsList(env.getProperty("pages.with.no.search"))));
+        registry.addInterceptor(new SearchBarHandlerInterceptor(noSearchBarList));
     }
 
     @Bean

@@ -93,11 +93,8 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
     @Override
     public GeoPage<OrganizationImpl> getFilteredOrganizations(OrganizationFilter filter, int pageNum)
     {
+        return this.getFilteredOrganizations(filter, pageNum, this.defaultDistance);
         
-        Distance d = new Distance(this.defaultDistance, Metrics.MILES);
-        
-        PageRequest page = new PageRequest(pageNum, defaultPageSize);
-        return organizationRepository.findOrganizationsByFilteredCriteria(filter.getSearchPoint(), d, filter, page);
     }
 
     @Override
@@ -117,5 +114,14 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
     public List<OrganizationImpl> getOrganizationsByIds(Iterable<String> organizationIds)
     {
         return Lists.newArrayList(organizationRepository.findAll(organizationIds));        
+    }
+
+    @Override
+    public GeoPage<OrganizationImpl> getFilteredOrganizations(OrganizationFilter filter, int pageNum, int dist)
+    {
+        Distance d = new Distance(dist, Metrics.MILES);
+        
+        PageRequest page = new PageRequest(pageNum, defaultPageSize);
+        return organizationRepository.findOrganizationsByFilteredCriteria(filter.getSearchPoint(), d, filter, page);
     }
 }

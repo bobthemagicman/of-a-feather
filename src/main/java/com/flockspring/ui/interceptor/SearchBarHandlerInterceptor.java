@@ -3,6 +3,8 @@
  */
 package com.flockspring.ui.interceptor;
 
+import static com.flockspring.ui.IdentifiedPage.PAGE_ID_MAP_KEY;
+
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,8 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
-
-import static com.flockspring.ui.IdentifiedPage.PAGE_ID_MAP_KEY;
 
 /**
  * HeaderHandlerInterceptor.java
@@ -23,13 +23,15 @@ import static com.flockspring.ui.IdentifiedPage.PAGE_ID_MAP_KEY;
  */
 public class SearchBarHandlerInterceptor extends HandlerInterceptorAdapter implements HandlerInterceptor
 {
-    private final List<String> pageIdsOfPagesNotToShowSearchInHeader;
+    private List<String> pageIdsOfPagesNotToShowSearchInHeader;
     
-    public SearchBarHandlerInterceptor (List<String> pageIdsOfPagesNotToShowSearchInHeader)
+    public SearchBarHandlerInterceptor(List<String> pageIdsOfPagesNotToShowSearchInHeader)
     {
+        super();
+
         this.pageIdsOfPagesNotToShowSearchInHeader = pageIdsOfPagesNotToShowSearchInHeader;
     }
-    
+
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView mv) throws Exception
     {

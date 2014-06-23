@@ -105,7 +105,9 @@ public class SearchPageController extends IdentifiedPage
 
     @RequestMapping("")
     public ModelAndView search(@RequestParam(value = "search-bar", required = false) String query,
-            @RequestParam(value = "page", required = false, defaultValue = "0") String page, HttpSession session, HttpServletRequest request)
+            @RequestParam(value = "page", required = false, defaultValue = "0") String page, 
+            @RequestParam(required=false, defaultValue="false") boolean showAll, 
+            HttpSession session, HttpServletRequest request)
     {
         SiteSearchHelper searchHelper = new SiteSearchHelper(session);
         OrganizationFilter organizationFilter = searchHelper.getOrganizationFilterFromSession();
@@ -140,7 +142,7 @@ public class SearchPageController extends IdentifiedPage
         GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
 
         List<GeocoderResult> googleResults = geocoderResponse.getResults();
-        if (googleResults.size() != 1)
+        if (googleResults.size() < 1)
         {
             // return error state to search results page asking user to select
             // address
@@ -177,7 +179,14 @@ public class SearchPageController extends IdentifiedPage
             searchHelper.setOrganizationFilter(organizationFilter);
         }
         
-        geoPageResult = organizationDiscoveryService.getFilteredOrganizations(organizationFilter, pageNum);
+        if(!showAll)
+        {
+            geoPageResult = organizationDiscoveryService.getFilteredOrganizations(organizationFilter, pageNum);
+        }
+        else
+        {
+            geoPageResult = organizationDiscoveryService.getFilteredOrganizations(organizationFilter, pageNum, 1000);
+        }
         
         SearchFilterUICommand searchFilterUIModel = searchFilterUIModelMapper.map(organizationFilter);
         SearchResultsUIModel searchResultsUIModel = searchResultsModelMapper.map(geoPageResult, address, request.getLocale(), query);
