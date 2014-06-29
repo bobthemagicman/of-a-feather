@@ -19,8 +19,7 @@
                     .queueScript("https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&callback=initializeMap")
                     .queueScript("${geoCompletePlugin}")
                     .queueScript("${mustacheJS}")
-                    .queueScript("${jqueryForm}")
-                    .queueScript("${bootstrapPaginatorJS}")                            
+                    .queueScript("${jqueryForm}")                            
                     .runQueue();
 
             var showOutsideRegionModal = ${not empty error and error eq 'user_search_out_of_region'};
@@ -33,7 +32,7 @@
         <title>Of A Feather - Search Results</title>	
     </head>
     <body data-rn="${userKey}">
-
+        <div class="page-container">
         <%-- Site Header --%>
         <c:set var="navSearchEnabled" value="true" />
         <%@ include file="/WEB-INF/jsp/partials/siteHeader.jsp"%>
@@ -647,5 +646,6 @@
 
         <%@ include file="/WEB-INF/jsp/partials/siteFooter.jsp"%> 
         <%@ include file="/WEB-INF/jsp/partials/outOfRegionModal.jsp"%>
+        </div>
     </body>
 </html>
