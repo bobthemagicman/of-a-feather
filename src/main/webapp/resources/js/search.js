@@ -22,7 +22,7 @@ $(document).ready(function() {
     if(showOutsideRegionModal) {
         $(".outside-beta-region-modal").modal("show");
         
-        var options = {url : 'search/ajax/out-of-region-search', success: betaRegionEmailUpdateCallback}; 
+        var options = {url : 'search/async/out-of-region-search', success: betaRegionEmailUpdateCallback}; 
         $("#email-submit-form").ajaxForm(options);
     }
     
@@ -647,7 +647,7 @@ function filterRequest() {
 
     $.ajaxSetup({ scriptCharset: "utf-8" , contentType: "application/json; charset=utf-8"});
 
-    var searchFilterRequest = "search/ajax/filter-results";
+    var searchFilterRequest = "search/async/filter-results";
 
     var json = constructJSON();
 

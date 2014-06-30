@@ -32,6 +32,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import com.flockspring.ui.interceptor.AuthenticationRequestCachingHandlerInterceptor;
 import com.flockspring.ui.interceptor.HeaderHandlerInterceptor;
 import com.flockspring.ui.interceptor.SearchBarHandlerInterceptor;
 
@@ -101,6 +102,7 @@ public class WebappConfig extends WebMvcConfigurerAdapter
         super.addInterceptors(registry);
         registry.addInterceptor(new HeaderHandlerInterceptor(connectionRepository));
         registry.addInterceptor(new SearchBarHandlerInterceptor(noSearchBarList));
+        registry.addInterceptor(new AuthenticationRequestCachingHandlerInterceptor());
     }
 
     @Bean

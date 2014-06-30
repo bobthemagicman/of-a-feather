@@ -44,7 +44,7 @@ import com.flockspring.ui.mapper.CategoryUIMapConverter;
 import com.flockspring.ui.mapper.OrganizationFilterMapper;
 import com.flockspring.ui.mapper.SearchFilterUIModelMapper;
 import com.flockspring.ui.mapper.SearchResultsUIModelMapper;
-import com.flockspring.ui.model.AjaxSearchFilterResponse;
+import com.flockspring.ui.model.AsyncSearchFilterResponse;
 import com.flockspring.ui.model.CongregationSize;
 import com.flockspring.ui.model.SearchFilterUICommand;
 import com.flockspring.ui.model.SearchResultsUIModel;
@@ -320,7 +320,7 @@ public class SearchPageController extends IdentifiedPage
         return new CategoryUIMapConverter<Programs>().convertCategoryToMap(Programs.values());
     }
 
-    @RequestMapping(value = "/ajax/out-of-region-search")
+    @RequestMapping(value = "/async/out-of-region-search")
     public void saveUserEmail(@RequestParam(value = "email-address") String email, @RequestParam(value = "user-key") String userKey,
             @RequestParam(value = "user-search-city") String userSearchCity, HttpSession session, HttpServletRequest request)
     {
@@ -337,10 +337,10 @@ public class SearchPageController extends IdentifiedPage
         }
     }
     
-    @RequestMapping(value = "/ajax/filter-results", method = RequestMethod.POST, headers =
+    @RequestMapping(value = "/async/filter-results", method = RequestMethod.POST, headers =
     { "content-type=application/json" })
     public @ResponseBody
-    AjaxSearchFilterResponse ajaxResultsFilter(@RequestBody SearchFilterUICommand filterRequest, HttpSession session, HttpServletRequest request)
+    AsyncSearchFilterResponse ajaxResultsFilter(@RequestBody SearchFilterUICommand filterRequest, HttpSession session, HttpServletRequest request)
     {
         SiteSearchHelper searchHelper = new SiteSearchHelper(session);
         OrganizationFilter organizationFilter = searchHelper.getOrganizationFilterFromSession();
@@ -353,12 +353,14 @@ public class SearchPageController extends IdentifiedPage
         {
 
             SearchResultsUIModel searchResultUIModels = searchResultsModelMapper.map(geoResult, filterRequest, request.getLocale());
-            AjaxSearchFilterResponse response = new AjaxSearchFilterResponse(searchResultUIModels);
+            
+            String statusMessage = String.format("Returning %[0] church listings for query" , searchResultUIModels.getChurchListings().size());
+            AsyncSearchFilterResponse response = new AsyncSearchFilterResponse(searchResultUIModels, statusMessage);
 
             return response;
         }
 
-        return new AjaxSearchFilterResponse();
+        return new AsyncSearchFilterResponse();
     }
 
     @Override

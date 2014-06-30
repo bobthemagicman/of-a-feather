@@ -6,28 +6,31 @@ package com.flockspring.ui.controller;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.NavigableSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.flockspring.domain.service.OrganizationDiscoveryService;
-import com.flockspring.domain.types.GlobalRegionType;
 import com.flockspring.domain.types.Organization;
-import com.flockspring.domain.types.Region;
+import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.ui.IdentifiedPage;
 import com.flockspring.ui.exception.PageNotFoundException;
 import com.flockspring.ui.mapper.OrganizationUIModelMapper;
+import com.flockspring.ui.model.AsyncUserFavoriteResponse;
 
 @Controller
-@RequestMapping("/church-profile")
+@RequestMapping("/churches")
 public class ProfilePageController extends IdentifiedPage
 {
     private static final String VIEW_NAME = "profilePage";
@@ -50,35 +53,16 @@ public class ProfilePageController extends IdentifiedPage
             @PathVariable String cityRegionName, @PathVariable String neighborhoodRegionName, HttpSession session,
             HttpServletRequest request)
     {
-        // TODO: sanitize organizationId
-        Organization organization = organizationDiscoveryService.getOrganizationByRegionAndOrganizationNames(organizationName, stateRegionName,
-                cityRegionName, neighborhoodRegionName);
-
-        return buildModelAndView(organization, -1, session, request.getLocale());
+        
+        return null;
     }
 
     @RequestMapping("/{stateRegionName}/{cityRegionName}/{organizationName}")
     public ModelAndView renderOrganizationProfileByName(@PathVariable String organizationName, @PathVariable String stateRegionName,
             @PathVariable String cityRegionName)
     {
-        // TODO: sanitize organizationId
-        Organization organization = organizationDiscoveryService.getOrganizationByRegionAndOrganizationNames(organizationName, stateRegionName,
-                cityRegionName);
-
+        
         return null;
-    }
-
-    private ModelAndView buildModelAndView(Organization organization, double distance, HttpSession session, Locale locale)
-    {
-        SiteSearchHelper searchHelper = new SiteSearchHelper(session);
-        
-        Map<String, Object> model = new HashMap<>();
-        model.put("organization", organizationUIModelMapper.map(organization, distance, locale));
-        model.put("hasPreviousSearch", searchHelper.hasPreviousSearch());
-        model.put("searchQuery", searchHelper.getSearchQuery());
-        model.put("navSearchEnabled", true);
-        
-        return new ModelAndView(VIEW_NAME, model);
     }
 
     @RequestMapping("/{organizationId}")
@@ -106,57 +90,19 @@ public class ProfilePageController extends IdentifiedPage
         return buildModelAndView(organization, dist, session, request.getLocale()); 
     }
 
-//    private ModelAndView buildRedirectUrl(Organization organization)
-//    {
-////        String organizationName = organization.getName().replaceAll(" ", "-");
-////        Region organizationRegion = organization.getRegion();
-////        Region state = getParentRegionTypeFromOrganizationRegion(GlobalRegionType.STATE, organizationRegion);
-////        Region city = getParentRegionTypeFromOrganizationRegion(GlobalRegionType.CITY, organizationRegion);
-////        Region neighborhood = getParentRegionTypeFromOrganizationRegion(GlobalRegionType.NEIGHBORHOOS, organizationRegion);
-////
-////        StringBuilder seoUrl = new StringBuilder("redirect:").append(state.getEnglishName()).append("/");
-////
-////        if (city != null)
-////        {
-////            seoUrl.append(city.getEnglishName()).append("/");
-////        }
-////
-////        if (neighborhood != null)
-////        {
-////            seoUrl.append(neighborhood.getEnglishName()).append("/");
-////        }
-////
-////        seoUrl.append(organizationName);
-////
-////        return new ModelAndView(seoUrl.toString(), "organization", organization);
-////        
-//        return null;
-//    }
-
-    /**
-     * @param neighborhood
-     * @param organizationRegion
-     * @return
-     */
-    private Region getParentRegionTypeFromOrganizationRegion(GlobalRegionType regionType, Region region)
+    private ModelAndView buildModelAndView(Organization organization, double distance, HttpSession session, Locale locale)
     {
-        if (region == null)
-        {
-            return null;
-        }
-
-        if (region.getRegionType() == regionType)
-        {
-            return region;
-        } else
-        {
-            return getParentRegionTypeFromOrganizationRegion(regionType, region.getParentRegion());
-        }
+        SiteSearchHelper searchHelper = new SiteSearchHelper(session);
+        
+        Map<String, Object> model = new HashMap<>();
+        model.put("organization", organizationUIModelMapper.map(organization, distance, locale));
+        model.put("hasPreviousSearch", searchHelper.hasPreviousSearch());
+        model.put("searchQuery", searchHelper.getSearchQuery());
+        model.put("navSearchEnabled", true);
+        
+        return new ModelAndView(VIEW_NAME, model);
     }
 
-    /**
-     * @param organization
-     */
     private void throwExceptionIfOrganizationIsNull(Organization organization, String id)
     {
         if (organization == null)
