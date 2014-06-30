@@ -35,7 +35,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <sec:authorize access="isAuthenticated()">
                 <c:if test="${not empty user.displayName}">
-			    <li><c:if test="${not empty user.displayImageUrl}"><img src="${user.displayImageUrl}" /></c:if>${user.displayName}</li> 
+			    <li class="header-user-identification"><c:if test="${not empty user.displayImageUrl}"><img src="${user.displayImageUrl}" /></c:if><span>${user.displayName}</span></li> 
 			    </c:if>
 			    <li><a href="<c:url value="/signout" />" > SIGN OUT</a></li>
                 </sec:authorize>
