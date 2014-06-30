@@ -46,7 +46,7 @@
 	                   <spring:url value="/signup" var="actionURL"/>
 	                   
 	                   <c:if test="${user.socialSignIn}">
-	                   <div>
+	                   <div class="social-user-identification">
 	                       <img src="${user.displayImageUrl}"><h3>${user.firstName} ${user.lastName}</h3>
 	                   </div>
                        <form:form action="${actionURL}" commandName="user" method="POST" enctype="utf8" role="form" class="sign-up-form" data-action="Signup" >    

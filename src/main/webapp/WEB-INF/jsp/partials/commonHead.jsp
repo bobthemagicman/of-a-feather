@@ -27,12 +27,12 @@
 
 <script type="text/javascript" src="<spring:url value="/static/js/LAB-debug.min.js" />"></script>
 
-<spring:url value="/static/js/bootstrap.min.js" var="bootstrapJS" />
 <spring:url value="/static/js/uservoice.js" var="userVoiceJS" />
 <script type="text/javascript">
     $LAB.setOptions({AlwaysPreserveOrder:true});
     $LAB.queueScript("http://code.jquery.com/jquery-latest.js")
-        .queueScript("//netdna.bootstrapcdn.com/bootstrap/2.3.2/js/bootstrap.min.js")
+        //.queueScript("//netdna.bootstrapcdn.com/bootstrap/2.3.2/js/bootstrap.min.js")
+        .queueScript("//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js")
         .queueScript("http://code.jquery.com/ui/1.10.3/jquery-ui.js")
         .queueScript("${userVoiceJS}");
 </script>

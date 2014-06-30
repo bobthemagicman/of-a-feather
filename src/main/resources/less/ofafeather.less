@@ -147,6 +147,7 @@ a {
 
 .main {
     padding-bottom: @footer-height;
+    
 }
 
 .footer {
@@ -2852,6 +2853,44 @@ a {
         position: absolute;
         top: -17px;
         text-transform: uppercase;
+    }
+}
+
+.social-container {
+    a {
+        display: block;
+        &:first-child {
+            margin-bottom: 5px;
+        }
+    }
+}
+
+.social-user-identification {
+    margin-bottom: 15px;
+    text-align: center;
+    img {
+        display: inline-block;
+        .rounded-corners(3px);
+    }
+    h3 {
+        display: inline-block;
+        margin-left: 15px;
+        font-weight: bold;
+        font-size: 18px;
+        color: @alt-dark-gray-color;
+    }
+}
+
+.header-user-identification {
+    margin: 7px;
+    img {
+        margin-right: 7px;
+        .rounded-corners(3px);
+    }
+    span {
+        display: inline-block;
+        padding: 2px 0 0 0;
+        vertical-align: middle;
     }
 }
 

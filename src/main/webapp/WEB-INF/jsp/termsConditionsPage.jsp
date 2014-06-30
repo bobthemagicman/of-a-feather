@@ -11,7 +11,7 @@
         <title>Of A Feather - Find your new church home today</title>	
     </head>
     <body>
-
+        <div class="page-container">
         <%-- Site Header --%>
         <%@ include file="/WEB-INF/jsp/partials/siteHeader.jsp"%>
 
@@ -157,5 +157,5 @@
         </div>
 
         <%@ include file="/WEB-INF/jsp/partials/siteFooter.jsp"%>
-
+        </div>
     </body>
