@@ -1,3 +1,5 @@
+<meta name="_csrf" content="${_csrf.token}"/>
+<meta name="_csrf_header" content="${_csrf.headerName}"/>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
@@ -38,6 +40,7 @@
 
 <script type="text/javascript">
     var resourceBaseURL = '<spring:url value="/static/" />';
+    var requestBaseUrl = '<spring:url value="/" />';
 </script>
 
 <c:set var="navSearchEnabled" value="false" /> 

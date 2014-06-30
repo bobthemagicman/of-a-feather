@@ -12,10 +12,14 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
+import org.springframework.social.security.SocialUserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.flockspring.domain.service.OrganizationDiscoveryService;
@@ -24,6 +28,7 @@ import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.impl.OrganizationImpl;
 import com.flockspring.ui.IdentifiedPage;
 import com.flockspring.ui.mapper.SearchResultsUIModelMapper;
+import com.flockspring.ui.model.AsyncUserFavoriteResponse;
 import com.flockspring.ui.model.ChurchListingUIModel;
 
 /**
@@ -80,6 +85,48 @@ public class UserController extends IdentifiedPage
         
         
         return new ModelAndView("userPreferencesPage", model);
+    }
+    
+    @RequestMapping(value = "/ajax/favorite/{churchId}", method=RequestMethod.PUT)
+    public @ResponseBody AsyncUserFavoriteResponse addUserFavorite(final @AuthenticationPrincipal ApplicationUserImpl user, 
+            final @PathVariable String churchId)
+    {
+        if(user != null)
+        {
+          //the injected user has no roles, this is a temp work around
+            UserDetails baseUser = userService.loadUserByUsername(user.getUsername());
+            
+            if(!(baseUser instanceof ApplicationUserImpl))
+            {
+                throw new IllegalArgumentException(
+                        String.format("Retrieved user identified by email: %[0] was not of correct type. If this is " +
+                        		"happening you should run away because it's black magic voodo darkness!", user.getEmail()));
+            }
+            ApplicationUserImpl retrievedUser = (ApplicationUserImpl) baseUser;
+            NavigableSet<String> favorites = retrievedUser.getFavoriteChurches();
+            if(favorites == null)
+            {
+                favorites = new TreeSet<>();
+                retrievedUser.setFavoriteChurches(favorites);
+            }
+            
+            String behaviorType = "";
+            if(favorites.contains(churchId))
+            {
+                favorites.remove(churchId);
+                behaviorType = "removed";
+            }
+            else
+            {
+                favorites.add(churchId);
+                behaviorType = "added";
+            }
+            
+            userService.saveUser(retrievedUser);
+            return new AsyncUserFavoriteResponse(String.format("Successfully %[0] church with id: %[1]", behaviorType, churchId));
+        }
+        
+        return new AsyncUserFavoriteResponse(new AsyncUserError(), "Unable to complete request");
     }
     
     @RequestMapping("/ajax/add-favorite/{church-id}")

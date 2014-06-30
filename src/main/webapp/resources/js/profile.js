@@ -7,8 +7,33 @@ $(document).ready(function() {
     initializeSliders();
     initializeVideoThumbnails();
     initializeTooltips();
+    initializeEventHandlers();
     
 });
+
+function initializeEventHandlers()
+{
+	$(".favorite").click(function(e){
+		var self = this;
+		var churchId = $(this).data("church-id");
+		var token = $("meta[name='_csrf']").attr("content");
+        var header = $("meta[name='_csrf_header']").attr("content");
+    
+		$.ajax({
+		    beforeSend: function(xhr) {
+                xhr.setRequestHeader(header, token);
+            },
+		    url: requestBaseUrl + 'user/ajax/favorite/' + churchId,
+            type: "PUT",
+            success: function(data) {
+                var self = this;
+                alert(this);
+            }
+        });
+		
+		e.preventDefault();
+	});
+}
 
 function initializeTooltips() {
     $(".has-tooltip").tooltip({'placement': 'top'});

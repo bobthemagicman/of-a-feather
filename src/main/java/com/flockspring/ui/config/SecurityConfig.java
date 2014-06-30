@@ -14,6 +14,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.RequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.flockspring.domain.service.user.impl.UserDetailsServiceImpl;
 
@@ -43,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                 .formLogin()
                     .loginPage("/signin")
                     .loginProcessingUrl("/signin/authenticate")
-                    .failureUrl("/signin?error=bad_credentials")
+                    .failureUrl("/signin?error=bad_credentials")                    
                 .and()
                     .logout()
                         .deleteCookies("JSESSIONID")
@@ -61,8 +64,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                                 "/addYourChurch",
                                 "/search",
                                 "/contact",
-                                "/church-profile/**"
+                                "/churches/**"
                         ).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/user/ajax/favorite/*", "PUT")).hasRole("USER")
                         .antMatchers("/**").hasRole("USER")
                 .and()
                     .apply(new AjaxEnabledSpringSocialConfigurer());
@@ -70,7 +74,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 
     @Override
     protected void configure(AuthenticationManagerBuilder authenticationManager) throws Exception {
-        authenticationManager.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        authenticationManager
+            .eraseCredentials(false)
+            .userDetailsService(userDetailsService)
+            .passwordEncoder(passwordEncoder());
     }
         
     @Bean

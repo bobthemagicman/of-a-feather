@@ -180,7 +180,10 @@
                             </div>
 
                             <div class="profile-icons-container">
-                                <img src="${heartIcon}" />
+                                <sec:authorize access="isAuthenticated()">
+                                <img src="${heartIcon}" class="favorite" data-church-id="${organization.id}" />
+                                </sec:authorize>
+                                
                                 <c:if test="${not empty organization.socialMedia.facebookUrl}">
                                     <a href="${organization.socialMedia.facebookUrl}" target="_blank"><img src="${facebookIcon}" /></a>
                                     </c:if>
@@ -520,5 +523,6 @@
 
             </div>
         </div>
+        <%@ include file="/WEB-INF/jsp/partials/siteFooter.jsp"%> 
     </body>
 </html>

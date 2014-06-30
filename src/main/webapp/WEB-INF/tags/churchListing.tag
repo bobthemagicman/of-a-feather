@@ -25,7 +25,7 @@
 
         <div class="search-result-info">
             <div class="church-basic-info">
-                <spring:url value="/church-profile/${item.id}?dist=${item.distanceFromSearchPoint}" var="churchUrl" />
+                <spring:url value="/churches/${item.id}?dist=${item.distanceFromSearchPoint}" var="churchUrl" />
                 <a href="${churchUrl}"><span class="church-name">${item.organizationName}</span></a>
                 <span class="church-denomination">${item.denomination}</span>
                 <span class="church-location">${item.city}, ${item.state} ${item.postalCode}<img src="${rightArrow}" /> <span class="distance"><fmt:formatNumber maxFractionDigits="2" value="${item.distanceFromSearchPoint}" /></span> miles away</span>
