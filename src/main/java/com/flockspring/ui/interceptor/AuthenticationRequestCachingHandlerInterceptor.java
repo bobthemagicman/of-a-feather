@@ -28,7 +28,7 @@ public class AuthenticationRequestCachingHandlerInterceptor extends HandlerInter
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception
     {
-        if(!request.getContextPath().contains(ConfigUtils.LOGIN_PAGE_URL))
+        if(!request.getRequestURI().contains(ConfigUtils.LOGIN_PAGE_URL))
         {
             requestCache.saveRequest(request, response);
         }
