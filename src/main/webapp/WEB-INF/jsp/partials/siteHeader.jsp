@@ -35,9 +35,20 @@
             <ul class="nav navbar-nav navbar-right">
                 <sec:authorize access="isAuthenticated()">
                 <c:if test="${not empty user.displayName}">
-			    <li class="header-user-identification"><c:if test="${not empty user.displayImageUrl}"><img src="${user.displayImageUrl}" /></c:if><span>${user.displayName}</span></li> 
-			    </c:if>
-			    <li><a href="<c:url value="/signout" />" > SIGN OUT</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <c:if test="${not empty user.displayImageUrl}"><img src="${user.displayImageUrl}" /></c:if>
+                            <span class="user-display-name">${user.displayName}</span>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Favorites</a></li>
+                            <li><a href="#">Preferences</a></li>
+                            <li><a href="#">Sign Out</a></li>
+                        </ul>
+                    </li> 
+		</c:if>
+		<li><a href="<c:url value="/signout" />" > SIGN OUT</a></li>
                 </sec:authorize>
                 <sec:authorize access="isAnonymous()">
                 <li><a href="<spring:url value='/signup'/>" class="sign-up">SIGN UP</a></li>
