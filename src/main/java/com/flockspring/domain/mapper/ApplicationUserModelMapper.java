@@ -4,6 +4,7 @@
 package com.flockspring.domain.mapper;
 
 import java.util.HashSet;
+import java.util.NavigableSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -30,6 +31,8 @@ public class ApplicationUserModelMapper
     private String firstName;
     private String email;
     private UserRole role;
+    private NavigableSet<String> favoriteChurches;
+    private String id;
 
     private Set<SimpleGrantedAuthority> createAuthorities(UserRole userRole)
     {
@@ -88,11 +91,21 @@ public class ApplicationUserModelMapper
         return this;
     }
 
-    /**
-     * @return
-     */
     public UserModel build()
     {
-        return new UserModel(null, email, firstName, lastName, encodedPassword, UserRole.ROLE_USER, signInProviders);
+        return new UserModel(id, email, firstName, lastName, encodedPassword, UserRole.ROLE_USER, signInProviders, favoriteChurches);
+    }
+
+    public ApplicationUserModelMapper withFavoriteChurches(NavigableSet<String> favoriteChurches)
+    {
+        this.favoriteChurches = favoriteChurches;
+        return this;
+    }
+
+    public ApplicationUserModelMapper withId(String id)
+    {
+        this.id = id;
+        return this;
+        
     }
 }

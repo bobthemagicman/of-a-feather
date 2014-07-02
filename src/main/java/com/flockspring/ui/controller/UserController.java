@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
-import org.springframework.social.security.SocialUserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -99,31 +98,34 @@ public class UserController extends IdentifiedPage
             if(!(baseUser instanceof ApplicationUserImpl))
             {
                 throw new IllegalArgumentException(
-                        String.format("Retrieved user identified by email: %[0] was not of correct type. If this is " +
+                        String.format("Retrieved user identified by email: %s was not of correct type. If this is " +
                         		"happening you should run away because it's black magic voodo darkness!", user.getEmail()));
             }
             ApplicationUserImpl retrievedUser = (ApplicationUserImpl) baseUser;
             NavigableSet<String> favorites = retrievedUser.getFavoriteChurches();
             if(favorites == null)
             {
-                favorites = new TreeSet<>();
+                favorites = new TreeSet<>();   
                 retrievedUser.setFavoriteChurches(favorites);
             }
             
             String behaviorType = "";
+            boolean currentStatus = false;
             if(favorites.contains(churchId))
             {
                 favorites.remove(churchId);
                 behaviorType = "removed";
+                currentStatus = false;
             }
             else
             {
                 favorites.add(churchId);
                 behaviorType = "added";
+                currentStatus = true;
             }
             
             userService.saveUser(retrievedUser);
-            return new AsyncUserFavoriteResponse(String.format("Successfully %[0] church with id: %[1]", behaviorType, churchId));
+            return new AsyncUserFavoriteResponse(String.format("Successfully %s church with id: %s", behaviorType, churchId), currentStatus);
         }
         
         return new AsyncUserFavoriteResponse(new AsyncUserError(), "Unable to complete request");

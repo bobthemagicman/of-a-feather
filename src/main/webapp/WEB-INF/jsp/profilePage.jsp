@@ -60,7 +60,7 @@
 
         <div class="main">
 
-            <div class="container profile" data-church-name="${organization.overview.name}" data-latitude="${organization.overview.address.latitude}" data-longitude="${organization.overview.address.longitude}">
+            <div class="container profile" data-church-name="${organization.overview.name}" data-latitude="${organization.overview.address.latitude}" data-longitude="${organization.overview.address.longitude}" data-church-id="${organization.id}">
             
                 <div class="profile-top">
     
@@ -180,9 +180,7 @@
                             </div>
 
                             <div class="profile-icons-container">
-                                <sec:authorize access="isAuthenticated()">
-                                <img src="${heartIcon}" class="favorite" data-church-id="${organization.id}" />
-                                </sec:authorize>
+                                <ctg:favorite isFavorite="${item.usersFavorite}" loginUrl="${loginUrl}" />
                                 
                                 <c:if test="${not empty organization.socialMedia.facebookUrl}">
                                     <a href="${organization.socialMedia.facebookUrl}" target="_blank"><img src="${facebookIcon}" /></a>

@@ -6,7 +6,6 @@ package com.flockspring.ui.controller;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.NavigableSet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -18,7 +17,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.flockspring.domain.service.OrganizationDiscoveryService;
@@ -27,7 +25,6 @@ import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.ui.IdentifiedPage;
 import com.flockspring.ui.exception.PageNotFoundException;
 import com.flockspring.ui.mapper.OrganizationUIModelMapper;
-import com.flockspring.ui.model.AsyncUserFavoriteResponse;
 
 @Controller
 @RequestMapping("/churches")
@@ -66,9 +63,9 @@ public class ProfilePageController extends IdentifiedPage
     }
 
     @RequestMapping("/{organizationId}")
-    public ModelAndView renderOrganizationProfileById(@PathVariable String organizationId, 
-            @RequestParam(value = "dist", required = false) String distance, HttpSession session, 
-            HttpServletRequest request)
+    public ModelAndView renderOrganizationProfileById(@AuthenticationPrincipal ApplicationUserImpl user,
+            @PathVariable String organizationId, @RequestParam(value = "dist", required = false) String distance, 
+            HttpSession session, HttpServletRequest request)
     {
         double dist = -1;
         if(StringUtils.hasText(distance))
@@ -87,15 +84,15 @@ public class ProfilePageController extends IdentifiedPage
 
         throwExceptionIfOrganizationIsNull(organization, organizationId);
 
-        return buildModelAndView(organization, dist, session, request.getLocale()); 
+        return buildModelAndView(organization, dist, session, request.getLocale(), user); 
     }
 
-    private ModelAndView buildModelAndView(Organization organization, double distance, HttpSession session, Locale locale)
+    private ModelAndView buildModelAndView(Organization organization, double distance, HttpSession session, Locale locale, ApplicationUserImpl user)
     {
         SiteSearchHelper searchHelper = new SiteSearchHelper(session);
         
         Map<String, Object> model = new HashMap<>();
-        model.put("organization", organizationUIModelMapper.map(organization, distance, locale));
+        model.put("organization", organizationUIModelMapper.map(organization, distance, locale, user));
         model.put("hasPreviousSearch", searchHelper.hasPreviousSearch());
         model.put("searchQuery", searchHelper.getSearchQuery());
         model.put("navSearchEnabled", true);

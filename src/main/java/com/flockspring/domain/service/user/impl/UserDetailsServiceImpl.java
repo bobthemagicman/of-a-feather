@@ -92,10 +92,17 @@ public class UserDetailsServiceImpl implements UserService
         modelMapper.withEmail(user.getEmail())
                 .withFirstName(user.getFirstName())
                 .withLastName(user.getLastName())
-                .withPassword(encodedPassword);
+                .withPassword(encodedPassword)
+                .withFavoriteChurches(user.getFavoriteChurches());
+                
         
         if (user.getSignInProviders() != null && !user.getSignInProviders().isEmpty()) {
             modelMapper.withSignInProvider(user.getSignInProviders().first());
+        }
+        
+        if (user.getId() != null && !user.getId().equals(""))
+        {
+            modelMapper.withId(user.getId());
         }
 
         UserModel userModel = modelMapper.build();
