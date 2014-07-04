@@ -28,10 +28,10 @@ public class UserModel
     private String password;
     private UserRole userRole;
     private TreeSet<SocialMediaProvider> signInProviders;
-    private NavigableSet<String> favoriteChurches;
+    private TreeSet<String> favoriteChurches;
   
     public UserModel(String id, String email, String firstName, String lastName, String password, UserRole userRole,
-            TreeSet<SocialMediaProvider> signInProviders, NavigableSet<String> favoriteChurches)
+            TreeSet<SocialMediaProvider> signInProviders, TreeSet<String> favoriteChurches)
     {
         super();
         this.id = id;
@@ -119,7 +119,7 @@ public class UserModel
         this.signInProviders = signInProviders;
     }
 
-    public void setFavoriteChurches(NavigableSet<String> favoriteChurches)
+    public void setFavoriteChurches(TreeSet<String> favoriteChurches)
     {
         this.favoriteChurches = favoriteChurches;
     }

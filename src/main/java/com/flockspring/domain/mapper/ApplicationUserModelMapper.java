@@ -14,6 +14,7 @@ import com.flockspring.dataaccess.mongodb.model.UserModel;
 import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.user.SocialMediaProvider;
 import com.flockspring.domain.types.user.UserRole;
+import com.google.common.collect.Sets;
 
 /**
  * UserUIModelMapper.java
@@ -31,7 +32,7 @@ public class ApplicationUserModelMapper
     private String firstName;
     private String email;
     private UserRole role;
-    private NavigableSet<String> favoriteChurches;
+    private TreeSet<String> favoriteChurches;
     private String id;
 
     private Set<SimpleGrantedAuthority> createAuthorities(UserRole userRole)
@@ -98,7 +99,7 @@ public class ApplicationUserModelMapper
 
     public ApplicationUserModelMapper withFavoriteChurches(NavigableSet<String> favoriteChurches)
     {
-        this.favoriteChurches = favoriteChurches;
+        this.favoriteChurches = Sets.newTreeSet(favoriteChurches);
         return this;
     }
 
