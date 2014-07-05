@@ -17,6 +17,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.user.SocialMediaProvider;
+import com.flockspring.ui.config.ConfigUtils;
 import com.flockspring.ui.mapper.user.UserUIModelBuilder;
 import com.flockspring.ui.model.user.HeaderUIModel;
 import com.flockspring.ui.model.user.UserRegistrationUICommand;
@@ -31,6 +32,9 @@ import com.flockspring.ui.model.user.UserRegistrationUICommand;
 public class HeaderHandlerInterceptor extends HandlerInterceptorAdapter implements HandlerInterceptor
 {
 
+    private static final String LOGIN_URL = "loginUrl";
+    private static final String LOGOUT_URL = "logoutUrl";
+    
     private final ConnectionRepository connectionRepository;
         
     public HeaderHandlerInterceptor (final ConnectionRepository connectionRepository)
@@ -55,6 +59,9 @@ public class HeaderHandlerInterceptor extends HandlerInterceptorAdapter implemen
         {
            createHeaderModels(mv);
         }
+        
+        mv.addObject(LOGIN_URL, ConfigUtils.LOGIN_PAGE_URL);
+        mv.addObject(LOGOUT_URL, ConfigUtils.LOGOUT_PAGE_URL);
     }
 
     private void createHeaderModels(ModelAndView modelAndView)
@@ -72,10 +79,8 @@ public class HeaderHandlerInterceptor extends HandlerInterceptorAdapter implemen
         
     }
     
-    private void createUserModelForHeader(ApplicationUserImpl obj, ModelAndView modelAndView)
+    private void createUserModelForHeader(ApplicationUserImpl user, ModelAndView modelAndView)
     {
-        ApplicationUserImpl user = (ApplicationUserImpl)obj;
-        
         if(user.getSignInProviders() != null && user.getSignInProviders().contains(SocialMediaProvider.FACEBOOK))
         {
             UserUIModelBuilder userUIModelBuilder = SocialMediaProvider.FACEBOOK.mapProfile(new UserUIModelBuilder(), connectionRepository);

@@ -39,7 +39,7 @@
         <div class="container main">
 
             <div class="search-results">
-                <ctg:churchListing items="${results.items}" />
+                <ctg:churchListing items="${favorites}" loginUrl="${loginUrl}"/>
             </div><!-- end search-results -->
             
             <!--  Pagination -->

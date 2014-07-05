@@ -3,6 +3,7 @@
  */
 package com.flockspring.dataaccess.mongodb.model;
 
+import java.util.NavigableSet;
 import java.util.TreeSet;
 
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -27,9 +28,10 @@ public class UserModel
     private String password;
     private UserRole userRole;
     private TreeSet<SocialMediaProvider> signInProviders;
+    private TreeSet<String> favoriteChurches;
   
     public UserModel(String id, String email, String firstName, String lastName, String password, UserRole userRole,
-            TreeSet<SocialMediaProvider> signInProviders)
+            TreeSet<SocialMediaProvider> signInProviders, TreeSet<String> favoriteChurches)
     {
         super();
         this.id = id;
@@ -39,75 +41,86 @@ public class UserModel
         this.password = password;
         this.userRole = userRole;
         this.signInProviders = signInProviders;
+        this.favoriteChurches = favoriteChurches;
     }
-    
+
     public String getId()
     {
         return id;
     }
-    
+
     public String getEmail()
     {
         return email;
     }
-    
+
     public String getFirstName()
     {
         return firstName;
     }
-    
+
     public String getLastName()
     {
         return lastName;
     }
-    
+
     public String getPassword()
     {
         return password;
     }
-    
+
     public UserRole getUserRole()
     {
         return userRole;
     }
-    
+
     public TreeSet<SocialMediaProvider> getSignInProviders()
     {
         return signInProviders;
     }
-    
-    public void TreeSetId(String id)
+
+    public NavigableSet<String> getFavoriteChurches()
+    {
+        return favoriteChurches;
+    }
+
+    public void setId(String id)
     {
         this.id = id;
     }
-    
-    public void TreeSetEmail(String email)
+
+    public void setEmail(String email)
     {
         this.email = email;
     }
-    
-    public void TreeSetFirstName(String firstName)
+
+    public void setFirstName(String firstName)
     {
         this.firstName = firstName;
     }
-    
-    public void TreeSetLastName(String lastName)
+
+    public void setLastName(String lastName)
     {
         this.lastName = lastName;
     }
-    
-    public void TreeSetPassword(String password)
+
+    public void setPassword(String password)
     {
         this.password = password;
     }
-    
-    public void TreeSetUserRole(UserRole userRole)
+
+    public void setUserRole(UserRole userRole)
     {
         this.userRole = userRole;
     }
-    
-    public void TreeSetSignInProviders(TreeSet<SocialMediaProvider> signInProviders)
+
+    public void setSignInProviders(TreeSet<SocialMediaProvider> signInProviders)
     {
         this.signInProviders = signInProviders;
+    }
+
+    public void setFavoriteChurches(TreeSet<String> favoriteChurches)
+    {
+        this.favoriteChurches = favoriteChurches;
     }
 }
