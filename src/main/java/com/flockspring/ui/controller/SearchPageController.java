@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.geo.GeoPage;
 import org.springframework.data.mongodb.core.geo.Point;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,6 +38,7 @@ import com.flockspring.domain.types.Language;
 import com.flockspring.domain.types.Programs;
 import com.flockspring.domain.types.ServiceDay;
 import com.flockspring.domain.types.impl.AddressImpl;
+import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.impl.OrganizationImpl;
 import com.flockspring.domain.types.impl.UpdateEmailImpl;
 import com.flockspring.ui.IdentifiedPage;
@@ -107,7 +109,7 @@ public class SearchPageController extends IdentifiedPage
     public ModelAndView search(@RequestParam(value = "search-bar", required = false) String query,
             @RequestParam(value = "page", required = false, defaultValue = "0") String page, 
             @RequestParam(required=false, defaultValue="false") boolean showAll, 
-            HttpSession session, HttpServletRequest request)
+            @AuthenticationPrincipal ApplicationUserImpl user, HttpSession session, HttpServletRequest request)
     {
         SiteSearchHelper searchHelper = new SiteSearchHelper(session);
         OrganizationFilter organizationFilter = searchHelper.getOrganizationFilterFromSession();
@@ -189,7 +191,7 @@ public class SearchPageController extends IdentifiedPage
         }
         
         SearchFilterUICommand searchFilterUIModel = searchFilterUIModelMapper.map(organizationFilter);
-        SearchResultsUIModel searchResultsUIModel = searchResultsModelMapper.map(geoPageResult, address, request.getLocale(), query);
+        SearchResultsUIModel searchResultsUIModel = searchResultsModelMapper.map(geoPageResult, address, request.getLocale(), query, user);
        
         model.put("filters", searchFilterUIModel);
         model.put("results", searchResultsUIModel);
@@ -340,7 +342,8 @@ public class SearchPageController extends IdentifiedPage
     @RequestMapping(value = "/async/filter-results", method = RequestMethod.POST, headers =
     { "content-type=application/json" })
     public @ResponseBody
-    AsyncSearchFilterResponse ajaxResultsFilter(@RequestBody SearchFilterUICommand filterRequest, HttpSession session, HttpServletRequest request)
+    AsyncSearchFilterResponse ajaxResultsFilter(@RequestBody SearchFilterUICommand filterRequest, @AuthenticationPrincipal ApplicationUserImpl user,
+            HttpSession session, HttpServletRequest request)
     {
         SiteSearchHelper searchHelper = new SiteSearchHelper(session);
         OrganizationFilter organizationFilter = searchHelper.getOrganizationFilterFromSession();
@@ -352,7 +355,7 @@ public class SearchPageController extends IdentifiedPage
         if (geoResult.getNumberOfElements() != 0)
         {
 
-            SearchResultsUIModel searchResultUIModels = searchResultsModelMapper.map(geoResult, filterRequest, request.getLocale());
+            SearchResultsUIModel searchResultUIModels = searchResultsModelMapper.map(geoResult, filterRequest, request.getLocale(), user);
             
             String statusMessage = String.format("Returning %[0] church listings for query" , searchResultUIModels.getChurchListings().size());
             AsyncSearchFilterResponse response = new AsyncSearchFilterResponse(searchResultUIModels, statusMessage);

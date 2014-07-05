@@ -180,26 +180,26 @@
                             </div>
 
                             <div class="profile-icons-container">
-                                <ctg:favorite isFavorite="${item.usersFavorite}" loginUrl="${loginUrl}" />
+                                <ctg:favorite isFavorite="${organization.overview.userFavorited}" loginUrl="${loginUrl}" />
                                 
                                 <c:if test="${not empty organization.socialMedia.facebookUrl}">
-                                    <a href="${organization.socialMedia.facebookUrl}" target="_blank"><img src="${facebookIcon}" /></a>
+                                    <a href="${organization.socialMedia.facebookUrl}" target="_blank"><img src="${facebookIcon}" class="social-icon" /></a>
                                     </c:if>
 
                                 <c:if test="${not empty organization.socialMedia.twitterUrl}">
-                                    <a href="${organization.socialMedia.twitterUrl}" target="_blank"><img src="${twitterIcon}" /></a>
+                                    <a href="${organization.socialMedia.twitterUrl}" target="_blank"><img src="${twitterIcon}" class="social-icon" /></a>
                                     </c:if>
 
                                 <c:if test="${not empty organization.socialMedia.instagramUrl}">
-                                    <a href="${organization.socialMedia.instagramUrl}" target="_blank"><img src="${instagramIcon}" /></a>
+                                    <a href="${organization.socialMedia.instagramUrl}" target="_blank"><img src="${instagramIcon}" class="social-icon" /></a>
                                     </c:if>
 
                                 <c:if test="${not empty organization.socialMedia.youtubeUrl}">
-                                    <a href="${organization.socialMedia.youtubeUrl}" target="_blank"><img src="${youtubeIcon}" /></a>
+                                    <a href="${organization.socialMedia.youtubeUrl}" target="_blank"><img src="${youtubeIcon}" class="social-icon" /></a>
                                     </c:if>
 
                                 <c:if test="${not empty organization.socialMedia.googlePlusUrl}">
-                                    <a href="${organization.socialMedia.googlePlusUrl}" target="_blank"><img src="${googlePlusIcon}" /></a>
+                                    <a href="${organization.socialMedia.googlePlusUrl}" target="_blank"><img src="${googlePlusIcon}" class="social-icon" /></a>
                                     </c:if>
                             </div>
 
@@ -208,12 +208,12 @@
                         <div class="visit-us-container">
 
                             <a class="visit-us-button btn btn-primary" href="#">
-                                <div class="visit-us-icon">
+                                <span class="visit-us-icon">
                                     <img src="${visitingIcon}" />
-                                </div>
-                                <div class="visit-us-text">
+                                </span>
+                                <span class="visit-us-text">
                                      INTERESTED<br />IN VISITING?
-                                </div>
+                                </span>
                             </a>
 
                             <div class="visit-us-times">

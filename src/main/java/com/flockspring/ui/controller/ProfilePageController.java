@@ -95,7 +95,6 @@ public class ProfilePageController extends IdentifiedPage
         model.put("organization", organizationUIModelMapper.map(organization, distance, locale, user));
         model.put("hasPreviousSearch", searchHelper.hasPreviousSearch());
         model.put("searchQuery", searchHelper.getSearchQuery());
-        model.put("navSearchEnabled", true);
         
         return new ModelAndView(VIEW_NAME, model);
     }

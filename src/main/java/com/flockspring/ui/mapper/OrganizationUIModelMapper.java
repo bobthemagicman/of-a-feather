@@ -79,16 +79,16 @@ public class OrganizationUIModelMapper
             return null;
         }
         
-        boolean isUserFavorite = false;
+        boolean userFavorited = false;
         if(user != null)
         {
-            isUserFavorite = user.getFavoriteChurches() != null && user.getFavoriteChurches().contains(organization.getId());
+            userFavorited = user.getFavoriteChurches() != null && user.getFavoriteChurches().contains(organization.getId());
         }
 
         Set<LeaderUIModel> leadershipTeam = leaderUIModelMapper.map(organization.getLeadershipTeam());
         Set<MultimediaUIModel> multimedia = multimediaUIModelMapper.map(organization.getMultimedia());
         Set<LanguageUIModel> languages = getLanguages(); 
-        OrganizationOverviewUIModel overview = getOrganizationOverviewUIModel(organization, distance, locale, isUserFavorite);
+        OrganizationOverviewUIModel overview = getOrganizationOverviewUIModel(organization, distance, locale, userFavorited);
 
         OrganizationStatementUIModel statements = new OrganizationStatementUIModel(organization.getMissionStatement(),
                 organization.getStatementOfFaith(), organization.getWelcomeMessage());

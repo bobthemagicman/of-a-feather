@@ -31,7 +31,6 @@ public class ApplicationUserModelMapper
     private String lastName;
     private String firstName;
     private String email;
-    private UserRole role;
     private TreeSet<String> favoriteChurches;
     private String id;
 
@@ -48,7 +47,7 @@ public class ApplicationUserModelMapper
     {
         
         return new ApplicationUserImpl(user.getId(), user.getEmail(), user.getPassword() , createAuthorities(user.getUserRole()), user.getEmail(),
-                user.getFirstName(), user.getLastName(), user.getSignInProviders(), role);        
+                user.getFirstName(), user.getLastName(), user.getSignInProviders(), user.getUserRole(), user.getFavoriteChurches());        
     }
 
     public ApplicationUserModelMapper withEmail(String email)
@@ -75,12 +74,6 @@ public class ApplicationUserModelMapper
         return this;
     }
     
-    public ApplicationUserModelMapper withRole(UserRole userRole)
-    {
-        this.role = userRole;
-        return this;
-    }
-
     public ApplicationUserModelMapper withSignInProvider(SocialMediaProvider signInProvider)
     {
         if(this.signInProviders == null)

@@ -79,10 +79,8 @@ public class HeaderHandlerInterceptor extends HandlerInterceptorAdapter implemen
         
     }
     
-    private void createUserModelForHeader(ApplicationUserImpl obj, ModelAndView modelAndView)
+    private void createUserModelForHeader(ApplicationUserImpl user, ModelAndView modelAndView)
     {
-        ApplicationUserImpl user = (ApplicationUserImpl)obj;
-        
         if(user.getSignInProviders() != null && user.getSignInProviders().contains(SocialMediaProvider.FACEBOOK))
         {
             UserUIModelBuilder userUIModelBuilder = SocialMediaProvider.FACEBOOK.mapProfile(new UserUIModelBuilder(), connectionRepository);

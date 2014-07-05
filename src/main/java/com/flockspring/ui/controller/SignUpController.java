@@ -36,6 +36,7 @@ import com.flockspring.ui.IdentifiedPage;
 import com.flockspring.ui.mapper.user.UserUIModelBuilder;
 import com.flockspring.ui.model.user.UserRegistrationUICommand;
 import com.google.common.base.Strings;
+import com.google.common.collect.Sets;
 
 /**
  * SignUpController.java
@@ -119,7 +120,7 @@ public class SignUpController extends IdentifiedPage
         
         ApplicationUserImpl applicationUser = new ApplicationUserImpl("", userAccountData.getEmail(), userAccountData.getPassword(), 
                 Collections.<GrantedAuthority>emptySet(), userAccountData.getEmail(), userAccountData.getFirstName(), userAccountData.getLastName(), 
-                socialSignInProviders, UserRole.ROLE_USER);
+                socialSignInProviders, UserRole.ROLE_USER, null);
 
         try
         {
