@@ -24,6 +24,7 @@ import com.flockspring.domain.service.OrganizationDiscoveryService;
 import com.flockspring.domain.service.user.UserService;
 import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.impl.OrganizationImpl;
+import com.flockspring.ui.AsyncUserError;
 import com.flockspring.ui.IdentifiedPage;
 import com.flockspring.ui.mapper.SearchResultsUIModelMapper;
 import com.flockspring.ui.model.AsyncUserFavoriteResponse;
