@@ -23,14 +23,14 @@ public class OrganizationOverviewUIModel
     private final String websiteUrl;
     private final String serviceTimeShortString1;
     private final String serviceTimeShortString2;
-    private final boolean isUserFavorite;
+    private final boolean userFavorited;
     private final SocialMediaUIModel socialMedia;
     private final AddressUIModel address;
     private final double distanceFromSearchPoint;
     private final boolean parkingLotAvailable;
    
     public OrganizationOverviewUIModel(String name, String denomination, String subDenomination, int yearFounded, String leadPastorName,
-            CongregationSize averageServiceCongregationSize, String phoneNumber, String websiteUrl, String serviceTimeShortString1, String serviceTimeShortString2, boolean isUserFavorite,
+            CongregationSize averageServiceCongregationSize, String phoneNumber, String websiteUrl, String serviceTimeShortString1, String serviceTimeShortString2, boolean userFavorited,
             SocialMediaUIModel socialMedia, AddressUIModel address, double distanceFromSearchPoint, boolean parkingLotAvailable)
     {
         super();
@@ -45,7 +45,7 @@ public class OrganizationOverviewUIModel
         this.websiteUrl = websiteUrl;
         this.serviceTimeShortString1 = serviceTimeShortString1;
         this.serviceTimeShortString2 = serviceTimeShortString2;
-        this.isUserFavorite = isUserFavorite;
+        this.userFavorited = userFavorited;
         this.socialMedia = socialMedia;
         this.address = address;
         this.distanceFromSearchPoint = distanceFromSearchPoint;
@@ -102,9 +102,9 @@ public class OrganizationOverviewUIModel
         return serviceTimeShortString2;
     }
 
-    public boolean isUserFavorite()
+    public boolean isUserFavorited()
     {
-        return isUserFavorite;
+        return userFavorited;
     }
 
     public SocialMediaUIModel getSocialMedia()

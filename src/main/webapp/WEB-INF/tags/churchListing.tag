@@ -2,9 +2,7 @@
 <%@ include file="/WEB-INF/jsp/init.jsp"%>
 
 <%@ attribute name="items" required="true" type="java.lang.Iterable" %>
-<%@ attribute name="showFavLink" required="false" type="java.lang.Boolean" %>
-
-<spring:url value="/static/images/site/heart_icon.png" var="heartIcon" />
+<%@ attribute name="loginUrl" required="true" type="java.lang.String" %>
 <spring:url value="/static/images/site/right_arrow.png" var="rightArrow" />
 
 <c:forEach items="${items}" var="item" varStatus="p_tracker">
@@ -13,9 +11,7 @@
         <c:set var="imagePath" value="http://maps.googleapis.com/maps/api/streetview?size=200x200&location=${item.latitude},${item.longitude}&fov=120&pitch=10&sensor=false" />   
     </c:if>
     
-    <c:if test="${item.usersFavorite}">
-        <spring:url value="/static/images/site/heart_favorited_icon.png" var="heartIcon" />
-    </c:if>
+   
 
     <div class="search-result-entry show-result" data-result-id="${item.id}" data-church-name="${item.organizationName}" data-latitude="${item.latitude}" data-longitude="${item.longitude}">
 
@@ -42,12 +38,8 @@
                 </div>
             </div>
         </div>
-        <c:if test="${showFavLink}">
-        <sec:authorize access="isAuthenticated()">
-        <div class="favorite-icon">
-            <a href="#"><img src="${heartIcon}" /></a>
-        </div>
-        </sec:authorize>
-        </c:if>
+        
+        <ctg:favorite isFavorite="${item.usersFavorite}" loginUrl="${loginUrl}" />
+                
     </div>                        
 </c:forEach>

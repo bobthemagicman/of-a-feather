@@ -12,9 +12,7 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
-import org.springframework.social.security.SocialUserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -70,7 +68,7 @@ public class UserController extends IdentifiedPage
             
             List<OrganizationImpl> organizations = organizationDiscoveryService.getOrganizationsByIds(churchIds);
             
-            List<ChurchListingUIModel> favorites = searchResultsModelMapper.map(organizations, request.getLocale());
+            List<ChurchListingUIModel> favorites = searchResultsModelMapper.map(organizations, request.getLocale(), user);
             model.put("favorites", favorites );            
             mv.addAllObjects(model);
         }
@@ -93,37 +91,30 @@ public class UserController extends IdentifiedPage
     {
         if(user != null)
         {
-          //the injected user has no roles, this is a temp work around
-            UserDetails baseUser = userService.loadUserByUsername(user.getUsername());
-            
-            if(!(baseUser instanceof ApplicationUserImpl))
-            {
-                throw new IllegalArgumentException(
-                        String.format("Retrieved user identified by email: %[0] was not of correct type. If this is " +
-                        		"happening you should run away because it's black magic voodo darkness!", user.getEmail()));
-            }
-            ApplicationUserImpl retrievedUser = (ApplicationUserImpl) baseUser;
-            NavigableSet<String> favorites = retrievedUser.getFavoriteChurches();
+            NavigableSet<String> favorites = user.getFavoriteChurches();
             if(favorites == null)
             {
-                favorites = new TreeSet<>();
-                retrievedUser.setFavoriteChurches(favorites);
+                favorites = new TreeSet<>();   
+                user.setFavoriteChurches(favorites);
             }
             
             String behaviorType = "";
+            boolean currentStatus = false;
             if(favorites.contains(churchId))
             {
                 favorites.remove(churchId);
                 behaviorType = "removed";
+                currentStatus = false;
             }
             else
             {
                 favorites.add(churchId);
                 behaviorType = "added";
+                currentStatus = true;
             }
             
-            userService.saveUser(retrievedUser);
-            return new AsyncUserFavoriteResponse(String.format("Successfully %[0] church with id: %[1]", behaviorType, churchId));
+            userService.saveUser(user);
+            return new AsyncUserFavoriteResponse(String.format("Successfully %s church with id: %s", behaviorType, churchId), currentStatus);
         }
         
         return new AsyncUserFavoriteResponse(new AsyncUserError(), "Unable to complete request");

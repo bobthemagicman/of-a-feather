@@ -20,18 +20,28 @@ import com.flockspring.ui.model.async.BaseAsyncResponse;
  */
 public class AsyncUserFavoriteResponse extends BaseAsyncResponse
 {
-    public AsyncUserFavoriteResponse(String successMessage)
+    private final boolean currentStatusFavorite;
+    
+    public AsyncUserFavoriteResponse(String successMessage, boolean currentStatusFavorite)
     {
         super(Collections.<AsyncError>emptyList(), AsyncStatus.SUCCESS, successMessage);
+        this.currentStatusFavorite = currentStatusFavorite;
     }
     
     public AsyncUserFavoriteResponse()
     {
         super(Collections.<AsyncError>emptyList(), AsyncStatus.NO_RESULT, "No Results Found for Query");
+        this.currentStatusFavorite = false;
     }
     
     public AsyncUserFavoriteResponse(AsyncError error, String errorMessage)
     {
         super(Arrays.asList(error), AsyncStatus.NO_RESULT, errorMessage);
+        this.currentStatusFavorite = false;
+    }
+
+    public boolean isCurrentStatusFavorite()
+    {
+        return currentStatusFavorite;
     }
 }

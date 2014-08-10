@@ -11,28 +11,40 @@ $(document).ready(function() {
     
 });
 
-function initializeEventHandlers()
-{
-	$(".favorite").click(function(e){
-		var self = this;
-		var churchId = $(this).data("church-id");
-		var token = $("meta[name='_csrf']").attr("content");
-        var header = $("meta[name='_csrf_header']").attr("content");
+function initializeEventHandlers() {
+    var self = this;
     
-		$.ajax({
-		    beforeSend: function(xhr) {
-                xhr.setRequestHeader(header, token);
-            },
-		    url: requestBaseUrl + 'user/ajax/favorite/' + churchId,
-            type: "PUT",
-            success: function(data) {
-                var self = this;
-                alert(this);
-            }
+    if(!($(".favorite").parent().is("a"))) {
+        $(".favorite").click(function(e) {
+    		var ele = $(this);
+    		var churchId = $(".profile").data("church-id");
+    		var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+            var offImgSrc = ele.parent().data("icon-off-src");
+            var onImgSrc = ele.parent().data("icon-on-src");
+            
+    		$.ajax({
+    		    beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+    		    url: requestBaseUrl + 'user/ajax/favorite/' + churchId,
+                type: "PUT",
+                success: function(data) {
+                    var self = self;
+                    if(data.hasOwnProperty("asyncStatus") && data.asyncStatus == "SUCCESS" && data.hasOwnProperty("errors") && data.errors.length == 0) {
+                        if(data.currentStatusFavorite) {
+                            ele.attr( "src", onImgSrc);        
+                        }else {
+                            ele.attr( "src", offImgSrc);                        
+                        }
+                    }
+                    
+                }
+            });
+            
+            e.preventDefault();        
         });
-		
-		e.preventDefault();
-	});
+    }
 }
 
 function initializeTooltips() {

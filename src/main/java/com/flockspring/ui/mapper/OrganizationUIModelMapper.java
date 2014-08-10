@@ -30,6 +30,7 @@ import com.flockspring.domain.types.Programs;
 import com.flockspring.domain.types.ServiceDay;
 import com.flockspring.domain.types.ServiceDetails;
 import com.flockspring.domain.types.TimeAndDay;
+import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.impl.Atmosphere;
 import com.flockspring.ui.model.AddressUIModel;
 import com.flockspring.ui.model.LanguageUIModel;
@@ -71,22 +72,23 @@ public class OrganizationUIModelMapper
         this.messageSource = messageSource;
     }
 
-    public OrganizationUIModel map(Organization organization, Locale locale)
-    {
-        return map(organization, -1, locale);
-    }
-
-    public OrganizationUIModel map(Organization organization, double distance, Locale locale)
+   public OrganizationUIModel map(Organization organization, double distance, Locale locale, ApplicationUserImpl user)
     {
         if (organization == null)
         {
             return null;
         }
+        
+        boolean userFavorited = false;
+        if(user != null)
+        {
+            userFavorited = user.getFavoriteChurches() != null && user.getFavoriteChurches().contains(organization.getId());
+        }
 
         Set<LeaderUIModel> leadershipTeam = leaderUIModelMapper.map(organization.getLeadershipTeam());
         Set<MultimediaUIModel> multimedia = multimediaUIModelMapper.map(organization.getMultimedia());
         Set<LanguageUIModel> languages = getLanguages(); 
-        OrganizationOverviewUIModel overview = getOrganizationOverviewUIModel(organization, distance, locale);
+        OrganizationOverviewUIModel overview = getOrganizationOverviewUIModel(organization, distance, locale, userFavorited);
 
         OrganizationStatementUIModel statements = new OrganizationStatementUIModel(organization.getMissionStatement(),
                 organization.getStatementOfFaith(), organization.getWelcomeMessage());
@@ -235,7 +237,7 @@ public class OrganizationUIModelMapper
         return serviceDetails;
     }
 
-    private OrganizationOverviewUIModel getOrganizationOverviewUIModel(Organization organization, double distance, Locale locale)
+    private OrganizationOverviewUIModel getOrganizationOverviewUIModel(Organization organization, double distance, Locale locale, boolean isFavorite)
     {
         Atmosphere atmosphere = organization.getAtmosphere();
         AddressUIModel address = addressUIModelMapper.map(organization.getAddress());
@@ -243,10 +245,6 @@ public class OrganizationUIModelMapper
         Set<Leader> leaders = organization.getLeadershipTeam();
 
         Leader leadPastor = getLeadPastor(organization.getLeadershipTeam());
-
-        // TODO: jbritain once we have a user infrastructure this will be
-        // dynamic
-        boolean isUserFavorite = false;
 
         // TODO: jbritain we want to display twillio number here, not the church number.
         String phoneNumber = getPhoneNumber(leaders, locale);
@@ -262,7 +260,7 @@ public class OrganizationUIModelMapper
                 
         return new OrganizationOverviewUIModel(organization.getName(), organization.getDenomination().getLocalizedStringCode(),
                 subDenominationLocalizationCode, organization.getYearFounded(), pastorName, atmosphere.getCongregationSize(), phoneNumber,
-                organization.getSocialMedia().getWebsiteUrl(), serviceTimeShortStrings.get(0), serviceTimeShortStrings.get(1), isUserFavorite, 
+                organization.getSocialMedia().getWebsiteUrl(), serviceTimeShortStrings.get(0), serviceTimeShortStrings.get(1), isFavorite, 
                 socialMedia, address, distance, getParkingLotInfo(organization.getAccessibilitySupport()));
     }
 

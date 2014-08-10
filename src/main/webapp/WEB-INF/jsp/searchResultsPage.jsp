@@ -634,7 +634,7 @@
                 <div class="showing-results${showingResultsHidden}">Showing Results <span class="now-showing">${results.pageStartIndex} - ${results.pageEndIndex}</span> of <span class="total-results">${results.totalNumberOfResults}</span> for <span class="user-search">&#34;${results.userInputQuery}&#34;</span></div>
                                 
                 <div class="search-results">
-                    <ctg:churchListing items="${results.churchListings}" />
+                    <ctg:churchListing items="${results.churchListings}" loginUrl="loginUrl"/>
                 </div><!-- end search-results -->
                 
                 <!--  Pagination -->

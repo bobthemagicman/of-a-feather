@@ -42,13 +42,12 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Favorites</a></li>
-                            <li><a href="#">Preferences</a></li>
-                            <li><a href="#">Sign Out</a></li>
+                            <li><a href="#">FAVORITES</a></li>
+                            <li><a href="#">PREFERENCES</a></li>
+                            <li><a href="#">SIGN OUT</a></li>
                         </ul>
                     </li> 
-		</c:if>
-		<li><a href="<c:url value="/signout" />" > SIGN OUT</a></li>
+		</c:if>		
                 </sec:authorize>
                 <sec:authorize access="isAnonymous()">
                 <li><a href="<spring:url value='/signup'/>" class="sign-up">SIGN UP</a></li>

@@ -48,7 +48,7 @@ public class ApplicationUserImpl extends SocialUser
     }
 
     public ApplicationUserImpl(String id, String username, String password, Collection<? extends GrantedAuthority> authorities, String email, String firstName,
-            String lastName, TreeSet<SocialMediaProvider> signInProviders, UserRole userRole)
+            String lastName, TreeSet<SocialMediaProvider> signInProviders, UserRole userRole, NavigableSet<String> favoriteChurches)
     {
         super(username, password, authorities);
         
@@ -58,6 +58,7 @@ public class ApplicationUserImpl extends SocialUser
         this.lastName = lastName;
         this.signInProviders = signInProviders;        
         this.userRole = userRole;
+        this.favoriteChurches = favoriteChurches;
     }
 
     public ApplicationUserImpl(String username, String password, Collection<? extends GrantedAuthority> authorities) {

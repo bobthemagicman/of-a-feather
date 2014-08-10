@@ -47,7 +47,7 @@ public class AutoConnectionSignUp implements ConnectionSignUp
         TreeSet<SocialMediaProvider> socialSigninProviders = Sets.newTreeSet(Arrays.asList(provider));
         
         ApplicationUserImpl applicaitonUser = new ApplicationUserImpl("", profile.getEmail(), "", Collections.<GrantedAuthority>emptySet(),
-                profile.getEmail(), profile.getFirstName(), profile.getLastName(), socialSigninProviders, UserRole.ROLE_USER);
+                profile.getEmail(), profile.getFirstName(), profile.getLastName(), socialSigninProviders, UserRole.ROLE_USER, null);
         
         try
         {

@@ -21,6 +21,7 @@ import com.flockspring.domain.types.MultimediaObject;
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.ServiceDetails;
 import com.flockspring.domain.types.impl.AddressImpl;
+import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.impl.Atmosphere;
 import com.flockspring.domain.types.impl.OrganizationImpl;
 import com.flockspring.ui.model.ChurchListingUIModel;
@@ -51,26 +52,26 @@ public class SearchResultsUIModelMapper
         this.messageSource = messageSource;
     }
 
-    public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, Address address, Locale locale, String query)
+    public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, Address address, Locale locale, String query, ApplicationUserImpl user)
     {
-        return map(geoPageResult, address, new SearchFilterUICommand(), locale, query);
+        return map(geoPageResult, address, new SearchFilterUICommand(), locale, query, user);
     }
 
-    public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, SearchFilterUICommand filterRequest, Locale locale)
+    public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, SearchFilterUICommand filterRequest, Locale locale, ApplicationUserImpl user)
     {
         AddressImpl address = new AddressImpl("", "", "", "", "", "", new double[]{filterRequest.getPoint().getX(), filterRequest.getPoint().getY()});
        
-        return map(geoPageResult, address, filterRequest, locale, "");
+        return map(geoPageResult, address, filterRequest, locale, "", user);
     }
     
     private SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, Address address, SearchFilterUICommand filterRequest, 
-            Locale locale, String query)
+            Locale locale, String query, ApplicationUserImpl user)
     {
         
         NavigableSet<ChurchListingUIModel> results = new TreeSet<>();
         for(GeoResult<OrganizationImpl> geoResult : geoPageResult)
         {
-            results.add(map(geoResult, filterRequest, locale));
+            results.add(map(geoResult, filterRequest, locale, user));
         }
         
         int currentPage = geoPageResult.getNumber();
@@ -91,9 +92,9 @@ public class SearchResultsUIModelMapper
                 address.getLatitude(), address.getLongitude(), query, totalNumberOfPages);
     }
 
-    public ChurchListingUIModel map(GeoResult<OrganizationImpl> geoResult, SearchFilterUICommand filterRequest, Locale locale)
+    public ChurchListingUIModel map(GeoResult<OrganizationImpl> geoResult, SearchFilterUICommand filterRequest, Locale locale, ApplicationUserImpl user)
     {
-        return map(geoResult.getContent(), filterRequest, locale, geoResult.getDistance().getValue());
+        return map(geoResult.getContent(), filterRequest, locale, geoResult.getDistance().getValue(), user);
     }
 
     /**
@@ -103,9 +104,17 @@ public class SearchResultsUIModelMapper
      * @param organization
      * @return
      */
-    private ChurchListingUIModel map(Organization organization, SearchFilterUICommand filterRequest, Locale locale, double distanceValue)
+    private ChurchListingUIModel map(Organization organization, SearchFilterUICommand filterRequest, Locale locale, double distanceValue,
+            ApplicationUserImpl user)
     {
         Atmosphere atmosphere = organization.getAtmosphere();
+        
+        boolean userFavorited = false;
+        if(user != null)
+        {
+            userFavorited = user.getFavoriteChurches() != null && user.getFavoriteChurches().contains(organization.getId());
+        }
+
         
         MultimediaUIModel image = imageUIModelMapper.map(getPrimaryOrganizationImage(organization.getMultimedia()));
         Address address = organization.getAddress();
@@ -114,7 +123,7 @@ public class SearchResultsUIModelMapper
                 
         return new ChurchListingUIModel(image, organization.getName(),  
                 denominationString, organization.getId(), distanceValue,
-                isOrganizationFeatured(organization), isOrganizationUserFavorite(organization), address.getCity(), 
+                isOrganizationFeatured(organization), userFavorited, address.getCity(), 
                 address.getState(), address.getPostalCode(), address.getLatitude(), address.getLongitude(), 
                 getMusicStyleSliderValue(serviceDetails), getServiceStyleSliderValue(serviceDetails), 
                 getDressAttireSliderValue(serviceDetails));
@@ -185,12 +194,6 @@ public class SearchResultsUIModelMapper
         return serviceDetails.getMusicStyle().ordinal() + 1;
     }
 
-    private boolean isOrganizationUserFavorite(Organization organization)
-    {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
     private boolean isOrganizationFeatured(Organization organization)
     {
         // TODO Auto-generated method stub
@@ -210,14 +213,14 @@ public class SearchResultsUIModelMapper
         return images.isEmpty() ? null : images.iterator().next();
     }
 
-    public List<ChurchListingUIModel> map(List<OrganizationImpl> organizations, Locale locale)
+    public List<ChurchListingUIModel> map(List<OrganizationImpl> organizations, Locale locale, ApplicationUserImpl user)
     {
         List<ChurchListingUIModel> churchListings = new ArrayList<>();
         if(organizations != null && !organizations.isEmpty())
         {
             for(OrganizationImpl org : organizations)
             {
-                churchListings.add(this.map(org, new SearchFilterUICommand(), locale, 0));
+                churchListings.add(this.map(org, new SearchFilterUICommand(), locale, 0, user));
             }
         }
         
