@@ -87,7 +87,7 @@ public class UserController extends IdentifiedPage
     }
     
     @RequestMapping(value = "/ajax/favorite/{churchId}", method=RequestMethod.PUT)
-    public @ResponseBody AsyncUserFavoriteResponse addUserFavorite(final @AuthenticationPrincipal ApplicationUserImpl user, 
+    public @ResponseBody AsyncUserFavoriteResponse addFavoriteForUser(final @AuthenticationPrincipal ApplicationUserImpl user, 
             final @PathVariable String churchId)
     {
         if(user != null)
@@ -121,30 +121,6 @@ public class UserController extends IdentifiedPage
         return new AsyncUserFavoriteResponse(new AsyncUserError(), "Unable to complete request");
     }
     
-    @RequestMapping("/ajax/add-favorite/{church-id}")
-    public void addFavoriteForUser(@PathVariable("church-id") String churchId, @AuthenticationPrincipal ApplicationUserImpl user)
-    {
-        if(user != null)
-        {
-            if(user.getFavoriteChurches() != null && user.getFavoriteChurches().contains(churchId))
-            {
-                user.getFavoriteChurches().remove(churchId);
-            }
-            else 
-            {
-                if(user.getFavoriteChurches() == null)
-                {
-                    user.setFavoriteChurches(new TreeSet<String>());
-                }
-                
-                user.getFavoriteChurches().add(churchId);
-            }
-
-            //does the object in the security context update automatically? If not there is work to do here
-            userService.saveUser(user);
-        }
-    }
-
     @Override
     protected String getPageId()
     {

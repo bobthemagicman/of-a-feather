@@ -4,6 +4,7 @@
 package com.flockspring.domain.types.impl;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -19,6 +20,7 @@ import com.flockspring.domain.types.Leader;
 import com.flockspring.domain.types.MultimediaObject;
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.Programs;
+import com.google.common.collect.Sets;
 
 /**
  * OrganizationImpl.java
@@ -198,91 +200,6 @@ public class OrganizationImpl implements Organization, Serializable
         return accessibilitySupport;
     }
 
-    public void setId(String id)
-    {
-        this.id = id;
-    }
-
-    public void setYearFounded(Integer yearFounded)
-    {
-        this.yearFounded = yearFounded;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    public void setMissionStatement(String missionStatement)
-    {
-        this.missionStatement = missionStatement;
-    }
-
-    public void setStatementOfFaith(String statementOfFaith)
-    {
-        this.statementOfFaith = statementOfFaith;
-    }
-
-    public void setWelcomeMessage(String welcomeMessage)
-    {
-        this.welcomeMessage = welcomeMessage;
-    }
-
-    public void setExtraServiceDetails(String extraServiceDetails)
-    {
-        this.extraServiceDetails = extraServiceDetails;
-    }
-
-    public void setAddress(AddressImpl address)
-    {
-        this.address = address;
-    }
-
-    public void setAtmosphere(AtmosphereImpl atmosphere)
-    {
-        this.atmosphere = atmosphere;
-    }
-
-    public void setSocialMedia(SocialMediaImpl socialMedia)
-    {
-        this.socialMedia = socialMedia;
-    }
-
-    public void setDenomination(Affiliation denomination)
-    {
-        this.denomination = denomination;
-    }
-
-    public void setSubDenomination(Affiliation subDenomination)
-    {
-        this.subDenomination = subDenomination;
-    }
-
-    public void setPrimaryAffiliation(Affiliation primaryAffiliation)
-    {
-        this.primaryAffiliation = primaryAffiliation;
-    }
-
-    public void setMultimedia(Set<MultimediaObjectImpl> multimedia)
-    {
-        this.multimedia = multimedia;
-    }
-
-    public void setLeadershipTeam(Set<LeaderImpl> leadershipTeam)
-    {
-        this.leadershipTeam = leadershipTeam;
-    }
-
-    public void setProgramsOffered(Set<Programs> programsOffered)
-    {
-        this.programsOffered = programsOffered;
-    }
-
-    public void setAccessibilitysupport(Set<AccessibilitySupport> accessibilitySupport)
-    {
-        this.accessibilitySupport = accessibilitySupport;
-    }
-
     @Override
     public int hashCode()
     {
@@ -299,5 +216,197 @@ public class OrganizationImpl implements Organization, Serializable
     public String toString()
     {
         return ToStringBuilder.reflectionToString(this);
+    }
+    
+    public static class OrganizationBuilder
+    {
+
+        protected String id;
+        protected Integer yearFounded;
+        protected String name;
+        protected String missionStatement;
+        protected String statementOfFaith;
+        protected String welcomeMessage;
+        protected AddressImpl address;
+        protected AtmosphereImpl atmosphere;
+        protected SocialMediaImpl socialMedia;
+        protected Affiliation denomination;
+        protected Affiliation subDenomination;
+        protected Affiliation primaryAffiliation;
+        protected Set<MultimediaObjectImpl> multimedia;
+        protected Set<LeaderImpl> leadershipTeam;
+        protected Set<Programs> programsOffered;
+        protected Set<AccessibilitySupport> accessibilitySupport;
+        protected String extraServiceDetails;
+        
+        private boolean leadershipTeamSetReset = false;
+        private boolean multimediaObjectSetReset = false;
+        private boolean programsSetReset = false;
+        private boolean accessibilitySupportSetReset = false;
+
+        public OrganizationBuilder withId(String id)
+        {
+            this.id = id;
+            return this;
+        }
+        
+        public OrganizationBuilder withYearFounded(Integer yearFounded)
+        {
+            this.yearFounded = yearFounded;
+            return this;
+        }
+        
+        public OrganizationBuilder withName(String name)
+        {
+            this.name = name;
+            return this;
+        }
+        
+        public OrganizationBuilder withMissionStatement(String missionStatement)
+        {
+            this.missionStatement = missionStatement;
+            return this;
+        }
+        
+        public OrganizationBuilder withStatementOfFaith(String statementOfFaith)
+        {
+            this.statementOfFaith = statementOfFaith;
+            return this;
+        }
+        
+        public OrganizationBuilder withWelcomeMessage(String welcomeMessage)
+        {
+            this.welcomeMessage = welcomeMessage;
+            return this;
+        }
+        
+        public OrganizationBuilder withAddress(AddressImpl address)
+        {
+            this.address = address;
+            return this;
+        }
+        
+        public OrganizationBuilder withAtmosphere(AtmosphereImpl atmosphere)
+        {
+            this.atmosphere = atmosphere;
+            return this;
+        }
+        
+        public OrganizationBuilder withSocialMedia(SocialMediaImpl socialMedia)
+        {
+            this.socialMedia = socialMedia;
+            return this;
+        }
+        
+        public OrganizationBuilder withDenomination(Affiliation denomination)
+        {
+            this.denomination = denomination;
+            return this;
+        }
+        
+        public OrganizationBuilder withSubDenomination(Affiliation subDenomination)
+        {
+            this.subDenomination = subDenomination;
+            return this;
+        }
+        
+        public OrganizationBuilder withMultimedia(Set<MultimediaObjectImpl> multimedia)
+        {
+            this.multimedia = multimedia;
+            return this;
+        }
+        
+        public OrganizationBuilder withLeadershipTeam(Set<LeaderImpl> leadershipTeam)
+        {
+            this.leadershipTeam = leadershipTeam;
+            return this;
+        }
+        
+        public OrganizationBuilder withProgramsOffered(Set<Programs> programsOffered)
+        {
+            this.programsOffered = programsOffered;
+            return this;
+        }
+        
+        public OrganizationBuilder withAccessabilitySupport(Set<AccessibilitySupport> accessibilitySupport)
+        {
+            this.accessibilitySupport = accessibilitySupport;
+            return this;
+        }
+        
+        public OrganizationBuilder withExtraServiceDetails(String extraServiceDetails)
+        {
+            this.extraServiceDetails = extraServiceDetails;
+            return this;
+        }
+        
+        public OrganizationBuilder addMultimediaObject(MultimediaObjectImpl multimediaObject)
+        {
+            if(!multimediaObjectSetReset || this.multimedia == null)
+            {
+                this.multimedia = Sets.newTreeSet(Arrays.asList(multimediaObject));
+                this.multimediaObjectSetReset = true;
+            }
+            else
+            {
+                this.multimedia.add(multimediaObject);
+            }
+            
+            return this;
+        }
+        
+        public OrganizationBuilder addLeader(LeaderImpl leaderToAdd)
+        {
+            if(!leadershipTeamSetReset || this.leadershipTeam == null)
+            {
+                this.leadershipTeam = Sets.newTreeSet(Arrays.asList(leaderToAdd));
+                this.leadershipTeamSetReset = true;
+            }
+            else
+            {
+                this.leadershipTeam.add(leaderToAdd);
+            }
+            
+            return this;
+        }
+
+        public OrganizationBuilder addAccessibilitySupport(AccessibilitySupport accessibilitySupportToAdd)
+        {
+            if(!this.accessibilitySupportSetReset || this.accessibilitySupport == null)
+            {
+                this.accessibilitySupport = Sets.newTreeSet(Arrays.asList(accessibilitySupportToAdd));
+                this.accessibilitySupportSetReset = true;
+            }
+            else
+            {
+                this.accessibilitySupport.add(accessibilitySupportToAdd);
+            }
+            
+            return this;
+        }
+        
+        public OrganizationBuilder addProgram(Programs programToAdd)
+        {
+            if(!this.programsSetReset || this.programsOffered == null)
+            {
+                this.programsOffered = Sets.newTreeSet(Arrays.asList(programToAdd));
+                this.programsSetReset = true;
+            }
+            else
+            {
+                this.programsOffered.add(programToAdd);
+            }
+            
+            return this;
+        }
+        
+        public Organization build()
+        {
+            return new OrganizationImpl(id, yearFounded, name, missionStatement, statementOfFaith, welcomeMessage, 
+                    address, atmosphere, socialMedia, denomination, subDenomination, primaryAffiliation, multimedia, 
+                    leadershipTeam, programsOffered, accessibilitySupport, extraServiceDetails);
+            
+        }
+
     }
 }

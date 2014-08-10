@@ -13,6 +13,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
@@ -44,12 +45,25 @@ import com.flockspring.ui.interceptor.SearchBarHandlerInterceptor;
  * 
  */
 @EnableWebMvc
-@ComponentScan(basePackages = { "com.flockspring.ui.controller", "com.flockspring.ui.mapper" })
 @Configuration
-@PropertySource("classpath:ui.properties")
+@ComponentScan(basePackages = { "com.flockspring.ui.controller", "com.flockspring.ui.mapper" })
 public class WebappConfig extends WebMvcConfigurerAdapter
 {
 
+    @Configuration  
+    @Profile("default")  
+    @PropertySource("classpath:ui.properties")
+    static class Default  
+    {  
+    }
+    
+    @Configuration  
+    @Profile("test")  
+    @PropertySource("classpath:ui.properties")  
+    static class Test  
+    {  
+    }
+    
     static @Bean  
     public PropertySourcesPlaceholderConfigurer myPropertySourcesPlaceholderConfigurer()  
     {  

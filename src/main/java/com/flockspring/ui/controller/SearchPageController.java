@@ -279,9 +279,16 @@ public class SearchPageController extends IdentifiedPage
 
         LatLng latLng = geocoderResult.getGeometry().getLocation();
         double[] location = new double[]
-        {latLng.getLng().doubleValue(), latLng.getLat().doubleValue()};
+        {latLng.getLat().doubleValue(), latLng.getLng().doubleValue()};
 
-        return new AddressImpl(new StringBuilder(streetNumber).append(route).toString(), "", postalCode, state, city, country, location);
+        return new AddressImpl.AddressBuilder()
+                .withStreet1(new StringBuilder(streetNumber).append(route).toString())
+                .withPostalCode(postalCode)
+                .withState(state)
+                .withCity(city)
+                .withCountry(country)
+                .withLocation(location)
+                .build();
     }
 
     private boolean queryInAllowedRegion(GeocoderResult result)

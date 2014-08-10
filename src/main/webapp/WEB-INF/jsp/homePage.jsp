@@ -46,8 +46,8 @@
 	            <div class="header">
 	                <div class="header-image-container">
 	                    <img class="active-image" src="${heroImage1}" data-church-name="Church of the Cross" data-church-location="Bluffton, SC" data-church-denomination="Episcopalian" data-photographer-credit="Photo Credit: Steven Hyatt<br />www.thechurchesofamerica.com" />
-	                    <img src="${heroImage2}" data-church-name="Church of the Holy Cross" data-church-location="Stateburg, SC" data-church-denomination="Episcopalian" data-photographer-credit="Photo Credit: Steven Hyatt<br />www.thechurchesofamerica.com" />
-	                    <img src="${heroImage3}" data-church-name="Cathedral of St. John the Baptist" data-church-location="Savannah, GA" data-church-denomination="Catholic" data-photographer-credit="Photo Credit: Steven Hyatt<br />www.thechurchesofamerica.com" />
+	                    <img src="${heroImage2}" data-photographer-credit="Photo Credit: Steven Hyatt<br />www.thechurchesofamerica.com" />
+	                    <img src="${heroImage3}" data-photographer-credit="Photo Credit: Steven Hyatt<br />www.thechurchesofamerica.com" />
 	                </div>
 	
 	                <div class="header-search">

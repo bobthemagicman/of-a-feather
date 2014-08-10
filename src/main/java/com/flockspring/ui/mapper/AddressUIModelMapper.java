@@ -21,17 +21,22 @@ public class AddressUIModelMapper
 
     public AddressUIModel map(Address address)
     {
-        String street1 = address.getStreet1();
-        String street2 = address.getStreet2();
-        String city = address.getCity();
-        String postalCode = address.getPostalCode();
-        String state = address.getState();
-        double longitude = address.getLongitude();
-        double latitude = address.getLatitude();
-        String country = address.getCountry();
+        if(address != null)
+        {
+            String street1 = address.getStreet1();
+            String street2 = address.getStreet2();
+            String city = address.getCity();
+            String postalCode = address.getPostalCode();
+            String state = address.getState();
+            double longitude = address.getLongitude();
+            double latitude = address.getLatitude();
+            String country = address.getCountry();
+            
+            AddressUIModel model = new AddressUIModel(street1, street2, city, state, postalCode, country, latitude, longitude);
+           
+            return model;
+        }
         
-        AddressUIModel model = new AddressUIModel(street1, street2, city, state, postalCode, country, latitude, longitude);
-       
-        return model;
+        return null;
     }
 }
