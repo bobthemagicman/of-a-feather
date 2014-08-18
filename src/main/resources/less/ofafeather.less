@@ -45,7 +45,7 @@
 
 @lightest-gray-color: #FAFAFA;
 @light-gray-color: #F4F4F4;
-//@gray-color: #dddddd;
+@alt-light-gray-color: #dddddd;
 //@dark-gray-color: #535353;
 @darkest-gray-color: #242424;
 
@@ -59,6 +59,7 @@
 @dark-gray-color: #383838;
 @gray-color: #9d9d9d;
 @beige-color: #d3d7c0;
+@alt-light-gray-color: #dddddd;
 @alt-dark-gray-color: #404040;
 @alt-dark-gray-color2: #434343;
 @alt-dark-gray-color3: #3d3d3d;
@@ -1113,7 +1114,7 @@ body:not(:-moz-handler-blocked) .time-description
     border: none;
     position: relative;
     .rounded-corners(6px);
-    
+    /*
     &:hover {
         .favorite-icon {
             .transition-effects;
@@ -1126,8 +1127,8 @@ body:not(:-moz-handler-blocked) .time-description
             }
         }
     }
-    
-    
+    */
+     
     .search-result-image-container {
         .make-sm-column(3);
         max-height:160px;
@@ -1238,9 +1239,12 @@ body:not(:-moz-handler-blocked) .time-description
         right: 20px !important;
         top: 20px !important;
         
+        background-image:url("http://www.ofafeather.org/static/images/site/heart_icon.png");
+
         &.favorited {
-            .glyphicon-heart;
-            color: @color1;
+
+            background-image:url("../../static/images/site/heart_icon_green.png");
+
         }
     }
 }
@@ -2907,6 +2911,25 @@ a {
         padding: 2px 0 0 0;
         vertical-align: middle;
     }
+}
+
+/*
+*   USER PREFERENCES PAGE
+*
+*/
+
+.user-preferences {
+
+    .tab-content {
+        border: 1px solid @alt-light-gray-color;
+        border-width: 0px 1px 1px 1px;
+        min-height: 250px;
+        padding: 1em;
+        .rounded-corners-bottom-right;
+        .rounded-corners-bottom-left;
+        margin-bottom: 2em;
+    }
+    
 }
 
 .loading {

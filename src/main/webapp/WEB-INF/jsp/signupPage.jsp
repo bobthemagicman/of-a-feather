@@ -4,6 +4,12 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
+<c:set var="isModalRequest" value="false" />
+<c:if test="${not empty param.modal and param.modal eq 'true'}">
+    <c:set var="isModalRequest" value="true" />
+</c:if>
+
 <html>
 <head>
     <c:if test="${not isModalRequest}">
@@ -28,10 +34,11 @@
     <div class="page-container">
         <%-- Site Header --%>
         <%@ include file="/WEB-INF/jsp/partials/siteHeader.jsp"%>
-    </c:if>
+    
    
-	    <div class="modal-dialog">
+	    <div class="modal-dialog">            
 	        <div class="modal-content">
+    </c:if>
 	            <div class="modal-header">
 	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 	                <h4 class="modal-title">Sign up</h4>
@@ -39,8 +46,8 @@
 	            <div id="sign-up-modal-body" class="modal-body">
 	                <div class="social-container">
 	                   <c:if test="${not user.socialSignIn}">
-	                   <button class="btn btn-block btn-xlarge btn-facebook register"><i class="fa fa-facebook"></i> | Connect with Facebook</button>
-	                   <button class="btn btn-block btn-xlarge btn-twitter register"><i class="fa fa-twitter"></i> | Connect with Twitter</button>
+	                   <a href="<c:url value="/auth/facebook"/>" data-toggle="modal" data-target="#socialSignInModal"><button class="btn btn-block btn-xlarge btn-facebook register"><i class="fa fa-facebook"></i> | Connect with Facebook</button></a>
+	                   <a href="<c:url value="/auth/twitter"/>"><button class="btn btn-block btn-xlarge btn-twitter register"><i class="fa fa-twitter"></i> | Connect with Twitter</button></a>
 	                   </c:if>
 	                   
 	                   <spring:url value="/signup" var="actionURL"/>
@@ -116,10 +123,12 @@
 	            </div>
 	            <div class="modal-footer">
 	                Already a member? <a href='<spring:url value="/signin" />' class="switch-to-log-in-modal">Log in</a>
-	            </div>
+	            </div>                  
+                    
+    <c:if test="${not isModalRequest}">            
 	        </div>
 	    </div>
-    <c:if test="${not isModalRequest}">
+    
         <%@ include file="/WEB-INF/jsp/partials/siteFooter.jsp"%>
     </div>
     </c:if>        
