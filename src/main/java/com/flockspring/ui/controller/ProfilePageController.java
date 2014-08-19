@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -31,7 +32,7 @@ import com.flockspring.ui.mapper.OrganizationUIModelMapper;
 public class ProfilePageController extends IdentifiedPage
 {
     private static final String VIEW_NAME = "profilePage";
-    private static final String PAGE_ID = "profile";
+    static final String PAGE_ID = "profile";
 
     private final OrganizationDiscoveryService organizationDiscoveryService;
     private final OrganizationUIModelMapper organizationUIModelMapper;

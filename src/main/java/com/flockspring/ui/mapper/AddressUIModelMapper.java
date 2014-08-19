@@ -3,6 +3,7 @@
  */
 package com.flockspring.ui.mapper;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.flockspring.domain.types.Address;

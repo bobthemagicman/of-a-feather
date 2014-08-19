@@ -11,16 +11,16 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.flockspring.config.TestConfig;
+import com.flockspring.config.TestControllerConfig;
+import com.flockspring.config.TestSocialConfig;
 import com.flockspring.ui.IdentifiedPageTests;
 import com.flockspring.ui.config.SecurityConfig;
-import com.flockspring.ui.config.SocialConfig;
 import com.flockspring.ui.config.WebappConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestConfig.class, WebappConfig.class, SecurityConfig.class, SocialConfig.class})
+@ContextConfiguration(classes = {TestControllerConfig.class, WebappConfig.class, SecurityConfig.class, TestSocialConfig.class})
 @WebAppConfiguration
-@ActiveProfiles(profiles = "test")
+@ActiveProfiles(profiles = "controller-tests")
 public class RegionPageControllerTests extends IdentifiedPageTests {
  
     private MockMvc mockMvc;

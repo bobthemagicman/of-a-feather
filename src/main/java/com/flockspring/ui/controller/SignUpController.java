@@ -9,6 +9,7 @@ import java.util.TreeSet;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -36,7 +37,6 @@ import com.flockspring.ui.IdentifiedPage;
 import com.flockspring.ui.mapper.user.UserUIModelBuilder;
 import com.flockspring.ui.model.user.UserRegistrationUICommand;
 import com.google.common.base.Strings;
-import com.google.common.collect.Sets;
 
 /**
  * SignUpController.java

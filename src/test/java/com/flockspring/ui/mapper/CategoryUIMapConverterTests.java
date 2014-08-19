@@ -3,6 +3,14 @@
  */
 package com.flockspring.ui.mapper;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.everyItem;
+import static org.hamcrest.Matchers.hasEntry;
+import static org.hamcrest.Matchers.hasKey;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.isOneOf;
+
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
@@ -11,9 +19,6 @@ import org.junit.Test;
 
 import com.flockspring.domain.types.AccessibilitySupport;
 import com.flockspring.domain.types.Category;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 
 /**
  * AddressUIModelMapperTest.java

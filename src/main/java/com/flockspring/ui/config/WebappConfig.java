@@ -19,7 +19,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.core.env.Environment;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.context.WebApplicationContext;
@@ -44,22 +43,22 @@ import com.flockspring.ui.interceptor.SearchBarHandlerInterceptor;
  * @date Mar 29, 2014
  * 
  */
+
 @EnableWebMvc
-@Configuration
-@ComponentScan(basePackages = { "com.flockspring.ui.controller", "com.flockspring.ui.mapper" })
+@Configuration  
 public class WebappConfig extends WebMvcConfigurerAdapter
 {
-
     @Configuration  
-    @Profile("default")  
+    @Profile({"dev", "prod"})
     @PropertySource("classpath:ui.properties")
+    @ComponentScan(basePackages = { "com.flockspring.ui.controller", "com.flockspring.ui.mapper" })
     static class Default  
     {  
     }
     
-    @Configuration  
+    @Configuration
     @Profile("test")  
-    @PropertySource("classpath:ui.properties")  
+    @PropertySource("classpath:ui.properties")
     static class Test  
     {  
     }
@@ -76,15 +75,6 @@ public class WebappConfig extends WebMvcConfigurerAdapter
     @Inject
     private ConnectionRepository connectionRepository;  
     
-    @Inject
-    private Environment env;
-    
-    // @Autowired
-    // private FlowExecutor flowExecutor;
-    //
-    // @Autowired
-    // private FlowDefinitionRegistry flowRegistry;
-
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry)
     {
@@ -153,32 +143,6 @@ public class WebappConfig extends WebMvcConfigurerAdapter
         resolver.setSuffix(".jsp");
         return resolver;
     }
-
-//    @Bean
-//    public static PropertySourcesPlaceholderConfigurer properties() {
-//        PropertySourcesPlaceholderConfigurer props = new PropertySourcesPlaceholderConfigurer();
-//        props.setLocation(new ClassPathResource("ui.properties"));
-//        
-//        return props;
-//    }
-//    
-    // @Bean
-    // public FlowHandlerAdapter flowHandlerAdapter()
-    // {
-    // FlowHandlerAdapter flowHandlerAdapter = new FlowHandlerAdapter();
-    // flowHandlerAdapter.setFlowExecutor(flowExecutor);
-    // return flowHandlerAdapter;
-    // }
-    //
-    // @Bean
-    // public FlowHandlerMapping flowHandlerMapping()
-    // {
-    // FlowHandlerMapping flowHandlerMapping = new FlowHandlerMapping();
-    // flowHandlerMapping.setInterceptors(new Object[]
-    // { localeChangeInterceptor() });
-    // flowHandlerMapping.setFlowRegistry(flowRegistry);
-    // return flowHandlerMapping;
-    // }
 
     @Bean
     @Scope(value = WebApplicationContext.SCOPE_SESSION, proxyMode = ScopedProxyMode.TARGET_CLASS)

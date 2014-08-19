@@ -20,10 +20,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.TestingAuthenticationToken;
-import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.FilterChainProxy;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
@@ -33,20 +29,22 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.flockspring.config.TestConfig;
+import com.flockspring.config.TestControllerConfig;
+import com.flockspring.config.TestSocialConfig;
 import com.flockspring.domain.service.OrganizationDiscoveryService;
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.impl.OrganizationImpl;
 import com.flockspring.ui.IdentifiedPageTests;
-import com.flockspring.ui.config.SocialConfig;
+import com.flockspring.ui.config.SecurityConfig;
 import com.flockspring.ui.config.WebappConfig;
 import com.flockspring.ui.mapper.OrganizationUIModelMapper;
+import com.flockspring.ui.model.OrganizationUIModel;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestConfig.class, WebappConfig.class, SocialConfig.class})
+@ContextConfiguration(classes = {TestControllerConfig.class, WebappConfig.class, SecurityConfig.class, TestSocialConfig.class})
 @WebAppConfiguration
-@ActiveProfiles("test")
+@ActiveProfiles("controller-tests")
 public class ProfilePageControllerTests extends IdentifiedPageTests {
  
     private final static String ORGANIZATION_ID = "S123456789654";
@@ -64,10 +62,19 @@ public class ProfilePageControllerTests extends IdentifiedPageTests {
     
     @Autowired
     private FilterChainProxy springSecurityFilterChain;
+
+	private OrganizationUIModel organizationModel = Mockito.mock(OrganizationUIModel.class);
+    private Organization organization;
     
     @Before
-    public void setUp() {
-        Mockito.reset(organizationDiscoveryService, organizationUIModelMapper);
+    public void setUp() 
+    {
+    	organization = new OrganizationImpl.OrganizationBuilder()
+    			.withId(ORGANIZATION_ID)
+				.build();
+    	
+        Mockito.reset(organizationDiscoveryService, organizationUIModelMapper, organizationModel);
+        
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
         		.addFilters(springSecurityFilterChain)
         		.build();
@@ -75,23 +82,15 @@ public class ProfilePageControllerTests extends IdentifiedPageTests {
  
     @Test
     public void testRenderProfilePage() throws Exception {
-        Organization organization = new OrganizationImpl.OrganizationBuilder()
-                .withId(ORGANIZATION_ID)
-                .build();
- 
         when(organizationDiscoveryService.getOrganizationById(anyString())).thenReturn(organization);
-        when(organizationUIModelMapper.map(any(Organization.class), anyDouble(), any(Locale.class), any(ApplicationUserImpl.class)));
-        
-        User user = new User("screen011","", AuthorityUtils.createAuthorityList("ROLE_PATRON"));
-        TestingAuthenticationToken testingAuthenticationToken = new TestingAuthenticationToken(user,null);
-        SecurityContextHolder.getContext().setAuthentication(testingAuthenticationToken);
+        when(organizationUIModelMapper.map(any(Organization.class), anyDouble(), any(Locale.class), any(ApplicationUserImpl.class))).thenReturn(organizationModel);
         
         mockMvc.perform(get("/churches/" + ORGANIZATION_ID))
         		.andExpect(status().isOk())
                 .andExpect(view().name("profilePage"))
                 .andExpect(forwardedUrl("/WEB-INF/jsp/profilePage.jsp"))
-                .andExpect(model().attribute("organization", ""))
-                .andExpect(model().attribute("hasPreviousSearch", ""))
+                .andExpect(model().attribute("organization", organizationModel))
+                .andExpect(model().attribute("hasPreviousSearch", false))
                 .andExpect(model().attribute("searchQuery", ""));
  
         verify(organizationDiscoveryService, times(1)).getOrganizationById(ORGANIZATION_ID);
@@ -99,9 +98,15 @@ public class ProfilePageControllerTests extends IdentifiedPageTests {
     }
 
     @Override
-    public void testPageIsIdentified()
+    public void testPageIsIdentified() throws Exception
     {
-        // TODO Auto-generated method stub
-        
+		when(organizationDiscoveryService.getOrganizationById(anyString())).thenReturn(organization);
+		when(organizationUIModelMapper.map(any(Organization.class), anyDouble(), any(Locale.class), any(ApplicationUserImpl.class))).thenReturn(organizationModel);
+		
+		mockMvc.perform(get("/churches/" + ORGANIZATION_ID))
+				.andExpect(status().isOk())
+                .andExpect(view().name("profilePage"))
+                .andExpect(forwardedUrl("/WEB-INF/jsp/profilePage.jsp"))
+		        .andExpect(model().attribute(PAGE_ID_MAP_KEY, ProfilePageController.PAGE_ID));
     }
 }

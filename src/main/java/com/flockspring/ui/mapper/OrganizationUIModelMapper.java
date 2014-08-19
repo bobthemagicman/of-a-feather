@@ -52,7 +52,6 @@ import com.flockspring.ui.model.SocialMediaUIModel;
  * 
  */
 @Component
-@Profile({"dev", "prod"})
 public class OrganizationUIModelMapper
 {
     private static final String SPECIFIC_TIME_FORMAT = "h:mm a";

@@ -6,6 +6,7 @@ package com.flockspring.ui.mapper;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.flockspring.domain.OrganizationFilter;

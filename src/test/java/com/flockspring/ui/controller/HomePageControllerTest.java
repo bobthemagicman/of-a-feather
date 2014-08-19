@@ -20,16 +20,16 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.flockspring.config.TestConfig;
+import com.flockspring.config.TestControllerConfig;
 import com.flockspring.config.TestSocialConfig;
 import com.flockspring.ui.IdentifiedPageTests;
 import com.flockspring.ui.config.SecurityConfig;
 import com.flockspring.ui.config.WebappConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {TestConfig.class, WebappConfig.class, SecurityConfig.class, TestSocialConfig.class})
+@ContextConfiguration(classes = {TestControllerConfig.class, TestSocialConfig.class, SecurityConfig.class, WebappConfig.class})
 @WebAppConfiguration
-@ActiveProfiles(profiles = "test")
+@ActiveProfiles(profiles = "tests")
 public class HomePageControllerTest extends IdentifiedPageTests 
 {
  
@@ -67,6 +67,6 @@ public class HomePageControllerTest extends IdentifiedPageTests
                 .andExpect(status().isOk())
                 .andExpect(view().name("homePage"))
                 .andExpect(forwardedUrl("/WEB-INF/jsp/homePage.jsp"))
-                .andExpect(model().attribute(PAGE_ID_MAP_KEY, "home"));
+                .andExpect(model().attribute(PAGE_ID_MAP_KEY, HomePageController.PAGE_ID));
     }
 }

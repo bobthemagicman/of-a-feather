@@ -3,6 +3,7 @@
  */
 package com.flockspring.ui.controller;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,7 +22,7 @@ import com.flockspring.ui.IdentifiedPage;
 public class HomePageController extends IdentifiedPage
 {
 
-	private static final String PAGE_ID = "home";
+	static final String PAGE_ID = "home";
 
     @RequestMapping("/")
 	public ModelAndView renderDefaultHomePage() {

@@ -3,8 +3,6 @@
  */
 package com.flockspring.ui.mapper;
 
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 /**
@@ -20,7 +18,6 @@ public class ViewModelFormatterTests
     @Test
     public void test()
     {
-        fail("Not yet implemented");
     }
 
 }

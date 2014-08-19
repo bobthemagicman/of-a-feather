@@ -6,13 +6,26 @@ package com.flockspring.ui.mapper;
 
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.flockspring.config.TestSocialConfig;
+import com.flockspring.config.TestWebConfig;
 import com.flockspring.domain.types.Address;
 import com.flockspring.domain.types.impl.AddressImpl.AddressBuilder;
+import com.flockspring.ui.config.SecurityConfig;
+import com.flockspring.ui.config.WebappConfig;
 import com.flockspring.ui.model.AddressUIModel;
 
 /**
@@ -22,6 +35,10 @@ import com.flockspring.ui.model.AddressUIModel;
  * @date Jul 5, 2014
  *
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = {TestWebConfig.class, TestSocialConfig.class, SecurityConfig.class, WebappConfig.class})
+@WebAppConfiguration
+@ActiveProfiles("test")
 public class AddressUIModelMapperTest
 {
 
@@ -77,7 +94,7 @@ public class AddressUIModelMapperTest
     @Test
     public void testMapperHandlesNullParameter()
     {
-        AddressUIModel mappedAddress = mapper.map(address);
+        AddressUIModel mappedAddress = mapper.map(null);
         
         assertThat(mappedAddress, is(nullValue()));
     }
