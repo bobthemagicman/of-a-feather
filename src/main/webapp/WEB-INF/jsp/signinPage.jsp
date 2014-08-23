@@ -6,7 +6,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <c:set var="isModalRequest" value="false" />
-<c:if test="${not empty modal and modal eq 'true'}">
+<c:if test="${not empty param.modal and param.modal eq 'true'}">
     <c:set var="isModalRequest" value="true" />
 </c:if>
 <html>
@@ -36,8 +36,10 @@
         <%@ include file="/WEB-INF/jsp/partials/siteHeader.jsp"%>
     </c:if>
     <sec:authorize access="isAnonymous()">
-    <div class="modal-dialog">
+    <c:if test="${not isModalRequest}">
+    <div class="modal-dialog" id="signinModal">
         <div class="modal-content">
+    </c:if>         
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <h4 class="modal-title">Log in</h4>
@@ -79,8 +81,10 @@
             <div class="modal-footer">
                 Don&apos;t have an account? <a href="#" class="switch-to-sign-up-modal">Sign up</a>
             </div>
+      <c:if test="${not isModalRequest}">              
         </div>
     </div>
+      </c:if>
 	</sec:authorize>
 	   
     <sec:authorize access="isAuthenticated()">
