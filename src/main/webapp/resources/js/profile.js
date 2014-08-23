@@ -27,7 +27,7 @@ function initializeEventHandlers() {
     		    beforeSend: function(xhr) {
                     xhr.setRequestHeader(header, token);
                 },
-    		    url: requestBaseUrl + 'user/ajax/favorite/' + churchId,
+    		    url: requestBaseUrl + 'user/async/favorite/' + churchId,
                 type: "PUT",
                 success: function(data) {
                     var self = self;

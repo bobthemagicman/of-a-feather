@@ -46,6 +46,11 @@ public class HeaderHandlerInterceptor extends HandlerInterceptorAdapter implemen
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView mv) throws Exception
     {
+    	if(request.getServletPath().contains("async"))
+    	{
+    		return;
+    	}
+    	
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Object obj = auth.getPrincipal();
         String pageId = (mv.getModel().containsKey(PAGE_ID_MAP_KEY) ? (String) mv.getModel().get(PAGE_ID_MAP_KEY) : "");

@@ -87,7 +87,7 @@ public class UserController extends IdentifiedPage
         return new ModelAndView("userPreferencesPage", model);
     }
     
-    @RequestMapping(value = "/ajax/favorite/{churchId}", method=RequestMethod.PUT)
+    @RequestMapping(value = "/async/favorite/{churchId}", method=RequestMethod.PUT)
     public @ResponseBody AsyncUserFavoriteResponse addFavoriteForUser(final @AuthenticationPrincipal ApplicationUserImpl user, 
             final @PathVariable String churchId)
     {
