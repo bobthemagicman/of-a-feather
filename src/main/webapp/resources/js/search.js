@@ -264,7 +264,7 @@ function initializeFavorites() {
                     xhr.setRequestHeader(header, token);
                 },
     		    url: requestBaseUrl + 'user/async/favorite/' + churchId,
-                type: "PUT",
+                type: data.currentStatusFavorite ? "DELETE" : "PUT",
                 success: function(data) {
                     var self = self;
                     if(data.hasOwnProperty("asyncStatus") && data.asyncStatus == "SUCCESS" && data.hasOwnProperty("errors") && data.errors.length == 0) {
@@ -604,34 +604,34 @@ function updateResults(filterResult) {
         $(".showing-results").show();
         $(".pagination").show();
         
-        for(i = 0; i < filterResult.organizations.items.length; i++) {
+        for(i = 0; i < filterResult.organizations.churchListings.length; i++) {
 
-            if(filterResult.organizations.items[i].displayImage === null) {
-                var di = { "path": "http://placehold.it/200x200", "alt": "No Image Available", "title": filterResult.organizations.items[i].organizationName } ;
+            if(filterResult.organizations.churchListings[i].displayImage === null) {
+                var di = { "path": "http://placehold.it/200x200", "alt": "No Image Available", "title": filterResult.organizations.churchListings[i].organizationName } ;
                 
-                filterResult.organizations.items[i].displayImage = di;
+                filterResult.organizations.churchListings[i].displayImage = di;
             }
             else {
-                filterResult.organizations.items[i].displayImage.path = resourceBaseURL + 'images/church-images/' + filterResult.organizations.items[i].id + '/' + filterResult.organizations.items[i].displayImage.path;
+                filterResult.organizations.churchListings[i].displayImage.path = resourceBaseURL + 'images/church-images/' + filterResult.organizations.churchListings[i].id + '/' + filterResult.organizations.churchListings[i].displayImage.path;
             }
 
-            var existingResult = $(".search-result-entry[data-result-id='" + filterResult.organizations.items[i].id + "']");
+            var existingResult = $(".search-result-entry[data-result-id='" + filterResult.organizations.churchListings[i].id + "']");
 
             if(!existingResult.length) {
 
                 var nodeForInsertion = $(".search-result-entry").filter(function() {
-                   return $(this).find(".distance").html() < filterResult.organizations.items[i].distanceFromSearchPoint; 
+                   return $(this).find(".distance").html() < filterResult.organizations.churchListings[i].distanceFromSearchPoint; 
                 });
 
-                //$(".search-results").append(generateSearchResultEntry(filterResult.organizations.items[i]));
+                //$(".search-results").append(generateSearchResultEntry(filterResult.organizations.churchListings[i]));
 
                 nodeForInsertion = nodeForInsertion.last();
 
                 if(nodeForInsertion.length === 0) {
-                    $(".search-results").prepend(generateSearchResultEntry(filterResult.organizations.items[i]));
+                    $(".search-results").prepend(generateSearchResultEntry(filterResult.organizations.churchListings[i]));
                 }
                 else {
-                    nodeForInsertion.after(generateSearchResultEntry(filterResult.organizations.items[i]));
+                    nodeForInsertion.after(generateSearchResultEntry(filterResult.organizations.churchListings[i]));
                 }
             }
             else {
@@ -674,12 +674,12 @@ function noResults() {
 function filterRequest() {
 
     $.ajaxSetup({ scriptCharset: "utf-8" , contentType: "application/json; charset=utf-8"});
-
     var searchFilterRequest = "search/async/filter-results";
-
     var json = constructJSON();
-
-    $.ajax({
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    
+	$.ajax({
         url: searchFilterRequest,
         data: JSON.stringify(json),
         type: "POST",
@@ -687,6 +687,7 @@ function filterRequest() {
         beforeSend: function(xhr) {
             xhr.setRequestHeader("Accept", "application/json");
             xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader(header, token);
         },
         success: function(data) {
             //console.log(JSON.stringify(data));

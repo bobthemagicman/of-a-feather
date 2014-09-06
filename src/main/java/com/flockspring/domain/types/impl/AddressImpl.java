@@ -101,13 +101,13 @@ public class AddressImpl implements Address, Serializable
     @Override
     public double getLongitude()
     {
-        return location != null && location.length != 0 ? location[1] : 0.0;
+        return location != null && location.length != 0 ? location[0] : 0.0;
     }
 
     @Override
     public double getLatitude()
     {
-        return location != null && location.length != 0 ? location[0] : 0.0;
+        return location != null && location.length != 0 ? location[1] : 0.0;
     }
 
     public static class AddressBuilder

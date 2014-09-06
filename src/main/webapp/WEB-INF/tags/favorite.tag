@@ -5,8 +5,8 @@
 <%@ attribute name="isFavorite" required="true" type="java.lang.Boolean" %>
 <%@ attribute name="loginUrl" required="true" type="java.lang.String" %>
 
-<spring:url value="/static/images/site/heart_icon.png" var="heartIconEmpty" />
-<spring:url value="/static/images/site/heart_icon_filled_gray.png" var="heartIconFilled" />
+<spring:url value="/static/images/site/heart_icon_filled_gray.png" var="heartIconEmpty" />
+<spring:url value="/static/images/site/heart_icon_green.png" var="heartIconFilled" />
 
 <div class="favorite-icon" data-icon-off-src="${heartIconEmpty}" data-icon-on-src="${heartIconFilled}">
     <sec:authorize access="isAuthenticated()">

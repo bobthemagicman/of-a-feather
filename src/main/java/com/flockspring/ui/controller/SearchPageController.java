@@ -15,7 +15,6 @@ import javax.servlet.http.HttpSession;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.geo.GeoPage;
 import org.springframework.data.mongodb.core.geo.Point;
 import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
@@ -280,7 +279,7 @@ public class SearchPageController extends IdentifiedPage
 
         LatLng latLng = geocoderResult.getGeometry().getLocation();
         double[] location = new double[]
-        {latLng.getLat().doubleValue(), latLng.getLng().doubleValue()};
+        {latLng.getLng().doubleValue(), latLng.getLat().doubleValue()};
 
         return new AddressImpl.AddressBuilder()
                 .withStreet1(new StringBuilder(streetNumber).append(route).toString())
@@ -365,7 +364,7 @@ public class SearchPageController extends IdentifiedPage
 
             SearchResultsUIModel searchResultUIModels = searchResultsModelMapper.map(geoResult, filterRequest, request.getLocale(), user);
             
-            String statusMessage = String.format("Returning %[0] church listings for query" , searchResultUIModels.getChurchListings().size());
+            String statusMessage = String.format("Returning %s church listings for query" , searchResultUIModels.getChurchListings().size());
             AsyncSearchFilterResponse response = new AsyncSearchFilterResponse(searchResultUIModels, statusMessage);
 
             return response;

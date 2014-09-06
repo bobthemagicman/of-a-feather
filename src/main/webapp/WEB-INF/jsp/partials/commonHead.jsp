@@ -10,8 +10,10 @@
 
 <link rel="icon" href="<spring:url value="/static/images/ofAFeatherIcon.ico" />" />
 
+<!--[if IE 6]>
 <script type="text/javascript" src="<spring:url value="/static/js/iepngfix_tilebg.js" />"></script>
 <script type="text/javascript" src="<spring:url value="/static/js/iepngfix.js" />"></script>
+<![endif]-->
 
 <%-- Google Analytics Snippit --%>
 <script>
