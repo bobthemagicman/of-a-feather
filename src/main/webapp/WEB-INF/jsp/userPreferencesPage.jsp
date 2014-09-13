@@ -27,6 +27,11 @@
 
             var showOutsideRegionModal = ${not empty error and error eq 'user_search_out_of_region'};
             
+        </script>
+        
+        <spring:url value="/user/async/savePreferences" var="actionUrl"/>
+        <script>
+        	$("#userCommand").ajaxForm({url: '${actionUrl}', type: 'POST'})
         	
         </script>
 
@@ -52,8 +57,8 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div class="tab-pane fade in active" id="profile">
-                        
-                        <form class="form-horizontal" role="form">
+                        <form:form action="${actionUrl}" commandName="userCommand" method="POST" enctype="utf8" role="form" class="form-horizontal">
+                            <input type="hidden" path="${_csrf.parameterName}" value="${_csrf.token}" >
                             <div class="form-group">
                                 <label for="profilePic" class="col-sm-3 control-label">Profile Picture</label>
                                 <div class="col-sm-8">
@@ -63,15 +68,27 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="profileName" class="col-sm-3 control-label">Your Name</label>
-                                <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="profileName" placeholder="${user.displayName}">
+                                <label for="profileName" class="col-sm-3 control-label">Display Name</label>
+                                <div class="col-sm-4">
+                                    <form:input path="displayName" cssClass="form-control" id="profileName" placeholder="Enter the name you want to identified by"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="profileName" class="col-sm-3 control-label">First Name</label>
+                                <div class="col-sm-4">
+                                    <form:input path="firstName" cssClass="form-control" id="profileName" placeholder="John" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <form:label path="lastName" cssClass="col-sm-3 control-label">Last Name</form:label>                                
+                                <div class="col-sm-4">
+                                    <form:input path="lastName" type="text" name="lastName" cssClass="form-control" id="profileName" placeholder="Doe" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="profileEmail" class="col-sm-3 control-label">Email Address</label>
                                 <div class="col-sm-8">
-                                    <input type="email" class="form-control" id="profileEmail" placeholder="">
+                                    <form:input path="email" type="email" name="email" cssClass="form-control" id="profileEmail" placeholder="${userCommand.email}" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -81,22 +98,11 @@
                                 </div>
                             </div> 
                             <div class="form-group">
-                                <label for="profileLanguages" class="col-sm-3 control-label">Preferred Languages</label>
-                                <div class="col-sm-8">
-                                    <select id="profileLanguages" multiple="multiple" class="form-control">
-                                        <option>English</option>
-                                        <option>Spanish</option>
-                                        <option>French</option>
-                                        <option>Mandarin</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-8">
                                     <button type="submit" class="btn btn-primary">Save Changes</button>
                                 </div>
                             </div>
-                        </form>
+                        </form:form>
                                               
                     </div>
                                 
@@ -113,6 +119,18 @@
                                         <option>Catholic</option>
                                         <option>Anglican</option>
                                         <option>Mormon</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-group">
+                                <label for="profileLanguages" class="col-sm-3 control-label">Preferred Languages</label>
+                                <div class="col-sm-8">
+                                    <select id="profileLanguages" multiple="multiple" class="form-control">
+                                        <option>English</option>
+                                        <option>Spanish</option>
+                                        <option>French</option>
+                                        <option>Mandarin</option>
                                     </select>
                                 </div>
                             </div>
@@ -213,16 +231,6 @@
                             <button class="btn btn-xlarge btn-block btn-twitter"><i class="fa fa-twitter"></i> | Connect with Twitter</button>
 
                             <br /><br />
-                        </div>
-                        
-                        
-                        
-                        <div class="row">
-                            <div class="col-sm-offset-3 col-sm-8">
-                                <button class="btn btn-primary">Delete Account</button>
-                                <br /><br />
-                            </div>
-                            
                         </div>
                     </div>
                  </div>

@@ -21,4 +21,10 @@ public class MusicStylePropertyEditor extends PropertyEditorSupport
     {
         setValue(MusicStyle.valueOf(musicStyleAsText.toUpperCase()));
     }
+    
+    @Override
+    public String getAsText()
+    {
+    	return ((MusicStyle)getValue()).name();
+    }
 }

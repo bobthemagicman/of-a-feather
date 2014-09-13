@@ -40,23 +40,23 @@ public class AutoConnectionSignUp implements ConnectionSignUp
     @Override
     public String execute(Connection<?> connection)
     {
-        UserProfile profile = connection.fetchUserProfile();
-        
-        ConnectionKey key = connection.getKey();
-        SocialMediaProvider provider = SocialMediaProvider.valueOf(key.getProviderId().toUpperCase());
-        TreeSet<SocialMediaProvider> socialSigninProviders = Sets.newTreeSet(Arrays.asList(provider));
-        
-        ApplicationUserImpl applicaitonUser = new ApplicationUserImpl("", profile.getEmail(), "", Collections.<GrantedAuthority>emptySet(),
-                profile.getEmail(), profile.getFirstName(), profile.getLastName(), socialSigninProviders, UserRole.ROLE_USER, null);
-        
-        try
-        {
-            return userDetailsService.registerNewUserAccount(applicaitonUser).getUserId();
-        } catch (DuplicateEmailException e)
-        {
-            // TODO jbritain log exception here as warning            
-        }
-        
+//        UserProfile profile = connection.fetchUserProfile();
+//        
+//        ConnectionKey key = connection.getKey();
+//        SocialMediaProvider provider = SocialMediaProvider.valueOf(key.getProviderId().toUpperCase());
+//        TreeSet<SocialMediaProvider> socialSigninProviders = Sets.newTreeSet(Arrays.asList(provider));
+//        
+//        ApplicationUserImpl applicaitonUser = new ApplicationUserImpl("", profile.getEmail(), "", Collections.<GrantedAuthority>emptySet(),
+//                profile.getEmail(), profile.getFirstName(), profile.getLastName(), socialSigninProviders, UserRole.ROLE_USER, null, null, profile.getUsername());
+//        
+//        try
+//        {
+//            return userDetailsService.registerNewUserAccount(applicaitonUser).getUserId();
+//        } catch (DuplicateEmailException e)
+//        {
+//            // TODO jbritain log exception here as warning            
+//        }
+//        
         return null;       
     }
 }

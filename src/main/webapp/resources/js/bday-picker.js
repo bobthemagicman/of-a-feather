@@ -31,8 +31,8 @@
       "placeholder"   : true,
       "legend"        : "",
       "defaultDate"   : false,
-      "fieldName"     : "birthdate",
-      "fieldId"       : "birthdate",
+      "fieldName"     : "birthDate",
+      "fieldId"       : "profileBirthDate",
       "hiddenDate"    : true,
       "onChange"      : null,
       "tabindex"      : null

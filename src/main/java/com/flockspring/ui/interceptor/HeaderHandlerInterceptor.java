@@ -20,7 +20,7 @@ import com.flockspring.domain.types.user.SocialMediaProvider;
 import com.flockspring.ui.config.ConfigUtils;
 import com.flockspring.ui.mapper.user.UserUIModelBuilder;
 import com.flockspring.ui.model.user.HeaderUIModel;
-import com.flockspring.ui.model.user.UserRegistrationUICommand;
+import com.flockspring.ui.model.user.UserCommand;
 
 /**
  * HeaderHandlerInterceptor.java
@@ -79,37 +79,34 @@ public class HeaderHandlerInterceptor extends HandlerInterceptorAdapter implemen
 
     private void setupHeaderForms(ModelAndView modelAndView, HttpServletRequest request)
     {
-        UserRegistrationUICommand registration = new UserRegistrationUICommand();
+        UserCommand registration = new UserCommand();
         modelAndView.addObject("user", registration);
         
     }
     
     private void createUserModelForHeader(ApplicationUserImpl user, ModelAndView modelAndView)
     {
+    	UserUIModelBuilder userUIModelBuilder = null;
+    	
         if(user.getSignInProviders() != null && user.getSignInProviders().contains(SocialMediaProvider.FACEBOOK))
         {
-            UserUIModelBuilder userUIModelBuilder = SocialMediaProvider.FACEBOOK.mapProfile(new UserUIModelBuilder(), connectionRepository);
-            
-            modelAndView.addObject("user", userUIModelBuilder.buildHeaderUIModel());
+            userUIModelBuilder = SocialMediaProvider.FACEBOOK.mapProfile(new UserUIModelBuilder(), connectionRepository);
         }
         else if(user.getSignInProviders() != null && user.getSignInProviders().contains(SocialMediaProvider.TWITTER))
         {
-            UserUIModelBuilder userUIModelBuilder = SocialMediaProvider.TWITTER.mapProfile(new UserUIModelBuilder(), connectionRepository);
-            
-            modelAndView.addObject("user", userUIModelBuilder.buildHeaderUIModel());
+            userUIModelBuilder = SocialMediaProvider.TWITTER.mapProfile(new UserUIModelBuilder(), connectionRepository);
         }
         else if(user.getSignInProviders() != null && user.getSignInProviders().contains(SocialMediaProvider.GOOGLE))
         {
-            UserUIModelBuilder userUIModelBuilder = SocialMediaProvider.GOOGLE.mapProfile(new UserUIModelBuilder(), connectionRepository);
-            
-            modelAndView.addObject("user", userUIModelBuilder.buildHeaderUIModel());
+            userUIModelBuilder = SocialMediaProvider.GOOGLE.mapProfile(new UserUIModelBuilder(), connectionRepository);
         }
         else
         {
-            HeaderUIModel userModel = new UserUIModelBuilder().withApplicationUserImpl(user)
-                    .buildHeaderUIModel();
-            
-            modelAndView.addObject("user", userModel);
+        	userUIModelBuilder = new UserUIModelBuilder();
         }
+        
+        userUIModelBuilder.withApplicationUserImpl(user);
+        modelAndView.addObject("user", userUIModelBuilder.buildHeaderUIModel());
+        
     }
 }

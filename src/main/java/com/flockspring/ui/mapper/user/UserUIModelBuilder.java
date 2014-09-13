@@ -7,10 +7,11 @@ import org.springframework.social.facebook.api.FacebookProfile;
 import org.springframework.social.google.api.userinfo.GoogleUserInfo;
 import org.springframework.social.twitter.api.TwitterProfile;
 
+import com.flockspring.domain.OrganizationFilter;
 import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.user.SocialMediaProvider;
 import com.flockspring.ui.model.user.HeaderUIModel;
-import com.flockspring.ui.model.user.UserRegistrationUICommand;
+import com.flockspring.ui.model.user.UserCommand;
 
 /**
  * UserUIModelMapper.java
@@ -28,6 +29,7 @@ public class UserUIModelBuilder
     private String displayImageUrl;
     private String displayName;
     private SocialMediaProvider socialSigninProvider;
+	private OrganizationFilter userPreferredSearch;
 
     public UserUIModelBuilder withFacebookProfile(FacebookProfile profile)
     {
@@ -50,11 +52,23 @@ public class UserUIModelBuilder
     
     public UserUIModelBuilder withApplicationUserImpl(ApplicationUserImpl user)
     {
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.email = user.getEmail();
+    	if(this.firstName == null || "".equals(this.firstName))
+    	{
+    		this.firstName = user.getFirstName();
+    	}
         
-        createDisplayName();
+    	if(this.lastName == null || "".equals(this.lastName))
+    	{
+    		this.lastName = user.getLastName();
+    	}
+        
+        if(this.email == null || "".equals(this.email))
+    	{
+        	this.email = user.getEmail();
+    	}
+        
+        String userDisplayName = user.getDisplayName();
+        this.displayName = userDisplayName == null || "".equals(userDisplayName) ? createDisplayName() : user.getDisplayName();
         
         return this;
     }
@@ -109,20 +123,22 @@ public class UserUIModelBuilder
         return new HeaderUIModel(displayName, displayImageUrl);
     }
 
-    private void createDisplayName()
+    private String createDisplayName()
     {
-        this.displayName = new StringBuilder(this.firstName).append(" ").append(this.lastName).toString();
+        return new StringBuilder(this.firstName).append(" ").append(this.lastName).toString();
     }
     
-    public UserRegistrationUICommand buildUserRegistrationUICommand()
+    public UserCommand buildUserCommand()
     {
-        UserRegistrationUICommand command = new UserRegistrationUICommand();
+        UserCommand command = new UserCommand();
         
         command.setEmail(email);
         command.setFirstName(firstName);
         command.setLastName(lastName);
         command.setSignInProvider(socialSigninProvider);
-        command.setDisplayImageUrl(displayImageUrl);        
+        command.setDisplayImageUrl(displayImageUrl);
+        command.setDisplayName(displayName);
+        command.setUserPreferredSearch(userPreferredSearch);
         
         return command;
     }
