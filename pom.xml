@@ -63,7 +63,7 @@
 		<commons-io.version>2.4</commons-io.version>
 
 		<!-- Build Properties -->
-		<mongodb.dbName>ofAFeather</mongodb.dbName>
+		<mongodb.dbName>of-a-feather</mongodb.dbName>
 		<mongodb.username>flockSpring</mongodb.username>
 		<mongodb.password>fl0ckSpr!ng</mongodb.password>
 		
@@ -106,7 +106,7 @@
 				<build.environment>prod</build.environment>
 
 				<mongodb.port>27698</mongodb.port>
-				<mongodb.host>ds027698-internal.mongolab.com</mongodb.host>
+				<mongodb.host>ds027698.mongolab.com</mongodb.host>
 
 				<!-- Log Levels -->
 				<com.flockspring.level>ERROR</com.flockspring.level>
