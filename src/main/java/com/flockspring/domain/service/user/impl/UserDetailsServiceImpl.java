@@ -33,7 +33,7 @@ public class UserDetailsServiceImpl implements UserService
 {
     private EmailUpdateRepository emailUpdateRepository;
     private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
+    
     
 
     @Autowired
@@ -42,7 +42,6 @@ public class UserDetailsServiceImpl implements UserService
     {
         super();
         
-        this.passwordEncoder = passwordEncoder;
         this.emailUpdateRepository = emailUpdateRepository;
         this.userRepository = userRepository;
     }
@@ -79,15 +78,13 @@ public class UserDetailsServiceImpl implements UserService
             throw new DuplicateEmailException("The email address: " + user.getEmail() + " is already in use.");
         }
 
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-
         ApplicationUserBuilder modelMapper = new ApplicationUserBuilder();
-        UserModel registered = convertApplicationUserToUserModel(user, encodedPassword, modelMapper);
+        UserModel registered = convertApplicationUserToUserModel(user, modelMapper);
 
         return modelMapper.map(userRepository.save(registered)).build();
     }
 
-    private UserModel convertApplicationUserToUserModel(ApplicationUserImpl user, String encodedPassword,
+    private UserModel convertApplicationUserToUserModel(ApplicationUserImpl user,
     		ApplicationUserBuilder modelMapper)
     {
         return new UserModel(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getPassword(), 
@@ -110,7 +107,7 @@ public class UserDetailsServiceImpl implements UserService
     {
     	ApplicationUserBuilder modelMapper = new ApplicationUserBuilder();
         
-        UserModel userModel = convertApplicationUserToUserModel(user, user.getPassword(), modelMapper);
+        UserModel userModel = convertApplicationUserToUserModel(user, modelMapper);
         
         return modelMapper.map(userRepository.save(userModel)).build();
     }

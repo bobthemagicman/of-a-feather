@@ -20,7 +20,7 @@ import com.flockspring.domain.types.user.SocialMediaProvider;
 import com.flockspring.ui.config.ConfigUtils;
 import com.flockspring.ui.mapper.user.UserUIModelBuilder;
 import com.flockspring.ui.model.user.HeaderUIModel;
-import com.flockspring.ui.model.user.UserCommand;
+import com.flockspring.ui.model.user.SignUpCommandObject;
 
 /**
  * HeaderHandlerInterceptor.java
@@ -79,7 +79,7 @@ public class HeaderHandlerInterceptor extends HandlerInterceptorAdapter implemen
 
     private void setupHeaderForms(ModelAndView modelAndView, HttpServletRequest request)
     {
-        UserCommand registration = new UserCommand();
+        SignUpCommandObject registration = new SignUpCommandObject();
         modelAndView.addObject("user", registration);
         
     }

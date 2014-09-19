@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.web.ProviderSignInUtils;
@@ -33,7 +34,7 @@ import com.flockspring.domain.types.user.SocialMediaProviderConnectionRepository
 import com.flockspring.domain.types.user.UserRole;
 import com.flockspring.ui.IdentifiedPage;
 import com.flockspring.ui.mapper.user.UserUIModelBuilder;
-import com.flockspring.ui.model.user.UserCommand;
+import com.flockspring.ui.model.user.SignUpCommandObject;
 import com.google.common.base.Strings;
 
 /**
@@ -49,12 +50,14 @@ public class SignUpController extends IdentifiedPage
 {
     private static final String PAGE_ID = "signUp";
     
+    private final PasswordEncoder passwordEncoder;
     private final UserService userService;
     
     @Autowired
-    public SignUpController(final UserService service)
+    public SignUpController(final UserService service, final PasswordEncoder passwordEncoder)
     {
         this.userService = service;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
@@ -65,14 +68,14 @@ public class SignUpController extends IdentifiedPage
         ProviderSignInUtils providerSignInUtils = new ProviderSignInUtils();
         Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
         
-        UserCommand registration = createRegistrationDTO(connection);
+        SignUpCommandObject registration = createRegistrationDTO(connection);
         model.addAttribute("user", registration);
         model.addAttribute("isModalRequest", isModalRequest);
         
         return "signupPage";
     }
 
-    private UserCommand createRegistrationDTO(Connection<?> connection)
+    private SignUpCommandObject createRegistrationDTO(Connection<?> connection)
     {
         UserUIModelBuilder userUIModelBuilder = new UserUIModelBuilder();
 
@@ -89,7 +92,7 @@ public class SignUpController extends IdentifiedPage
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String registerUserAccount(@Valid @ModelAttribute("user") UserCommand userAccountData, BindingResult result,
+    public String registerUserAccount(@Valid @ModelAttribute("user") SignUpCommandObject userAccountData, BindingResult result,
             WebRequest request) throws DuplicateEmailException
     {
         if (result.hasErrors())
@@ -111,13 +114,15 @@ public class SignUpController extends IdentifiedPage
         return "redirect:/";
     }
 
-    private ApplicationUserImpl createUserAccount(UserCommand userAccountData, BindingResult result)
+    private ApplicationUserImpl createUserAccount(SignUpCommandObject userAccountData, BindingResult result)
     {
         TreeSet<SocialMediaProvider> socialSignInProviders = new TreeSet<SocialMediaProvider>();
         socialSignInProviders.add(userAccountData.getSignInProvider());
+        String encodedPassword = passwordEncoder.encode(userAccountData.getPassword());
         
         ApplicationUserImpl applicationUser = new ApplicationUserBuilder().map(userAccountData)
         		.withUserRole(UserRole.ROLE_USER)
+        		.withPassword(encodedPassword)
         		.build(); 
 
         try

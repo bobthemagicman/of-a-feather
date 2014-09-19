@@ -17,7 +17,8 @@ import com.flockspring.domain.OrganizationFilter;
 import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.user.SocialMediaProvider;
 import com.flockspring.domain.types.user.UserRole;
-import com.flockspring.ui.model.user.UserCommand;
+import com.flockspring.ui.model.user.ProfileCommandObject;
+import com.flockspring.ui.model.user.SignUpCommandObject;
 import com.google.common.collect.Sets;
 
 /**
@@ -30,7 +31,7 @@ import com.google.common.collect.Sets;
 public class ApplicationUserBuilder
 {
 
-    private TreeSet<SocialMediaProvider> signInProviders;
+    private NavigableSet<SocialMediaProvider> signInProviders;
     private String encodedPassword;
     private String lastName;
     private String firstName;
@@ -68,15 +69,23 @@ public class ApplicationUserBuilder
     	return this;
     }
 
-    public ApplicationUserBuilder map(final UserCommand userPreferences)
+    public ApplicationUserBuilder map(final SignUpCommandObject signup)
 	{
-        this.email = userPreferences.getEmail();
-        this.firstName = userPreferences.getFirstName(); 
-        this.lastName = userPreferences.getLastName();
-        this.signInProviders = Sets.newTreeSet(Arrays.asList(userPreferences.getSignInProvider())); 
-        this.birthDate = userPreferences.getBirthDate();
-    	this.displayName = userPreferences.getDisplayName(); 
-    	this.organizationFilter = userPreferences.getOrganizationFilter();
+        this.email = signup.getEmail();
+        this.firstName = signup.getFirstName(); 
+        this.lastName = signup.getLastName();
+        this.signInProviders =  signup.getSignInProvider() != null ? Sets.newTreeSet(Arrays.asList(signup.getSignInProvider())) : null; 
+    	
+    	return this;
+	}
+    
+    public ApplicationUserBuilder map(final ProfileCommandObject profile)
+	{
+    	this.birthDate = profile.getBirthDate();
+    	this.displayName = profile.getDisplayName();
+    	this.email = profile.getEmail();
+    	this.lastName = profile.getLastName();
+    	this.firstName = profile.getFirstName();
     	
     	return this;
 	}
@@ -100,8 +109,8 @@ public class ApplicationUserBuilder
     
     public ApplicationUserImpl build()
     {
-        return new ApplicationUserImpl(email, encodedPassword, createAuthorities(userRole), id, email, firstName, lastName, signInProviders, 
-        		favoriteChurches, userRole, birthDate, displayName, organizationFilter);
+        return new ApplicationUserImpl(email, encodedPassword, createAuthorities(userRole), id, email, firstName, lastName, 
+        		Sets.newTreeSet(signInProviders), favoriteChurches, userRole, birthDate, displayName, organizationFilter);
     }
     
     public ApplicationUserBuilder withEmail(final String email)

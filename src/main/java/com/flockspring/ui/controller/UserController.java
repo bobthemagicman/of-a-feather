@@ -15,11 +15,13 @@ import javax.validation.Valid;
 
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -39,14 +41,15 @@ import com.flockspring.ui.AsyncUserError;
 import com.flockspring.ui.IdentifiedPage;
 import com.flockspring.ui.editors.LocalDateEditor;
 import com.flockspring.ui.mapper.SearchResultsUIModelMapper;
-import com.flockspring.ui.mapper.user.UserUIModelBuilder;
 import com.flockspring.ui.model.AsyncBindingResultError;
 import com.flockspring.ui.model.AsyncUserFavoriteResponse;
 import com.flockspring.ui.model.AsyncUserPreferencesResponse;
 import com.flockspring.ui.model.ChurchListingUIModel;
 import com.flockspring.ui.model.async.AsyncStatus;
-import com.flockspring.ui.model.user.UserCommand;
-import com.google.common.collect.Sets;
+import com.flockspring.ui.model.user.PasswordChangeCommandObject;
+import com.flockspring.ui.model.user.ProfileCommandObject;
+import com.flockspring.ui.model.user.SearchCriteriaCommandObject;
+import com.flockspring.ui.model.user.SignUpCommandObject;
 
 /**
  * UserPreferencesController.java
@@ -65,14 +68,16 @@ public class UserController extends IdentifiedPage
     private final UserService userService;
     private final OrganizationDiscoveryService organizationDiscoveryService;
     private final SearchResultsUIModelMapper searchResultsModelMapper;
+    private final PasswordEncoder passwordEncoder;
     
     @Autowired
     public UserController(final UserService userService, final OrganizationDiscoveryService organizationDiscoveryService,
-            final SearchResultsUIModelMapper searchResultsModelMapper)
+            final SearchResultsUIModelMapper searchResultsModelMapper, final PasswordEncoder passwordEncoder)
     {
         this.userService = userService;
         this.organizationDiscoveryService = organizationDiscoveryService;
         this.searchResultsModelMapper = searchResultsModelMapper;
+        this.passwordEncoder = passwordEncoder;
     }
     
     @RequestMapping("/favorites")
@@ -98,17 +103,20 @@ public class UserController extends IdentifiedPage
     @RequestMapping("/preferences")
     public String renderPreferencesPage(WebRequest request, Model model, @AuthenticationPrincipal ApplicationUserImpl principleUser)
     {
-    	UserUIModelBuilder userUIModelBuilder = new UserUIModelBuilder();
-    	userUIModelBuilder.withApplicationUserImpl(principleUser);
-        UserCommand userCommand = userUIModelBuilder.buildUserCommand();
-
-        model.addAttribute("userCommand", userCommand);
+    	ProfileCommandObject profileCommand = new ProfileCommandObject(principleUser);
+    	model.addAttribute("profileCommand", profileCommand);
+    	
+    	SearchCriteriaCommandObject searchCriteriaCommandObject = new SearchCriteriaCommandObject(principleUser.getOrganizationFilter());
+    	model.addAttribute("searchCriteriaCommandObject", searchCriteriaCommandObject);
+    	
+    	PasswordChangeCommandObject passwordChangeCommandObject = new PasswordChangeCommandObject();
+    	model.addAttribute("passwordChangeCommandObject", passwordChangeCommandObject);
         
         return "userPreferencesPage";
     }
     
     @RequestMapping(value = "/async/savePreferences", method=RequestMethod.POST)
-    public @ResponseBody AsyncUserPreferencesResponse saveUserPreferences(@Valid @ModelAttribute("user") UserCommand userPreferences, BindingResult result,
+    public @ResponseBody AsyncUserPreferencesResponse saveUserPreferences(@Valid @ModelAttribute("user") SignUpCommandObject userPreferences, BindingResult result,
             WebRequest request, @AuthenticationPrincipal ApplicationUserImpl principleUser)
     {
     	if (result.hasErrors())
@@ -122,18 +130,49 @@ public class UserController extends IdentifiedPage
             return new AsyncUserPreferencesResponse(bindingErrors, AsyncStatus.FAILURE, "Error during parameter binding");
         }
     	
-    	
-    	ApplicationUserImpl user = new ApplicationUserBuilder().map(userPreferences)
-    			.withId(principleUser.getId())
-    			.withUserRole(principleUser.getUserRole())
-    			.withFavoriteChurches(principleUser.getFavoriteChurches())
-    			.withPassword(principleUser.getPassword())
-    			.withSignInProviders(Sets.newTreeSet(principleUser.getSignInProviders()))
+    	ApplicationUserImpl user = new ApplicationUserBuilder()
+    			.map(principleUser)
+    			.map(userPreferences)
     			.build();
     	
 		userService.saveUser(user);
     	
     	return new AsyncUserPreferencesResponse("Successfully saved user preferences");
+    }
+    
+    @RequestMapping(value = "/async/updatePassword", method=RequestMethod.POST)
+    public @ResponseBody AsyncUserPreferencesResponse updatePassword(@Valid @ModelAttribute("user") PasswordChangeCommandObject passwordChange, BindingResult result,
+            WebRequest request, @AuthenticationPrincipal ApplicationUserImpl principleUser)
+    {
+    	if(verifyOriginalPasswordMatches(passwordChange.getOriginalPassword(), principleUser))
+    	{
+    		String encodedPassword = passwordEncoder.encode(passwordChange.getPassword());
+    		
+    		ApplicationUserImpl user = new ApplicationUserBuilder()
+    				.map(principleUser)
+    				.withPassword(encodedPassword)
+    				.build();
+    		
+    		userService.saveUser(user);
+    		
+    		return new AsyncUserPreferencesResponse("Successfully updated user password");
+    	}
+    	
+    	result.addError(ValidationUtils.);
+    }
+    
+    private boolean verifyOriginalPasswordMatches(String originalPassword, ApplicationUserImpl principleUser)
+	{
+    	String originalEncodedPassword = passwordEncoder.encode(originalPassword);
+    	
+    	return originalEncodedPassword.equals(principleUser.getPassword());
+	}
+
+	@RequestMapping(value = "/async/updateSearchCriteria", method=RequestMethod.POST)
+    public @ResponseBody AsyncUserPreferencesResponse updateSearchCriteria(@Valid @ModelAttribute("user") SignUpCommandObject userPreferences, BindingResult result,
+            WebRequest request, @AuthenticationPrincipal ApplicationUserImpl principleUser)
+    {
+    	return new AsyncUserPreferencesResponse("Successfully updated user search criteria");	
     }
     
     @RequestMapping(value = "/async/favorite/{churchId}", method=RequestMethod.PUT)

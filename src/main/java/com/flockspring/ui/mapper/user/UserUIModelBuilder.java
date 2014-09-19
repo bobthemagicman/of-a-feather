@@ -11,7 +11,7 @@ import com.flockspring.domain.OrganizationFilter;
 import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.user.SocialMediaProvider;
 import com.flockspring.ui.model.user.HeaderUIModel;
-import com.flockspring.ui.model.user.UserCommand;
+import com.flockspring.ui.model.user.SignUpCommandObject;
 
 /**
  * UserUIModelMapper.java
@@ -128,9 +128,9 @@ public class UserUIModelBuilder
         return new StringBuilder(this.firstName).append(" ").append(this.lastName).toString();
     }
     
-    public UserCommand buildUserCommand()
+    public SignUpCommandObject buildUserCommand()
     {
-        UserCommand command = new UserCommand();
+        SignUpCommandObject command = new SignUpCommandObject();
         
         command.setEmail(email);
         command.setFirstName(firstName);

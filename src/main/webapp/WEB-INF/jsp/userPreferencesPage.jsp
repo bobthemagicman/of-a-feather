@@ -8,36 +8,25 @@
         <%-- Common Metadata, scripts, and CSS --%>
         <%@ include file="/WEB-INF/jsp/partials/commonHead.jsp"%>
 
-        <spring:url value="/static/js/search.js" var="searchJS" />
-        <spring:url value="/static/js/bootstrap-paginator.min.js" var="bootstrapPaginatorJS" />
-        <spring:url value="/static/js/mustache.js" var="mustacheJS" />
+        <spring:url value="/static/js/preferences.js" var="preferencesJS" />
         <spring:url value="/static/js/jquery.form.min.js" var="jqueryForm"/>
         <spring:url value="/static/js/jquery.geocomplete.js" var="geoCompletePlugin" />
         <spring:url value="/static/js/bday-picker.js" var="bdayPickerJS" />
         
         <script type="text/javascript">
-            $LAB.queueScript("${searchJS}")
+            $LAB.queueScript("${preferencesJS}")
                     .queueScript("https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&callback=initializeMap")
                     .queueScript("${geoCompletePlugin}")
-                    .queueScript("${mustacheJS}")
                     .queueScript("${jqueryForm}")
-                    .queueScript("${bootstrapPaginatorJS}")
                     .queueScript("${bdayPickerJS}")
                     .runQueue();
-
-            var showOutsideRegionModal = ${not empty error and error eq 'user_search_out_of_region'};
             
         </script>
         
         <spring:url value="/user/async/savePreferences" var="actionUrl"/>
-        <script>
-        	$("#userCommand").ajaxForm({url: '${actionUrl}', type: 'POST'})
-        	
-        </script>
-
         <title>Of A Feather - Search Results</title>	
     </head>
-    <body data-rn="${userKey}">
+    <body data-rn="${userKey}" >
         <div class="page-container user-preferences">
             <%-- Site Header --%>
             <c:set var="navSearchEnabled" value="true" />
@@ -57,7 +46,7 @@
                 <!-- Tab panes -->
                 <div class="tab-content">
                     <div class="tab-pane fade in active" id="profile">
-                        <form:form action="${actionUrl}" commandName="userCommand" method="POST" enctype="utf8" role="form" class="form-horizontal">
+                        <form:form action="${actionUrl}" commandName="profileCommand" method="POST" enctype="utf8" role="form" class="form-horizontal">
                             <input type="hidden" path="${_csrf.parameterName}" value="${_csrf.token}" >
                             <div class="form-group">
                                 <label for="profilePic" class="col-sm-3 control-label">Profile Picture</label>
@@ -107,7 +96,7 @@
                     </div>
                                 
                     <div class="tab-pane fade" id="settings">
-                        <form class="form-horizontal" role="form">
+                        <form:form action="${actionUrl}" commandName="searchCriteriaCommandObject" method="POST" enctype="utf8" role="form" class="form-horizontal">
                             
                             <div class="form-group">
                                 <label for="settingsDenominations" class="col-sm-3 control-label">Denomination(s)</label>
@@ -184,12 +173,13 @@
                                     <button type="submit" class="btn btn-primary">Save Changes</button>
                                 </div>
                             </div>
-                        </form>
+                        </form:form>
                     </div>
                                 
                     <div class="tab-pane fade" id="account">
-                        <form class="form-horizontal" role="form">
-                            <div class="col-sm-offset-3 col-sm-9">
+                        <form:form action="${actionUrl}" commandName="passwordChangeCommandObject" method="POST" enctype="utf8" role="form" class="form-horizontal">
+                            <input type="hidden" path="${_csrf.parameterName}" value="${_csrf.token}" >
+                        	<div class="col-sm-offset-3 col-sm-9">
                                 <h4>Change Password</h4>
                             </div>
                             <div class="form-group">
@@ -215,8 +205,7 @@
                                     <button type="submit" class="btn btn-primary">Update Password</button>
                                 </div>
                             </div>
-                            
-                        </form>
+                        </form:form>                        
                         
                         <br />
                         
