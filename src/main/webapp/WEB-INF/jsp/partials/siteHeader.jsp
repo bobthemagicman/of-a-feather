@@ -41,9 +41,14 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">FAVORITES</a></li>
-                            <li><a href="#">PREFERENCES</a></li>
-                            <li><a href="#">SIGN OUT</a></li>
+                            <spring:url value="/user/favorites" var="userFavoritesLink" />
+                            <li><a href="${userFavoritesLink}">FAVORITES</a></li>
+                            
+                            <spring:url value="/user/preferences" var="userPrefsLink" />
+                            <li><a href="${userPrefsLink}">PREFERENCES</a></li>
+                            
+                            <spring:url value="/signout" var="signoutLink" />
+                            <li><a href="${signoutLink}">SIGN OUT</a></li>
                         </ul>
                     </li> 
 		</c:if>		
@@ -52,6 +57,8 @@
                 <li><a href="<spring:url value='/signup?modal=true' />" class="sign-up" data-toggle="modal" data-target="#userModal">SIGN UP</a></li>
                 <li><a href="<spring:url value='/signin?modal=true' />" class="sign-in" data-toggle="modal" data-target="#socialSignInModal">SIGN IN</a></li>
                 </sec:authorize>
+                <li><a href="${aboutUsLink}">ABOUT US</a></li> 
+                <li><a href="${addYourChurchLink}">ADD YOUR CHURCH</a></li>
                 <li><a href="https://docs.google.com/forms/d/1z7UPHqIvfdLTmiy_U9HFsd9Pud6mXWjd-uWrUQwwFZo/viewform" target="_blank">LOCAL EVENTS</a></li>
                 <li><a href="http://blog.ofafeather.org">BLOG</a></li>
             </ul>

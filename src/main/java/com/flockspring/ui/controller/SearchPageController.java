@@ -281,7 +281,14 @@ public class SearchPageController extends IdentifiedPage
         double[] location = new double[]
         {latLng.getLng().doubleValue(), latLng.getLat().doubleValue()};
 
-        return new AddressImpl(new StringBuilder(streetNumber).append(route).toString(), "", postalCode, state, city, country, location);
+        return new AddressImpl.AddressBuilder()
+                .withStreet1(new StringBuilder(streetNumber).append(route).toString())
+                .withPostalCode(postalCode)
+                .withState(state)
+                .withCity(city)
+                .withCountry(country)
+                .withLocation(location)
+                .build();
     }
 
     private boolean queryInAllowedRegion(GeocoderResult result)
@@ -357,7 +364,7 @@ public class SearchPageController extends IdentifiedPage
 
             SearchResultsUIModel searchResultUIModels = searchResultsModelMapper.map(geoResult, filterRequest, request.getLocale(), user);
             
-            String statusMessage = String.format("Returning %[0] church listings for query" , searchResultUIModels.getChurchListings().size());
+            String statusMessage = String.format("Returning %s church listings for query" , searchResultUIModels.getChurchListings().size());
             AsyncSearchFilterResponse response = new AsyncSearchFilterResponse(searchResultUIModels, statusMessage);
 
             return response;

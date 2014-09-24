@@ -9,9 +9,11 @@ import java.util.TreeSet;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.joda.time.LocalDate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.social.security.SocialUser;
 
+import com.flockspring.domain.OrganizationFilter;
 import com.flockspring.domain.types.user.SocialMediaProvider;
 import com.flockspring.domain.types.user.UserRole;
 
@@ -26,45 +28,36 @@ public class ApplicationUserImpl extends SocialUser
 {
     private static final long serialVersionUID = 3247713418605012233L;
 
-    private String id;
-    private String email;
-    private String firstName;
-    private String lastName;
-    private TreeSet<SocialMediaProvider> signInProviders;
-    private NavigableSet<String> favoriteChurches;
-    private UserRole userRole;
+    private final String id;
+    private final String email;
+    private final String firstName;
+    private final String lastName;
+    private final TreeSet<SocialMediaProvider> signInProviders;
+    private final NavigableSet<String> favoriteChurches;
+    private final UserRole userRole;
+    private final LocalDate birthDate;
+	private final String displayName;
+	private final OrganizationFilter organizationFilter;
     
-    public ApplicationUserImpl(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired,
-            boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities, String email, String firstName, String lastName,
-            TreeSet<SocialMediaProvider> signInProviders, UserRole userRole)
-    {
-        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.signInProviders = signInProviders;
-        this.userRole = userRole;
-    }
-
-    public ApplicationUserImpl(String id, String username, String password, Collection<? extends GrantedAuthority> authorities, String email, String firstName,
-            String lastName, TreeSet<SocialMediaProvider> signInProviders, UserRole userRole, NavigableSet<String> favoriteChurches)
-    {
-        super(username, password, authorities);
-        
-        this.id = id;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.signInProviders = signInProviders;        
-        this.userRole = userRole;
-        this.favoriteChurches = favoriteChurches;
-    }
-
-    public ApplicationUserImpl(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, authorities);
-    }
-
+    public ApplicationUserImpl(final String username, final String password, final Collection<? extends GrantedAuthority> authorities, 
+    		final String id, final String email, final String firstName, final String lastName, final TreeSet<SocialMediaProvider> signInProviders,
+    		final NavigableSet<String> favoriteChurches, final UserRole userRole, final LocalDate birthDate, final String displayName, 
+    		final OrganizationFilter organizationFilter)
+	{
+		super(username, password, authorities);
+		
+		this.id = id;
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.signInProviders = signInProviders;
+		this.favoriteChurches = favoriteChurches;
+		this.userRole = userRole;
+		this.birthDate = birthDate;
+		this.displayName = displayName;
+		this.organizationFilter = organizationFilter;
+	}
+	
     public String getId()
     {
         return id;
@@ -100,47 +93,22 @@ public class ApplicationUserImpl extends SocialUser
         return userRole;
     }
 
-    public void TreeSetId(String id)
+    public LocalDate getBirthDate() 
     {
-        this.id = id;
-    }
+		return birthDate;
+	}
 
-    public void setId(String id)
-    {
-        this.id = id;
-    }
-
-    public void setEmail(String email)
-    {
-        this.email = email;
-    }
-
-    public void setFirstName(String firstName)
-    {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName)
-    {
-        this.lastName = lastName;
-    }
-
-    public void setSignInProviders(TreeSet<SocialMediaProvider> signInProviders)
-    {
-        this.signInProviders = signInProviders;
-    }
-
-    public void setFavoriteChurches(NavigableSet<String> favoriteChurches)
-    {
-        this.favoriteChurches = favoriteChurches;
-    }
+    public String getDisplayName()
+	{
+		return this.displayName;
+	}
     
-    public void setUserRole(UserRole userRole)
-    {
-        this.userRole = userRole;
-    }
+	public OrganizationFilter getOrganizationFilter()
+	{
+		return organizationFilter;
+	}
 
-    @Override
+	@Override
     public int hashCode()
     {
         return HashCodeBuilder.reflectionHashCode(this);

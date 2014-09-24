@@ -1,29 +1,22 @@
-/*
- * Copyright 2013 FlockSpring Inc. All rights reserved
- */
-package com.flockspring.ui.model.user;
+package com.flockspring.ui.model.validation;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-/**
- * test.java
- *
- * @author Justen L. Britain
- * @date Apr 5, 2014
- *
- */
-public class PasswordsNotEmptyValidator implements ConstraintValidator<PasswordsNotEmpty, Object> {
+import com.flockspring.ui.model.validation.annotation.PasswordNotEqualToOldPassword;
 
-    private String validationTriggerFieldName;
+public class PasswordNotEqualToOldPasswordValidator implements ConstraintValidator<PasswordNotEqualToOldPassword, Object>
+{
+
+	private String validationTriggerFieldName;
     private String passwordFieldName;
-    private String passwordVerificationFieldName;
+    private String originalPasswordFieldName;
 
     @Override
-    public void initialize(PasswordsNotEmpty constraintAnnotation) {
+    public void initialize(PasswordNotEqualToOldPassword constraintAnnotation) {
         validationTriggerFieldName = constraintAnnotation.triggerFieldName();
         passwordFieldName = constraintAnnotation.passwordFieldName();
-        passwordVerificationFieldName = constraintAnnotation.passwordVerificationFieldName();
+        originalPasswordFieldName = constraintAnnotation.originalPasswordFieldName();
     }
 
     @Override
@@ -51,12 +44,14 @@ public class PasswordsNotEmptyValidator implements ConstraintValidator<Passwords
             passwordWordFieldsAreValid = false;
         }
 
-        String passwordVerification = (String) ValidatorUtil.getFieldValue(value, passwordVerificationFieldName);
-        if (isNullOrEmpty(passwordVerification)) {
-            ValidatorUtil.addValidationError(passwordVerificationFieldName, context);
+        String oldPassword = (String) ValidatorUtil.getFieldValue(value, originalPasswordFieldName);
+        if (isNullOrEmpty(oldPassword)) {
+            ValidatorUtil.addValidationError(originalPasswordFieldName, context);
             passwordWordFieldsAreValid = false;
         }
 
+        passwordWordFieldsAreValid = !originalPasswordFieldName.trim().equals(passwordFieldName.trim());
+        
         return passwordWordFieldsAreValid;
     }
 

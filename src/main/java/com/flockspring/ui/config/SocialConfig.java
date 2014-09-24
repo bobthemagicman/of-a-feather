@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.security.crypto.encrypt.Encryptors;
 import org.springframework.social.UserIdSource;
@@ -60,6 +61,7 @@ public class SocialConfig implements SocialConfigurer
         
     
     @Override
+    @Profile({"dev", "default"})
     public UsersConnectionRepository getUsersConnectionRepository(ConnectionFactoryLocator connectionFactoryLocator) {
        
         MongoUsersConnectionRepository repository = new MongoUsersConnectionRepository(Encryptors.noOpText(), userSocialConnectionRepository, 

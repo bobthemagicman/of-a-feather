@@ -6,8 +6,10 @@ package com.flockspring.dataaccess.mongodb.model;
 import java.util.NavigableSet;
 import java.util.TreeSet;
 
+import org.joda.time.LocalDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.flockspring.domain.OrganizationFilter;
 import com.flockspring.domain.types.user.SocialMediaProvider;
 import com.flockspring.domain.types.user.UserRole;
 
@@ -29,11 +31,16 @@ public class UserModel
     private UserRole userRole;
     private TreeSet<SocialMediaProvider> signInProviders;
     private TreeSet<String> favoriteChurches;
+	private LocalDate birthDate;
+	private String displayName;
+	private OrganizationFilter organizationFilter;
   
     public UserModel(String id, String email, String firstName, String lastName, String password, UserRole userRole,
-            TreeSet<SocialMediaProvider> signInProviders, TreeSet<String> favoriteChurches)
+            TreeSet<SocialMediaProvider> signInProviders, TreeSet<String> favoriteChurches, LocalDate birthDate,
+            String displayName, OrganizationFilter organizationFilter)
     {
         super();
+        
         this.id = id;
         this.email = email;
         this.firstName = firstName;
@@ -42,6 +49,9 @@ public class UserModel
         this.userRole = userRole;
         this.signInProviders = signInProviders;
         this.favoriteChurches = favoriteChurches;
+        this.birthDate = birthDate;
+        this.displayName = displayName;
+        this.organizationFilter = organizationFilter;
     }
 
     public String getId()
@@ -83,6 +93,11 @@ public class UserModel
     {
         return favoriteChurches;
     }
+    
+    public LocalDate getBirthDate() 
+	{
+		return birthDate;
+	}
 
     public void setId(String id)
     {
@@ -123,4 +138,19 @@ public class UserModel
     {
         this.favoriteChurches = favoriteChurches;
     }
+    
+    public void setBirthDate(LocalDate birthDate) 
+	{
+		this.birthDate = birthDate;
+	}
+
+	public String getDisplayName()
+	{
+		return this.displayName;
+	}
+
+	public OrganizationFilter getOrganizationFilter()
+	{
+		return this.organizationFilter;
+	}
 }

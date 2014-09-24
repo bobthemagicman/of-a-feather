@@ -14,9 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.util.RequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.flockspring.domain.service.user.impl.UserDetailsServiceImpl;
 
@@ -65,10 +63,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                                 "/search",
                                 "/contact",
                                 "/churches/**",
-                                "/async/filter-results",
-                                "/async/out-of-region-search"
+                                "/search/async/filter-results",
+                                "/search/async/out-of-region-search"
                         ).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/user/ajax/favorite/*", "PUT")).hasRole("USER")
+                        .requestMatchers(new AntPathRequestMatcher("/user/async/favorite/*", "PUT")).hasRole("USER")
+                        .requestMatchers(new AntPathRequestMatcher("/user/async/favorite/*", "DELETE")).hasRole("USER")
+                        .requestMatchers(new AntPathRequestMatcher("/user/async/preferences/*", "PUT")).hasRole("USER")
                         .antMatchers("/**").hasRole("USER")
                 .and()
                     .apply(new AjaxEnabledSpringSocialConfigurer());

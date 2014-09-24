@@ -14,11 +14,11 @@ import java.util.List;
  */
 public abstract class BaseAsyncResponse
 {
-    private final List<AsyncError> errors;
+    private final List<? extends AsyncError> errors;
     private final AsyncStatus asyncStatus;
     private final String statusMessage;
     
-    public BaseAsyncResponse(final List<AsyncError> errors, final AsyncStatus asyncStatus,
+    public BaseAsyncResponse(final List<? extends AsyncError> errors, final AsyncStatus asyncStatus,
             final String statusMessage)
     {
         super();
@@ -28,7 +28,7 @@ public abstract class BaseAsyncResponse
         this.statusMessage = statusMessage;
     }
 
-    public List<AsyncError> getErrors()
+    public List<? extends AsyncError> getErrors()
     {
         return errors;
     }

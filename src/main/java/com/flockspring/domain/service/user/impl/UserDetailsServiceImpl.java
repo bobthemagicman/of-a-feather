@@ -15,10 +15,11 @@ import com.flockspring.dataaccess.mongodb.EmailUpdateRepository;
 import com.flockspring.dataaccess.mongodb.UserRepository;
 import com.flockspring.dataaccess.mongodb.model.UserModel;
 import com.flockspring.domain.DuplicateEmailException;
-import com.flockspring.domain.mapper.ApplicationUserModelMapper;
+import com.flockspring.domain.mapper.ApplicationUserBuilder;
 import com.flockspring.domain.service.user.UserService;
 import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.impl.UpdateEmailImpl;
+import com.google.common.collect.Sets;
 
 /**
  * UserDetailsServiceImpl.java
@@ -32,7 +33,7 @@ public class UserDetailsServiceImpl implements UserService
 {
     private EmailUpdateRepository emailUpdateRepository;
     private UserRepository userRepository;
-    private PasswordEncoder passwordEncoder;
+    
     
 
     @Autowired
@@ -41,7 +42,6 @@ public class UserDetailsServiceImpl implements UserService
     {
         super();
         
-        this.passwordEncoder = passwordEncoder;
         this.emailUpdateRepository = emailUpdateRepository;
         this.userRepository = userRepository;
     }
@@ -62,7 +62,7 @@ public class UserDetailsServiceImpl implements UserService
             throw new UsernameNotFoundException("Unable to load user with username \""+ username);
         }
         
-        return new ApplicationUserModelMapper().map(user);
+        return new ApplicationUserBuilder().map(user).build();
     }
 
     @Override
@@ -78,35 +78,18 @@ public class UserDetailsServiceImpl implements UserService
             throw new DuplicateEmailException("The email address: " + user.getEmail() + " is already in use.");
         }
 
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        ApplicationUserBuilder modelMapper = new ApplicationUserBuilder();
+        UserModel registered = convertApplicationUserToUserModel(user, modelMapper);
 
-        ApplicationUserModelMapper modelMapper = new ApplicationUserModelMapper();
-        UserModel registered = convertApplicationUserToUserModel(user, encodedPassword, modelMapper);
-
-        return modelMapper.map(userRepository.save(registered));
+        return modelMapper.map(userRepository.save(registered)).build();
     }
 
-    private UserModel convertApplicationUserToUserModel(ApplicationUserImpl user, String encodedPassword,
-            ApplicationUserModelMapper modelMapper)
+    private UserModel convertApplicationUserToUserModel(ApplicationUserImpl user,
+    		ApplicationUserBuilder modelMapper)
     {
-        modelMapper.withEmail(user.getEmail())
-                .withFirstName(user.getFirstName())
-                .withLastName(user.getLastName())
-                .withPassword(encodedPassword)
-                .withFavoriteChurches(user.getFavoriteChurches());
-                
-        
-        if (user.getSignInProviders() != null && !user.getSignInProviders().isEmpty()) {
-            modelMapper.withSignInProvider(user.getSignInProviders().first());
-        }
-        
-        if (user.getId() != null && !user.getId().equals(""))
-        {
-            modelMapper.withId(user.getId());
-        }
-
-        UserModel userModel = modelMapper.build();
-        return userModel;
+        return new UserModel(user.getId(), user.getEmail(), user.getFirstName(), user.getLastName(), user.getPassword(), 
+        		user.getUserRole(), user.getSignInProviders(), Sets.newTreeSet(user.getFavoriteChurches()), user.getBirthDate(), user.getDisplayName(),
+        		user.getOrganizationFilter());
     }
 
     private boolean emailExist(String email) {
@@ -122,10 +105,10 @@ public class UserDetailsServiceImpl implements UserService
     @Override
     public ApplicationUserImpl saveUser(ApplicationUserImpl user)
     {
-        ApplicationUserModelMapper modelMapper = new ApplicationUserModelMapper();
+    	ApplicationUserBuilder modelMapper = new ApplicationUserBuilder();
         
-        UserModel userModel = convertApplicationUserToUserModel(user, user.getPassword(), modelMapper);
+        UserModel userModel = convertApplicationUserToUserModel(user, modelMapper);
         
-        return modelMapper.map(userRepository.save(userModel));
+        return modelMapper.map(userRepository.save(userModel)).build();
     }
 }

@@ -1,7 +1,7 @@
 /*
  * Copyright 2013 FlockSpring Inc. All rights reserved
  */
-package com.flockspring.ui.model.user;
+package com.flockspring.ui.model.validation;
 
 import java.lang.reflect.Field;
 

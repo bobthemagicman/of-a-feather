@@ -5,6 +5,7 @@ package com.flockspring.ui.mapper;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -24,24 +25,29 @@ public class CategoryUIMapConverter<T extends Enum<T> & Category<T>>
 
     public Map<Category<T>, Set<T>> convertCategoryToMap(Collection<T> convertables)
     {
-        Map<Category<T>, Set<T>> convertedMap = new LinkedHashMap<>();
-        for (T c : convertables)
-        {
-            if(c.getCategory() != null)
-            {
-                if (convertedMap.containsKey(c.getCategory()))
-                {
-                    convertedMap.get(c.getCategory()).add(c);
-                } else
-                {
-                    Set<T> valueSet = new TreeSet<>();
-                    valueSet.add(c);
-                    convertedMap.put(c.getCategory(), valueSet);
-                }
-            }
-        }
-
-        return convertedMap;
+    	if(convertables != null)
+    	{
+	        Map<Category<T>, Set<T>> convertedMap = new LinkedHashMap<>();
+	        for (T c : convertables)
+	        {
+	            if(c.getCategory() != null)
+	            {
+	                if (convertedMap.containsKey(c.getCategory()))
+	                {
+	                    convertedMap.get(c.getCategory()).add(c);
+	                } else
+	                {
+	                    Set<T> valueSet = new TreeSet<>();
+	                    valueSet.add(c);
+	                    convertedMap.put(c.getCategory(), valueSet);
+	                }
+	            }
+	        }
+	
+	        return convertedMap;
+    	}
+    	
+    	return Collections.<Category<T>, Set<T>>emptyMap();
     }
 
     public Map<Category<T>, Set<T>> convertCategoryToMap(T[] values)

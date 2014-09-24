@@ -1,7 +1,7 @@
 /*
  * Copyright 2013 FlockSpring Inc. All rights reserved
  */
-package com.flockspring.ui.model.user;
+package com.flockspring.ui.model.validation.annotation;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.TYPE;
@@ -13,6 +13,8 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
+
+import com.flockspring.ui.model.validation.PasswordsNotEmptyValidator;
 
 /**
  * PasswordsNotEmpty.java

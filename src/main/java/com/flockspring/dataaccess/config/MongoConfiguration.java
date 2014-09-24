@@ -31,9 +31,9 @@ public class MongoConfiguration
 {
 
     @Configuration  
-    @Profile("default")  
+    @Profile("prod")  
     @PropertySource("classpath:dataaccess.properties")  
-    static class Test  
+    static class Prod  
     {  
     }
     

@@ -12,6 +12,7 @@ import java.util.TreeSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.geo.GeoPage;
 import org.springframework.data.mongodb.core.geo.GeoResult;
 import org.springframework.stereotype.Component;
@@ -59,7 +60,9 @@ public class SearchResultsUIModelMapper
 
     public SearchResultsUIModel map(GeoPage<OrganizationImpl> geoPageResult, SearchFilterUICommand filterRequest, Locale locale, ApplicationUserImpl user)
     {
-        AddressImpl address = new AddressImpl("", "", "", "", "", "", new double[]{filterRequest.getPoint().getX(), filterRequest.getPoint().getY()});
+        Address address = new AddressImpl.AddressBuilder()
+                .withLocation(new double[]{filterRequest.getPoint().getY(), filterRequest.getPoint().getX()})
+                .build();
        
         return map(geoPageResult, address, filterRequest, locale, "", user);
     }

@@ -3,7 +3,6 @@
  */
 package com.flockspring.ui.controller;
 
-import java.util.Collections;
 import java.util.TreeSet;
 
 import javax.validation.Valid;
@@ -11,8 +10,8 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionKey;
 import org.springframework.social.connect.web.ProviderSignInUtils;
@@ -27,6 +26,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
 
 import com.flockspring.domain.DuplicateEmailException;
+import com.flockspring.domain.mapper.ApplicationUserBuilder;
 import com.flockspring.domain.service.user.UserService;
 import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.user.SocialMediaProvider;
@@ -34,9 +34,8 @@ import com.flockspring.domain.types.user.SocialMediaProviderConnectionRepository
 import com.flockspring.domain.types.user.UserRole;
 import com.flockspring.ui.IdentifiedPage;
 import com.flockspring.ui.mapper.user.UserUIModelBuilder;
-import com.flockspring.ui.model.user.UserRegistrationUICommand;
+import com.flockspring.ui.model.user.SignUpCommandObject;
 import com.google.common.base.Strings;
-import com.google.common.collect.Sets;
 
 /**
  * SignUpController.java
@@ -51,30 +50,32 @@ public class SignUpController extends IdentifiedPage
 {
     private static final String PAGE_ID = "signUp";
     
+    private final PasswordEncoder passwordEncoder;
     private final UserService userService;
     
     @Autowired
-    public SignUpController(final UserService service)
+    public SignUpController(final UserService service, final PasswordEncoder passwordEncoder)
     {
         this.userService = service;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
-    public String showUserRegistrationUICommand(WebRequest request, Model model)
+    public String renderSingupPage(WebRequest request, Model model)
     {
         boolean isModalRequest = Boolean.valueOf(Strings.nullToEmpty(request.getParameter("modal")));
         
         ProviderSignInUtils providerSignInUtils = new ProviderSignInUtils();
         Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
         
-        UserRegistrationUICommand registration = createRegistrationDTO(connection);
+        SignUpCommandObject registration = createRegistrationDTO(connection);
         model.addAttribute("user", registration);
         model.addAttribute("isModalRequest", isModalRequest);
         
         return "signupPage";
     }
 
-    private UserRegistrationUICommand createRegistrationDTO(Connection<?> connection)
+    private SignUpCommandObject createRegistrationDTO(Connection<?> connection)
     {
         UserUIModelBuilder userUIModelBuilder = new UserUIModelBuilder();
 
@@ -87,11 +88,11 @@ public class SignUpController extends IdentifiedPage
             userUIModelBuilder.withSocialSignInProvider(socialSigninProvider);
         }
 
-        return userUIModelBuilder.buildUserRegistrationUICommand();
+        return userUIModelBuilder.buildUserCommand();
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    public String registerUserAccount(@Valid @ModelAttribute("user") UserRegistrationUICommand userAccountData, BindingResult result,
+    public String registerUserAccount(@Valid @ModelAttribute("user") SignUpCommandObject userAccountData, BindingResult result,
             WebRequest request) throws DuplicateEmailException
     {
         if (result.hasErrors())
@@ -113,14 +114,16 @@ public class SignUpController extends IdentifiedPage
         return "redirect:/";
     }
 
-    private ApplicationUserImpl createUserAccount(UserRegistrationUICommand userAccountData, BindingResult result)
+    private ApplicationUserImpl createUserAccount(SignUpCommandObject userAccountData, BindingResult result)
     {
         TreeSet<SocialMediaProvider> socialSignInProviders = new TreeSet<SocialMediaProvider>();
         socialSignInProviders.add(userAccountData.getSignInProvider());
+        String encodedPassword = passwordEncoder.encode(userAccountData.getPassword());
         
-        ApplicationUserImpl applicationUser = new ApplicationUserImpl("", userAccountData.getEmail(), userAccountData.getPassword(), 
-                Collections.<GrantedAuthority>emptySet(), userAccountData.getEmail(), userAccountData.getFirstName(), userAccountData.getLastName(), 
-                socialSignInProviders, UserRole.ROLE_USER, null);
+        ApplicationUserImpl applicationUser = new ApplicationUserBuilder().map(userAccountData)
+        		.withUserRole(UserRole.ROLE_USER)
+        		.withPassword(encodedPassword)
+        		.build(); 
 
         try
         {
