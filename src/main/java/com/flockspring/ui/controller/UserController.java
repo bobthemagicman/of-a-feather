@@ -21,7 +21,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -116,7 +115,7 @@ public class UserController extends IdentifiedPage
     }
     
     @RequestMapping(value = "/async/savePreferences", method=RequestMethod.POST)
-    public @ResponseBody AsyncUserPreferencesResponse saveUserPreferences(@Valid @ModelAttribute("user") SignUpCommandObject userPreferences, BindingResult result,
+    public @ResponseBody AsyncUserPreferencesResponse saveUserPreferences(@Valid @ModelAttribute("user") ProfileCommandObject userPreferences, BindingResult result,
             WebRequest request, @AuthenticationPrincipal ApplicationUserImpl principleUser)
     {
     	if (result.hasErrors())
@@ -158,7 +157,9 @@ public class UserController extends IdentifiedPage
     		return new AsyncUserPreferencesResponse("Successfully updated user password");
     	}
     	
-    	result.addError(ValidationUtils.);
+    	//result.addError(ValidationUtils.);
+    	//TODO: jubritain
+    	return new AsyncUserPreferencesResponse("shit failed dog");
     }
     
     private boolean verifyOriginalPasswordMatches(String originalPassword, ApplicationUserImpl principleUser)

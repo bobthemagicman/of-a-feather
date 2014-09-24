@@ -29,7 +29,6 @@ public class UserUIModelBuilder
     private String displayImageUrl;
     private String displayName;
     private SocialMediaProvider socialSigninProvider;
-	private OrganizationFilter userPreferredSearch;
 
     public UserUIModelBuilder withFacebookProfile(FacebookProfile profile)
     {
@@ -136,9 +135,6 @@ public class UserUIModelBuilder
         command.setFirstName(firstName);
         command.setLastName(lastName);
         command.setSignInProvider(socialSigninProvider);
-        command.setDisplayImageUrl(displayImageUrl);
-        command.setDisplayName(displayName);
-        command.setUserPreferredSearch(userPreferredSearch);
         
         return command;
     }

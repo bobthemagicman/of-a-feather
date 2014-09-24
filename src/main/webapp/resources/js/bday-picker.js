@@ -33,7 +33,7 @@
       "defaultDate"   : false,
       "fieldName"     : "birthDate",
       "fieldId"       : "profileBirthDate",
-      "hiddenDate"    : true,
+      "hiddenDate"    : false,
       "onChange"      : null,
       "tabindex"      : null
     };

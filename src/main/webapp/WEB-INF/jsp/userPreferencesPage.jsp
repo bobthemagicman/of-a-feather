@@ -83,7 +83,7 @@
                             <div class="form-group">
                                 <label for="profileDOB" class="col-sm-3 control-label">Birth Date</label>
                                 <div id="birthdateSelection" class="col-sm-8">
-                                    
+                                    <form:input path="birthDate" type="hidden" id="profileBirthDate" value="${userCommand.birthDate}" />
                                 </div>
                             </div> 
                             <div class="form-group">
