@@ -134,9 +134,14 @@ public class UserController extends IdentifiedPage
     			.map(userPreferences)
     			.build();
     	
-		userService.saveUser(user);
+    	if(!user.equals(principleUser))
+    	{
+    		userService.saveUser(user);
     	
-    	return new AsyncUserPreferencesResponse("Successfully saved user preferences");
+    		return new AsyncUserPreferencesResponse("Successfully saved user preferences");
+    	}
+    	
+    	return new AsyncUserPreferencesResponse("Request processed successfully, no changes made to User Preferences");
     }
     
     @RequestMapping(value = "/async/updatePassword", method=RequestMethod.POST)

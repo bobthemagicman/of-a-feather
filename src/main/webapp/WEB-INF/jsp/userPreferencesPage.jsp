@@ -15,7 +15,6 @@
         
         <script type="text/javascript">
             $LAB.queueScript("${preferencesJS}")
-                    .queueScript("https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&callback=initializeMap")
                     .queueScript("${geoCompletePlugin}")
                     .queueScript("${jqueryForm}")
                     .queueScript("${bdayPickerJS}")
@@ -88,7 +87,7 @@
                             </div> 
                             <div class="form-group">
                                 <div class="col-sm-offset-3 col-sm-8">
-                                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    <button type="submit" class="btn btn-primary disabled">Save Changes</button>
                                 </div>
                             </div>
                         </form:form>

@@ -21,16 +21,24 @@
 
   $.fn.birthdaypicker = function( options ) {
 
+	var hiddenBdayField = $("#profileBirthDate");
+	var defaultDate = false;
+	var placeHolder = true;
+	if(hiddenBdayField)
+	{
+		defaultDate = hiddenBdayField.val();
+		placeHolder = false;
+	}
     var settings = {
-      "maxAge"        : 120,
+      "maxAge"        : 90,
       "minAge"        : 0,
       "futureDates"   : false,
       "maxYear"       : todayYear,
       "dateFormat"    : "middleEndian",
       "monthFormat"   : "short",
-      "placeholder"   : true,
+      "placeholder"   : placeHolder,
       "legend"        : "",
-      "defaultDate"   : false,
+      "defaultDate"   : defaultDate,
       "fieldName"     : "birthDate",
       "fieldId"       : "profileBirthDate",
       "hiddenDate"    : false,
@@ -43,7 +51,7 @@
       if (options) { $.extend(settings, options); }
 
       // Create the html picker skeleton
-      var $fieldset = $("<div></div>"),
+      var $fieldset = $("#birthdateSelection"),
           $year = $("<select class='form-control birth-year' name='birth[year]'></select>"),
           $month = $("<select class='form-control birth-month' name='birth[month]'></select>"),
           $day = $("<select class='form-control birth-day' name='birth[day]'></select>");
@@ -81,17 +89,6 @@
         $("<option value='0'>Year</option>").appendTo($year);
         $("<option value='0'>Month</option>").appendTo($month);
         $("<option value='0'>Day</option>").appendTo($day);
-      }
-
-      var hiddenDate;
-      if (settings["defaultDate"]) {
-        var defDate = new Date(settings["defaultDate"] + "T00:00:00"),
-        defYear = defDate.getFullYear(),
-        defMonth = defDate.getMonth() + 1,
-        defDay = defDate.getDate();
-        if (defMonth<10) defMonth="0"+defMonth;
-        if (defDay<10) defDay="0"+defDay;
-        hiddenDate = defYear + "-" + defMonth + "-" + defDay;
       }
 
       // Create the hidden date markup
