@@ -3,8 +3,6 @@
  */
 package com.flockspring.ui.interceptor;
 
-import static com.flockspring.ui.IdentifiedPage.PAGE_ID_MAP_KEY;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -19,8 +17,6 @@ import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.user.SocialMediaProvider;
 import com.flockspring.ui.config.ConfigUtils;
 import com.flockspring.ui.mapper.user.UserUIModelBuilder;
-import com.flockspring.ui.model.user.HeaderUIModel;
-import com.flockspring.ui.model.user.SignUpCommandObject;
 
 /**
  * HeaderHandlerInterceptor.java
@@ -53,12 +49,6 @@ public class HeaderHandlerInterceptor extends HandlerInterceptorAdapter implemen
     	
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Object obj = auth.getPrincipal();
-        String pageId = (mv.getModel().containsKey(PAGE_ID_MAP_KEY) ? (String) mv.getModel().get(PAGE_ID_MAP_KEY) : "");
-        
-        if((obj == null || (obj.equals("anonymousUser"))) && (pageId != null && !pageId.equals("signUp")))
-        {
-            setupHeaderForms(mv, request);
-        }
         
         if(obj !=null && obj instanceof ApplicationUserImpl)
         {
@@ -77,13 +67,6 @@ public class HeaderHandlerInterceptor extends HandlerInterceptorAdapter implemen
         createUserModelForHeader(user, modelAndView);
     }
 
-    private void setupHeaderForms(ModelAndView modelAndView, HttpServletRequest request)
-    {
-        SignUpCommandObject registration = new SignUpCommandObject();
-        modelAndView.addObject("user", registration);
-        
-    }
-    
     private void createUserModelForHeader(ApplicationUserImpl user, ModelAndView modelAndView)
     {
     	UserUIModelBuilder userUIModelBuilder = null;

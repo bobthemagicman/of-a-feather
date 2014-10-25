@@ -35,8 +35,6 @@ public @interface PasswordsNotEmpty {
 
     Class<? extends Payload>[] payload() default {};
 
-    String triggerFieldName() default "";
-
     String passwordFieldName() default "";
 
     String passwordVerificationFieldName() default "";

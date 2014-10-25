@@ -33,8 +33,6 @@ public @interface PasswordNotEqualToOldPassword
 
 	Class<? extends Payload>[] payload() default {};
 
-	String triggerFieldName() default "";
-
 	String passwordFieldName() default "";
 
 	String originalPasswordFieldName() default "";

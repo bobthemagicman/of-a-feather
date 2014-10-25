@@ -15,11 +15,16 @@ import javax.validation.Valid;
 
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -45,7 +50,7 @@ import com.flockspring.ui.model.AsyncUserFavoriteResponse;
 import com.flockspring.ui.model.AsyncUserPreferencesResponse;
 import com.flockspring.ui.model.ChurchListingUIModel;
 import com.flockspring.ui.model.async.AsyncStatus;
-import com.flockspring.ui.model.user.PasswordChangeCommandObject;
+import com.flockspring.ui.model.user.PasswordChangeSocialCommandObject;
 import com.flockspring.ui.model.user.ProfileCommandObject;
 import com.flockspring.ui.model.user.SearchCriteriaCommandObject;
 import com.flockspring.ui.model.user.SignUpCommandObject;
@@ -108,7 +113,7 @@ public class UserController extends IdentifiedPage
     	SearchCriteriaCommandObject searchCriteriaCommandObject = new SearchCriteriaCommandObject(principleUser.getOrganizationFilter());
     	model.addAttribute("searchCriteriaCommandObject", searchCriteriaCommandObject);
     	
-    	PasswordChangeCommandObject passwordChangeCommandObject = new PasswordChangeCommandObject();
+    	PasswordChangeSocialCommandObject passwordChangeCommandObject = new PasswordChangeSocialCommandObject(principleUser);
     	model.addAttribute("passwordChangeCommandObject", passwordChangeCommandObject);
         
         return "userPreferencesPage";
@@ -137,6 +142,9 @@ public class UserController extends IdentifiedPage
     	if(!user.equals(principleUser))
     	{
     		userService.saveUser(user);
+    		
+    		Authentication authentication = new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
     	
     		return new AsyncUserPreferencesResponse("Successfully saved user preferences");
     	}
@@ -145,26 +153,25 @@ public class UserController extends IdentifiedPage
     }
     
     @RequestMapping(value = "/async/updatePassword", method=RequestMethod.POST)
-    public @ResponseBody AsyncUserPreferencesResponse updatePassword(@Valid @ModelAttribute("user") PasswordChangeCommandObject passwordChange, BindingResult result,
+    public @ResponseBody AsyncUserPreferencesResponse updatePassword(@Valid @ModelAttribute("user") PasswordChangeSocialCommandObject passwordChange, BindingResult result,
             WebRequest request, @AuthenticationPrincipal ApplicationUserImpl principleUser)
     {
-    	if(verifyOriginalPasswordMatches(passwordChange.getOriginalPassword(), principleUser))
+    	if(!BCrypt.checkpw(passwordChange.getOriginalPassword(), principleUser.getPassword()))
     	{
-    		String encodedPassword = passwordEncoder.encode(passwordChange.getPassword());
-    		
-    		ApplicationUserImpl user = new ApplicationUserBuilder()
-    				.map(principleUser)
-    				.withPassword(encodedPassword)
-    				.build();
-    		
-    		userService.saveUser(user);
-    		
-    		return new AsyncUserPreferencesResponse("Successfully updated user password");
+    		result.addError(new FieldError("passwordChangeCommandObject", "originalPassword", "Current password was incorrect"));
+    		return new AsyncUserPreferencesResponse("Nope Nope Nope");
     	}
     	
-    	//result.addError(ValidationUtils.);
-    	//TODO: jubritain
-    	return new AsyncUserPreferencesResponse("shit failed dog");
+    	String encodedPassword = passwordEncoder.encode(passwordChange.getPassword());
+    		
+		ApplicationUserImpl user = new ApplicationUserBuilder()
+				.map(principleUser)
+				.withPassword(encodedPassword)
+				.build();
+		
+		userService.saveUser(user);
+		
+		return new AsyncUserPreferencesResponse("Successfully updated user password");
     }
     
     private boolean verifyOriginalPasswordMatches(String originalPassword, ApplicationUserImpl principleUser)

@@ -68,8 +68,8 @@ public class SignUpController extends IdentifiedPage
         ProviderSignInUtils providerSignInUtils = new ProviderSignInUtils();
         Connection<?> connection = providerSignInUtils.getConnectionFromSession(request);
         
-        SignUpCommandObject registration = createRegistrationDTO(connection);
-        model.addAttribute("user", registration);
+        SignUpCommandObject signUpCommand = createRegistrationDTO(connection);
+        model.addAttribute("signUpCommand", signUpCommand);
         model.addAttribute("isModalRequest", isModalRequest);
         
         return "signupPage";

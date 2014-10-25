@@ -21,7 +21,6 @@
      <script type="text/javascript">
          $LAB.queueScript("https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false&callback=initAutoComplete")
              .queueScript("${geoCompletePlugin}")        
-             .queueScript("${registerJS}")
              .runQueue();
          
      </script>
@@ -45,18 +44,18 @@
 	            </div>
 	            <div id="sign-up-modal-body" class="modal-body">
 	                <div class="social-container">
-	                   <c:if test="${not user.socialSignIn}">
+	                   <c:if test="${not signUpCommand.socialSignIn}">
 	                   <a href="<c:url value="/auth/facebook"/>" data-toggle="modal" data-target="#socialSignInModal"><button class="btn btn-block btn-xlarge btn-facebook register"><i class="fa fa-facebook"></i> | Connect with Facebook</button></a>
-	                   <a href="<c:url value="/auth/twitter"/>"><button class="btn btn-block btn-xlarge btn-twitter register"><i class="fa fa-twitter"></i> | Connect with Twitter</button></a>
+	                   
 	                   </c:if>
 	                   
 	                   <spring:url value="/signup" var="actionURL"/>
 	                   
-	                   <c:if test="${user.socialSignIn}">
+	                   <c:if test="${signUpCommand.socialSignIn}">
 	                   <div class="social-user-identification">
-	                       <img src="${user.displayImageUrl}"><h3>${user.firstName} ${user.lastName}</h3>
+	                       <img src="${signUpCommand.displayImageUrl}"><h3>${signUpCommand.firstName} ${signUpCommand.lastName}</h3>
 	                   </div>
-                       <form:form action="${actionURL}" commandName="user" method="POST" enctype="utf8" role="form" class="sign-up-form" data-action="Signup" >    
+                       <form:form action="${actionURL}" commandName="signUpCommand" method="POST" enctype="utf8" role="form" class="sign-up-form" data-action="Signup" >    
 		                    <form:hidden path="signInProvider"/>
                             <input type="hidden" path="${_csrf.parameterName}" value="${_csrf.token}" >
 	                        
@@ -75,12 +74,12 @@
 	                            <form:errors id="error-passwordVerification" path="passwordVerification" cssClass="help-block"/>
 	                        </div>
                         
-	                       <button type="submit" class="btn btn-primary btn-block">Finish ${user.signInProvider.providerDisplayName} Signup</button>
+	                       <button type="submit" class="btn btn-primary btn-block">Finish ${signUpCommand.signInProvider.providerDisplayName} Signup</button>
 	                    </form:form>
 	                    </c:if>
 	                </div>
 	                
-	                <c:if test="${not user.socialSignIn}">
+	                <c:if test="${not signUpCommand.socialSignIn}">
 	                <div class="or-separator">
 	                    <h6 class="separator-text">or</h6>
 	                    <hr>
@@ -89,7 +88,7 @@
 	                <button class="btn btn-block btn-xlarge email-sign-up">Sign up with Email</button>
                     </c:if>
                     
-                   <form:form action="${actionURL}" commandName="user" method="POST" enctype="utf8" role="form" class="sign-up-form" data-action="Signup" >
+                   <form:form action="${actionURL}" commandName="signUpCommand" method="POST" enctype="utf8" role="form" class="sign-up-form" data-action="Signup" >
                     
 	                    <input type="hidden" path="${_csrf.parameterName}" value="${_csrf.token}" >
 	                    

@@ -135,6 +135,7 @@ public class UserUIModelBuilder
         command.setFirstName(firstName);
         command.setLastName(lastName);
         command.setSignInProvider(socialSigninProvider);
+        command.setDisplayImageUrl(displayImageUrl);
         
         return command;
     }
