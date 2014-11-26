@@ -3,24 +3,31 @@
  */
 package com.flockspring.ui.controller;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
+import org.springframework.data.mongodb.core.geo.Metrics;
+import org.springframework.data.mongodb.core.geo.Point;
 import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import com.flockspring.domain.OrganizationFilter;
+import com.flockspring.domain.service.GeoLocationService;
 import com.flockspring.domain.service.OrganizationDiscoveryService;
+import com.flockspring.domain.types.Address;
+import com.flockspring.domain.types.Affiliation;
 import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.ui.IdentifiedPage;
@@ -28,7 +35,7 @@ import com.flockspring.ui.exception.PageNotFoundException;
 import com.flockspring.ui.mapper.OrganizationUIModelMapper;
 
 @Controller
-@RequestMapping("/churches")
+@RequestMapping("/church-profile")
 public class ProfilePageController extends IdentifiedPage
 {
     private static final String VIEW_NAME = "profilePage";
@@ -36,60 +43,102 @@ public class ProfilePageController extends IdentifiedPage
 
     private final OrganizationDiscoveryService organizationDiscoveryService;
     private final OrganizationUIModelMapper organizationUIModelMapper;
-
+    private final GeoLocationService geoLocationService;
+    
     @Autowired
-    public ProfilePageController(final OrganizationDiscoveryService organizationDiscoveryService, OrganizationUIModelMapper organizationUIModelMapper)
+    public ProfilePageController(final OrganizationDiscoveryService organizationDiscoveryService, final OrganizationUIModelMapper organizationUIModelMapper,
+    		final GeoLocationService geoLocationService)
     {
         super();
 
         this.organizationUIModelMapper = organizationUIModelMapper;
         this.organizationDiscoveryService = organizationDiscoveryService;
+        this.geoLocationService = geoLocationService;
     }
-
-    @RequestMapping("/{statRegionName}/{cityRegionName}/{neighborhoodRegionName}/{organizationName}")
-    public ModelAndView renderOrganizationProfileByName(@PathVariable String organizationName, @PathVariable String stateRegionName,
-            @PathVariable String cityRegionName, @PathVariable String neighborhoodRegionName, HttpSession session,
-            HttpServletRequest request)
+    
+    // organization name based SEO url or region and denomination based SEO url
+    @RequestMapping({"/{cityRegionName}-{stateAbrevRegionName}/{denomination}/{organizationName}", "/{cityRegionName}-{stateAbrevRegionName}/{organizationName}"})
+    public ModelAndView renderOrganizationProfileByRegionAndName(final @PathVariable String cityName, final @PathVariable String stateAbrev,  
+    		final @PathVariable String organizationName, final @AuthenticationPrincipal ApplicationUserImpl user, final @Valid @PathVariable Affiliation denomination,
+            final HttpSession session, HttpServletRequest request)
     {
+
+    	final Address address = geoLocationService.getAddressFromQuery(new StringBuilder(cityName).append(", ").append(stateAbrev).toString());
+    	
+    	Organization organization = organizationDiscoveryService.getOrganization(address, organizationName);
         
-        return null;
+    	if(organization == null)
+    	{
+    		throw new PageNotFoundException("page.not.found.exception.no.such.organization");
+    	}
+    	
+    	validateOrganizationDenomination(organization, denomination);
+    	
+    	String urlCriteria = String.format("organization with name: %1, in %2 %3", organizationName, cityName, stateAbrev);
+        
+        SiteSearchHelper searchHelper = new SiteSearchHelper(session);
+        OrganizationFilter organizationFilter = searchHelper.getOrganizationFilterFromSession();
+        
+        double dist = getDistanceFromQuery(organization.getAddress(), organizationFilter.getSearchPoint());
+        		
+        return buildModelAndView(organization, dist, session, request.getLocale(), user, urlCriteria); 
     }
 
-    @RequestMapping("/{stateRegionName}/{cityRegionName}/{organizationName}")
-    public ModelAndView renderOrganizationProfileByName(@PathVariable String organizationName, @PathVariable String stateRegionName,
-            @PathVariable String cityRegionName)
+    private void validateOrganizationDenomination(final Organization organization, final Affiliation denomination)
     {
-        
-        return null;
+    	if("".equals(denomination) || denomination == null)
+    	{
+    		return ;
+    	}
+    	
+    	Affiliation organizationAffiliation = organization.getDenomination();
+    	boolean isChildAffiliation = Arrays.asList(organizationAffiliation.getChildAffiliations()).contains(organizationAffiliation);
+	  
+    	if(denomination != organizationAffiliation && !isChildAffiliation)
+    	{
+		   // Log this failure, something is trying to access a church by the correct name and wrong denomination.
+    		throw new PageNotFoundException("page.not.found.exception.no.such.organization");
+    	}
     }
 
+	@Deprecated
     @RequestMapping("/{organizationId}")
-    public ModelAndView renderOrganizationProfileById(@AuthenticationPrincipal ApplicationUserImpl user,
-            @PathVariable String organizationId, @RequestParam(value = "dist", required = false) String distance, 
-            HttpSession session, HttpServletRequest request)
+    public String renderOrganizationProfileById(@AuthenticationPrincipal ApplicationUserImpl user,
+            @PathVariable String organizationId, HttpSession session, HttpServletRequest request, HttpServletResponse response)
     {
-        double dist = -1;
-        if(StringUtils.hasText(distance))
-        {
-            try
-            {
-                dist = Double.parseDouble(distance);
-            }catch(NumberFormatException nfe)
-            {
-                //log invalid distance here
-            }
-        }
-        
-        // TODO: sanitize organizationId
-        Organization organization = organizationDiscoveryService.getOrganizationById(organizationId);
-
-        throwExceptionIfOrganizationIsNull(organization, organizationId);
-
-        return buildModelAndView(organization, dist, session, request.getLocale(), user); 
+		Organization organization = organizationDiscoveryService.getOrganization(organizationId);
+		
+		if(organization == null)
+		{
+			// log here, someone tried to access a church via id and it wasn't found
+			throw new PageNotFoundException("page.not.found.no.organization.found.for.id");
+		}
+		
+		String canonicalUrl = new StringBuilder(request.getContextPath())
+				.append("/church-profile/")
+				.append(organization.getAddress().getCity()).append("-")
+				.append(organization.getAddress().getState().toUpperCase())
+				.append("/")
+				.append(getOrganizationNameForUrl(organization.getName()))
+				.toString().toLowerCase();
+		
+        return "redirect: " + UriComponentsBuilder.fromPath(canonicalUrl);
     }
 
-    private ModelAndView buildModelAndView(Organization organization, double distance, HttpSession session, Locale locale, ApplicationUserImpl user)
+    private String getOrganizationNameForUrl(String name)
     {
+	    String preparedName = name.replaceAll(" ", "_");
+	    preparedName = preparedName.replaceAll("'", "");
+	    preparedName = preparedName.replaceAll("&", "and");
+	    
+	    return preparedName;
+    }
+
+	private ModelAndView buildModelAndView(final Organization organization, final double distance, final HttpSession session, 
+    		final  Locale locale, final ApplicationUserImpl user, final String urlCriteria)
+    {
+    	throwExceptionIfOrganizationIsNull(organization, urlCriteria);
+    	
         SiteSearchHelper searchHelper = new SiteSearchHelper(session);
         
         Map<String, Object> model = new HashMap<>();
@@ -100,13 +149,50 @@ public class ProfilePageController extends IdentifiedPage
         return new ModelAndView(VIEW_NAME, model);
     }
 
-    private void throwExceptionIfOrganizationIsNull(Organization organization, String id)
+    private void throwExceptionIfOrganizationIsNull(Organization organization, String urlCriteria)
     {
         if (organization == null)
         {
-            throw new PageNotFoundException("Unable to find profile for organization with organizationId: " + id);
+            throw new PageNotFoundException("Unable to find profile for " + urlCriteria);
         }
     }
+    
+	private double getDistanceFromQuery(Address organizationAddress, Point queryPoint)
+	{
+		//TODO: fix for internationalization
+		Metrics unit = Metrics.MILES;
+		
+		double orgLong = organizationAddress.getLongitude();
+		double queryLong = queryPoint.getY();
+		
+		double orgLat = organizationAddress.getLatitude();
+		double queryLat = queryPoint.getX();
+		
+		double theta = orgLong - queryLong;
+		double dist = Math.sin(deg2rad(orgLat)) * Math.sin(deg2rad(queryLat))
+		        + Math.cos(deg2rad(orgLat)) * Math.cos(deg2rad(queryLat))
+		        * Math.cos(deg2rad(theta));
+		dist = Math.acos(dist);
+		dist = rad2deg(dist);
+		dist = dist * 60 * 1.1515;
+		
+		if (unit == Metrics.KILOMETERS)
+		{
+			dist = dist * 1.609344;
+		} 
+		
+		return (dist);
+	}
+
+	private double deg2rad(double deg)
+	{
+		return (deg * Math.PI / 180.0);
+	}
+
+	private double rad2deg(double rad)
+	{
+		return (rad * 180.0 / Math.PI);
+	}
 
     @Override
     protected String getPageId()

@@ -27,7 +27,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.flockspring.domain.NoGeoLocationResultsException;
 import com.flockspring.domain.OrganizationFilter;
+import com.flockspring.domain.service.GeoLocationService;
 import com.flockspring.domain.service.OrganizationDiscoveryService;
 import com.flockspring.domain.service.user.UserService;
 import com.flockspring.domain.types.AccessibilitySupport;
@@ -37,7 +39,6 @@ import com.flockspring.domain.types.Category;
 import com.flockspring.domain.types.Language;
 import com.flockspring.domain.types.Programs;
 import com.flockspring.domain.types.ServiceDay;
-import com.flockspring.domain.types.impl.AddressImpl;
 import com.flockspring.domain.types.impl.ApplicationUserImpl;
 import com.flockspring.domain.types.impl.OrganizationImpl;
 import com.flockspring.domain.types.impl.UpdateEmailImpl;
@@ -51,13 +52,6 @@ import com.flockspring.ui.model.CongregationSize;
 import com.flockspring.ui.model.SearchFilterUICommand;
 import com.flockspring.ui.model.SearchResultsUIModel;
 import com.flockspring.ui.model.ServiceTimeRange;
-import com.google.code.geocoder.Geocoder;
-import com.google.code.geocoder.GeocoderRequestBuilder;
-import com.google.code.geocoder.model.GeocodeResponse;
-import com.google.code.geocoder.model.GeocoderAddressComponent;
-import com.google.code.geocoder.model.GeocoderRequest;
-import com.google.code.geocoder.model.GeocoderResult;
-import com.google.code.geocoder.model.LatLng;
 import com.google.common.base.Strings;
 
 /**
@@ -72,8 +66,6 @@ import com.google.common.base.Strings;
 public class SearchPageController extends IdentifiedPage
 {
     private static final String USER_KEY = "userKey";
-    private static final String LOCALITY = "locality";
-    private static final String POSTAL_CODE = "postal_code";
     private static final String VIEW_NAME = "searchResultsPage";
     private static final String ERROR_STATE_BAD_REGION = "user_search_out_of_region";
     private static final String ERROR_STATE_BAD_INPUT = "user_input_error";
@@ -84,6 +76,7 @@ public class SearchPageController extends IdentifiedPage
     private final OrganizationFilterMapper organizationFilterMapper;
     private final SearchFilterUIModelMapper searchFilterUIModelMapper;
     private final UserService userService;
+    private final GeoLocationService geoLocationService;
     
     @Value("#{'${search.allowedZipCodes}'.split(',')}")
     private List<Integer> allowedZipCodeList;
@@ -94,7 +87,8 @@ public class SearchPageController extends IdentifiedPage
     @Autowired
     public SearchPageController(final OrganizationDiscoveryService organizationDiscoveryService,
             final SearchResultsUIModelMapper searchResultsModelMapper, final OrganizationFilterMapper organizationFilterMapper,
-            final SearchFilterUIModelMapper searchFilterUIModelMapper, final UserService userService)
+            final SearchFilterUIModelMapper searchFilterUIModelMapper, final UserService userService,
+            final GeoLocationService geoLocationService)
     {
         super();
 
@@ -103,6 +97,7 @@ public class SearchPageController extends IdentifiedPage
         this.organizationFilterMapper = organizationFilterMapper;
         this.searchFilterUIModelMapper = searchFilterUIModelMapper;
         this.userService = userService;
+        this.geoLocationService = geoLocationService;
     }
 
     @RequestMapping("")
@@ -139,14 +134,15 @@ public class SearchPageController extends IdentifiedPage
         String uuid = searchHelper.createAndSaveUUIDIfNoneExists();
         model.put(USER_KEY, uuid);
         
-        final Geocoder geocoder = new Geocoder();
-        GeocoderRequest geocoderRequest = new GeocoderRequestBuilder().setAddress(query).setLanguage("en").getGeocoderRequest();
-        GeocodeResponse geocoderResponse = geocoder.geocode(geocoderRequest);
-
-        List<GeocoderResult> googleResults = geocoderResponse.getResults();
-        if (googleResults.size() < 1)
+        Address address;
+        
+        try
         {
-            // return error state to search results page asking user to select
+        	address = geoLocationService.getAddressFromQuery(query);
+        }
+        catch(NoGeoLocationResultsException nglre)
+        {
+        	// return error state to search results page asking user to select
             // address
             
             //Store google call in session/cache to prevent additional call
@@ -157,20 +153,16 @@ public class SearchPageController extends IdentifiedPage
             return buildSearchModelAndView(model);
         }
 
-        //There can only be one result in the results list here 
-        GeocoderResult resolvedResult = googleResults.get(0);
-        if (resolvedResult == null || !queryInAllowedRegion(resolvedResult))
+        if (address == null || !queryInAllowedRegion(address))
         {
             model.put("error", ERROR_STATE_BAD_REGION);
             model.put("results", new SearchResultsUIModel(null, 0, 0L, 0, 0, 37.7749295, -122.4194155, query, 0));
             
-            String resolvedSearchTerm = getCityForSearchTerm(resolvedResult);
+            String resolvedSearchTerm = address != null ? address.getCity() : query;
             model.put("errorSearchTerm", StringUtils.hasText(resolvedSearchTerm) ? resolvedSearchTerm : query);
             
             return buildSearchModelAndView(model);
         }
-
-        Address address = mapGoogleResultToAddress(resolvedResult);
 
         GeoPage<OrganizationImpl> geoPageResult;
         if(organizationFilter == null || Strings.isNullOrEmpty(organizationFilter.getUserQuery()) ||
@@ -221,11 +213,6 @@ public class SearchPageController extends IdentifiedPage
         
     }
 
-    private String getCityForSearchTerm(GeocoderResult resolvedResult)
-    {
-        return Strings.emptyToNull(findGeometryComponentFromResult(resolvedResult, LOCALITY));
-    }
-
     private ModelAndView buildSearchModelAndView(Map<String, Object> model)
     {
         // Enum values for filters
@@ -243,71 +230,10 @@ public class SearchPageController extends IdentifiedPage
         return new ModelAndView(VIEW_NAME, model);
     }
 
-    private Address mapGoogleResultToAddress(GeocoderResult geocoderResult)
+    private boolean queryInAllowedRegion(Address address)
     {
-        String streetNumber = "", route = "", postalCode = "", state = "", city = "", country = "";
-
-        for (GeocoderAddressComponent component : geocoderResult.getAddressComponents())
-        {
-            switch (component.getTypes().get(0))
-            {
-                case POSTAL_CODE:
-                    postalCode = component.getShortName();
-                    break;
-
-                case "country":
-                    country = component.getShortName();
-                    break;
-
-                case "administrative_area_level_1":
-                    state = component.getShortName();
-                    break;
-
-                case LOCALITY:
-                    city = component.getShortName();
-                    break;
-
-                case "street_number":
-                    streetNumber = component.getShortName();
-                    break;
-
-                case "route":
-                    route = component.getShortName();
-                    break;
-            }
-        }
-
-        LatLng latLng = geocoderResult.getGeometry().getLocation();
-        double[] location = new double[]
-        {latLng.getLng().doubleValue(), latLng.getLat().doubleValue()};
-
-        return new AddressImpl.AddressBuilder()
-                .withStreet1(new StringBuilder(streetNumber).append(route).toString())
-                .withPostalCode(postalCode)
-                .withState(state)
-                .withCity(city)
-                .withCountry(country)
-                .withLocation(location)
-                .build();
-    }
-
-    private boolean queryInAllowedRegion(GeocoderResult result)
-    {
-            return this.allowedZipCodeList.contains(findGeometryComponentFromResult(result, POSTAL_CODE))
-                    || this.allowedCityList.contains(findGeometryComponentFromResult(result, LOCALITY));
-    }
-
-    private String findGeometryComponentFromResult(GeocoderResult result, String componentName)
-    {
-        for (GeocoderAddressComponent component : result.getAddressComponents())
-        {
-            if (component.getTypes().contains(componentName))
-            {
-                return component.getLongName();
-            }
-        }
-
-        return "";
+            return this.allowedZipCodeList.contains(address.getPostalCode())
+                    || this.allowedCityList.contains(address.getFullState());
     }
 
     private void addPagingInfoToModel(GeoPage<OrganizationImpl> geoPageResult, Map<String, Object> model)
