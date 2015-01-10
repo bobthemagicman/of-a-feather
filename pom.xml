@@ -29,6 +29,7 @@
 		<servlet.version>2.5</servlet.version>
 		<javax-el.version>2.2</javax-el.version>
 		<jaxb-impl.version>2.2.7</jaxb-impl.version>
+		<javax.validation.version>1.0.0.GA</javax.validation.version>
 
 		<!-- Database access -->
 		<mongo-java-driver.version>2.10.1</mongo-java-driver.version>
@@ -263,6 +264,11 @@
 
 		<!-- Javax Dependencies -->
 		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>${javax.validation.version}</version>
+		</dependency>
+		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>${jstl.version}</version>
@@ -420,15 +426,16 @@
 			</plugin>
 			<plugin>
 				<groupId>org.lesscss</groupId>
-				<artifactId>lesscss-maven-plugin</artifactId>
-				<version>1.3.3</version>
+			    <artifactId>lesscss-maven-plugin</artifactId>
+			    <version>1.7.0.1.1</version>
 				<configuration>
 					<sourceDirectory>${project.basedir}/src/main/resources/less</sourceDirectory>
-					<outputDirectory>${project.build.directory}/${build.finalName}/resources/css</outputDirectory>
+					<outputDirectory>${project.basedir}/src/main/webapp/resources/css</outputDirectory>
 					<compress>true</compress>
 					<includes>
 						<include>ofafeather.less</include>
 					</includes>
+					<force>true</force>
 				</configuration>
 				<executions>
 					<execution>
@@ -523,12 +530,12 @@
 					</execution>
 				</executions>
 				<configuration>
-					<!-- <port>8080</port> -->
-					<!-- <path>/</path> -->
-					<!-- <warSourceDirectory>${project.build.directory}/${build.finalName}</warSourceDirectory> -->
-					<!-- <systemProperties> -->
-					<!-- <spring.profiles.active>dev</spring.profiles.active> -->
-					<!-- </systemProperties> -->
+					<port>8080</port>
+					<path>/</path>
+<!-- 					<warSourceDirectory>${project.build.directory}/${build.finalName}</warSourceDirectory> -->
+					<systemProperties>
+					<spring.profiles.active>dev</spring.profiles.active>
+					</systemProperties>
 					<url>http://localhost:8080/manager/text/</url>
 					<server>TomcatServer</server>
 					<password>mavenDeployer</password>
