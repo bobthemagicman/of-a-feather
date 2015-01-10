@@ -233,7 +233,7 @@ public class SearchPageController extends IdentifiedPage
     private boolean queryInAllowedRegion(Address address)
     {
             return this.allowedZipCodeList.contains(address.getPostalCode())
-                    || this.allowedCityList.contains(address.getFullState());
+                    || this.allowedCityList.contains(address.getCity());
     }
 
     private void addPagingInfoToModel(GeoPage<OrganizationImpl> geoPageResult, Map<String, Object> model)
