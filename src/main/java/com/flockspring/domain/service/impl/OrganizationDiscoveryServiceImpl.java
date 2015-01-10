@@ -12,13 +12,12 @@ import org.springframework.data.mongodb.core.geo.Distance;
 import org.springframework.data.mongodb.core.geo.GeoPage;
 import org.springframework.data.mongodb.core.geo.Metrics;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.flockspring.dataaccess.mongodb.OrganizationRepository;
 import com.flockspring.domain.OrganizationFilter;
 import com.flockspring.domain.service.OrganizationDiscoveryService;
+import com.flockspring.domain.types.Address;
 import com.flockspring.domain.types.Organization;
-import com.flockspring.domain.types.Region;
 import com.flockspring.domain.types.impl.OrganizationImpl;
 import com.google.common.collect.Lists;
 
@@ -27,7 +26,6 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
 {
 
     private final OrganizationRepository organizationRepository;
-//    private final RegionRepository regionRepository;
     
     private final int defaultDistance;
     private final int defaultPageSize;
@@ -43,25 +41,10 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
         this.organizationRepository = organizationRepository;
         this.defaultDistance = defaultDistance;
         this.defaultPageSize = defaultPageSize;
-//        this.regionRepository = regionRepository;
     }
 
     @Override
-    public Organization getOrganizationByNameAndRegion(String name, Long regionId)
-    {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Region getRegionForOrganization(String organizationId)
-    {
-        OrganizationImpl organization = findOrganizationById(organizationId);
-        return null;//regionRepository.findByOrganizationInRegionOrganizations(organization);
-    }
-
-    @Override
-    public Organization getOrganizationById(String organizationId)
+    public Organization getOrganization(String organizationId)
     {
         return findOrganizationById(organizationId);
     }
@@ -69,25 +52,6 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
     private OrganizationImpl findOrganizationById(String organizationId)
     {
         return organizationRepository.findOne(organizationId);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public Organization getOrganizationByRegionAndOrganizationNames(String organizationName, String stateRegionName, String cityRegionName,
-            String neighborhoodRegionName)
-    {
-        String parentRegion = neighborhoodRegionName == null ? cityRegionName : neighborhoodRegionName;
-        organizationName = organizationName.replaceAll("-", "%");
-
-//        OrganizationImpl organization = organizationRepository.findByNameAndRegion(organizationName, parentRegion);
-
-        return null;
-    }
-
-    @Override
-    public Organization getOrganizationByRegionAndOrganizationNames(String organizationName, String stateRegionName, String cityRegionName)
-    {
-        return getOrganizationByRegionAndOrganizationNames(organizationName, stateRegionName, cityRegionName, null);
     }
 
     @Override
@@ -119,9 +83,30 @@ public class OrganizationDiscoveryServiceImpl implements OrganizationDiscoverySe
     @Override
     public GeoPage<OrganizationImpl> getFilteredOrganizations(OrganizationFilter filter, int pageNum, int dist)
     {
+    	//TODO:needs fixed for internationalization
         Distance d = new Distance(dist, Metrics.MILES);
         
         PageRequest page = new PageRequest(pageNum, defaultPageSize);
         return organizationRepository.findOrganizationsByFilteredCriteria(filter.getSearchPoint(), d, filter, page);
+    }
+
+	@Override
+    public List<Organization> getOrganizationsForRegion(Address address)
+    {
+	    String city = address.getCity();
+	    String state = address.getState();
+	    String country = address.getCountry();
+	    
+	    return organizationRepository.findByAddressCityAndAddressStateAndAddressCountry(city, state, country);
+    }
+
+	@Override
+    public Organization getOrganization(Address address, String organizationName)
+    {
+		String city = address.getCity();
+		String state = address.getState();
+		String country = address.getCountry();
+		
+	    return organizationRepository.findByAddressCityAndAddressStateAndAddressCountryAndName(city, state, country, organizationName);
     }
 }

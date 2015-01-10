@@ -81,8 +81,8 @@ public class ProfilePageControllerTests extends IdentifiedPageTests {
     }
  
     @Test
-    public void testRenderProfilePage() throws Exception {
-        when(organizationDiscoveryService.getOrganizationById(anyString())).thenReturn(organization);
+    public void testRenderOrganizationByProfileIdRedirectsToCanonical() throws Exception {
+        when(organizationDiscoveryService.getOrganization(anyString())).thenReturn(organization);
         when(organizationUIModelMapper.map(any(Organization.class), anyDouble(), any(Locale.class), any(ApplicationUserImpl.class))).thenReturn(organizationModel);
         
         mockMvc.perform(get("/churches/" + ORGANIZATION_ID))
@@ -93,14 +93,24 @@ public class ProfilePageControllerTests extends IdentifiedPageTests {
                 .andExpect(model().attribute("hasPreviousSearch", false))
                 .andExpect(model().attribute("searchQuery", ""));
  
-        verify(organizationDiscoveryService, times(1)).getOrganizationById(ORGANIZATION_ID);
+        verify(organizationDiscoveryService, times(1)).getOrganization(ORGANIZATION_ID);
         verifyNoMoreInteractions(organizationDiscoveryService);
     }
 
+    @Test
+    public void testRenderOrganizationByRegionAndNameNoDenomination() throws Exception {
+    	
+    }
+    
+    @Test
+    public void testRenderOrganizationByRegionAndNameAndDenomination() throws Exception {
+    	
+    }
+    
     @Override
     public void testPageIsIdentified() throws Exception
     {
-		when(organizationDiscoveryService.getOrganizationById(anyString())).thenReturn(organization);
+		when(organizationDiscoveryService.getOrganization(anyString())).thenReturn(organization);
 		when(organizationUIModelMapper.map(any(Organization.class), anyDouble(), any(Locale.class), any(ApplicationUserImpl.class))).thenReturn(organizationModel);
 		
 		mockMvc.perform(get("/churches/" + ORGANIZATION_ID))

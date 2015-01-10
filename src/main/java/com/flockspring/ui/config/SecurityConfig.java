@@ -62,9 +62,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
                                 "/addYourChurch",
                                 "/search",
                                 "/contact",
-                                "/churches/**",
+                                "/church-profile/**",
                                 "/search/async/filter-results",
-                                "/search/async/out-of-region-search"
+                                "/search/async/out-of-region-search",
+                                "/**-churches",
+                                "/**/**-churches",
+                                "/**/"
                         ).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/user/async/favorite/*", "PUT")).hasRole("USER")
                         .requestMatchers(new AntPathRequestMatcher("/user/async/favorite/*", "DELETE")).hasRole("USER")

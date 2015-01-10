@@ -8,8 +8,8 @@ import java.util.List;
 import org.springframework.data.mongodb.core.geo.GeoPage;
 
 import com.flockspring.domain.OrganizationFilter;
+import com.flockspring.domain.types.Address;
 import com.flockspring.domain.types.Organization;
-import com.flockspring.domain.types.Region;
 import com.flockspring.domain.types.impl.OrganizationImpl;
 
 /**
@@ -21,22 +21,17 @@ import com.flockspring.domain.types.impl.OrganizationImpl;
  */
 public interface OrganizationDiscoveryService {
 
-    Organization getOrganizationByNameAndRegion(String name, Long regionId);
+    GeoPage<OrganizationImpl> getFilteredOrganizations(final OrganizationFilter filterRequest, final int page);
+    
+    GeoPage<OrganizationImpl> getFilteredOrganizations(final OrganizationFilter filterRequest, final int page, final int dist);
 
-    Region getRegionForOrganization(String OrganizationId);
+    void saveOrganization(final OrganizationImpl organization);
     
-    Organization getOrganizationById(String OrganizationId);
-    
-    Organization getOrganizationByRegionAndOrganizationNames(String organizationName, String stateRegionName, String cityRegionName, String neighborhoodRegionName);
-    
-    Organization getOrganizationByRegionAndOrganizationNames(String organizationName, String stateRegionName, String cityRegionName);
+	Organization getOrganization(final String OrganizationId);
 
-    GeoPage<OrganizationImpl> getFilteredOrganizations(OrganizationFilter filterRequest, int page);
-    
-    GeoPage<OrganizationImpl> getFilteredOrganizations(OrganizationFilter filterRequest, int page, int dist);
+	List<Organization> getOrganizationsForRegion(final Address address);
+	
+	List<OrganizationImpl> getOrganizationsByIds(final Iterable<String> organizationIds);
 
-    void saveOrganization(OrganizationImpl organization);
-    
-    List<OrganizationImpl> getOrganizationsByIds(Iterable<String> organizationIds);
-        
+	Organization getOrganization(Address address, String organizationName);
 }
