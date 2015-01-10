@@ -17,13 +17,11 @@ import com.flockspring.ui.model.validation.annotation.PasswordsNotEmpty;
  */
 public class PasswordsNotEmptyValidator implements ConstraintValidator<PasswordsNotEmpty, Object> {
 
-    private String validationTriggerFieldName;
     private String passwordFieldName;
     private String passwordVerificationFieldName;
 
     @Override
     public void initialize(PasswordsNotEmpty constraintAnnotation) {
-        validationTriggerFieldName = constraintAnnotation.triggerFieldName();
         passwordFieldName = constraintAnnotation.passwordFieldName();
         passwordVerificationFieldName = constraintAnnotation.passwordVerificationFieldName();
     }
@@ -31,17 +29,13 @@ public class PasswordsNotEmptyValidator implements ConstraintValidator<Passwords
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         context.disableDefaultConstraintViolation();
+        
         try {
-            Object validationTrigger = ValidatorUtil.getFieldValue(value, validationTriggerFieldName);
-            if (validationTrigger == null) {
-                return passwordFieldsAreValid(value, context);
-            }
+            return passwordFieldsAreValid(value, context);
         }
         catch (Exception ex) {
             throw new RuntimeException("Exception occurred during validation", ex);
         }
-
-        return true;
     }
 
     private boolean passwordFieldsAreValid(Object value, ConstraintValidatorContext context) throws NoSuchFieldException, IllegalAccessException {

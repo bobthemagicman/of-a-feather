@@ -71,7 +71,7 @@ public class GeoLocationServiceImpl implements GeoLocationService
                     break;
 
                 case LOCALITY:
-                    city = component.getShortName();
+                    city = component.getLongName();
                     break;
 
                 case "street_number":

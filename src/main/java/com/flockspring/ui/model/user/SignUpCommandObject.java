@@ -19,7 +19,7 @@ import com.flockspring.ui.model.validation.annotation.PasswordsNotEqual;
  * @date Apr 5, 2014
  * 
  */
-@PasswordsNotEmpty(triggerFieldName = "signInProvider", passwordFieldName = "password", passwordVerificationFieldName = "passwordVerification")
+@PasswordsNotEmpty(passwordFieldName = "password", passwordVerificationFieldName = "passwordVerification")
 @PasswordsNotEqual(passwordFieldName = "password", passwordVerificationFieldName = "passwordVerification")
 public class SignUpCommandObject
 {
@@ -45,6 +45,7 @@ public class SignUpCommandObject
 	@Size(max = 100)	
 	private String passwordVerification;
 	
+	private String displayImageUrl;
 	private SocialMediaProvider signInProvider;
 	
 	public boolean isSocialSignIn()
@@ -110,5 +111,15 @@ public class SignUpCommandObject
 	public void setSignInProvider(SocialMediaProvider signInProvider)
 	{
 		this.signInProvider = signInProvider;
+	}
+
+	public String getDisplayImageUrl()
+	{
+		return displayImageUrl;
+	}
+
+	public void setDisplayImageUrl(String displayImageUrl)
+	{
+		this.displayImageUrl = displayImageUrl;
 	}
 }

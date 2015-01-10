@@ -1,6 +1,6 @@
 var Preferences = Preferences || {};
 
-(function(P) {
+(function(prefs) {
 	prefs.page = {
 		formErrorProcessors: {
 			userCommandErrorProcessor: { 
@@ -88,14 +88,21 @@ var Preferences = Preferences || {};
 		initUserCommandForm: function () {
 			var that = this;
 			
+			var form = $("#userCommand");
 			var actionURL = $('#userCommand').attr('action');
-			$("#userCommand").ajaxForm({
+			form.ajaxForm({
 				url: actionURL, 
 				type: 'POST',
 				error: that.hardErrorResponse,
 				success: that.processSuccessResponse, 
 				beforeSubmit: that.preSubmit
 			});	
+			
+			form.change(function(){
+				if($(that).hasClass('disabled')) {
+					$(that).removeClass('disabled');
+				}
+			});
 		},
 		
 		initSearchSettingsForm: function () {

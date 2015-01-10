@@ -532,15 +532,14 @@
 				<configuration>
 					<port>8080</port>
 					<path>/</path>
-<!-- 					<warSourceDirectory>${project.build.directory}/${build.finalName}</warSourceDirectory> -->
 					<systemProperties>
 					<spring.profiles.active>dev</spring.profiles.active>
+						<spring.profiles.active>dev</spring.profiles.active>
 					</systemProperties>
 					<url>http://localhost:8080/manager/text/</url>
 					<server>TomcatServer</server>
 					<password>mavenDeployer</password>
 					<username>mavenDeployer</username>
-					<port>9966</port>
 					<path>/${build.finalName}</path>
 				</configuration>
 			</plugin>

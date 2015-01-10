@@ -7,6 +7,8 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import com.flockspring.domain.types.impl.ApplicationUserImpl;
+import com.flockspring.domain.types.user.SocialMediaProvider;
 import com.flockspring.ui.model.validation.annotation.PasswordNotEqualToOldPassword;
 import com.flockspring.ui.model.validation.annotation.PasswordsNotEmpty;
 import com.flockspring.ui.model.validation.annotation.PasswordsNotEqual;
@@ -19,9 +21,9 @@ import com.flockspring.ui.model.validation.annotation.PasswordsNotEqual;
  * 
  */
 @PasswordsNotEmpty(passwordFieldName = "password", passwordVerificationFieldName = "passwordVerification")
-@PasswordNotEqualToOldPassword(triggerFieldName = "originalPassword", passwordFieldName = "password")
+@PasswordNotEqualToOldPassword(passwordFieldName = "password", originalPasswordFieldName = "originalPassword")
 @PasswordsNotEqual(passwordFieldName = "password", passwordVerificationFieldName = "passwordVerification")
-public class PasswordChangeCommandObject
+public class PasswordChangeSocialCommandObject
 {
 
 	@NotEmpty
@@ -35,6 +37,18 @@ public class PasswordChangeCommandObject
 	@NotEmpty
 	@Size(max = 100)	
 	private String originalPassword;
+
+	private boolean facebookSignInEnabled;
+	
+	public PasswordChangeSocialCommandObject()
+	{
+		super();
+	}
+	
+	public PasswordChangeSocialCommandObject(ApplicationUserImpl principleUser)
+	{
+		facebookSignInEnabled = principleUser.getSignInProviders().contains(SocialMediaProvider.FACEBOOK);
+	}
 
 	public String getPassword()
 	{
@@ -65,4 +79,16 @@ public class PasswordChangeCommandObject
 	{
 		this.originalPassword = originalPassword;
 	}
+
+	public boolean getFacebookSignInEnabled()
+	{
+		return facebookSignInEnabled;
+	}
+
+	public void setFacebookSignInEnabled(boolean facebookSignInEnabled)
+	{
+		this.facebookSignInEnabled = facebookSignInEnabled;
+	}
+
+	
 }

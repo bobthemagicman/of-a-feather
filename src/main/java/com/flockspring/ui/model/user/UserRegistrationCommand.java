@@ -3,7 +3,7 @@ package com.flockspring.ui.model.user;
 import com.flockspring.ui.model.validation.annotation.PasswordsNotEmpty;
 import com.flockspring.ui.model.validation.annotation.PasswordsNotEqual;
 
-@PasswordsNotEmpty(triggerFieldName = "signInProvider", passwordFieldName = "password", passwordVerificationFieldName = "passwordVerification")
+@PasswordsNotEmpty(passwordFieldName = "password", passwordVerificationFieldName = "passwordVerification")
 @PasswordsNotEqual(passwordFieldName = "password", passwordVerificationFieldName = "passwordVerification")
 public class UserRegistrationCommand extends SignUpCommandObject
 {

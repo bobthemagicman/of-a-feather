@@ -8,13 +8,11 @@ import com.flockspring.ui.model.validation.annotation.PasswordNotEqualToOldPassw
 public class PasswordNotEqualToOldPasswordValidator implements ConstraintValidator<PasswordNotEqualToOldPassword, Object>
 {
 
-	private String validationTriggerFieldName;
     private String passwordFieldName;
     private String originalPasswordFieldName;
 
     @Override
     public void initialize(PasswordNotEqualToOldPassword constraintAnnotation) {
-        validationTriggerFieldName = constraintAnnotation.triggerFieldName();
         passwordFieldName = constraintAnnotation.passwordFieldName();
         originalPasswordFieldName = constraintAnnotation.originalPasswordFieldName();
     }
@@ -23,16 +21,11 @@ public class PasswordNotEqualToOldPasswordValidator implements ConstraintValidat
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         context.disableDefaultConstraintViolation();
         try {
-            Object validationTrigger = ValidatorUtil.getFieldValue(value, validationTriggerFieldName);
-            if (validationTrigger == null) {
                 return passwordFieldsAreValid(value, context);
-            }
         }
         catch (Exception ex) {
             throw new RuntimeException("Exception occurred during validation", ex);
         }
-
-        return true;
     }
 
     private boolean passwordFieldsAreValid(Object value, ConstraintValidatorContext context) throws NoSuchFieldException, IllegalAccessException {

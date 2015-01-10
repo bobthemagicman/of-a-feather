@@ -26,7 +26,7 @@
          
      </script>
 
-     <title>Of A Feather - Sign Up</title>
+     <title>Of A Feather - Sign in</title>
      </c:if>   
 </head>
 <body>
