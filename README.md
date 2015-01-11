@@ -9,22 +9,25 @@ This is the Of A Feather website application project repository. Here you will f
 The following short guide will help you to setup a basic development environment. 
 
 Requirements:
-* A Development IDE (preferably Eclipse)
-* Java 8 SE
-* Apache Maven 3.2.5
-
+<ul>
+<li>A Development IDE (preferably Eclipse)</li>
+<li>Java 8 SE</li>
+<li>Apache Maven 3.2.5</li>
+</ul>
 This goal of this guide is to assist you in starting and debugging the Of A Feather web application, as such instruction relating to installing and setting up the prerequisites is not provided at this time.
 
-1. Clone this repository in to your working directory:
+1. Clone this repository in to your working directory:<br />
     ```
     git clone https://bobthemagicman@bitbucket.org/bobthemagicman/flockspring.git
     ```
-    
-2. To start the application run:
+    <br />
+2. To start the application run:<br />
+    ```
     mvn tomcat7:run
-
+    ```
+<br />
 ## Production Installation
-
+Comming soon
 ## Tests
 
 To run the test suites simply run:
@@ -33,8 +36,10 @@ To run the test suites simply run:
 ## Contributors
 
 Active Contributors:
-* Justen Britian - justen@ofafeather.org
-* Steven Yarbrough 
+<ul>
+<li>Justen Britian - justen@ofafeather.org</li>
+<li>Steven Yarbrough</li>
+</ul>
 
 ## License
 
