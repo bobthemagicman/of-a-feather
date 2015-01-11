@@ -16,7 +16,9 @@ Requirements:
 This goal of this guide is to assist you in starting and debugging the Of A Feather web application, as such instruction relating to installing and setting up the prerequisites is not provided at this time.
 
 1. Clone this repository in to your working directory:
+    ```
     git clone https://bobthemagicman@bitbucket.org/bobthemagicman/flockspring.git
+    ```
     
 2. To start the application run:
     mvn tomcat7:run
