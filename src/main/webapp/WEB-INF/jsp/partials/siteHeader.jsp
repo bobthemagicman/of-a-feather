@@ -5,7 +5,7 @@
 <spring:url value="/privacyPolicy" var="privacyPolicy" />
 <spring:url value="/contact" var="contactUsLink" />
 
-<nav class="navbar navbar-default <c:if test='${navSearchEnabled}'>navbar-search-enabled</c:if>" role="navigation">
+<nav class="navbar gradient-vertical-black <c:if test='${navSearchEnabled}'>navbar-search-enabled</c:if>" role="navigation">
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -54,13 +54,12 @@
 		</c:if>		
                 </sec:authorize>
                 <sec:authorize access="isAnonymous()">
-                <li><a href="<spring:url value='/signup?modal=true' />" class="sign-up" data-toggle="modal" data-target="#userModal">SIGN UP</a></li>
-                <li><a href="<spring:url value='/signin?modal=true' />" class="sign-in" data-toggle="modal" data-target="#socialSignInModal">SIGN IN</a></li>
-                </sec:authorize>
-                <li><a href="${aboutUsLink}">ABOUT US</a></li> 
+
+                <li><a href="${aboutUsLink}">ABOUT US</a></li>
                 <li><a href="${addYourChurchLink}">ADD YOUR CHURCH</a></li>
-                <li><a href="https://docs.google.com/forms/d/1z7UPHqIvfdLTmiy_U9HFsd9Pud6mXWjd-uWrUQwwFZo/viewform" target="_blank">LOCAL EVENTS</a></li>
-                <li><a href="http://blog.ofafeather.org">BLOG</a></li>
+                <li><a href="<spring:url value='/signin?modal=true' />" class="sign-in" data-toggle="modal" data-target="#socialSignInModal">SIGN IN</a></li>
+                <li><a href="<spring:url value='/signup?modal=true' />" class="sign-up" data-toggle="modal" data-target="#userModal">SIGN UP</a></li>
+                </sec:authorize>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
