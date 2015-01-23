@@ -38,13 +38,26 @@
 	        <spring:url value="/static/images/hero/01-church-of-the-cross-in-B.jpg" var="heroImage1"/>
 	        <spring:url value="/static/images/site/blur.png" var="blurImage" />
 	
-	        <spring:url value="/static/images/features/Calvary_Baptist_Church_Hayward_ca_southern_baptist_logo.jpg" var="featuredChurchImage1"/>
-	        <spring:url value="/static/images/features/Community_Church_of_Hayward_hayward_ca_american_baptist_promo.jpg" var="featuredChurchImage2"/>
-	        <spring:url value="/static/images/features/crosswalk_church_sunnyvale_ca_non_denominational_3.jpg" var="featuredChurchImage3"/>
-	        <spring:url value="/static/images/features/Hillcrest_Baptist_Church_Richmond_ca_southern_baptist_promo.jpg" var="featuredChurchImage4"/>
-	        <spring:url value="/static/images/features/Hillside_Church_antioch_ca_nondenominational_3.jpg" var="featuredChurchImage5"/>
-	        <spring:url value="/static/images/features/Shiloh_Church_oakland_ca_nondenominational_3.jpg" var="featuredChurchImage6"/>
-	        <spring:url value="/static/images/features/valley_baptist_church_castro_valley_ca_southern_baptist_promo.jpg" var="featuredChurchImage7"/>
+            <spring:url value="Hayward" var="featuredChurch1_City" />
+            <spring:url value="/static/images/features/Community_Church_of_Hayward_hayward_ca_american_baptist_promo.jpg" var="featuredChurch1_Image"/>
+            
+            <spring:url value="Hayward" var="featuredChurch2_City" />
+	        <spring:url value="/static/images/features/Calvary_Baptist_Church_Hayward_ca_southern_baptist_logo.jpg" var="featuredChurch2_Image"/>
+            
+            <spring:url value="Sunnyvale" var="featuredChurch3_City" />
+            <spring:url value="/static/images/features/crosswalk_church_sunnyvale_ca_non_denominational_3.jpg" var="featuredChurch3_Image"/>
+            
+            <spring:url value="Richmond" var="featuredChurch4_City" />
+            <spring:url value="/static/images/features/Hillcrest_Baptist_Church_Richmond_ca_southern_baptist_promo.jpg" var="featuredChurch4_Image"/>
+            
+            <spring:url value="Antioch" var="featuredChurch5_City" />
+            <spring:url value="/static/images/features/Hillside_Church_antioch_ca_nondenominational_3.jpg" var="featuredChurch5_Image"/>
+            
+            <spring:url value="Oakland" var="featuredChurch6_City" />
+            <spring:url value="/static/images/features/Shiloh_Church_oakland_ca_nondenominational_3.jpg" var="featuredChurch6_Image"/>
+
+            <spring:url value="Castro Valley" var="featuredChurch7_City" />
+            <spring:url value="/static/images/features/valley_baptist_church_castro_valley_ca_southern_baptist_promo.jpg" var="featuredChurch7_Image"/>
 	
 	        <spring:url value="/static/images/features/testimonial_photo_gering.jpg" var="testimonialPhoto1"/>
 	        <spring:url value="/static/images/features/testimonial_photo_hines.jpg" var="testimonialPhoto2"/>
@@ -64,7 +77,6 @@
 	                <div class="header-search">
 	                    <div class="header-text">
 	                        <h1>Find the Church for You</h1>
-	                        <h4>Personalized church search</h4>
 	                    </div>
 	                    <div class="blur"><img src="${blurImage}" /></div>
 	                    <form action="${searchAction}" method="GET">
@@ -90,156 +102,108 @@
                         <div class="row section white" id="featuredChurches">
                             <div class="col-md-12">
                                 <h1>Find churches wherever you are.</h1>
-                                <h2>Worship where you live or where you are visiting</h2>                           
-                            
+                                <h2>Worship where you live or where you are visiting</h2>  
+
                                 <div class="row masonry">
                                     <div class="col-md-8 col-sm-9 big-rectangle">
-                                        
+                                        <a href="#">
+                                        <img src="${featuredChurch6_Image}" />
+                                        <h3>${featuredChurch6_City}</h3>
+
+                                        <div class="church-info">
+                                            <span class="name">Shiloh Church</span>
+                                            <span class="denomination">Non-denominational</span>
+                                            <span class="location">Oakland, CA</span>
+                                        </div>
+                                        </a>
+                                       
                                     </div>
+
                                     <div class="col-md-4 col-sm-3 small-rectangle">
-                                        
+                                        <a href="#">
+                                        <img src="${featuredChurch2_Image}" />
+                                        <h3>${featuredChurch2_City}</h3>
+
+                                        <div class="church-info hidden">
+                                            <span class="name">Calvary Baptist Church</span>
+                                            <span class="denomination">Southern Baptist</span>
+                                            <span class="location">Hayward, CA</span>
+                                        </div>
+                                        </a>
                                     </div>
+
                                     <div class="col-md-4 col-sm-3 small-rectangle">
-                                        
+                                         <a href="#">
+                                        <img src="${featuredChurch1_Image}" />
+                                        <h3>${featuredChurch1_City}</h3>
+
+                                        <div class="church-info hidden">
+                                            <span class="name">Community Church of Hayward</span>
+                                            <span class="denomination">American Baptist</span>
+                                            <span class="location">Hayward, CA</span>
+                                        </div>
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="row masonry">
                                     <div class="col-sm-6 medium-rectangle">
-                                        
+                                        <a href="#">
+                                        <img src="${featuredChurch3_Image}" />
+                                        <h3>${featuredChurch3_City}</h3>
+
+                                        <div class="church-info">
+                                            <span class="name">Crosswalk Church</span>
+                                            <span class="denomination">Non-denominational</span>
+                                            <span class="location">Sunnyvale, CA</span>
+                                        </div>
+                                    </a>
                                     </div>
                                     <div class="col-sm-6 medium-rectangle">
-                                        
+                                        <a href="#">
+                                            <div class="add-church">
+                                                <h3>Add your church</h3>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
                                 <div class="row masonry">
                                     <div class="col-md-4 col-sm-3 small-rectangle">
-                                        
+                                         <a href="#">
+                                            <img src="${featuredChurch7_Image}" />
+                                            <h3>${featuredChurch7_City}</h3>
+                                            <div class="church-info">
+                                                <span class="name">Valley Baptist Church</span>
+                                                <span class="denomination">Southern Baptist</span>
+                                                <span class="location">Castro Valley, CA</span>
+                                            </div>
+                                        </a>                                        
                                     </div>
+
                                     <div class="col-md-4 col-sm-3 small-rectangle">
+                                        <a href="#">
+                                        <img src="${featuredChurch5_Image}" />
+                                        <h3>${featuredChurch5_City}</h3>
+                                            <div class="church-info">
+                                                <span class="name">Hillside Church</span>
+                                                <span class="denomination">Non-denominational</span>
+                                                <span class="location">Antioch, CA</span>
+                                            </div>
+                                        </a>
                                         
                                     </div>
+
                                     <div class="col-md-8 col-sm-9 big-rectangle">
-                                        
+                                           <a href="#">
+                                        <img src="${featuredChurch4_Image}" />
+                                        <h3>${featuredChurch4_City}</h3>
+                                            <div class="church-info">
+                                                <span class="name">Hillcrest Baptist Church</span>
+                                                <span class="denomination">Southern Baptist</span>
+                                                <span class="location">Richmond, CA</span>
+                                            </div>
+                                        </a>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="item active">
-
-                                <div class="featured-church">
-                                    <a href="#">
-                                        <div class="featured-church-image-wrapper">
-                                            <div class="featured-church-image">
-                                                <img class="img-responsive" src="${featuredChurchImage1}" />
-                                            </div>
-                                        </div>
-                                        <div class="featured-church-info">
-                                            <span class="featured-church-name">Calvary Baptist Church</span>
-                                            <span class="featured-church-denomination">Southern Baptist</span>
-                                            <span class="featured-church-location">Hayward, CA</span>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <div class="featured-church">
-                                    <a href="#">
-                                        <div class="featured-church-image-wrapper">
-                                            <div class="featured-church-image">
-                                                <img class="img-responsive" src="${featuredChurchImage2}" />
-                                            </div>
-                                        </div>
-                                        <div class="featured-church-info">
-                                            <span class="featured-church-name">Community Church of Hayward</span>
-                                            <span class="featured-church-denomination">American Baptist</span>
-                                            <span class="featured-church-location">Hayward, CA</span>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <div class="featured-church">
-                                    <a href="#">
-                                        <div class="featured-church-image-wrapper">
-                                            <div class="featured-church-image">
-                                                <img class="img-responsive" src="${featuredChurchImage3}" />
-                                            </div>
-                                        </div>
-                                        <div class="featured-church-info">
-                                            <span class="featured-church-name">Crosswalk Church</span>
-                                            <span class="featured-church-denomination">Non-denominational</span>
-                                            <span class="featured-church-location">Sunnyvale, CA</span>
-                                        </div>
-                                    </a>
-                                </div>
-
-                            </div>
-
-                            <div class="item">
-
-                                <div class="featured-church">
-                                    <a href="#">
-                                        <div class="featured-church-image-wrapper">
-                                            <div class="featured-church-image">
-                                                <img class="img-responsive" src="${featuredChurchImage4}" />
-                                            </div>
-                                        </div>
-                                        <div class="featured-church-info">
-                                            <span class="featured-church-name">Hillcrest Baptist Church</span>
-                                            <span class="featured-church-denomination">Southern Baptist</span>
-                                            <span class="featured-church-location">Richmond, CA</span>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <div class="featured-church">
-                                    <a href="#">
-                                        <div class="featured-church-image-wrapper">
-                                            <div class="featured-church-image">
-                                                <img class="img-responsive" src="${featuredChurchImage5}" />
-                                            </div>
-                                        </div>
-                                        <div class="featured-church-info">
-                                            <span class="featured-church-name">Hillside Church</span>
-                                            <span class="featured-church-denomination">Non-denominational</span>
-                                            <span class="featured-church-location">Antioch, CA</span>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <div class="featured-church">
-                                    <a href="#">
-                                        <div class="featured-church-image-wrapper">
-                                            <div class="featured-church-image">
-                                                <img class="img-responsive" src="${featuredChurchImage6}" />
-                                            </div>
-                                        </div>
-                                        <div class="featured-church-info">
-                                            <span class="featured-church-name">Shiloh Church</span>
-                                            <span class="featured-church-denomination">Non-denominational</span>
-                                            <span class="featured-church-location">Oakland, CA</span>
-                                        </div>
-                                    </a>
-                                </div>
-
-
-
-                            </div>
-                            <div class="item">
-
-                                <div class="featured-church">
-                                    <a href="#">
-                                        <div class="featured-church-image-wrapper">
-                                            <div class="featured-church-image">
-                                                <img class="img-responsive" src="${featuredChurchImage7}" />
-                                            </div>
-                                        </div>
-                                        <div class="featured-church-info">
-                                            <span class="featured-church-name">Valley Baptist Church</span>
-                                            <span class="featured-church-denomination">Southern Baptist</span>
-                                            <span class="featured-church-location">Castro Valley, CA</span>
-                                        </div>
-                                    </a>
-                                </div>
-
                             </div>
 
                         </div><!-- end featured churches content -->
