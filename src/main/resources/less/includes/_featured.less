@@ -1,3 +1,26 @@
-.features {
-	text-align: center;
+.masonry {
+	[class$=-rectangle] { // anything ending with -rectangle
+		position: relative;
+
+		a, img {
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+		}
+
+		.church-info {
+			position: absolute;
+			bottom: 1.5em;
+			left: 2em;
+			opacity: 0.8;
+			background-color: @colorGray;
+			font-size: 1.5em;
+		}
+
+		.add-church {
+			background-color: @colorGreen;
+			color: @colorWhite;
+		}
+	}
 }
