@@ -263,8 +263,8 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-1">
-                                                <div class="icon icon-quote-right text-left"></div>
+                                            <div class="col-sm-1 text-left">
+                                                <div class="icon icon-quote-right"></div>
                                             </div>
                                         </div>
                                     </li>
@@ -303,10 +303,31 @@
                                 
                 
                                 <li class="testimonial">
-                
-                                    <p class="testimonial-text"><br />
-                                        &quot;I was thrilled to find Of A Feather when searching for a new church! It&apos;s your one-stop shop for finding a church that will meet all of your needs.&quot;
-                                    </p>
+                                    <div class="image col-sm-3">
+                                        <img src="${testimonialPhoto3}" alt="Faithful user" class="img-responsive">
+                                    </div>
+                                    <div class="col-sm-1 text-right">
+                                        <span class="icon icon-quote-left"></span>
+                                    </div>
+                                    <div class="col-sm7 text-left">
+                                        <div class="h4">
+                                            I was thrilled to find Of A Feather when searching for a new church! It&apos;s your one-stop shop for finding a church that will meet all of your needs.
+                                        </div>
+                                        <div class="user-info">
+                                            <span class="name">
+                                                Pastor Tim Hines, Phd<
+                                            </span>
+                                            <span class="church">
+                                                First Southern Baptist Church
+                                            </span>
+                                            <span class="location">
+                                                San Lorenzo, CA
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1 text-left">
+                                        <span class="icon icon-quote-right"></span>
+                                    </div>
                 
                                     <div class="testimonial-content">
                 
