@@ -22,11 +22,11 @@ on it, and prints the data out to a JSON file.
 
 =head1 VERSION
 
-Version 1.3.1
+Version 1.2.1
 
 =cut
 
-our $VERSION = '1.3.1';
+our $VERSION = '1.2.1';
 
 =head1 AUTHOR
 
@@ -42,49 +42,83 @@ use Getopt::Long;
 use Text::CSV;
 use Geo::StreetAddress::US;
 use JSON;
-use DateTime;
 use REST::Client;
+use MongoDB;
+use DateTime;
 
 # Get command line options
 my $csv_file;
 my $output_file;
-GetOptions(
-    'csv_file=s'    => \$csv_file,
-    'output_file=s' => \$output_file,
-);
-die 'Please define --csv_file on command line'    if ( !defined($csv_file) );
-die 'Please define --output_file on command line' if ( !defined($output_file) );
+my $mongo_host;
+my $mongo_port;
+my $mongo_user;
+my $mongo_pass;
 
-my $KEY = '<Set your key here>';
-die 'You need to set your MaqQuest API key on line 58'
+GetOptions(
+    'input_file=s'    => \$csv_file,
+    'host=s' => \$mongo_host,
+    'port=s' => \$mongo_port,
+    'username=s' => \$mongo_user,
+    'password=s' => \$mongo_pass,
+);
+die 'Please define --input_file on command line'    if ( !defined($csv_file) );
+
+if ( !defined($mongo_host) )
+{
+    $mongo_host = "localhost";
+}
+
+if ( !defined($mongo_port) )
+{
+    $mongo_port = 27017;
+}
+
+my $KEY = 'Fmjtd%7Cluub250rnq%2C85%3Do5-9u8wq0';
+die 'You need to set your MaqQuest API key on line 57'
   if ( $KEY eq '<Set your key here>' );
 my $API    = 'http://www.mapquestapi.com/geocoding/v1/address';
 my $client = REST::Client->new;
+my $mongo_connection = MongoDB::Connection->new("host" => "$mongo_host", "port" => "$mongo_port");
+my $db = $mongo_connection->get_database('ofAFeather');
+my $collection = $db->get_collection( 'organizations');
 
-my $data = parse_csv($csv_file);
-print_json($data);
+parse_csv_and_insert_to_mongo($csv_file, $collection);
+
+#print_json($data);
 
 # read in the CSV file
-sub parse_csv {
+sub parse_csv_and_insert_to_mongo {
 
-    my ($file) = @_;
+    my ($file, $collection) = (@_);
 
     my @retval;
     my $csv = Text::CSV->new( { binary => 1 } )
       or die 'Cannot use CSV: ' . Text::CSV->error_diag;
 
-    print 'Reading CSV file...';
+    print "Reading CSV file... \n";
     open( my $fh, '<:encoding(windows-1252)', $file )
       or die 'Cannot open file ' . $file . ': ' . $!;
     $csv->column_names( $csv->getline($fh) );
+    my $tracker = 1;
     while ( my $row = $csv->getline_hr($fh) ) {
-        push @retval, transform($row);
+        my $org = transform($row);
+        my $orgName = $org->{name};
+       
+        eval {
+            $collection->insert($org);
+        };
+        if ($@) {
+            print "Error while attempting to insert record on line $tracker, for organization called $orgName \n";
+            print "Error from MongoDB: $@\n";
+        }
+        
+        ${tracker}++;
     }
     close $fh;
     print "Done.\n";
+    print 'Found ' . scalar($tracker) . ' records.' . "\n";
 
-    print 'Found ' . scalar(@retval) . ' records.' . "\n";
-    return \@retval;
+    return; 
 }    # parse_csv
 
 # perform any transformations here
@@ -96,19 +130,13 @@ sub transform {
     # basic information
     $retval->{yearFounded} =
       ( $data->{'Founding Year'} =~ /\d+/ )
-      ? $data->{'Founding Year'} + 0
+      ? $data->{'Founding Year'}
       : '';
-    $retval->{name}             = _html_replace( $data->{'Church Name'} );
-    $retval->{missionStatement} = _html_replace(
-        $data->{
-'Church Mission or Vision Statement (also known as a Statement of Purpose)'
-        }
-    );
-    $retval->{statementOfFaith} =
-      _html_replace( $data->{'Church Statement of Faith'} );
-    $retval->{welcomeMessage} =
-      _html_replace( $data->{'Personal Welcome Message to Newcomers'} );
-
+    $retval->{name}                 = _html_replace( $data->{'Church Name'} );
+    $retval->{missionStatement}     = _html_replace( $data->{'Mission Statement'} );
+    $retval->{statementOfFaith}     = _html_replace( $data->{'Statement of Faith'} );
+    $retval->{welcomeMessage}       = _html_replace( $data->{'Welcome Message'} );
+    $retval->{extraServiceDetails}  = _html_replace( $data->{'Service Details'});
     # address information
     my $address = Geo::StreetAddress::US->parse_location( $data->{'Address'} );
 
@@ -184,11 +212,10 @@ sub transform {
         congregationSize => _congregation_size( $data->{'Size'} ),
         serviceSchedule  => '',
         serviceDetails   => [],
-        gayAffirming     => ( $data->{'Gay Affirming'} =~ /true/i )
-        ? JSON::true
-        : JSON::false,
-        homeChurch => ( $data->{'Home Church?'} =~ /yes/i ) ? JSON::true
-        : JSON::false,
+        gayAffirming     => ( $data->{'Gay Affirming'} =~ /true/i ) ? boolean::true
+        : boolean::false,
+        homeChurch => ( $data->{'Home Church?'} =~ /yes/i ) ? boolean::true
+        : boolean::false,
     };
 
     # parse atmosphere1-6 information
@@ -205,19 +232,16 @@ sub transform {
           || $service_day eq
           '';    # if service day doesn't exist, skip this atmosphere
 
-        # set the time to a date object
-        my ( $hour, $minute, $second ) =
-          split( /:/, $data->{ $_ . '-StartTime' } );
-        $second ||= 0;
+        my @splitTime = split(/:/,$data->{ $_ . '-StartTime' });
         my $dt = DateTime->new(
-            year      => 1970,
-            month     => 1,
-            day       => 1,
-            hour      => $hour,
-            minute    => $minute,
-            second    => $second,
-            time_zone => 'UTC'
-        );
+                year       => 0000,
+                month      => 12,
+                day        => 30,
+                hour       => $splitTime[0],
+                minute     => $splitTime[1],
+                second     => 0,
+                nanosecond => 0);    
+
         my $service_details = {
 
             musicStyle        => _conv_music_style($music),
@@ -228,7 +252,7 @@ sub transform {
             durationInMinutes => _conv_dur_time( $data->{'Duration'} ),
             serviceName       => '',
             timeAndDay        => {
-                startTime        => { "\$date" => $dt->epoch },
+                startTime =>  $dt, #"ISODate('0000-12-30T" . $data->{ $_ . '-StartTime' } . "Z')",
                 serviceDay       => $service_day,
                 serviceTimeRange => $time_range,
             },
@@ -240,15 +264,15 @@ sub transform {
 
     # social media information
     $retval->{socialMedia} = {
-        websiteUrl    => $data->{'Website URL'},
-        facebookUrl   => $data->{'Facebook URL (optional)'},
-        blogUrl       => $data->{'Blog URL (optional)'},
-        googlePlusUrl => $data->{'Google Plus URL (optional)'},
-        youtubeUrl    => $data->{'YouTube URL (optional)'},
-        podcastUrl    => $data->{'Podcast URL (optional)'},
-        twitterUrl    => $data->{'Twitter URL (optional)'},
-        otherUrl      => '',
-        instagramUrl  => '',
+        websiteUrl    => $data->{'Website'},
+        facebookUrl   => $data->{'Facebook'},
+        blogUrl       => $data->{'Blog'},
+        googlePlusUrl => $data->{'Google Plus'},
+        youtubeUrl    => $data->{'YouTube'},
+        podcastUrl    => $data->{'Podcast'},
+        twitterUrl    => $data->{'Twitter'},
+        otherUrl      => $data->{'Other Social Media'},
+        instagramUrl  => $data->{'Instagram'},
     };
 
     # denomination information
@@ -269,14 +293,14 @@ sub transform {
             title => ( defined( $leader->{title} ) ? $leader->{title} : '' ),
             bio   => _html_replace( $data->{'Pastor Bio'} ),
             leaderRole     => ['PASTOR'],
-            image          => '',
-            primaryContact => JSON::true,
-            primaryLeader  => JSON::true,
+            #image          => '',
+            primaryContact => boolean::true,
+            primaryLeader  => boolean::true,
             phoneNumber    => $data->{'Church Phone Number'},
             emailAddress   => $data->{'Church Email contact'},
             yearStarted    => (
                 ( $data->{'Year Pastor Joined'} =~ /\d+/ )
-                ? $data->{'Year Pastor Joined'} + 0
+                ? $data->{'Year Pastor Joined'}
                 : ''
             ),
         }
@@ -285,37 +309,62 @@ sub transform {
     # program information
     $retval->{programsOffered} = [];
     if ( $data->{'Nursery Care'} =~ /\w+/ ) {
-        push(
-            @{ $retval->{programsOffered} },
-            _html_replace( $data->{'Nursery Care'} )
-        );
+        my @pgrms = split(/,/, $data->{'Nursery Care'} );
+        for (@pgrms) {
+            s/^\s+|\s+$//g;    
+        }
+    
+        push( @{ $retval->{programsOffered} }, @pgrms );
     }
     if ( $data->{'Programs & Ministries - Gender focused'} =~ /\w+/ ) {
-        push(
-            @{ $retval->{programsOffered} },
-            _html_replace( $data->{'Programs & Ministries - Gender focused'} )
-        );
+        my @pgrms = split(/,/, $data->{'Programs & Ministries - Gender focused'} );
+        for (@pgrms) {
+            s/^\s+|\s+$//g;    
+        }
+
+        push( @{ $retval->{programsOffered} }, @pgrms );
     }
     if ( $data->{'Programs & Ministries'} =~ /\w+/ ) {
-        push(
-            @{ $retval->{programsOffered} },
-            _html_replace( $data->{'Programs & Ministries'} )
-        );
+        my @pgrms = split(/,/, $data->{'Programs & Ministries'} );
+        for (@pgrms) {
+            s/^\s+|\s+$//g;    
+        }
+
+        push( @{ $retval->{programsOffered} }, @pgrms );
     }
     if ( $data->{'Programs & Ministries - Community Outreach'} =~ /\w+/ ) {
-        push(
-            @{ $retval->{programsOffered} },
-            _html_replace(
-                $data->{'Programs & Ministries - Community Outreach'}
-            )
-        );
+        my @pgrms = split(/,/, $data->{'Programs & Ministries - Community Outreach'} );
+        for (@pgrms) {
+            s/^\s+|\s+$//g;    
+        }
+
+        push( @{ $retval->{programsOffered} }, @pgrms );
     }
 
-    $data->{'accessibilitySupport'} =
-      [ _html_replace( $data->{'Special Needs Accommodations'} ) ];
+    $retval->{accessibilitySupport} = [];
+    if( $data->{'Special Needs Accommodations'} =~ /\w+/ ) 
+    {
+        my @supports = split(/,/, $data->{'Special Needs Accommodations'});
+        for (@supports) {
+            s/^\s+|\s+$//g;    
+        }
+
+        push( @{ $retval->{accessibilitySupport} },  @supports);
+    }
+    
+    if( $data->{'Parking'} =~ /\w+/ ) 
+    {
+        my @parking = split(/,/, $data->{'Parking'});
+        for (@parking) {
+            s/^\s+|\s+$//g;    
+        }
+
+        push( @{ $retval->{accessibilitySupport} },  @parking);
+    }
+
     if ( $data->{'If "other", please explain below.'} =~ /\w+/ ) {
-        push(
-            @{ $retval->{programsOffered} },
+        $retval->{specialNeedsOther} = [];
+        push( @{ $retval->{specialNeedsOther} },
             _html_replace( $data->{'If "other", please explain below.'} )
         );
     }
@@ -393,8 +442,7 @@ sub print_json {
 
     my ($data) = @_;
 
-    # my $json_text = encode($data);
-    my $json_text = to_json($data);
+    my $json_text = encode_json($data);
 
     open( my $fh, '>', $output_file )
       or die 'Cannot open file ' . $output_file . ': ' . $!;
