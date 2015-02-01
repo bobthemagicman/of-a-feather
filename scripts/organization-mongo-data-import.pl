@@ -10,7 +10,7 @@ csv_to_js.pl - Script to parse CSV file and create JSON file
 
 =head1 SYNOPSIS
 
-    csv_to_js.pl --csv_file=file --output_file=file
+    csv_to_js.pl file --output_file=file
     
     csv_file - a csv file containing all of the data to parse, required
     output_file - the document name to output to, required
@@ -79,7 +79,11 @@ die 'You need to set your MaqQuest API key on line 57'
 my $API    = 'http://www.mapquestapi.com/geocoding/v1/address';
 my $client = REST::Client->new;
 my $mongo_connection = MongoDB::Connection->new("host" => "$mongo_host", "port" => "$mongo_port");
-my $db = $mongo_connection->get_database('ofAFeather');
+  if(defined($mongo_user) && defined($mongo_pass))
+  {
+    $mongo_connection->authenticate('of-a-feather', $mongo_user, $mongo_pass);
+  }
+my $db = $mongo_connection->get_database('of-a-feather');
 my $collection = $db->get_collection( 'organizations');
 
 parse_csv_and_insert_to_mongo($csv_file, $collection);
@@ -96,16 +100,19 @@ sub parse_csv_and_insert_to_mongo {
       or die 'Cannot use CSV: ' . Text::CSV->error_diag;
 
     print "Reading CSV file... \n";
-    open( my $fh, '<:encoding(windows-1252)', $file )
+    open( my $fh, '<:encoding(iso-8859-1)', $file )
       or die 'Cannot open file ' . $file . ': ' . $!;
+    
     $csv->column_names( $csv->getline($fh) );
-    my $tracker = 1;
+    
+    my $tracker = 0;
     while ( my $row = $csv->getline_hr($fh) ) {
+        print "Reading row " . scalar($tracker). "\n";
         my $org = transform($row);
         my $orgName = $org->{name};
        
         eval {
-            $collection->insert($org);
+           $collection->insert($org);
         };
         if ($@) {
             print "Error while attempting to insert record on line $tracker, for organization called $orgName \n";
@@ -126,6 +133,26 @@ sub transform {
 
     my ($data) = @_;
     my $retval;
+
+    # contact/leader information
+    for my $a ( 1 .. 3 ) {
+
+    }
+    my $leader = _parse_leader( $data->{'Leader Name-$a'} );
+
+    $retval->{leadershipTeam} = [
+        {
+            name  => $leader->{name},
+            title => ( defined( $leader->{title} ) ? $leader->{title} : '' ),
+            bio   => _html_replace( $data->{'Pastor Bio'} ),
+            leaderRole     => ['PASTOR'],
+            primaryContact => boolean::true,
+            primaryLeader  => boolean::true,
+            phoneNumber    => $data->{'Church Phone Number'},
+            emailAddress   => $data->{'Church Email contact'},
+            yearStarted    => (( $data->{'Year Pastor Joined'} =~ /\d+/ ) ? $data->{'Year Pastor Joined'} : ''),
+        }
+    ];
 
     # basic information
     $retval->{yearFounded} =
@@ -156,8 +183,7 @@ sub transform {
     };
 
     # minimum information to get MQ to work
-    if ( defined( $address->{zip} )
-        || ( defined( $address->{city} ) && defined( $address->{state} ) ) )
+    if ( defined( $address->{zip} ) || ( defined( $address->{city} ) && defined( $address->{state} ) ) )
     {
         # Get Lat & Lon from MQ
         my $mq_addr = (
@@ -277,55 +303,60 @@ sub transform {
 
     # denomination information
     $retval->{denomination}    = _html_replace( $data->{'Denomination'} );
-    $retval->{subDenomination} = _html_replace(
-        $data->{
-'For Non-Denominational Churches:  What denomination is this church similar to in beliefs and style?'
-        }
-    );
     $retval->{multimedia} = [];
-
-    # contact/leader information
-    my $leader = _parse_leader( $data->{'Leader Name'} );
-
-    $retval->{leadershipTeam} = [
-        {
-            name  => $leader->{name},
-            title => ( defined( $leader->{title} ) ? $leader->{title} : '' ),
-            bio   => _html_replace( $data->{'Pastor Bio'} ),
-            leaderRole     => ['PASTOR'],
-            #image          => '',
-            primaryContact => boolean::true,
-            primaryLeader  => boolean::true,
-            phoneNumber    => $data->{'Church Phone Number'},
-            emailAddress   => $data->{'Church Email contact'},
-            yearStarted    => (
-                ( $data->{'Year Pastor Joined'} =~ /\d+/ )
-                ? $data->{'Year Pastor Joined'}
-                : ''
-            ),
-        }
-    ];
 
     # program information
     $retval->{programsOffered} = [];
-    if ( $data->{'Nursery Care'} =~ /\w+/ ) {
-        my @pgrms = split(/,/, $data->{'Nursery Care'} );
+    if ( $data->{'Programs and Ministries - Nursery Care'} =~ /\w+/ ) {
+        my @pgrms = split(/,/, $data->{'Programs and Ministries - Nursery Care'} );
         for (@pgrms) {
             s/^\s+|\s+$//g;    
         }
     
         push( @{ $retval->{programsOffered} }, @pgrms );
     }
-    if ( $data->{'Programs & Ministries - Gender focused'} =~ /\w+/ ) {
-        my @pgrms = split(/,/, $data->{'Programs & Ministries - Gender focused'} );
+    if ( $data->{'Programs and Ministries - Education'} =~ /\w+/ ) {
+        my @pgrms = split(/,/, $data->{'Programs and Ministries - Education'} );
+        for (@pgrms) {
+            s/^\s+|\s+$//g;    
+        }
+    
+        push( @{ $retval->{programsOffered} }, @pgrms );
+    }
+    if ( $data->{'Programs & Ministries - Gender Groups'} =~ /\w+/ ) {
+        my @pgrms = split(/,/, $data->{'Programs & Ministries - Gender Groups'} );
         for (@pgrms) {
             s/^\s+|\s+$//g;    
         }
 
         push( @{ $retval->{programsOffered} }, @pgrms );
     }
-    if ( $data->{'Programs & Ministries'} =~ /\w+/ ) {
-        my @pgrms = split(/,/, $data->{'Programs & Ministries'} );
+    if ( $data->{'Programs & Ministries - Age Groups'} =~ /\w+/ ) {
+        my @pgrms = split(/,/, $data->{'Programs & Ministries - Age Groups'} );
+        for (@pgrms) {
+            s/^\s+|\s+$//g;    
+        }
+
+        push( @{ $retval->{programsOffered} }, @pgrms );
+    }
+    if ( $data->{'Programs & Ministries - Music and Arts'} =~ /\w+/ ) {
+        my @pgrms = split(/,/, $data->{'Programs & Ministries - Music and Arts'} );
+        for (@pgrms) {
+            s/^\s+|\s+$//g;    
+        }
+
+        push( @{ $retval->{programsOffered} }, @pgrms );
+    }
+    if ( $data->{'Programs & Ministries - Social'} =~ /\w+/ ) {
+        my @pgrms = split(/,/, $data->{'Programs & Ministries - Social'} );
+        for (@pgrms) {
+            s/^\s+|\s+$//g;    
+        }
+
+        push( @{ $retval->{programsOffered} }, @pgrms );
+    }
+    if ( $data->{'Programs & Ministries - Spiritual'} =~ /\w+/ ) {
+        my @pgrms = split(/,/, $data->{'Programs & Ministries - Spiritual'} );
         for (@pgrms) {
             s/^\s+|\s+$//g;    
         }
@@ -340,7 +371,14 @@ sub transform {
 
         push( @{ $retval->{programsOffered} }, @pgrms );
     }
+    if ( $data->{'Programs & Ministries - Support and Counseling'} =~ /\w+/ ) {
+        my @pgrms = split(/,/, $data->{'Programs & Ministries - Support and Counseling'} );
+        for (@pgrms) {
+            s/^\s+|\s+$//g;    
+        }
 
+        push( @{ $retval->{programsOffered} }, @pgrms );
+    }
     $retval->{accessibilitySupport} = [];
     if( $data->{'Special Needs Accommodations'} =~ /\w+/ ) 
     {
@@ -361,14 +399,7 @@ sub transform {
 
         push( @{ $retval->{accessibilitySupport} },  @parking);
     }
-
-    if ( $data->{'If "other", please explain below.'} =~ /\w+/ ) {
-        $retval->{specialNeedsOther} = [];
-        push( @{ $retval->{specialNeedsOther} },
-            _html_replace( $data->{'If "other", please explain below.'} )
-        );
-    }
-
+    
     return $retval;
 
 }    # transform
