@@ -46,4 +46,4 @@
 </script>
 
 <c:set var="navSearchEnabled" value="false" /> 
-<spring:url value="/static/images/site/ofafeather_logo.png" var="ofafeatherLogo" />
+<spring:url value="/static/images/site/ofafeather_logo.png" var="ofafeatherLogo" /> 

@@ -2,14 +2,13 @@
     position: relative;
     top: 0;
     left: 0;
-    width: 100%;
     min-height: @header-height;
+    margin: 0;
+    padding: 0;
 
     background-color: @colorBlack;
     overflow: hidden;
-    margin: 0;
-    padding: 0;
-    border-bottom: 2px solid @colorGray;
+    z-index: 0;
     
     @media (min-height: 700px) {
         height: (@header-height + @header-height-adjust);
@@ -23,39 +22,28 @@
         height: (@header-height + 3 * @header-height-adjust);
     }
    
-     z-index: 0;
-     #comingSoonImage {
+    #comingSoonImage {
         position: absolute;
         top: 0px;
         left: 0px;
      }
-     .header-image-container {
-        display: block;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        margin: 0 auto;
-        border-bottom: 2px solid @colorGray;
-        background: transparent;
-        overflow: hidden;
-
-        [class$=fade-left] {
-            position: absolute;
-            
-        }
-
-        img {
-            z-index: -2;
-            .translucent(0);
-            &.active-image {
-                z-index: -1;
-                .translucent(100);
-            }
-         }
-         
+    .header-image-container {
+        text-align: center;
     }
 
+    [class$=fade-left] {
+        position: absolute;   
+    }
+
+    img {
+        width: 100%;
+        z-index: -2;
+        .translucent(0);
+        &.active-image {
+            z-index: -1;
+            .translucent(100);
+        }
+    }
 }
 
 .header-search {
@@ -95,7 +83,7 @@
     }
     .input-group-btn button {
         height: @header-search-height;
-        width: 100px;
+        width: 10em;
         padding: 0px;
         border: none;
         .transition-effects;
@@ -107,23 +95,11 @@
     }
     .header-text {
         position: absolute;
-        top: -5em;
+        top: -7em;
         left: 0%;
         width: 100%;
-        font-size: 2.5em;
-        color: @colorGrayLight;
-        text-shadow: 0px -2px 2px rgba(75,75,75,0.5), 0px 2px 2px rgba(75,75,75,0.5), -2px 0px 2px rgba(75,75,75,0.5), 2px 0px 2px rgba(75,75,75,0.5);
-        white-space: nowrap;
-        text-align: center;
-        h1 {
-            font-size: 2em;
-            font-weight: 900;
-        }
-        h4 {
-            font-size: 1em;
-            font-weight: bold;
-            padding: 5px 0px 0px 0px;
-        }
+        font-size: 1.5em;
+        color: @colorWhite;
         
     }
     div.blur {

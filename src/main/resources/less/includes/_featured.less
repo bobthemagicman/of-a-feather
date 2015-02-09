@@ -1,26 +1,82 @@
 .masonry {
-	[class$=-rectangle] { // anything ending with -rectangle
+	margin: 0 3em 2em;
+	font-size: 1.5em;
+	
+	&:nth-child(3) {
+		margin-top: 3em;
+	}
+
+	[class$=-tile] {
 		position: relative;
+		width: 100%;
+	}
 
-		a, img {
-			top: 0;
-			left: 0;
-			bottom: 0;
-			right: 0;
-		}
+	.big-tile {
+		display: block;
+		float: left;
+		height: 433px;
+		h2 { top: 35%; }
+	}
 
-		.church-info {
-			position: absolute;
-			bottom: 1.5em;
-			left: 2em;
-			opacity: 0.8;
-			background-color: @colorGray;
-			font-size: 1.5em;
-		}
+	.medium-tile {
+		display: block;
+		float: left;
+		height: 338px;
+		h2 { top: 30%; }
+	}
 
-		.add-church {
-			background-color: @colorGreen;
-			color: @colorWhite;
+	.small-tile {
+		position: relative;
+		display: block;
+		height: 209px;
+		h2 { top: 25%; }
+
+		&:first-child {
+			margin-bottom: 1em;
 		}
+	}
+
+	a, img {
+		width: 100%;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		text-align: center;
+	}
+
+	img {
+		height: 100%;
+		width: 100%;
+	}
+
+	h2 {
+		position: relative;
+		color: @colorWhite;
+		font-family: "Lato-Bold";
+		text-shadow: 1px 1px 5px @colorBlack;
+		text-decoration: none;
+	}
+
+	.church-info {
+		position: absolute;
+		bottom: 1.5em;
+		left: 2em;
+		opacity: 0.8;
+		background-color: @colorGray;
+		font-size: 1.5em;
+	}
+
+	.add-church {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+
+		background-color: @colorGreen;
+		color: @colorWhite;
 	}
 }

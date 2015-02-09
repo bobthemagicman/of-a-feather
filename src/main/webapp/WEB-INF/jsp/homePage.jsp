@@ -76,7 +76,7 @@
 	
 	                <div class="header-search">
 	                    <div class="header-text">
-	                        <h1>Find the Church for You</h1>
+	                        <h1>Find the church for you</h1>
 	                    </div>
 	                    <div class="blur"><img src="${blurImage}" /></div>
 	                    <form action="${searchAction}" method="GET">
@@ -98,31 +98,34 @@
 	            </div>
     	
                 <div class="features">
-                    <div class="container">
+                    <div class="container-fluid">
                         <div class="row section white" id="featuredChurches">
                             <div class="col-md-12">
                                 <h1>Find churches wherever you are.</h1>
-                                <h2>Worship where you live or where you are visiting</h2>  
+                                <h4>Worship where you live or where you are visiting</h4> 
 
                                 <div class="row masonry">
-                                    <div class="col-md-8 col-sm-9 big-rectangle">
-                                        <a href="#">
-                                        <img src="${featuredChurch6_Image}" />
-                                        <h3>${featuredChurch6_City}</h3>
+                                    <div class="col-md-8 col-sm-9">
+                                    <div class="big-tile">
+                                        <a href="#" alt="${featuredChurch1_City}" name="${featuredChurch1_City}">
+                                        <img src="${featuredChurch1_Image}" class="location-image"/>
+                                        <h2>${featuredChurch1_City}</h2>
 
-                                        <div class="church-info">
-                                            <span class="name">Shiloh Church</span>
-                                            <span class="denomination">Non-denominational</span>
-                                            <span class="location">Oakland, CA</span>
+                                        <div class="church-info hidden">
+                                            <span class="name">Community Church of Hayward</span>
+                                            <span class="denomination">American Baptist</span>
+                                            <span class="location">Hayward, CA</span>
                                         </div>
                                         </a>
                                        
                                     </div>
+                                    </div>
 
-                                    <div class="col-md-4 col-sm-3 small-rectangle">
-                                        <a href="#">
-                                        <img src="${featuredChurch2_Image}" />
-                                        <h3>${featuredChurch2_City}</h3>
+                                    <div class="col-md-4 col-sm-3">
+                                    <div class="small-tile">
+                                        <a href="#" alt="${featuredChurch2_City}" name="${featuredChurch2_City}">
+                                        <img src="${featuredChurch2_Image}" class="location-image"/>
+                                        <h2>${featuredChurch2_City}</h2>
 
                                         <div class="church-info hidden">
                                             <span class="name">Calvary Baptist Church</span>
@@ -132,76 +135,83 @@
                                         </a>
                                     </div>
 
-                                    <div class="col-md-4 col-sm-3 small-rectangle">
-                                         <a href="#">
-                                        <img src="${featuredChurch1_Image}" />
-                                        <h3>${featuredChurch1_City}</h3>
+                                    <div class="small-tile">
+                                        <a href="#" alt="${featuredChurch6_City}" name="${featuredChurch6_City}">
+                                        <img src="${featuredChurch6_Image}" class="location-image"/>
+                                        <h2>${featuredChurch6_City}</h2>
 
                                         <div class="church-info hidden">
-                                            <span class="name">Community Church of Hayward</span>
-                                            <span class="denomination">American Baptist</span>
-                                            <span class="location">Hayward, CA</span>
+                                            <span class="name">Shiloh Church</span>
+                                            <span class="denomination">Non-denominational</span>
+                                            <span class="location">Oakland, CA</span>
                                         </div>
                                         </a>
                                     </div>
+                                    </div>
                                 </div>
                                 <div class="row masonry">
-                                    <div class="col-sm-6 medium-rectangle">
-                                        <a href="#">
-                                        <img src="${featuredChurch3_Image}" />
-                                        <h3>${featuredChurch3_City}</h3>
+                                    <div class="col-sm-6">
+                                    <div class="medium-tile">
+                                        <a href="#" alt="${featuredChurch3_City}" name="${featuredChurch3_City}">
+                                        <img src="${featuredChurch3_Image}" class="location-image"/>
+                                        <h2>${featuredChurch3_City}</h2>
 
-                                        <div class="church-info">
+                                        <div class="church-info hidden">
                                             <span class="name">Crosswalk Church</span>
                                             <span class="denomination">Non-denominational</span>
                                             <span class="location">Sunnyvale, CA</span>
                                         </div>
                                     </a>
                                     </div>
-                                    <div class="col-sm-6 medium-rectangle">
+                                    </div>
+                                    <div class="col-sm-6">
+                                    <div class="medium-tile">
                                         <a href="#">
                                             <div class="add-church">
-                                                <h3>Add your church</h3>
+                                                <h2>Add your church</h2>
                                             </div>
                                         </a>
                                     </div>
+                                    </div>
                                 </div>
                                 <div class="row masonry">
-                                    <div class="col-md-4 col-sm-3 small-rectangle">
-                                         <a href="#">
-                                            <img src="${featuredChurch7_Image}" />
-                                            <h3>${featuredChurch7_City}</h3>
-                                            <div class="church-info">
+                                    <div class="col-md-4 col-sm-3">
+                                    <div class="small-tile">
+                                         <a href="#" alt="${featuredChurch7_City}" name="${featuredChurch7_City}">
+                                            <img src="${featuredChurch7_Image}" class="location-image"/>
+                                            <h2>${featuredChurch7_City}</h2>
+                                            <div class="church-info hidden">
                                                 <span class="name">Valley Baptist Church</span>
                                                 <span class="denomination">Southern Baptist</span>
                                                 <span class="location">Castro Valley, CA</span>
                                             </div>
                                         </a>                                        
                                     </div>
-
-                                    <div class="col-md-4 col-sm-3 small-rectangle">
-                                        <a href="#">
-                                        <img src="${featuredChurch5_Image}" />
-                                        <h3>${featuredChurch5_City}</h3>
-                                            <div class="church-info">
+                                    <div class="small-tile">
+                                        <a href="#" alt="${featuredChurch5_City}" name="${featuredChurch5_City}">
+                                        <img src="${featuredChurch5_Image}" class="location-image"/>
+                                        <h2>${featuredChurch5_City}</h2>
+                                            <div class="church-info hidden">
                                                 <span class="name">Hillside Church</span>
                                                 <span class="denomination">Non-denominational</span>
                                                 <span class="location">Antioch, CA</span>
                                             </div>
                                         </a>
-                                        
+                                    </div>
                                     </div>
 
-                                    <div class="col-md-8 col-sm-9 big-rectangle">
-                                           <a href="#">
-                                        <img src="${featuredChurch4_Image}" />
-                                        <h3>${featuredChurch4_City}</h3>
-                                            <div class="church-info">
+                                    <div class="col-md-8 col-sm-9">
+                                    <div class="big-tile">
+                                           <a href="#" alt="${featuredChurch4_City}" name="${featuredChurch4_City}">
+                                        <img src="${featuredChurch4_Image}" class="location-image"/>
+                                        <h2>${featuredChurch4_City}</h2>
+                                            <div class="church-info hidden">
                                                 <span class="name">Hillcrest Baptist Church</span>
                                                 <span class="denomination">Southern Baptist</span>
                                                 <span class="location">Richmond, CA</span>
                                             </div>
                                         </a>
+                                    </div>
                                     </div>
                                 </div>
                             </div>
@@ -237,7 +247,7 @@
 
                                 <!-- This could be turned into a dynamic piece with a for loop of some sort -->
                                 <ul>
-                                    <li class="testimonial">
+                                    <li class="testimonial hidden">
                                         
                                         <div class="image col-sm-3">
                                             <img src="${stetimonialPhoto1}" alt="" class="img-responsive">
@@ -328,30 +338,9 @@
                                     <div class="col-sm-1 text-left">
                                         <span class="icon icon-quote-right"></span>
                                     </div>
-                
-                                    <div class="testimonial-content">
-                
-                                        <p class="testimonial-info">
-                                            <span class="testimonial-name">Laurie Paddock</span>
-                
-                                            <span class="testimonial-church-location">Fremont CA</span>
-                                        </p>
-                
-                                        <div class="testimonial-image">
-                                            <img class="img-responsive" src="${testimonialPhoto3}" />
-                                        </div>
-                
-                                    </div>
-                
                                 </li>
-
-
-                                    
                                 </ul>
-                                
                             </div>
-                            
-
                         </div>
                     </div>
                 </div>
