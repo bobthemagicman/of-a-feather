@@ -7357,7 +7357,7 @@ a:not(.ui-slider-handle) {
   height: 433px;
 }
 .masonry .big-tile h2 {
-  top: 35%;
+  top: 37%;
 }
 .masonry .medium-tile {
   display: block;
@@ -7365,7 +7365,7 @@ a:not(.ui-slider-handle) {
   height: 338px;
 }
 .masonry .medium-tile h2 {
-  top: 30%;
+  top: 33%;
 }
 .masonry .small-tile {
   position: relative;
@@ -7414,6 +7414,7 @@ a:not(.ui-slider-handle) {
   left: 0;
   right: 0;
   bottom: 0;
+  padding-top: 18%;
   background-color: #83b633;
   color: #ffffff;
 }
@@ -8974,6 +8975,7 @@ div.pagination ul > li > a:hover {
   min-height: 1px;
   padding-left: 15px;
   padding-right: 15px;
+  display: block;
 }
 .sign-up-modal .modal-dialog,
 .log-in-modal .modal-dialog {
