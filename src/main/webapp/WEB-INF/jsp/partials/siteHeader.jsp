@@ -55,10 +55,10 @@
                 </sec:authorize>
                 <sec:authorize access="isAnonymous()">
 
-                <li><a href="${aboutUsLink}">ABOUT US</a></li>
-                <li><a href="${addYourChurchLink}">ADD YOUR CHURCH</a></li>
-                <li><a href="<spring:url value='/signin?modal=true' />" class="sign-in" data-toggle="modal" data-target="#socialSignInModal">SIGN IN</a></li>
-                <li><a href="<spring:url value='/signup?modal=true' />" class="sign-up" data-toggle="modal" data-target="#userModal">SIGN UP</a></li>
+                <li><a href="${aboutUsLink}">About</a></li>
+                <li><a href="${addYourChurchLink}">Add a Church</a></li>
+                <li><a href="<spring:url value='/signin?modal=true' />" class="sign-in" data-toggle="modal" data-target="#socialSignInModal">Sign In</a></li>
+                <li><a href="<spring:url value='/signup?modal=true' />" class="sign-up" data-toggle="modal" data-target="#userModal">Sign Up</a></li>
                 </sec:authorize>
             </ul>
         </div>

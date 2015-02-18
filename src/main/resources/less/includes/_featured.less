@@ -2,7 +2,7 @@
 	margin: 0 3em 2em;
 	font-size: 1.5em;
 	
-	&:nth-child(3) {
+	&:nth-child(1) {
 		margin-top: 3em;
 	}
 
@@ -14,25 +14,25 @@
 	.big-tile {
 		display: block;
 		float: left;
-		height: 433px;
+		height: 376px;
 		h2 { top: 37%; }
 	}
 
 	.medium-tile {
 		display: block;
 		float: left;
-		height: 338px;
+		height: 279px;
 		h2 { top: 33%; }
 	}
 
 	.small-tile {
 		position: relative;
 		display: block;
-		height: 209px;
+		height: 180px;
 		h2 { top: 25%; }
 
 		&:first-child {
-			margin-bottom: 1em;
+			margin-bottom: 1.09em;
 		}
 	}
 
@@ -56,8 +56,6 @@
 		position: relative;
 		color: @colorWhite;
 		font-family: "Lato-Bold";
-		text-shadow: 1px 1px 5px @colorBlack;
-		text-decoration: none;
 	}
 
 	.church-info {
@@ -78,5 +76,18 @@
 		padding-top: 18%;
 		background-color: @colorGreen;
 		color: @colorWhite;
+	}
+}
+
+.video-embed {
+	.add-church {
+		font-family: "Lato-Black";
+		background-color: @colorGreen;
+		border-radius: 10px;
+		.transition-effects;
+
+		&:hover {
+			background-color: darken(@colorGreen, 15%);
+		}
 	}
 }

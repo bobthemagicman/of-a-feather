@@ -9,6 +9,7 @@
     
     height: @navbar-height;
     clear: right;
+    padding-top: 1.5em;
     margin-bottom: 0px;
     border: 0;
 
@@ -19,7 +20,20 @@
         .navbar-form-wrapper {
             display: block;
         }
-    }   
+    }
+
+    a.sign-up {
+        background-color: @colorGreen;
+        border-radius: 1em;
+    }
+}
+
+.navbar-collapse .navbar-nav.navbar-right:last-child {
+    margin-right: 0;
+}
+
+.icon-bar {
+    background-color: @colorGreen;
 }
 
 .navbar-toggle {
@@ -90,7 +104,6 @@
 
 .navbar-collapse .navbar-nav {
     @media(max-width: @screen-tablet) {
-        background-color: darken(@colorGrayLight, 10%);
         margin: 0px -15px;
         padding: 0px;
         border-bottom: 2px solid @colorGray;
@@ -98,31 +111,30 @@
 }
 
 ul.nav.navbar-nav {
-    
-    a {
-        .transition-effects;
-        &:hover {
-            background-color: @color1;
-            color: @lightest-gray-color;
+    li {
+        padding-top: 1.5em;
+        a {
+            padding: 0.5em 1em;
+            font-size: 2em;
+            font-family: "Lato-Regular";
+            color: @colorWhite;
+            border-radius: 1em;
+
+            .transition-effects;
+            &:hover {
+                background-color: transparent;
+                color: @colorGreen;
+            }
         }
     }
 
     li.dropdown {
-        
-        &> a {
-            font-weight: 900;
-            
+        a {
             &:hover {
-                background-color: @color1;
-                color: @lightest-gray-color;
+                background-color: @colorWhite;
                 .caret {
-                    border-top-color: @lightest-gray-color !important;
+                    border-top-color: @colorGreen !important;
                 }
-            }
-        }
-        &.user-profile-button {
-            &> a {
-                font-weight: bold;
             }
         }
     }
@@ -149,8 +161,7 @@ ul.nav.navbar-nav {
 }
 
 ul.dropdown-menu li {
-
-    &>a {
+    a {
         
         line-height: 2em;
         .rounded-corners(0px);

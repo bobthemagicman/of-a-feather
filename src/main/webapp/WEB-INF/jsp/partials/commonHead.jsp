@@ -3,7 +3,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css"/>
-<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"/>
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
 <link rel="stylesheet" type="text/css" href="<spring:url value="/static/css/ofafeather.css"/>"  />
 <link rel="stylesheet" type="text/css" href="<spring:url value="/static/css/social-buttons.css"/>"  />
 <link rel="stylesheet" type="text/css" href="<spring:url value="/static/css/elastislide.css"/>"  />
@@ -46,4 +46,4 @@
 </script>
 
 <c:set var="navSearchEnabled" value="false" /> 
-<spring:url value="/static/images/site/ofafeather_logo.png" var="ofafeatherLogo" /> 
+<spring:url value="/static/images/site/ofafeather_logo_white.png" var="ofafeatherLogo" /> 

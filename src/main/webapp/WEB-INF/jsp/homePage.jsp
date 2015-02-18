@@ -8,7 +8,7 @@
      <meta name="robots" content="noindex">
     <%-- Common Metadata, scripts, and CSS --%>
         <%@ include file="/WEB-INF/jsp/partials/commonHead.jsp"%>
-
+        
         <spring:url value="/static/js/front.js" var="frontJS" />
         <spring:url value="/static/js/jquery.geocomplete.js" var="geoCompletePlugin" />
         <script type="text/javascript">
@@ -94,15 +94,16 @@
 	                    <p class="church-info"></p>
 	                    <p class="photographer-credit"></p>
 	                </div>
-	
 	            </div>
     	
                 <div class="features">
+                        <div class="gradient-vertical-white next-section-label">
+                            <h1>Find churches wherever you are</h1>
+                            <h4>Worship where you live or where you are visiting</h4> 
+                        </div>
                     <div class="container-fluid">
                         <div class="row section white" id="featuredChurches">
-                            <div class="col-md-12">
-                                <h1>Find churches wherever you are.</h1>
-                                <h4>Worship where you live or where you are visiting</h4> 
+                            <div class="container">
 
                                 <div class="row masonry">
                                     <div class="col-md-8 col-sm-9">
@@ -166,10 +167,8 @@
                                     </div>
                                     <div class="col-sm-6">
                                     <div class="medium-tile">
-                                        <a href="#">
-                                            <div class="add-church">
-                                                <h2>Add your church</h2>
-                                            </div>
+                                        <a href="./addYourChurch" class="add-church">
+                                            <h2>Add your church</h2>
                                         </a>
                                     </div>
                                     </div>
@@ -219,12 +218,12 @@
                         </div><!-- end featured churches content -->
                         
                         <div class="row section purple">
-                            <div class="col-md-12 video-embed">
-                                <h1>Find your faithful.</h1>
-                                <h2>
-                                    <a href="${addYourChurchLink}">Add a church</a>
-                                    &nbsp;and help people find your parish.
-                                </h2>
+                            <div class="container video-embed">
+                                <h1>Find your faithful</h1>
+                                <h4>
+                                    <a href="${addYourChurchLink}" class="white-underline">Add a church</a>
+                                    and help people find your parish.
+                                </h4>
 
                                 <div class="player">
                                     <!-- youtube embedding code here -->
@@ -241,75 +240,43 @@
                         </div><!-- end featured events content -->
 
                         <div class="row section gray-blue">
-                            <div class="col-md-12 testimonials">
-                                <h1>Find fellowship.</h1>
-                                <h2>Read what others are saying about Of a Feather</h2>
+                            <div class="container testimonials">
+                                <h1>Find fellowship</h1>
+                                <h4>Read what others are saying about Of a Feather</h4>
 
                                 <!-- This could be turned into a dynamic piece with a for loop of some sort -->
                                 <ul>
-                                    <li class="testimonial hidden">
-                                        
-                                        <div class="image col-sm-3">
-                                            <img src="${stetimonialPhoto1}" alt="" class="img-responsive">
+                                <li class="testimonial">
+                                    
+                                    <div class="image col-sm-3">
+                                        <img src="${testimonialPhoto1}" alt="" class="img-responsive">
+                                    </div>
+
+                                    <div class="testimony">
+                                        <div class="col-sm-1 text-right">
+                                            <h3 class="fa fa-quote-left"></h3>
                                         </div>
-
-                                        <div class="testimony">
-                                            <div class="col-sm-1 text-right">
-                                                <span class="icon icon-quote-left"></span>
+                                        <div class="col-sm-7 text-left">
+                                            <div class="h5">
+                                                This is a great tool to connect searching people to your church.
                                             </div>
-                                            <div class="col-sm-7 text-left">
-                                                <div class="h4">
-                                                    This is a great tool to connect searching people to your church.
+                                            <div class="user-info">
+                                                <div class="name">
+                                                    Pastor Brian Gering
                                                 </div>
-                                                <div class="user-info">
-                                                    <span class="name">
-                                                        Pastor Brian Gering
-                                                    </span>
-                                                    <span class="church">
-                                                        Church of the Cross
-                                                    </span>
-                                                    <span class="location">
-                                                        Hayward, CA
-                                                    </span>
+                                                <div class="church">
+                                                    <a href="${testimonialChurch1}">Church of the Cross</a>
                                                 </div>
-                                            </div>
-                                            <div class="col-sm-1 text-left">
-                                                <div class="icon icon-quote-right"></div>
-                                            </div>
-                                        </div>
-                                    </li>
-
-
-                                    <li class="testimonial">
-                                        <div class="image col-sm-3">
-                                            <img class="img-responsive" src="${testimonialPhoto2}" />
-                                        </div>
-
-                                        <div class="testimony">
-                                            <div class="col-sm-1 text-right">
-                                                <span class="icon icon-quote-left"></span>
-                                            </div>
-                                            <div class="col-sm-7 text-left">
-                                                <div class="h4">
-                                                    I encourage every pastor to check out this inventive way for churches to get their names out on the internet. I believe this will enhance your ministry and those who are looking to join your church. Who knows, a new member may be one click away!
-                                                </div>
-                                                <div class="user-info">
-                                                    <span class="name">
-                                                        Pastor Tim Hines, Phd<
-                                                    </span>
-                                                    <span class="church">
-                                                        First Southern Baptist Church
-                                                    </span>
-                                                    <span class="location">
-                                                        San Lorenzo, CA
-                                                    </span>
+                                                <div class="location">
+                                                    <a href="${testimonialLocation1}">Hayward, CA</a>
                                                 </div>
                                             </div>
-                                            <div class="col-sm-1">
-                                                <div class="icon icon-quote-right text-left"></div>
-                                            </div>
                                         </div>
-                                    </li>    
+                                        <div class="col-sm-1 text-left">
+                                            <h3 class="fa fa-quote-right"></h3>
+                                        </div>
+                                    </div>
+                                </li>
                                 
                 
                                 <li class="testimonial">
@@ -317,26 +284,25 @@
                                         <img src="${testimonialPhoto3}" alt="Faithful user" class="img-responsive">
                                     </div>
                                     <div class="col-sm-1 text-right">
-                                        <span class="icon icon-quote-left"></span>
+                                        <h3 class="fa fa-quote-left"></h3>
                                     </div>
-                                    <div class="col-sm7 text-left">
-                                        <div class="h4">
+                                    <div class="col-sm-7 text-left">
+                                        <div class="h5">
                                             I was thrilled to find Of A Feather when searching for a new church! It&apos;s your one-stop shop for finding a church that will meet all of your needs.
                                         </div>
                                         <div class="user-info">
-                                            <span class="name">
-                                                Pastor Tim Hines, Phd<
-                                            </span>
-                                            <span class="church">
-                                                First Southern Baptist Church
-                                            </span>
-                                            <span class="location">
-                                                San Lorenzo, CA
-                                            </span>
+                                            <div class="name">
+                                                Laurie Paddock
+                                            </div>
+                                            <div class="church">
+                                            </div>
+                                            <div class="location">
+                                                <a href="${testimonialLocation3}">San Lorenzo, CA</a>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-1 text-left">
-                                        <span class="icon icon-quote-right"></span>
+                                        <h3 class="fa fa-quote-right"></h3>
                                     </div>
                                 </li>
                                 </ul>
