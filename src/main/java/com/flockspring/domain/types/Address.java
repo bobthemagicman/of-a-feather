@@ -54,4 +54,6 @@ public interface Address
     double getLatitude();
 
     double [] getLocation();
+
+	String getFullState();
 }

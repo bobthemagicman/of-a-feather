@@ -3,12 +3,12 @@
  */
 package com.flockspring.ui.controller;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.flockspring.ui.IdentifiedPage;
 
 /**
  * HomePageController.java
@@ -19,16 +19,19 @@ import org.springframework.web.servlet.ModelAndView;
  */
 
 @Controller
-public class HomePageController {
+public class HomePageController extends IdentifiedPage
+{
 
-	@RequestMapping("/")
+	static final String PAGE_ID = "home";
+
+    @RequestMapping("/")
 	public ModelAndView renderDefaultHomePage() {
-	    Map<String, Object> model = new HashMap<String, Object>();
-	    model.put("navSearchEnabled", false);
-	    
-	    ModelAndView mav = new ModelAndView("homePage", model);
-	  
-	
-		return mav;
+	    return new ModelAndView("homePage");
 	}
+
+    @Override
+    protected String getPageId()
+    {
+        return PAGE_ID;
+    }
 }

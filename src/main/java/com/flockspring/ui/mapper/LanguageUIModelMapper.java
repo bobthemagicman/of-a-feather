@@ -6,6 +6,7 @@ package com.flockspring.ui.mapper;
 import java.util.Set;
 import java.util.TreeSet;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.flockspring.domain.types.Language;

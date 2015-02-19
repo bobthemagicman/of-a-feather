@@ -21,6 +21,7 @@ public class AddressImpl implements Address, Serializable
     private String postalCode;
     private String state;
     private String city;
+    private String fullState;
     private String country;
     private double [] location; 
 
@@ -29,8 +30,8 @@ public class AddressImpl implements Address, Serializable
         
     }
     
-    public AddressImpl(String street1, String street2, String postalCode, String state, 
-            String city, String country, double [] location)
+    AddressImpl(final String street1, final String street2, final String postalCode, final String state, 
+            final String city, final String country, final double [] location, final String fullState)
     {
         this.street1 = street1;
         this.street2 = street2;
@@ -39,6 +40,7 @@ public class AddressImpl implements Address, Serializable
         this.country = country;
         this.city = city;
         this.location = location;
+        this.fullState = fullState;
     }
 
     public String getStreet1()
@@ -70,8 +72,18 @@ public class AddressImpl implements Address, Serializable
     {
         return country;
     }
+    
+    public String getFullState()
+	{
+		return fullState;
+	}
 
-    @Override
+	public void setFullState(String fullState)
+	{
+		this.fullState = fullState;
+	}
+
+	@Override
     public double[] getLocation()
     {
         return location;
@@ -110,38 +122,69 @@ public class AddressImpl implements Address, Serializable
         return location != null && location.length != 0 ? location[1] : 0.0;
     }
 
-    public void setStreet1(String street1)
+    public static class AddressBuilder
     {
-        this.street1 = street1;
-    }
 
-    public void setStreet2(String street2)
-    {
-        this.street2 = street2;
-    }
+        protected String street1;
+        protected String street2;
+        protected String postalCode;
+        protected String state;
+        protected String city;
+        protected String country;
+        protected double[] location;
+        protected String fullState;
 
-    public void setPostalCode(String postalCode)
-    {
-        this.postalCode = postalCode;
-    }
-
-    public void setState(String state)
-    {
-        this.state = state;
-    }
-
-    public void setCity(String city)
-    {
-        this.city = city;
-    }
-
-    public void setCountry(String country)
-    {
-        this.country = country;
-    }
-
-    public void setLocation(double[] location)
-    {
-        this.location = location;
+        public AddressBuilder withStreet1(final String street1)
+        {
+            this.street1 = street1;
+            return this;
+        }
+        
+        public AddressBuilder withStreet2(final String street2)
+        {
+            this.street2 = street2;
+            return this;
+        }
+        
+        public AddressBuilder withPostalCode(final String postalCode)
+        {
+            this.postalCode = postalCode;
+            return this;
+        }
+        
+        public AddressBuilder withState(final String state)
+        {
+            this.state = state;
+            return this;
+        }
+        
+        public AddressBuilder withCity(final String city)
+        {
+            this.city = city;
+            return this;
+        }
+        
+        public AddressBuilder withCountry(final String country)
+        {
+            this.country = country;
+            return this;
+        }
+        
+        public AddressBuilder withLocation(final double[] location)
+        {
+            this.location = location;
+            return this;
+        }
+        
+        public AddressBuilder withFullState(final String fullState)
+        {
+        	this.fullState = fullState;
+        	return this;
+        }
+        
+        public AddressImpl build()
+        {
+            return new AddressImpl(street1, street2, postalCode, state, city, country, location, fullState);
+        }
     }
 }

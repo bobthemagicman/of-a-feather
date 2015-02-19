@@ -1,0 +1,589 @@
+.search-options-panel {
+    
+    .panel-heading {
+        
+        padding: 0px;
+        background-color: @colorGrayLight;
+        .accordion-toggle {
+            
+            color: @colorGrayDark;
+            display: block;
+            width: 100%;
+            line-height: 30px;
+            padding: (@standard-margin / 2);
+            font-weight: 700;
+            &:hover {
+                background-color: @color5;
+            }
+            .chevron-icon, .plus-icon, .minus-icon {
+                font-size: 0.8em;
+                float: right;
+                clear: right;
+                display: inline-block !important;
+                
+                line-height: 25px !important;
+                .glyphicon;
+                .glyphicon-chevron-right;
+                &.plus-icon {
+                    .glyphicon-plus-sign;
+                }
+                &.minus-icon {
+                   
+                    .glyphicon-minus-sign;
+                }
+            }
+            &.collapsed {
+                .chevron-icon, .plus-icon {
+                    .glyphicon-chevron-right;
+                    &.plus-icon {
+                        .glyphicon-plus-sign;
+                    }
+                }
+            }
+            &.active {
+                .chevron-icon, .plus-icon {
+                    .glyphicon-chevron-down;
+                    &.plus-icon {
+                        .glyphicon-plus-sign;
+                    }
+                }
+                //background-color: @color3;
+            }       
+        }
+
+    }
+
+    .panel {
+        border: none;
+        .rounded-corners(8px);
+        .panel-body {
+            background-color: @colorGrayLight;
+            border: none !important;
+        }
+    }
+
+    .badge {
+        float: right;
+        clear: right;
+    }
+
+    .see-more-link {
+        text-align: right;
+        display: inline-block;
+        width: 100%;
+    }
+
+    #moreProgramsModal .modal-dialog {
+        width: auto;
+        max-width: 750px;
+        ul.nav-tabs li a {
+            white-space: nowrap;
+        }
+
+    }
+
+    .checkbox-group {
+
+        input[type=checkbox] {
+            position: absolute; 
+            overflow: hidden; 
+            clip: rect(0 0 0 0); 
+            height:1px; 
+            width:1px; 
+            margin:-1px; 
+            padding:0;
+            border:0;
+        }
+
+        label {
+            background-image:url("http://www.ofafeather.org/static/images/site/custom_checkbox.png");
+            padding-left:25px;
+            height:20px; 
+            display:block;
+            line-height:20px;
+            background-repeat:no-repeat;
+            background-position: 0 0;
+            font-size: 1em;
+            font-weight: normal;
+            vertical-align:middle;
+            cursor:pointer;
+            white-space: nowrap;
+            &:hover {
+                color: @darkest-gray-color;
+            }
+            &.checked {
+                background-position: 0 -20px;
+                color: @darkest-gray-color;
+            }   
+            &.time-label {
+                @media(max-width: @screen-md) {
+                    margin-bottom: 25px;
+                }
+            }
+        }
+
+        
+
+        .time-description {
+            float: right;
+            clear: right;
+            font-size: 0.8em;
+            @media(max-width: @screen-md) {
+                clear: both;
+            }
+        }
+
+    }
+
+    .modal-header {
+        background-color: @colorGrayLight;
+    }
+
+    .close {
+        color: @color1;
+        &:hover {
+            color: darken(@color1, 20%);
+        }
+        opacity: 1;
+        outline: none;
+        font-size: 2em;
+    }
+
+    .modal-body {
+        
+        .tab-pane {
+            border: 1px solid #dddddd;
+            border-top: 0px;
+            padding: @standard-margin;
+        }
+    }
+
+    h5 {
+        font-style: normal;
+        font-weight: 300;
+        font-size: 1.2em;
+        color: @colorGrayDark;
+        text-indent: 0.5em;
+        &.slider-heading {
+            text-align: center;
+            margin: 20px 0px 0px 0px;
+            
+            text-indent: 0px;
+            font-size: 1em;
+            font-weight: 500;
+            &:first-child {
+                margin-top: 10px;
+            }
+        }
+    }       
+
+    .day-buttons {
+        
+        text-align: center;
+        label {
+            width: 3.3em;
+            .unselectable;
+            background: none;
+            color: @colorGrayDark;
+            display: inline-block;
+            margin: 5px 2px;
+            padding: 6px 5px 7px 5px !important;
+            background-color: @colorGrayLight;
+            border: 1px solid @colorGray;
+            font-size: 0.75em;
+            //font-weight: bold;
+            
+            .transition-effects;
+            span {
+                line-height: 2em;
+                margin: -4px -6em;
+                .unselectable;
+            }
+            &:hover {
+                background-color: @color3;
+                color: @darkest-gray-color;
+            }
+            &.ui-state-active {
+                background: none;
+                background-color: @color1;
+                color: @lightest-gray-color;
+            }
+            overflow: hidden;
+            .rounded-corners(10em) !important;
+            &.wednesday {
+                
+                span {
+                    
+                    margin: -4px -6px;
+                }
+            }
+        }
+    }
+
+    .gay-affirming {
+        margin: 10px auto 0px auto;
+        label {
+            
+            .unselectable;
+            .transition-effects;
+            color: darken(@colorGray, 20%);
+            background: none;
+            background-color: @colorGrayLight;
+            border: 1px solid @colorGray;
+            font-size: 0.8em;
+            font-weight: 500;
+            padding: 5px 2px;
+            &.ui-state-active {
+                background: none;
+                color: @lightest-gray-color;
+                background-color: @color1;
+                &:hover {
+                    background: none;
+                    background-color: @color1;
+                    color: @lightest-gray-color;
+                }
+            }
+            &:hover {
+                background: none;
+                background-color: @color3;
+                color: @colorGrayDark;
+            }
+        }
+    }   
+
+    .ui-button-text {
+        padding: 0.25em;
+    }
+
+    .slider-labels {
+        .make-row();
+        white-space: nowrap;
+        font-size: 0.8em;
+        div:last-child {
+            text-align: right;
+        }
+        margin: 2px;
+        .slider-label-container {
+            .make-xs-column(4);
+            padding: 0px;
+            @media(max-width: @screen-md) {
+                font-size: 0.7em;
+            }
+        }
+    }
+
+    .ui-widget-header {
+        background: none;
+        background-color: @colorGrayDark;
+        
+    }
+
+    .ui-slider {
+        margin-bottom: 15px;
+        overflow: hidden;
+        background: none;
+        background-color: darken(@colorGray, 10%);
+    }
+
+    .ui-slider-handle {
+        height: 100%;
+        top: 0px;
+        cursor: pointer;
+        background: none;
+        background-color: white;
+        border: none;
+        outline: none;
+    }
+
+    .ui-state-hover {
+        background-color: white;
+    }
+
+    .ui-slider-range {
+        background-color: @color3;
+    }
+
+}
+
+//mozilla hack
+body:not(:-moz-handler-blocked) .time-description
+{
+    margin-top: -20px;
+    @media(max-width: @screen-md) {
+        margin-top: 0px;
+    }
+}
+
+.map-panel {
+    z-index: 1000;
+    border: 0px;
+    margin-top: (@standard-margin / 3);
+        .panel-body {
+            padding: 0px;
+        }
+    a.active {
+        background-color: @colorGrayLight !important;
+        &:hover {
+            background-color: @color5 !important;
+        }
+    }
+    .chevron-icon {
+      //  .glyphicon-globe;
+    }
+        
+}
+
+
+
+.left-column, .right-column {
+    margin: 50px 0px 40px 0px;
+    position: static;
+    .ajax-loader {
+        position: absolute;
+    }
+}
+
+
+.results-message {
+    text-align: center;
+    line-height: 1.5em;
+    &:first-line {
+        font-size: 2em;
+        color: @color1;
+        font-weight: bold;
+        line-height: 3em;
+    }
+}   
+
+.showing-results {
+    text-align: left;
+    display: block;
+    width: 100%;
+    color: @colorGrayDark;
+    margin-left: 25px;
+    text-transform: uppercase;
+    line-height: (2 * @standard-margin);
+    .now-showing, .total-results {
+        font-weight: 900;
+        margin: 0px 5px;
+    }
+    .user-search {
+      font-style: italic;
+      text-transform: none;
+    }
+}
+
+
+.search-result-entry {
+    display: block;
+    
+    .transition-effects;
+    .make-row();
+    cursor: pointer;
+    .diagonal-light-gray-gradient;
+    margin: 5px 15px;
+    padding: 0px;
+    border: none;
+    position: relative;
+    .rounded-corners(6px);
+    
+    &:hover {
+        .favorite-icon {
+            .transition-effects;
+            color: @color3;
+            &.favorited {
+                color: @color1;
+            }
+            &:hover {
+                color: @color1;
+            }
+        }
+    }
+    
+    
+    .search-result-image-container {
+        .make-sm-column(3);
+        max-height:160px;
+        overflow: hidden;
+        padding: 15px;
+        img {
+            .img-responsive;
+            .rounded-corners;
+            padding: 0px;
+        }
+    }
+    
+    .search-result-info {
+        .make-sm-column(9);
+
+        padding: 15px;
+
+        color: darken(@colorGray,15%);
+        font-size: 1em;
+        font-weight: 500;
+
+        .church-name {
+            display: block;
+            font-size: 1.5em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            width: 454px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            
+            .transition-effects;
+        }
+
+        .church-denomination {
+            display: block;
+        }   
+
+        .church-location {
+            display: block;
+            img {
+                height: 1em;
+                margin: 0em 0.5em 0.1em 0.5em;
+            }
+            .distance {
+                font-weight: bold;
+            }
+        }
+
+        .church-sliders {
+            .make-row();
+
+            font-weight: normal;
+            margin-top: 15px;
+
+            .slider-container {
+                .make-row();
+
+                .slider-label {
+                    .make-xs-column(4);
+                    font-size: 0.8em;
+                    margin: 0.25em 0em;
+                    text-align: right;
+                    text-transform: uppercase;
+                }
+
+                .info-slider {
+                    .make-xs-column(4);
+
+                    border: 1px solid #8d8d8d;
+                    height: 0.6em;
+                    margin: 0.35em 0em 0.25em 0em;
+                    overflow: hidden;
+
+                    &.ui-state-disabled {
+                        .translucent(100) !important;
+                    }
+                    
+                    &.ui-widget-content {
+                        background: none;
+                        border: none;
+                        background-color: #8d8d8d;
+                    }
+
+                    .ui-slider-handle {
+                        height: 100%;
+                        width: 1.2em;
+                        
+                        top: 0px;
+                        background: none;
+                        background-color: @colorWhite;
+                        border: 1px solid #8d8d8d;
+                        .rounded-corners(6px);
+                        outline: none;
+                    }
+
+                }
+
+            }
+
+        }
+
+
+    }
+
+    .favorite-icon {
+        display: block;
+        position: absolute !important;
+        right: 20px !important;
+        top: 20px !important;
+        
+        &.favorited {
+            .glyphicon-heart;
+            color: @color1;
+        }
+    }
+}
+
+
+.do-not-show {
+    display: none !important;
+}
+
+.pagination-centered {
+   text-align: center;
+   width: 100%;
+}
+
+div.pagination ul {
+     background: none;
+     list-style-type: none;
+     &> li {
+        display: inline-block;
+        &.active {
+            a {
+                color: @colorGrayDark;
+                background-color: darken(@colorGrayLight, 15%) !important;
+                border: none;
+                &:hover {
+                    background-color: darken(@colorGrayLight, 15%) !important;
+                }
+            }
+        }
+        > a {
+            font-size: 1em;
+            border: none !important;
+            background-color: @colorGrayLight !important;
+            color: @color1;
+            display: inline-block;
+            font-weight: 900;
+            padding: 5px 12px;
+            margin: 5px;
+            .rounded-corners(50px);
+            &.active {
+                background-color: @color1 !important;
+                color: white !important;
+            }
+            &:hover {
+                background-color: @color3 !important;
+                color: @darkest-gray-color !important;
+            }
+        }
+    }
+}
+
+.pagination {
+    li {
+        a {
+            cursor: pointer;
+        }
+    }
+}
+
+
+.back-to-results-link {
+    position: relative;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 15px;
+    min-height: 20px;
+    
+    a.btn.btn-primary {
+        font-size: 0.9em;
+        padding: 0.2em 0.4em;
+        border: none;
+    }
+}

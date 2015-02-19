@@ -5,8 +5,12 @@
 
 
 $(document).ready(function() {
-   
-   loadImageInfo(); 
+
+    $(window).on("resize", function() {
+        matchGradient();
+    });
+
+    loadImageInfo(); 
     
    //Currently using only one hero image so no need to cycle
    /*
@@ -25,7 +29,7 @@ $(document).ready(function() {
     //$(".header-search .input-group").popover();
     
     initializeSearchBar();
-    
+
 });
 
 function initAutoComplete()
@@ -98,7 +102,6 @@ function fixTabPanes() {
     maxHeight += 'px';
     
     $(".tab-pane .item").css("height",maxHeight);
-    
 }
 
 function initializeSearchBar() {
@@ -114,5 +117,11 @@ function initializeSearchBar() {
         }
         
     });
-    
+}
+
+function matchGradient() {
+    var $gradient = $(".gradient-vertical-white");
+    var img = $("img.active-image");
+
+    $gradient.css({ "top" : -(window.innerHeight - img.height() + 35) + "px" });
 }

@@ -15,7 +15,7 @@ import java.util.NavigableSet;
 public class SearchResultsUIModel
 {
 
-    private final NavigableSet<SearchResultUIModel> items;
+    private final NavigableSet<ChurchListingUIModel> churchListings;
     private final int currentPage;
     private final long totalNumberOfResults;
     private final int pageStartIndex;
@@ -25,11 +25,11 @@ public class SearchResultsUIModel
     private final double searchLongitude;
     private final String userInputQuery;
 
-    public SearchResultsUIModel(NavigableSet<SearchResultUIModel> items, int currentPage, long totalNumberOfResults, 
+    public SearchResultsUIModel(NavigableSet<ChurchListingUIModel> items, int currentPage, long totalNumberOfResults, 
             int pageStartIndex, int pageEndIndex, double searchLatitude, double searchLongitude, String userInputQuery,
             int totalNumberOfPages)
     {
-        this.items = items;
+        this.churchListings = items;
         this.currentPage = currentPage;
         this.totalNumberOfResults = totalNumberOfResults;
         this.pageStartIndex = pageStartIndex;
@@ -40,9 +40,9 @@ public class SearchResultsUIModel
         this.totalNumberOfPages = totalNumberOfPages;
     }
 
-    public NavigableSet<SearchResultUIModel> getItems()
+    public NavigableSet<ChurchListingUIModel> getChurchListings()
     {
-        return items;
+        return churchListings;
     }
 
     public int getCurrentPage()

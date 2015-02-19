@@ -22,7 +22,7 @@ $(document).ready(function() {
     if(showOutsideRegionModal) {
         $(".outside-beta-region-modal").modal("show");
         
-        var options = {url : 'search/ajax/out-of-region-search', success: betaRegionEmailUpdateCallback}; 
+        var options = {url : 'search/async/out-of-region-search', success: betaRegionEmailUpdateCallback}; 
         $("#email-submit-form").ajaxForm(options);
     }
     
@@ -250,9 +250,37 @@ function initializeTooltips() {
 }
 
 function initializeFavorites() {
-    $(".favorite-icon").click(function() {
-       $(this).toggleClass("favorited");
-    });
+	if(!($(".favorite").parent().is("a"))) {
+        $(".favorite").click(function(e) {
+    		var ele = $(this);
+    		var churchId = ele.parents(".search-result-entry").data("result-id");
+    		var token = $("meta[name='_csrf']").attr("content");
+            var header = $("meta[name='_csrf_header']").attr("content");
+            var offImgSrc = ele.parent().data("icon-off-src");
+            var onImgSrc = ele.parent().data("icon-on-src");
+            
+    		$.ajax({
+    		    beforeSend: function(xhr) {
+                    xhr.setRequestHeader(header, token);
+                },
+    		    url: requestBaseUrl + 'user/async/favorite/' + churchId,
+                type: data.currentStatusFavorite ? "DELETE" : "PUT",
+                success: function(data) {
+                    var self = self;
+                    if(data.hasOwnProperty("asyncStatus") && data.asyncStatus == "SUCCESS" && data.hasOwnProperty("errors") && data.errors.length == 0) {
+                        if(data.currentStatusFavorite) {
+                            ele.attr( "src", onImgSrc);        
+                        }else {
+                            ele.attr( "src", offImgSrc);                        
+                        }
+                    }
+                    
+                }
+            });
+            
+            e.preventDefault();        
+        });
+    }
 }
 
 function paginate(resultsPerPage) {
@@ -556,7 +584,7 @@ function generateSearchResultEntry(item) {
     item.distanceFromSearchPoint = parseFloat(item.distanceFromSearchPoint).round(2);
 
     //var searchResultTemplate = '<div class="search-result-entry show-result" data-result-id="{{id}}" data-current-result="true" data-church-name="{{organizationName}}" data-latitude="{{latitude}}" data-longitude="{{longitude}}"> <div class="search-result-image-container"> <img src="' + resourceBaseURL + 'church-images/{{id}}/{{displayImage.path}}" alt="{{displayImage.alt}}" title="{{displayImage.title}}" /> </div> <div class="search-result-info"> <div class="church-basic-info"> <a href="/church-profile/{{id}}?dist={{distanceFromSearchPoint}}"><span class="church-name">{{organizationName}}</span></a> <span class="church-denomination">{{denomination}}</span> <span class="church-location">{{city}}, {{state}} {{postalCode}} <img src="' + resourceBaseURL + 'images/site/right_arrow.png" /> <span class="distance">{{distanceFromSearchPoint}}</span> miles away </span> </div> <div class="church-sliders"> <div class="slider-container"> <div class="slider-label">Service Style</div> <div class="info-slider" data-slider-value="{{serviceStyleSliderValue}}"></div> </div> <div class="slider-container"> <div class="slider-label">Music</div> <div class="info-slider" data-slider-value="{{musicStyleSliderValue}}"></div> </div> <div class="slider-container"> <div class="slider-label">Dress Attire</div> <div class="info-slider" data-slider-value="{{dressAttireSliderValue}}"></div> </div> </div> </div> <div class="favorite-icon"> <img src="' + resourceBaseURL + 'images/site/heart_icon.png" /> </div> </div>';
-    var searchResultTemplate = '<div class="search-result-entry show-result" data-result-id="{{id}}" data-current-result="true" data-church-name="{{organizationName}}" data-latitude="{{latitude}}" data-longitude="{{longitude}}"> <div class="search-result-image-container"> <img src="{{displayImage.path}}" alt="{{displayImage.alt}}" title="{{displayImage.title}}" /> </div> <div class="search-result-info"> <div class="church-basic-info"> <a href="/church-profile/{{id}}?dist={{distanceFromSearchPoint}}"><span class="church-name">{{organizationName}}</span></a> <span class="church-denomination">{{denomination}}</span> <span class="church-location">{{city}}, {{state}} {{postalCode}} <img src="' + resourceBaseURL + 'images/site/right_arrow.png" /> <span class="distance">{{distanceFromSearchPoint}}</span> miles away </span> </div> <div class="church-sliders"> <div class="slider-container"> <div class="slider-label">Service Style</div> <div class="info-slider" data-slider-value="{{serviceStyleSliderValue}}"></div> </div> <div class="slider-container"> <div class="slider-label">Music</div> <div class="info-slider" data-slider-value="{{musicStyleSliderValue}}"></div> </div> <div class="slider-container"> <div class="slider-label">Dress Attire</div> <div class="info-slider" data-slider-value="{{dressAttireSliderValue}}"></div> </div> </div> </div> <div class="favorite-icon"> <img src="' + resourceBaseURL + 'images/site/heart_icon.png" /> </div> </div>';
+    var searchResultTemplate = '<div class="search-result-entry show-result" data-result-id="{{id}}" data-current-result="true" data-church-name="{{organizationName}}" data-latitude="{{latitude}}" data-longitude="{{longitude}}"> <div class="search-result-image-container"> <img src="{{displayImage.path}}" alt="{{displayImage.alt}}" title="{{displayImage.title}}" /> </div> <div class="search-result-info"> <div class="church-basic-info"> <a href="/churches/{{id}}?dist={{distanceFromSearchPoint}}"><span class="church-name">{{organizationName}}</span></a> <span class="church-denomination">{{denomination}}</span> <span class="church-location">{{city}}, {{state}} {{postalCode}} <img src="' + resourceBaseURL + 'images/site/right_arrow.png" /> <span class="distance">{{distanceFromSearchPoint}}</span> miles away </span> </div> <div class="church-sliders"> <div class="slider-container"> <div class="slider-label">Service Style</div> <div class="info-slider" data-slider-value="{{serviceStyleSliderValue}}"></div> </div> <div class="slider-container"> <div class="slider-label">Music</div> <div class="info-slider" data-slider-value="{{musicStyleSliderValue}}"></div> </div> <div class="slider-container"> <div class="slider-label">Dress Attire</div> <div class="info-slider" data-slider-value="{{dressAttireSliderValue}}"></div> </div> </div> </div> <div class="favorite-icon"> <img src="' + resourceBaseURL + 'images/site/heart_icon.png" /> </div> </div>';
 
     var html = Mustache.to_html(searchResultTemplate, item);
 
@@ -576,34 +604,34 @@ function updateResults(filterResult) {
         $(".showing-results").show();
         $(".pagination").show();
         
-        for(i = 0; i < filterResult.organizations.items.length; i++) {
+        for(i = 0; i < filterResult.organizations.churchListings.length; i++) {
 
-            if(filterResult.organizations.items[i].displayImage === null) {
-                var di = { "path": "http://placehold.it/200x200", "alt": "No Image Available", "title": filterResult.organizations.items[i].organizationName } ;
+            if(filterResult.organizations.churchListings[i].displayImage === null) {
+                var di = { "path": "http://placehold.it/200x200", "alt": "No Image Available", "title": filterResult.organizations.churchListings[i].organizationName } ;
                 
-                filterResult.organizations.items[i].displayImage = di;
+                filterResult.organizations.churchListings[i].displayImage = di;
             }
             else {
-                filterResult.organizations.items[i].displayImage.path = resourceBaseURL + 'images/church-images/' + filterResult.organizations.items[i].id + '/' + filterResult.organizations.items[i].displayImage.path;
+                filterResult.organizations.churchListings[i].displayImage.path = resourceBaseURL + 'images/church-images/' + filterResult.organizations.churchListings[i].id + '/' + filterResult.organizations.churchListings[i].displayImage.path;
             }
 
-            var existingResult = $(".search-result-entry[data-result-id='" + filterResult.organizations.items[i].id + "']");
+            var existingResult = $(".search-result-entry[data-result-id='" + filterResult.organizations.churchListings[i].id + "']");
 
             if(!existingResult.length) {
 
                 var nodeForInsertion = $(".search-result-entry").filter(function() {
-                   return $(this).find(".distance").html() < filterResult.organizations.items[i].distanceFromSearchPoint; 
+                   return $(this).find(".distance").html() < filterResult.organizations.churchListings[i].distanceFromSearchPoint; 
                 });
 
-                //$(".search-results").append(generateSearchResultEntry(filterResult.organizations.items[i]));
+                //$(".search-results").append(generateSearchResultEntry(filterResult.organizations.churchListings[i]));
 
                 nodeForInsertion = nodeForInsertion.last();
 
                 if(nodeForInsertion.length === 0) {
-                    $(".search-results").prepend(generateSearchResultEntry(filterResult.organizations.items[i]));
+                    $(".search-results").prepend(generateSearchResultEntry(filterResult.organizations.churchListings[i]));
                 }
                 else {
-                    nodeForInsertion.after(generateSearchResultEntry(filterResult.organizations.items[i]));
+                    nodeForInsertion.after(generateSearchResultEntry(filterResult.organizations.churchListings[i]));
                 }
             }
             else {
@@ -646,12 +674,12 @@ function noResults() {
 function filterRequest() {
 
     $.ajaxSetup({ scriptCharset: "utf-8" , contentType: "application/json; charset=utf-8"});
-
-    var searchFilterRequest = "search/ajax/filter-results";
-
+    var searchFilterRequest = "search/async/filter-results";
     var json = constructJSON();
-
-    $.ajax({
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    
+	$.ajax({
         url: searchFilterRequest,
         data: JSON.stringify(json),
         type: "POST",
@@ -659,6 +687,7 @@ function filterRequest() {
         beforeSend: function(xhr) {
             xhr.setRequestHeader("Accept", "application/json");
             xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.setRequestHeader(header, token);
         },
         success: function(data) {
             //console.log(JSON.stringify(data));

@@ -21,4 +21,10 @@ public class AffiliationPropertyEditor extends PropertyEditorSupport
     {
         setValue(Affiliation.valueOf(musicStyleAsText.toUpperCase()));
     }
+    
+    @Override
+    public String getAsText()
+    {
+    	return ((Affiliation)getValue()).name();
+    }
 }

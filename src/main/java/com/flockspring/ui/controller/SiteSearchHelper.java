@@ -50,17 +50,21 @@ public final class SiteSearchHelper
         session.setAttribute(ORG_FILTER, organizationFilter);
     }
 
-    public Object hasPreviousSearch()
+    public boolean hasPreviousSearch()
     {
-        return getOrganizationFilterFromSession() != null;
+        return !StringUtils.isEmpty(getOrganizationFilterFromSession().getUserQuery());
     }
 
     public String getSearchQuery()
     {
         OrganizationFilter filter = getOrganizationFilterFromSession();
-        StringBuilder query = new StringBuilder("?").append(SEARCH_PARAM_NAME).append("=").append(filter.getUserQuery());
-
-        return query.toString();
+        String query = filter.getUserQuery();
+        if(StringUtils.hasText(query))
+        {
+        	return new StringBuilder("?").append(SEARCH_PARAM_NAME).append("=").append(query).toString();
+        }
+        
+        return "";
     }
 
     public String createAndSaveUUIDIfNoneExists()

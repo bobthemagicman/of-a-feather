@@ -1,0 +1,416 @@
+
+.profile-top {
+
+    .make-row();
+    margin-top: 15px;
+
+    .media-container {
+        .make-sm-column(6);
+
+        .video-player-container {
+            display: none;
+            position: relative;
+            background-color: @colorBlack;
+            height: 500px;
+            padding: 0px;
+            border: 10px solid @colorGrayLight;
+            .rounded-corners-top-left;
+            .rounded-corners-top-right;
+            .rounded-corners-bottom-right;
+            &.active-media {
+                display: block;
+            }
+            #videoPlayer {
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                .rounded-corners;
+            }
+        }
+
+        .media-carousel-container {
+            display: none;
+            position: relative;
+            background-color: @colorGrayLight;
+            height: 500px;
+            padding: 10px;
+            .rounded-corners;
+            &.active-media {
+                display: block;
+            }
+
+            .media-carousel {
+                height: 100%;
+                overflow: hidden;
+                .rounded-corners;
+                .media-left-arrow, .media-right-arrow {
+                    position: absolute;
+                    .translucent(0);
+                    top: 45%;
+                    z-index: 2;
+                    .transition-effects;
+                    cursor: pointer;
+                    &:hover {
+                        .translucent(100) !important;
+                    }
+                }
+                .media-left-arrow {
+                    left: 10px;
+                }
+                .media-right-arrow {
+                    right: 10px;
+                }
+                &:hover {
+                    .media-left-arrow, .media-right-arrow {
+                        .translucent(75);
+                    }
+                }
+                .carousel-inner {
+                    background-color: @darkest-gray-color;
+                    line-height: 480px;
+                    img {
+                        .rounded-corners;
+                        //min-height: 500px;
+                        width: 100%;
+                        height: auto;
+                        //min-width: 535px;
+                        //max-width: 750px;
+                        //min-height: 535px;
+                        //max-height: 750px;
+                        display: inline-block;
+                        vertical-align: middle;
+                        margin: auto;
+                    }
+                    .video-placeholder {
+                        position: relative;
+                        .play-button {
+                            cursor: pointer;
+                            position: absolute;
+                            top: 200px;
+                            left: 225px;
+                            width: 0px;
+                            height: 0px;
+                            border-style: solid;
+                            border-width: 50px 0 50px 86.6px;
+                            border-color: transparent transparent transparent #7cba2b;
+                            .translucent(90);
+                            .transition-effects;
+                            &:hover {
+                                .translucent(100);
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+
+        .elastislide-wrapper {
+            box-shadow: none;
+            nav {
+                span {
+                    background: none;
+                    background-repeat: no-repeat;
+                    top: 55%;
+                    .rounded-corners(0px);
+                }
+            }
+            .elastislide-prev {
+                background-image: url("http://www.ofafeather.org/static/images/site/left_arrow.png");
+                &:hover {
+                    background-image: url("http://www.ofafeather.org/static/images/site/left_arrow_hover.png");
+                }
+                left: 20px;
+            }
+            .elastislide-next {
+                background-image: url("http://www.ofafeather.org/static/images/site/right_arrow.png");
+                &:hover {
+                    background-image: url("http://www.ofafeather.org/static/images/site/right_arrow_hover.png");
+                }
+                right: 5px;
+            }
+        }
+
+        .elastislide-list {
+            box-shadow: 0px;
+            li {
+                background-color: @darkest-gray-color;
+                cursor: pointer;
+                display: inline-block;
+                height: 70px;
+                width: 70px;
+                margin: 3px;
+                overflow: hidden;
+                .rounded-corners;
+            }
+            img {
+                display: inline-block;
+                min-width: 76px;
+                
+                height: 76px;
+                margin: 0px;
+                .rounded-corners;
+                .transition-effects;
+                &:hover {
+                    .translucent(70);
+                }
+            }
+        }
+
+        .media-icons-container {
+            text-align: center;
+
+            .thumbnails-left-arrow, .thumbnails-right-arrow {
+                display: inline-block;
+                height: 80px;
+                width: 25px;
+                position: relative;
+                cursor: pointer;
+                img {
+                    .transition-effects;
+                    position: absolute;
+                    top: 31.5px;
+                    left: 8px;
+                    &.arrow-hover {
+                        .translucent(0);
+                    }
+                }
+                &:hover {
+                    img {
+                        .translucent(0);
+                        &.arrow-hover {
+                            .translucent(100);
+                        }
+                    }
+                }  
+            }
+            .carousel-inner {
+                display: inline-block;
+                margin-top: 5px;
+                width: auto;
+            }
+            .thumbnails-group {
+                .photo-thumb, .video-thumb {
+                    background-color: @darkest-gray-color;
+                    width: 70px;
+                    height: 70px;
+                    display: inline-block;
+                    overflow: hidden;
+                    margin: 2px;
+                    .rounded-corners;
+
+                    img {
+                        display: inline-block;
+                        min-height: 70px;
+                        min-width: 70px;
+                        max-height: 100px;
+                        max-width: 100px;
+                        .rounded-corners;
+                        .transition-effects;
+                        &:hover {
+                            .translucent(70);
+                            cursor: pointer;
+                        }
+                    }
+                }
+                .video-thumb {
+                    position: relative;
+                    &:hover {
+                        .play-button {
+                            .translucent(100);
+                        }
+                    }
+                    .play-button {
+                        cursor: pointer;
+                        position: absolute;
+                        top: 15px;
+                        left: 20px;
+                        width: 0px;
+                        height: 0px;
+                        border-style: solid;
+                        border-width: 20px 0 20px 34.6px;
+                        border-color: transparent transparent transparent #7cba2b;
+                        .translucent(90);
+                        .transition-effects;
+                        &:hover {
+                            .translucent(100);
+                        }                        
+                    }
+                }
+                
+            }
+        }
+
+    }
+
+    .profile-top-info {
+        .make-sm-column(6);
+
+        .church-intro-container {
+            .make-row();
+
+            .church-intro {
+                .make-xs-column(10);
+                font-size: 0.9em;
+
+                h1 {
+                    margin: 0px 0px 5px 0px;
+                    font-size: @header1-font-size;
+                    font-weight: normal;
+                    color: @colorBlack;
+                }
+
+                h2 {
+                    margin: 0px 0px 5px 0px;
+                    font-size: @header2-font-size;
+                    color: @colorGrayDark;
+                }
+
+                .basic-info-container {
+                    .make-row();
+                    margin: 0px;
+
+                    .profile-large-icon-container {
+                        .make-xs-column(1);
+                        padding: 10px;
+                        .img-responsive;
+                    }
+
+                    .basic-info {
+                        .make-xs-column(11);
+                        margin: 5px 0px;
+
+                        .church-leader {
+                            color: @color1;
+                        }
+                    }
+
+                }
+
+                .contact-info-container {
+                    .make-row();
+                    margin: 0px;
+
+                    .profile-large-icon-container {
+                        .make-xs-column(1);
+                        padding: 10px;
+                        .img-responsive;
+                    }
+
+                    .contact-info {
+                        .make-xs-column(11);
+                        margin: 5px 0px;
+                    }
+                    
+
+                }
+
+            }
+
+            .profile-icons-container {
+                .make-xs-column(2);
+                
+                img {
+                    display: block;
+                    float: right;
+                    clear: both;
+                    width: 23px;
+                    height: 23px;
+                    margin: 0px 0px 15px 0px;
+                    cursor: pointer;
+                }
+            }
+
+        }
+
+       .visit-us-container {
+            .make-row();
+            margin: 25px 0px;
+
+            .visit-us-button {
+                .make-xs-column(4);
+                min-width: 185px;
+
+                .visit-us-icon {
+                    .make-xs-column(4);
+                    height: 35px;
+                    padding: 7.5px;
+                }
+
+                .visit-us-text {
+                    .make-xs-column(8);
+                    font-size: @button-font-size;
+                    font-weight: bold;
+                    height: 35px;
+                    padding: 7.5px;
+                }
+
+                .transition-effects;
+                height: 50px;
+                .rounded-corners(10px);
+                padding-top: 0px;
+                border: none;
+            }
+
+            .visit-us-times {
+                .make-xs-column(8);
+                padding-top: 5px;
+                padding-left: 20px;
+                margin: 0px -20px;
+                img {
+                    display: block;
+                    float: left;
+                    padding-left: 10px;
+                    margin: 10px 15px 15px 5px;
+                }
+                p {
+                    
+                }
+            }
+
+        }
+
+        .location-info {
+            .make-row();
+            position: relative;
+
+            .location {
+                .make-sm-column(8);
+                margin: 5px 0px;
+
+                .transportation-info {
+                    color: @color1;
+                }
+
+            }
+
+            .distance-info {
+                .make-sm-column(4);
+                position: static;
+
+                .distance {
+                    display: block;
+                    position: absolute;
+                    bottom: 5px;
+                    right: 15px;
+                }
+
+            }
+
+        }
+
+        .map-container {
+            .make-row();
+
+            height: 200px;
+            border: 0px;
+            margin: 0px;
+
+            #map-canvas {
+                .rounded-corners(6px);
+            }
+        }
+
+    }
+
+}

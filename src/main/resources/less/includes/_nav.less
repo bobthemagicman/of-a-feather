@@ -1,0 +1,233 @@
+
+@navbar-height: 65px;
+
+.navbar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    
+    height: @navbar-height;
+    clear: right;
+    padding-top: 1.5em;
+    margin-bottom: 0px;
+    border: 0;
+
+    .navbar-form-wrapper {
+        display: none;
+    }
+    &.navbar-search-enabled {
+        .navbar-form-wrapper {
+            display: block;
+        }
+    }
+
+    a.sign-up {
+        background-color: @colorGreen;
+        border-radius: 1em;
+    }
+}
+
+.navbar-collapse .navbar-nav.navbar-right:last-child {
+    margin-right: 0;
+}
+
+.icon-bar {
+    background-color: @colorGreen;
+}
+
+.navbar-toggle {
+    outline-color: @color1;
+}
+
+.open .dropdown-toggle {
+    background: none !important;
+}
+
+
+.navbar-header {
+    padding: 0px 15px;
+}
+
+.navbar-brand {
+    img {
+        .img-responsive;
+        margin: -5px 0px;
+    }
+    padding: 10px;
+}
+
+.navbar-form-wrapper {
+    margin-left: 0px;
+    padding-left: 0px;
+}
+
+.navbar-form {
+    padding-left: 0px;
+    margin: 11px 0px;
+    input.form-control {
+        height: @nav-search-height;
+        font-size: 1.25em;
+        border: 1px solid transparent;
+        box-shadow: none;
+        .transition-effects;
+        &:focus {
+            border: 1px solid @color1;
+            border-right-color: transparent;
+        }
+        .rounded-corners-top-left(10px) !important;
+        .rounded-corners-bottom-left(10px) !important;
+        //padding: 22px;
+        background-color: #e2e2e2;
+    }
+    .input-group-btn button {
+        height: @nav-search-height;
+        width: 75px;
+        padding: 0px;
+        border: none;
+        .transition-effects;
+        .rounded-corners-top-right(10px) !important;
+        .rounded-corners-bottom-right(10px) !important;
+        span {
+            line-height: @nav-search-height;
+            color: white;
+            font-size: 1em;
+            font-weight: 300;
+        }   
+    }
+}
+
+.form-control.button-on-right {
+    padding: 5px;
+    border-right: 0px;
+}
+
+.navbar-collapse .navbar-nav {
+    @media(max-width: @screen-tablet) {
+        margin: 0px -15px;
+        padding: 0px;
+        border-bottom: 2px solid @colorGray;
+    }
+}
+
+ul.nav.navbar-nav {
+    li {
+        padding-top: 1.5em;
+        a {
+            padding: 0.5em 1em;
+            font-size: 2em;
+            font-family: "Lato-Regular";
+            color: @colorWhite;
+            border-radius: 1em;
+
+            .transition-effects;
+            &:hover {
+                background-color: transparent;
+                color: @colorGreen;
+            }
+        }
+    }
+
+    li.dropdown {
+        a {
+            &:hover {
+                background-color: @colorWhite;
+                .caret {
+                    border-top-color: @colorGreen !important;
+                }
+            }
+        }
+    }
+
+    li.dropdown.open {
+        a.dropdown-toggle {
+                background-color: @color1 !important;
+                color: @lightest-gray-color;    
+                .caret {
+                    border-top-color: @lightest-gray-color;
+                }
+        }
+        a.plain {
+            display: block;
+            color: @gray;
+            background: none !important;
+            padding: 5px;
+            &:hover {
+                color: @base;
+            }
+        }
+    }
+    
+}
+
+ul.dropdown-menu li {
+    a {
+        
+        line-height: 2em;
+        .rounded-corners(0px);
+    }
+
+}
+
+.sign-in-menu {
+    padding: 15px;
+    min-width: 200px;
+    input, button {
+        padding: 5px;
+        margin: 5px 0px;
+    }
+    button {
+        margin: 15px;
+    }
+}
+
+.user-profile-picture {
+    .rounded-corners;
+    margin: 0px;
+    padding: 0px;
+    display: block;
+    height: 30px;
+    width: 30px;
+    float: left;
+    margin-top: -5px;
+    margin-right: 5px;
+}
+
+.user-profile-button {
+    display: none !important;
+    &.logged-in {
+        display: block !important;
+    }
+}
+
+.sign-in-button {
+    display: block !important;
+    &.logged-in {
+        display: none !important;
+    }
+}
+
+.navbar .nav li.dropdown .dropdown-menu {
+    background-color: @colorGrayLight;
+    //padding: @standard-margin;
+   
+    .btn {
+        margin: 0px;
+    }
+}
+
+
+#searchButton {
+    
+    background-color: @firm;
+    
+    
+        font-size: 1.25em;
+        &:hover {
+            background-color: lighten(@color1, 10%);
+        }
+        .glyphicon {
+            font-size: 1.4em;
+            margin-top: -7px;
+        }
+}
