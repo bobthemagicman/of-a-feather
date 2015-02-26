@@ -4,7 +4,7 @@ usage()
 cat << EOF
 usage: $0 options
 
-This script is designed to build the flockspring database. Please use the following options:
+This script is designed to build the ofafeather database. Please use the following options:
 
 OPTIONS:
    -h      Show this message

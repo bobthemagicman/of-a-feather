@@ -9,7 +9,7 @@
 	<uri>http://journaldev.com/jsp/tlds/mytags</uri>
 	<tag>
 		<name>churchListing</name>
-		<tag-class>com.flockspring.ui.tags.ChurchListingTag</tag-class>
+		<tag-class>com.ofafeather.ui.tags.ChurchListingTag</tag-class>
 		<body-content>empty</body-content>
 		<attribute>
 			<name>items</name>

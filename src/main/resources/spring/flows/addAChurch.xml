@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/webflow
         http://www.springframework.org/schema/webflow/spring-webflow-2.0.xsd">
 
-	<var name="organizationCommandObject" class="com.flockspring.domain.types.impl.OrganizationImpl"/>
+	<var name="organizationCommandObject" class="com.ofafeather.domain.types.impl.OrganizationImpl"/>
 	
 	<view-state id="addAChurch3" model="organizationCommandObject">
 		<on-render>

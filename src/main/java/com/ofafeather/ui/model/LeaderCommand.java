@@ -1,0 +1,102 @@
+/**
+ *
+ *   Copyright 2015 Justen L. Britain
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ **/
+package com.ofafeather.ui.model;
+
+import com.ofafeather.domain.types.impl.LeaderRole;
+
+/**
+ * LeaderCommand.java
+ *
+ * @author Justen L. Britain
+ * @date Dec 15, 2013
+ *
+ */
+public class LeaderCommand
+{
+
+    private String name;
+    private String bio;
+    private String title;
+    private LeaderRole role;
+    private ImageCommand image;
+    private boolean primaryContact;
+    private boolean primaryLeader;
+    private String emailAddress;
+    private String phoneNumber;
+    private int yearStarted;
+
+    public String getName()
+    {
+        
+        return this.name;
+    }
+
+    public String getBio()
+    {
+        
+        return this.bio;
+    }
+
+    public String getTitle()
+    {
+        
+        return this.title;
+    }
+
+    public LeaderRole getRole()
+    {
+        
+        return this.role;
+    }
+
+    public ImageCommand getImage()
+    {
+        
+        return this.image;
+    }
+
+    public boolean isPrimaryContact()
+    {
+        
+        return this.primaryContact;
+    }
+
+    public boolean isPrimaryLeader()
+    {
+        
+        return this.primaryLeader;
+    }
+
+    public String getEmailAddress()
+    {
+        
+        return this.emailAddress;
+    }
+
+    public String getPhoneNumber()
+    {
+        
+        return this.phoneNumber;
+    }
+
+    public int getYearStarted()
+    {
+        
+        return this.yearStarted;
+    }
+}

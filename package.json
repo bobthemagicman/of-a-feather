@@ -1,0 +1,20 @@
+{
+  "name": "ofafeather",
+  "version": "0.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://bobthemagicman@bitbucket.org/bobthemagicman/ofafeather.git"
+  },
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-bower": "^0.17.0",
+    "grunt-bower-task": "^0.4.0",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-less": "^1.0.0",
+    "grunt-contrib-nodeunit": "*",
+    "grunt-contrib-qunit": "^0.5.2",
+    "grunt-contrib-uglify": "^0.8.0",
+    "grunt-contrib-watch": "^0.6.1"
+  }
+}

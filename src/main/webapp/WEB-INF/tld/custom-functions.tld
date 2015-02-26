@@ -8,13 +8,13 @@
  
     <function>
         <name>collectionContains</name>
-        <function-class>com.flockspring.ui.tags.JSTLCustomFunctions</function-class>
+        <function-class>com.ofafeather.ui.tags.JSTLCustomFunctions</function-class>
          <function-signature>boolean collectionContains(java.util.Collection, java.lang.Object)</function-signature>
     </function>
     
     <function>
         <name>createList</name>
-        <function-class>com.flockspring.ui.tags.JSTLCustomFunctions</function-class>
+        <function-class>com.ofafeather.ui.tags.JSTLCustomFunctions</function-class>
          <function-signature>java.util.List createList(java.lang.Object[])</function-signature>
     </function>
 </taglib>

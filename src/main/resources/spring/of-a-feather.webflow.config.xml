@@ -36,6 +36,6 @@
 <!--     <bean id="mvcViewFactoryCreator" class="org.springframework.webflow.mvc.builder.MvcViewFactoryCreator" -->
 <!--           p:viewResolvers-ref="internalResourceViewResolver" /> -->
 
-<!--     <bean id="organizationBean" class="com.flockspring.domain.types.impl.OrganizationImpl" scope="prototype" /> -->
+<!--     <bean id="organizationBean" class="com.ofafeather.domain.types.impl.OrganizationImpl" scope="prototype" /> -->
 
 </beans>

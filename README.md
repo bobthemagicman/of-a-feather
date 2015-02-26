@@ -1,4 +1,4 @@
-Current Build Status Using Drone.io: [![Build Status](https://drone.io/bitbucket.org/bobthemagicman/flockspring/status.png)](https://drone.io/bitbucket.org/bobthemagicman/flockspring/latest)
+Current Build Status Using Drone.io: [![Build Status](https://drone.io/bitbucket.org/bobthemagicman/ofafeather/status.png)](https://drone.io/bitbucket.org/bobthemagicman/ofafeather/latest)
 
 ## Synopsis
 
@@ -18,7 +18,7 @@ This goal of this guide is to assist you in starting and debugging the Of A Feat
 
 1. Clone this repository in to your working directory:<br />
     ```
-    git clone https://bobthemagicman@bitbucket.org/bobthemagicman/flockspring.git
+    git clone https://bobthemagicman@bitbucket.org/bobthemagicman/ofafeather.git
     ```
     <br />
 2. To start the application run:<br />

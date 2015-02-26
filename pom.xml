@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.flockspring</groupId>
+	<groupId>com.ofafeather</groupId>
 
 	<name>OfAFeather</name>
 	<packaging>war</packaging>
@@ -87,7 +87,7 @@
 				<build.environment>dev</build.environment>
 
 				<!-- Log Levels -->
-				<com.flockspring.level>DEBUG</com.flockspring.level>
+				<com.ofafeather.level>DEBUG</com.ofafeather.level>
 				<org.springframework.level>WARN</org.springframework.level>
 				<org.springframework.data.document.mongodb.level>WARN</org.springframework.data.document.mongodb.level>
 				<root.level>WARN</root.level>
@@ -110,7 +110,7 @@
 				<mongodb.host>ds027698.mongolab.com</mongodb.host>
 
 				<!-- Log Levels -->
-				<com.flockspring.level>ERROR</com.flockspring.level>
+				<com.ofafeather.level>ERROR</com.ofafeather.level>
 				<org.springframework.level>ERROR</org.springframework.level>
 				<org.springframework.data.document.mongodb.level>ERROR</org.springframework.data.document.mongodb.level>
 				<root.level>ERROR</root.level>

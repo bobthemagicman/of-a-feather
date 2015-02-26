@@ -1,0 +1,68 @@
+/**
+ *
+ *   Copyright 2015 Justen L. Britain
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ **/
+package com.ofafeather.domain.types.impl;
+
+import com.ofafeather.ui.model.LocalizedEnum;
+
+/**
+ * MusicalInstruments.java
+ *
+ * @author Justen L. Britain
+ * @date Dec 8, 2013
+ *
+ */
+public enum MusicalInstruments implements LocalizedEnum
+{
+    CHOIR("musical.instruments.chior"),
+    PIANO("musical.instruments.piano"),
+    KEYBOARD("musical.instruments.keyboard"),
+    ORGAN("musical.instruments.organ"),
+    VIOLIN("musical.instruments.violin"),
+    ELECTRIC_GUITAR("musical.instruments.electric.guitar"),
+    ACOUSTIC_GUITAR("musical.instruments.acoustic.guitar"),
+    DRUMS("musical.instruments.drums"),
+    HORNS("musical.instruments.horns"),
+    NO_MUSIC("musical.instruments.no.music"),
+    OTHER("musical.instruments.other");
+    
+    private String localizationStringCode;
+    
+    private MusicalInstruments(String localizationStringCode)
+    {
+        this.localizationStringCode = localizationStringCode;
+    }
+    
+    @Override
+    public String getLocalizedStringCode()
+    {
+        return this.localizationStringCode;
+    }
+
+    @Override
+    public String getName()
+    {
+        return this.name();
+    }
+
+    @Override
+    public int getOrdinal()
+    {
+        return this.ordinal();
+    }
+    
+}

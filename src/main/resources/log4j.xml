@@ -11,8 +11,8 @@
     	</layout>
   	</appender> 
   	
-	<category name="com.flockspring" additivity="false">
-    	<priority value="${com.flockspring.level}" />
+	<category name="com.ofafeather" additivity="false">
+    	<priority value="${com.ofafeather.level}" />
     	<appender-ref ref="console" />
   	</category>
 

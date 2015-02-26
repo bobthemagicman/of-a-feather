@@ -35,11 +35,11 @@
 	        <%-- Site Header --%>
 	        <%@ include file="/WEB-INF/jsp/partials/siteHeader.jsp"%>
 	
-	        <spring:url value="/static/images/hero/01-church-of-the-cross-in-B.jpg" var="heroImage1"/>
+	        <spring:url value="/static/images/hero/steven-hyatt-hero-1.jpg" var="heroImage1"/>
 	        <spring:url value="/static/images/site/blur.png" var="blurImage" />
 	
-            <spring:url value="Hayward" var="featuredChurch1_City" />
-            <spring:url value="/static/images/features/Community_Church_of_Hayward_hayward_ca_american_baptist_promo.jpg" var="featuredChurch1_Image"/>
+			<spring:url value="/San-Francisco-CA" var="sanFranciscoRegionLink"/>
+            <spring:url value="/static/images/features/san-francisco.jpg" var="sanFrancisco"/>
             
             <spring:url value="Hayward" var="featuredChurch2_City" />
 	        <spring:url value="/static/images/features/Calvary_Baptist_Church_Hayward_ca_southern_baptist_logo.jpg" var="featuredChurch2_Image"/>
@@ -69,9 +69,7 @@
 	
 	            <div class="header">
 	                <div class="header-image-container">
-	                    <img class="active-image" src="${heroImage1}" data-church-name="Church of the Cross" data-church-location="Bluffton, SC" data-church-denomination="Episcopalian" data-photographer-credit="Photo Credit: Steven Hyatt<br />www.thechurchesofamerica.com" />
-	                    <img src="${heroImage2}" data-photographer-credit="Photo Credit: Steven Hyatt<br />www.thechurchesofamerica.com" />
-	                    <img src="${heroImage3}" data-photographer-credit="Photo Credit: Steven Hyatt<br />www.thechurchesofamerica.com" />
+	                    <img class="active-image" src="${heroImage1}" />
 	                </div>
 	
 	                <div class="header-search">
@@ -90,17 +88,17 @@
 	                </div>
 	
 	                <div class="header-label">
-	                    <p class="church-name"></p>
-	                    <p class="church-info"></p>
-	                    <p class="photographer-credit"></p>
+	                    <p class="photographer-credit"><a href='//www.thechurchesofamerica.com'>Photo Credit: Steven Hyatt</a></p>
 	                </div>
+	                <div class="gradient-vertical-white next-section-label">
+	                	<div class="transparent-white" style="background:rgba(255,255,255,0.5); height:100%; width:100%;">
+	<!-- 	                    <h1>Find churches wherever you are</h1> -->
+	<!-- 	                    <h4>Worship where you live or where you are visiting</h4>  -->
+						</div>
+	               	</div>
 	            </div>
-    	
+                        
                 <div class="features">
-                        <div class="gradient-vertical-white next-section-label">
-                            <h1>Find churches wherever you are</h1>
-                            <h4>Worship where you live or where you are visiting</h4> 
-                        </div>
                     <div class="container-fluid">
                         <div class="row section white" id="featuredChurches">
                             <div class="container">
@@ -108,9 +106,9 @@
                                 <div class="row masonry">
                                     <div class="col-md-8 col-sm-9">
                                     <div class="big-tile">
-                                        <a href="#" alt="${featuredChurch1_City}" name="${featuredChurch1_City}">
-                                        <img src="${featuredChurch1_Image}" class="location-image"/>
-                                        <h2>${featuredChurch1_City}</h2>
+                                        <a href="${sanFranciscoRegionLink}" alt="San Francisco - Golden Gate Bridge" name="San Francisco - Golden Gate Bridge">
+                                        <img src="${sanFrancisco}" class="location-image"/>
+                                        <h2>San Francisco</h2>
 
                                         <div class="church-info hidden">
                                             <span class="name">Community Church of Hayward</span>
@@ -226,7 +224,7 @@
                                 </h4>
 
                                 <div class="player">
-                                    <!-- youtube embedding code here -->
+                                    <iframe width="640" height="385" src="https://www.youtube.com/embed/d712Th-4y0Q" frameborder="0" allowfullscreen></iframe>
                                 </div>
 
                                 <div class="col-md-2 col-md-offset-5 col-sm-4 col-sm-offset-4">
@@ -303,6 +301,39 @@
                                     </div>
                                     <div class="col-sm-1 text-left">
                                         <h3 class="fa fa-quote-right"></h3>
+                                    </div>
+                                </li>
+                                
+                                
+                                <li class="testimonial">
+                                    
+                                    <div class="image col-sm-3">
+                                        <img src="${testimonialPhoto2}" alt="" class="img-responsive">
+                                    </div>
+
+                                    <div class="testimony">
+                                        <div class="col-sm-1 text-right">
+                                            <h3 class="fa fa-quote-left"></h3>
+                                        </div>
+                                        <div class="col-sm-7 text-left">
+                                            <div class="h5">
+                                                I encourage every pastor to check out this inventive way for churches to get their names out on the internet. I believe this will enhance your ministry and those who are looking to join your church. Who knows, a new member may be one click away!
+                                            </div>
+                                            <div class="user-info">
+                                                <div class="name">
+                                                    Pastor Tim Hines, Phd
+                                                </div>
+                                                <div class="church">
+                                                    <a href="${testimonialChurch3}">First Southern Baptist Church</a>
+                                                </div>
+                                                <div class="location">
+                                                    <a href="${testimonialLocation3}">San Lorenzo, CA</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1 text-left">
+                                            <h3 class="fa fa-quote-right"></h3>
+                                        </div>
                                     </div>
                                 </li>
                                 </ul>

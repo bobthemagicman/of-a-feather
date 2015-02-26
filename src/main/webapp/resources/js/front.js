@@ -6,11 +6,11 @@
 
 $(document).ready(function() {
 
-    $(window).on("resize", function() {
-        matchGradient();
-    });
+//    $(window).on("resize", function() {
+//        matchGradient();
+//    });
 
-    loadImageInfo(); 
+//    loadImageInfo(); 
     
    //Currently using only one hero image so no need to cycle
    /*
@@ -71,17 +71,12 @@ function loadImageInfo() {
     if($(".active-image").length) {
     
         var churchName = $(".active-image").attr("data-church-name");
-
         var churchInfo = $(".active-image").attr("data-church-location") + "&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;" + $(".active-image").attr("data-church-denomination");
-
         var photographerCredit = $(".active-image").attr("data-photographer-credit");
 
         $(".church-name").html(churchName.toUpperCase());
-
         $(".church-info").html(churchInfo);
-
         $(".photographer-credit").html(photographerCredit);
-
         $(".header-label").fadeTo(2000, 1);
     
     }
