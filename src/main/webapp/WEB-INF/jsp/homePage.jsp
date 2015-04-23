@@ -67,7 +67,7 @@
 	        
 	        <div class="main">    
 	
-	            <div class="header">
+	            <div class="header" role="region">
 	                <div class="header-image-container">
 	                    <img class="active-image" src="${heroImage1}" data-church-name="Church of the Cross" data-church-location="Bluffton, SC" data-church-denomination="Episcopalian" data-photographer-credit="Photo Credit: Steven Hyatt<br />www.thechurchesofamerica.com" />
 	                    <img src="${heroImage2}" data-photographer-credit="Photo Credit: Steven Hyatt<br />www.thechurchesofamerica.com" />
@@ -93,14 +93,15 @@
 	                    <p class="church-name"></p>
 	                    <p class="church-info"></p>
 	                    <p class="photographer-credit"></p>
-	                </div>
+	                </div> 
+                    <div class="gradient-vertical-white next-section-label">
+                        <h1>Find churches wherever you are</h1>
+                        <h4>Worship where you live or where you are visiting</h4> 
+                    </div>
 	            </div>
     	
                 <div class="features">
-                        <div class="gradient-vertical-white next-section-label">
-                            <h1>Find churches wherever you are</h1>
-                            <h4>Worship where you live or where you are visiting</h4> 
-                        </div>
+                      
                     <div class="container-fluid">
                         <div class="row section white" id="featuredChurches">
                             <div class="container">
@@ -241,13 +242,15 @@
 
                         <div class="row section gray-blue">
                             <div class="container testimonials">
-                                <h1>Find fellowship</h1>
-                                <h4>Read what others are saying about Of a Feather</h4>
+                                <div class="row">
+                                    <h1>Find fellowship</h1>
+                                    <h4>Read what others are saying about Of a Feather</h4>                                    
+                                </div>
 
                                 <!-- This could be turned into a dynamic piece with a for loop of some sort -->
                                 <ul>
                                 <li class="testimonial">
-                                    
+                                    <div class="row">
                                     <div class="image col-sm-3">
                                         <img src="${testimonialPhoto1}" alt="" class="img-responsive">
                                     </div>
@@ -276,10 +279,13 @@
                                             <h3 class="fa fa-quote-right"></h3>
                                         </div>
                                     </div>
+                                        
+                                    </div>
                                 </li>
                                 
                 
                                 <li class="testimonial">
+                                    <div class="row">
                                     <div class="image col-sm-3">
                                         <img src="${testimonialPhoto3}" alt="Faithful user" class="img-responsive">
                                     </div>
@@ -303,6 +309,8 @@
                                     </div>
                                     <div class="col-sm-1 text-left">
                                         <h3 class="fa fa-quote-right"></h3>
+                                    </div>
+                                        
                                     </div>
                                 </li>
                                 </ul>
