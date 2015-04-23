@@ -1,47 +1,13 @@
 .header {
+    display: table;
     position: relative;
-    top: 0;
-    left: 0;
     min-height: @header-height;
     margin: 0;
-    padding: 0;
+    padding: 0 0 2em 0;
     text-align: center;
     background-color: @colorWhite;
-    overflow: hidden;
+    // overflow: hidden;
     z-index: 0;
-
-    @media (max-height: 699px) {
-        height: (@header-height + @header-height-adjust);
-        .next-section-label {
-            height: 160px;
-            padding-top: 45px;
-            bottom: 0px;
-        }
-    }
-    
-    @media (min-height: 700px) {
-        height: (@header-height + 2.8 * @header-height-adjust);
-        .next-section-label {
-            height: 170px;
-            padding-top: 100px;
-            bottom: 50px;
-        }
-    }
-
-    @media (min-height: 800px) {
-        height: (@header-height + 3.5 * @header-height-adjust);
-        .next-section-label {
-            bottom: 90px;
-        }
-    }
-
-    @media (min-height: 900px) {
-        height: (@header-height + 4 * @header-height-adjust);
-        .next-section-label {
-            bottom: 28px;
-            padding-top: 80px;
-        }
-    }
    
     #comingSoonImage {
         position: absolute;
@@ -64,6 +30,10 @@
             .translucent(100);
         }
     }
+}
+
+.header-image-container {
+    display: table-row;
 }
 
 .header-search {
@@ -174,33 +144,11 @@
 
 .next-section-label {
     position: absolute;
+    bottom: 4em;
     width: 100%;
     height: 180px;
-    padding-top: 80px;
     z-index: 2;
 
     color: @colorGreen;
-
-    @media (max-width: 800px) {
-        top: -250px;
-    }
-    @media (max-width: 980px) {
-        top: -230px;
-    }
-    @media (min-width: 981px) and (max-width: 1060px) {
-        top: -200px;
-    }
-    @media (min-width: 1061px) and (max-width: 1400px) {
-        top: -165px;
-    }
-    @media (min-width: 1401px) {
-        @media (max-height: 805px) { top: -260px; }
-        @media (min-height: 806px) { top: -220px; }
-    }
-    @media (min-width: 1670px) and (max-width: 1681px) {
-        top: -215px;
-    }
-    @media (min-width: 1600px) {
-        top: -180px;
-    }
+    h1 { margin-top: 10rem; }
 }
