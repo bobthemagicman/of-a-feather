@@ -6,9 +6,6 @@
 
 $(document).ready(function() {
 
-    $(window).on("resize", function() {
-        matchGradient();
-    });
 
     loadImageInfo(); 
     
@@ -117,11 +114,4 @@ function initializeSearchBar() {
         }
         
     });
-}
-
-function matchGradient() {
-    var $gradient = $(".gradient-vertical-white");
-    var img = $("img.active-image");
-
-    $gradient.css({ "top" : -(window.innerHeight - img.height() + 35) + "px" });
 }
