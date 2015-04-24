@@ -7523,7 +7523,7 @@ div.footer a:hover {
 .header-search {
   position: absolute;
   height: 45px;
-  top: 227.5px;
+  top: 200px;
   width: 100%;
   left: 0;
   box-sizing: content-box;
@@ -7584,17 +7584,13 @@ div.footer a:hover {
   line-height: 45px;
 }
 .header-search .header-text {
-  position: absolute;
-  top: -7em;
-  left: 0%;
-  width: 100%;
   font-size: 1.5em;
   color: #ffffff;
 }
 .header-search div.blur {
   position: absolute;
-  top: -15em;
-  left: 0px;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 17em;
   z-index: -1;
@@ -7613,6 +7609,14 @@ div.footer a:hover {
   -webkit-transition: All 0.2s ease;
   -moz-transition: All 0.2s ease;
   -o-transition: All 0.2s ease;
+}
+@media screen and (max-width: 768px) {
+  .header-search {
+    top: 100px;
+  }
+  .header-search .header-text {
+    font-size: 1em;
+  }
 }
 .header-label {
   position: absolute;
@@ -8954,6 +8958,7 @@ div.pagination ul > li > a:hover {
 }
 .testimonials ul {
   padding: 0;
+  margin: 0;
 }
 .testimonial {
   margin-top: 75px;
@@ -8968,6 +8973,9 @@ div.pagination ul > li > a:hover {
 .testimonial .h5 {
   font-family: "Lato-Light";
   font-style: italic;
+}
+.testimonial .col-xs-offset-1 {
+  margin-left: 8.3333%;
 }
 .sign-up-modal .modal-dialog,
 .log-in-modal .modal-dialog {

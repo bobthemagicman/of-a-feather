@@ -251,15 +251,15 @@
                                 <ul>
                                 <li class="testimonial">
                                     <div class="row">
-                                    <div class="image col-sm-3">
+                                    <div class="image col-xs-3 col-xs-offset-1">
                                         <img src="${testimonialPhoto1}" alt="" class="img-responsive">
                                     </div>
 
                                     <div class="testimony">
-                                        <div class="col-sm-1 text-right">
+                                        <div class="col-xs-1 text-right">
                                             <h3 class="fa fa-quote-left"></h3>
                                         </div>
-                                        <div class="col-sm-7 text-left">
+                                        <div class="col-xs-5 col-sm-7 text-left">
                                             <div class="h5">
                                                 This is a great tool to connect searching people to your church.
                                             </div>
@@ -275,7 +275,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-sm-1 text-left">
+                                        <div class="col-xs-1 text-left">
                                             <h3 class="fa fa-quote-right"></h3>
                                         </div>
                                     </div>
@@ -286,13 +286,13 @@
                 
                                 <li class="testimonial">
                                     <div class="row">
-                                    <div class="image col-sm-3">
+                                    <div class="image col-xs-3 col-xs-offset-1">
                                         <img src="${testimonialPhoto3}" alt="Faithful user" class="img-responsive">
                                     </div>
-                                    <div class="col-sm-1 text-right">
+                                    <div class="col-xs-1 text-right">
                                         <h3 class="fa fa-quote-left"></h3>
                                     </div>
-                                    <div class="col-sm-7 text-left">
+                                    <div class="col-xs-5 col-sm-7 text-left">
                                         <div class="h5">
                                             I was thrilled to find Of A Feather when searching for a new church! It&apos;s your one-stop shop for finding a church that will meet all of your needs.
                                         </div>
@@ -307,7 +307,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-1 text-left">
+                                    <div class="col-xs-1 text-left">
                                         <h3 class="fa fa-quote-right"></h3>
                                     </div>
                                         

@@ -39,7 +39,8 @@
 .header-search {
     position: absolute;
     height: @header-search-height;
-    top: ((@header-height / 2) - (@header-search-height / 2) + 50);
+    top: (@header-height / 2);
+
     @media (min-height: 700px) {
         top: (((@header-height + 2 * @header-height-adjust) / 2) - (@header-search-height / 2) + 50);
     }
@@ -84,18 +85,14 @@
         }   
     }
     .header-text {
-        position: absolute;
-        top: -7em;
-        left: 0%;
-        width: 100%;
         font-size: 1.5em;
         color: @colorWhite;
         
     }
     div.blur {
         position: absolute;
-        top: -15em;
-        left: 0px;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 17em;
         
@@ -115,6 +112,12 @@
         .transition-effects;
     }
     
+    @media screen and (max-width: 768px) {
+        top: @header-height / 4;
+        .header-text {
+            font-size: 1em;
+        } 
+    }
 }
 
 .header-label {
