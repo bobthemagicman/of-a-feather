@@ -1,0 +1,74 @@
+
+html, body{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-size: 10px;
+    overflow-x: hidden;
+}
+
+h1, .h1 {
+    font-size: 5em;
+    font-family: "Lato-Black";
+}
+h2, .h2 {
+    font-size: 3.6em;
+}
+h3, .h3 {
+    font-size: 2.9em;
+}
+h4, .h4 {
+    font-size: 2.5em;
+}
+h5, .h5 {
+    font-size: 2em;
+}
+
+a {
+    &:not(.ui-slider-handle) {
+        .transition-effects;
+    }
+}
+
+.btn, .btn:focus {
+    outline-color: @color1;
+}
+
+.page-container {
+    min-height: 100%;
+    position: relative;
+}
+
+.main {
+    padding-bottom: @footer-height;
+}
+.features {
+    position: relative;
+}
+
+body > .container,
+.page-container > .container {
+    padding-top: 8em;
+    font-size: 1.4em;
+}
+
+.user-info {
+    margin: 1.5em 0 0;
+    font-size: 1.25em;
+    .name {
+        font-family: "Lato-Bold";
+    }
+    .church {
+        a { font-family: "Lato-Bold"; }
+    }
+    .location {
+        a { font-family: "Lato-Light"; }
+    }
+}
+
+a.color-white {
+    color: #fff;
+    &:hover {
+        color: darken(@colorGrayLight, 15%);
+    }
+}

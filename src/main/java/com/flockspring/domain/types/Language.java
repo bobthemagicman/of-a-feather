@@ -52,9 +52,8 @@ public enum Language {
     THAI(new String[]{"language.thai", "siamese"}, new String[]{"ภาษาไทย"}),
     URDU(new String[]{"language.urdu"}, new String[]{"اُردُو"}),
     VIETNAMESE(new String[]{"language.vietnamese"}, new String[]{"Tiếng Việt"}),
-    YIDDISH(new String[]{"language.yiddish"}, new String[]{"ייִדיש"});
-
-//    ENGLISH(new String[]{"language.english"}, new String[]{"english"}),
+    YIDDISH(new String[]{"language.yiddish"}, new String[]{"ייִדיש"}),
+    ENGLISH(new String[]{"language.english"}, new String[]{"english"});
 //    ARABIC(new String[]{"arabic"}, new String[]{"العربية"}),
 //    BENGALI(new String[]{"bengali"}, new String[]{"বাংলা"}),
 //    PUNJABI(new String[]{"punjabi"}, new String[]{"ਪੰਜਾਬੀ"}),

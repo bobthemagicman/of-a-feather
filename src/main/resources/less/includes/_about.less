@@ -1,0 +1,115 @@
+.about-page {
+    .links {
+        color: @colorGrayLight;
+        border: 1px solid @colorGrayLight;
+        border-width: 1px 0px;
+        padding: 8px 0px;
+        a {
+            color: @color1;
+            padding: 0px 5px;
+            .transition-effects;
+            &:hover {
+                color: darken(@color1, 10%);
+            }
+        }
+    }
+    h1 {
+        font-weight: bold;
+        color: @darkest-gray-color;
+    }
+    h2 {
+        font-weight: normal;
+        margin: 20px 0px;
+    }
+    h3 {
+        color: @colorGrayDark;
+        text-align: center;
+        font-style: italic;
+        font-size: 1.5em;
+    }
+    h5 {
+        font-weight: 500;
+        margin: 5px;
+    }
+    p {
+        font-weight: 500;
+        padding: 10px;
+        span {
+            font-weight: bold;
+            font-style: italic;
+        }
+    }
+    .gray-block {
+        padding: 20px;
+        color: @colorGrayLight;
+        background-color: @alt-dark-gray-color2;
+        h1, h2, h3, h4, h5 {
+            color: #d2d2d2;
+            margin-top: 0px;
+        }
+        p {
+            color: #d2d2d2;
+        }
+        margin-bottom: 25px;
+    }
+    .team-info-container {
+        .make-row();
+        min-height: 200px;
+
+        .team-member-photo {
+            .make-xs-column(3, 5px);
+            img {
+                .img-responsive;
+                margin: auto;
+                margin-top: 35px;
+                .rounded-corners;
+            }
+        }
+        .team-member-bio {
+            .make-xs-column(9, 5px);
+            
+            h5 {
+                font-size: 1.5em;
+            }
+        }
+        
+    }
+    .team-info-container:nth-child(3) {
+        .team-member-bio {
+            margin-top: 35px;
+        }
+    }
+    .team-info-container:nth-child(4) {
+        .team-member-bio {
+            margin-top: 20px;
+        }
+    }
+    ul > li 
+    {
+        list-style-type: none;
+        padding-left: 20px;
+        
+        background-image: url('http://www.ofafeather.org/static/images/site/right_arrow_hover.png');
+        background-repeat: no-repeat;
+        p {
+            padding: 0px;
+        }
+        &>p:first-child {
+            font-size: 1.2em;
+            font-style: italic;
+        }
+        &>p:last-child {
+            padding-bottom: 10px;
+        }       
+    }
+    hr.divider {
+        width: 100%;
+        color: @colorGrayLight;
+        background-color: @colorGrayLight;
+        height: 1px;
+    }
+    .filler {
+        height: 50px;
+    }
+}
+

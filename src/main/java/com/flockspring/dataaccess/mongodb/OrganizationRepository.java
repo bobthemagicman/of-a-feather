@@ -5,12 +5,15 @@ package com.flockspring.dataaccess.mongodb;
 
 
 
+import java.util.List;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.mongodb.core.geo.Distance;
 import org.springframework.data.mongodb.core.geo.GeoPage;
 import org.springframework.data.mongodb.core.geo.Point;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
+import com.flockspring.domain.types.Organization;
 import com.flockspring.domain.types.impl.OrganizationImpl;
 
 /**
@@ -24,5 +27,7 @@ public interface OrganizationRepository extends MongoRepository<OrganizationImpl
 {
     GeoPage<OrganizationImpl> findByAddressLocationNear(Point point, Distance distance, Pageable pageRequest);
 
-//    OrganizationImpl findByNameAndRegion(String organizationName, String parentRegion);
+	OrganizationImpl findByAddressCityAndAddressStateAndAddressCountryAndName(String city, String state, String country, String organizationName);
+
+	List<Organization> findByAddressCityAndAddressStateAndAddressCountry(String city, String state, String country);
 }

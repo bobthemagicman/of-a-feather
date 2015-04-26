@@ -1,13 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-         pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ include file="/WEB-INF/jsp/init.jsp"%>
 
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:fb="http://ogp.me/ns/fb#">
     <head>
-        <%-- Common Metadata, scripts, and CSS --%>
+         <%-- Adding this to test server to prevent indexing by google --%>
+     <meta name="robots" content="noindex">
+    <%-- Common Metadata, scripts, and CSS --%>
         <%@ include file="/WEB-INF/jsp/partials/commonHead.jsp"%>
-
+        
         <spring:url value="/static/js/front.js" var="frontJS" />
         <spring:url value="/static/js/jquery.geocomplete.js" var="geoCompletePlugin" />
         <script type="text/javascript">
@@ -15,324 +16,309 @@
                 .queueScript("${geoCompletePlugin}")        
                 .queueScript("${frontJS}")
                 .runQueue();
-            
         </script>
 
-        <title>Of A Feather - Find your new church home today</title>	
+                <!--[if gte IE 9]>
+                    <script>
+                        .gradient-vertical-black, 
+                        .gradient-horizontal-white {
+                        filter: none !important;    
+                        }
+                    </script>
+                <![endif]-->
+
+        <title>Of A Feather - Find your new church home today</title>   
     </head>
     <body>
-
-        <%-- Site Header --%>
-        <%@ include file="/WEB-INF/jsp/partials/siteHeader.jsp"%>
-
-        <spring:url value="/static/images/hero/01-church-of-the-cross-in-B.jpg" var="heroImage1"/>
-        <spring:url value="/static/images/site/blur.png" var="blurImage" />
-
-        <spring:url value="/static/images/features/Calvary_Baptist_Church_Hayward_ca_southern_baptist_logo.jpg" var="featuredChurchImage1"/>
-        <spring:url value="/static/images/features/Community_Church_of_Hayward_hayward_ca_american_baptist_promo.jpg" var="featuredChurchImage2"/>
-        <spring:url value="/static/images/features/crosswalk_church_sunnyvale_ca_non_denominational_3.jpg" var="featuredChurchImage3"/>
-        <spring:url value="/static/images/features/Hillcrest_Baptist_Church_Richmond_ca_southern_baptist_promo.jpg" var="featuredChurchImage4"/>
-        <spring:url value="/static/images/features/Hillside_Church_antioch_ca_nondenominational_3.jpg" var="featuredChurchImage5"/>
-        <spring:url value="/static/images/features/Shiloh_Church_oakland_ca_nondenominational_3.jpg" var="featuredChurchImage6"/>
-        <spring:url value="/static/images/features/valley_baptist_church_castro_valley_ca_southern_baptist_promo.jpg" var="featuredChurchImage7"/>
-
-        <spring:url value="/static/images/features/testimonial_photo_gering.jpg" var="testimonialPhoto1"/>
-        <spring:url value="/static/images/features/testimonial_photo_hines.jpg" var="testimonialPhoto2"/>
-        <spring:url value="/static/images/features/testimonial_photo_paddock.jpg" var="testimonialPhoto3"/>
-
-        <spring:url value="/search" var="searchAction" />
+        <div class="page-container">
         
-        <div class="main">    
+	        <%-- Site Header --%>
+	        <%@ include file="/WEB-INF/jsp/partials/siteHeader.jsp"%>
+	
+	        <spring:url value="/static/images/hero/01-church-of-the-cross-in-B.jpg" var="heroImage1"/>
+	        <spring:url value="/static/images/site/blur.png" var="blurImage" />
+	
+            <spring:url value="Hayward" var="featuredChurch1_City" />
+            <spring:url value="/static/images/features/Community_Church_of_Hayward_hayward_ca_american_baptist_promo.jpg" var="featuredChurch1_Image"/>
+            
+            <spring:url value="Hayward" var="featuredChurch2_City" />
+	        <spring:url value="/static/images/features/Calvary_Baptist_Church_Hayward_ca_southern_baptist_logo.jpg" var="featuredChurch2_Image"/>
+            
+            <spring:url value="Sunnyvale" var="featuredChurch3_City" />
+            <spring:url value="/static/images/features/crosswalk_church_sunnyvale_ca_non_denominational_3.jpg" var="featuredChurch3_Image"/>
+            
+            <spring:url value="Richmond" var="featuredChurch4_City" />
+            <spring:url value="/static/images/features/Hillcrest_Baptist_Church_Richmond_ca_southern_baptist_promo.jpg" var="featuredChurch4_Image"/>
+            
+            <spring:url value="Antioch" var="featuredChurch5_City" />
+            <spring:url value="/static/images/features/Hillside_Church_antioch_ca_nondenominational_3.jpg" var="featuredChurch5_Image"/>
+            
+            <spring:url value="Oakland" var="featuredChurch6_City" />
+            <spring:url value="/static/images/features/Shiloh_Church_oakland_ca_nondenominational_3.jpg" var="featuredChurch6_Image"/>
 
-            <div class="header">
-                <div class="header-image-container">
-                    <img class="active-image" src="${heroImage1}" data-church-name="Church of the Cross" data-church-location="Bluffton, SC" data-church-denomination="Episcopalian" data-photographer-credit="Photo Credit: Steven Hyatt<br />www.thechurchesofamerica.com" />
-                    <img src="${heroImage2}" data-church-name="Church of the Holy Cross" data-church-location="Stateburg, SC" data-church-denomination="Episcopalian" data-photographer-credit="Photo Credit: Steven Hyatt<br />www.thechurchesofamerica.com" />
-                    <img src="${heroImage3}" data-church-name="Cathedral of St. John the Baptist" data-church-location="Savannah, GA" data-church-denomination="Catholic" data-photographer-credit="Photo Credit: Steven Hyatt<br />www.thechurchesofamerica.com" />
-                </div>
-
-                <div class="header-search">
-                    <div class="header-text">
-                        <h1>Find the Church for You.</h1>
-                        <h4>Personalized church search</h4>
+            <spring:url value="Castro Valley" var="featuredChurch7_City" />
+            <spring:url value="/static/images/features/valley_baptist_church_castro_valley_ca_southern_baptist_promo.jpg" var="featuredChurch7_Image"/>
+	
+	        <spring:url value="/static/images/features/testimonial_photo_gering.jpg" var="testimonialPhoto1"/>
+	        <spring:url value="/static/images/features/testimonial_photo_hines.jpg" var="testimonialPhoto2"/>
+	        <spring:url value="/static/images/features/testimonial_photo_paddock.jpg" var="testimonialPhoto3"/>
+	
+	        <spring:url value="/search" var="searchAction" />
+	        
+	        <div class="main">    
+	
+	            <div class="header" role="region">
+	                <div class="header-image-container">
+	                    <img class="active-image" src="${heroImage1}" data-church-name="Church of the Cross" data-church-location="Bluffton, SC" data-church-denomination="Episcopalian" data-photographer-credit="Photo Credit: Steven Hyatt<br />www.thechurchesofamerica.com" />
+	                    <img src="${heroImage2}" data-photographer-credit="Photo Credit: Steven Hyatt<br />www.thechurchesofamerica.com" />
+	                    <img src="${heroImage3}" data-photographer-credit="Photo Credit: Steven Hyatt<br />www.thechurchesofamerica.com" />
+	                </div>
+	
+	                <div class="header-search">
+	                    <div class="header-text">
+	                        <h1>Find the church for you</h1>
+	                    </div>
+	                    <div class="blur"><img src="${blurImage}" /></div>
+	                    <form action="${searchAction}" method="GET">
+	                        <div class="input-group">
+	                            <input id="search-bar" name="search-bar" type="text" class="form-control button-on-right" autofocus="autofocus" placeholder="Find Churches Near (City and State, Zip, or Neighborhood)">
+	                            <span id="search-button" class="input-group-btn">
+	                                <button type="submit" id="searchButton" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+	                            </span>
+	                        </div>
+	                    </form>
+	                </div>
+	
+	                <div class="header-label">
+	                    <p class="church-name"></p>
+	                    <p class="church-info"></p>
+	                    <p class="photographer-credit"></p>
+	                </div> 
+                    <div class="gradient-vertical-white next-section-label">
+                        <h1>Find churches wherever you are</h1>
+                        <h4>Worship where you live or where you are visiting</h4> 
                     </div>
-                    <div class="blur"><img src="${blurImage}" /></div>
-                    <form id="searchForm" action="${searchAction}" method="GET">
-                        <div class="input-group">
-                            <input id="search-bar" name="search-bar" type="text" class="form-control button-on-right" autofocus="autofocus" placeholder="Find Churches Near (City and State, Zip, or Neighborhood)" required="required">
-                            <span id="search-button" class="input-group-btn">
-                                <button type="submit" id="searchButton" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
-                            </span>
+	            </div>
+    	
+                <div class="features">
+                      
+                    <div class="container-fluid">
+                        <div class="row section white" id="featuredChurches">
+                            <div class="container">
+
+                                <div class="row masonry">
+                                    <div class="col-md-8 col-sm-9">
+                                    <div class="big-tile">
+                                        <a href="#" alt="${featuredChurch1_City}" name="${featuredChurch1_City}">
+                                        <img src="${featuredChurch1_Image}" class="location-image"/>
+                                        <h2>${featuredChurch1_City}</h2>
+
+                                        <div class="church-info hidden">
+                                            <span class="name">Community Church of Hayward</span>
+                                            <span class="denomination">American Baptist</span>
+                                            <span class="location">Hayward, CA</span>
+                                        </div>
+                                        </a>
+                                       
+                                    </div>
+                                    </div>
+
+                                    <div class="col-md-4 col-sm-3">
+                                    <div class="small-tile">
+                                        <a href="#" alt="${featuredChurch2_City}" name="${featuredChurch2_City}">
+                                        <img src="${featuredChurch2_Image}" class="location-image"/>
+                                        <h2>${featuredChurch2_City}</h2>
+
+                                        <div class="church-info hidden">
+                                            <span class="name">Calvary Baptist Church</span>
+                                            <span class="denomination">Southern Baptist</span>
+                                            <span class="location">Hayward, CA</span>
+                                        </div>
+                                        </a>
+                                    </div>
+
+                                    <div class="small-tile">
+                                        <a href="#" alt="${featuredChurch6_City}" name="${featuredChurch6_City}">
+                                        <img src="${featuredChurch6_Image}" class="location-image"/>
+                                        <h2>${featuredChurch6_City}</h2>
+
+                                        <div class="church-info hidden">
+                                            <span class="name">Shiloh Church</span>
+                                            <span class="denomination">Non-denominational</span>
+                                            <span class="location">Oakland, CA</span>
+                                        </div>
+                                        </a>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="row masonry">
+                                    <div class="col-sm-6">
+                                    <div class="medium-tile">
+                                        <a href="#" alt="${featuredChurch3_City}" name="${featuredChurch3_City}">
+                                        <img src="${featuredChurch3_Image}" class="location-image"/>
+                                        <h2>${featuredChurch3_City}</h2>
+
+                                        <div class="church-info hidden">
+                                            <span class="name">Crosswalk Church</span>
+                                            <span class="denomination">Non-denominational</span>
+                                            <span class="location">Sunnyvale, CA</span>
+                                        </div>
+                                    </a>
+                                    </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                    <div class="medium-tile">
+                                        <a href="./addYourChurch" class="add-church">
+                                            <h2>Add your church</h2>
+                                        </a>
+                                    </div>
+                                    </div>
+                                </div>
+                                <div class="row masonry">
+                                    <div class="col-md-4 col-sm-3">
+                                    <div class="small-tile">
+                                         <a href="#" alt="${featuredChurch7_City}" name="${featuredChurch7_City}">
+                                            <img src="${featuredChurch7_Image}" class="location-image"/>
+                                            <h2>${featuredChurch7_City}</h2>
+                                            <div class="church-info hidden">
+                                                <span class="name">Valley Baptist Church</span>
+                                                <span class="denomination">Southern Baptist</span>
+                                                <span class="location">Castro Valley, CA</span>
+                                            </div>
+                                        </a>                                        
+                                    </div>
+                                    <div class="small-tile">
+                                        <a href="#" alt="${featuredChurch5_City}" name="${featuredChurch5_City}">
+                                        <img src="${featuredChurch5_Image}" class="location-image"/>
+                                        <h2>${featuredChurch5_City}</h2>
+                                            <div class="church-info hidden">
+                                                <span class="name">Hillside Church</span>
+                                                <span class="denomination">Non-denominational</span>
+                                                <span class="location">Antioch, CA</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    </div>
+
+                                    <div class="col-md-8 col-sm-9">
+                                    <div class="big-tile">
+                                           <a href="#" alt="${featuredChurch4_City}" name="${featuredChurch4_City}">
+                                        <img src="${featuredChurch4_Image}" class="location-image"/>
+                                        <h2>${featuredChurch4_City}</h2>
+                                            <div class="church-info hidden">
+                                                <span class="name">Hillcrest Baptist Church</span>
+                                                <span class="denomination">Southern Baptist</span>
+                                                <span class="location">Richmond, CA</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><!-- end featured churches content -->
+                        
+                        <div class="row section purple">
+                            <div class="container video-embed">
+                                <h1>Find your faithful</h1>
+                                <h4>
+                                    <a href="${addYourChurchLink}" class="white-underline">Add a church</a>
+                                    and help people find your parish.
+                                </h4>
+
+                                <div class="player">
+                                    <!-- youtube embedding code here -->
+                                </div>
+
+                                <div class="col-md-2 col-md-offset-5 col-sm-4 col-sm-offset-4">
+                                    <button class="btn btn-success add-church">
+                                        Add a Church
+                                    </button>
+                                </div>
+                            </div>
+
+
+                        </div><!-- end featured events content -->
+
+                        <div class="row section gray-blue">
+                            <div class="container testimonials">
+                                <div class="row">
+                                    <h1>Find fellowship</h1>
+                                    <h4>Read what others are saying about Of a Feather</h4>                                    
+                                </div>
+
+                                <!-- This could be turned into a dynamic piece with a for loop of some sort -->
+                                <ul>
+                                <li class="testimonial">
+                                    <div class="row">
+                                    <div class="image col-xs-3 col-xs-offset-1">
+                                        <img src="${testimonialPhoto1}" alt="" class="img-responsive">
+                                    </div>
+
+                                    <div class="testimony">
+                                        <div class="col-xs-1 text-right">
+                                            <h3 class="fa fa-quote-left"></h3>
+                                        </div>
+                                        <div class="col-xs-5 col-sm-7 text-left">
+                                            <div class="h5">
+                                                This is a great tool to connect searching people to your church.
+                                            </div>
+                                            <div class="user-info">
+                                                <div class="name">
+                                                    Pastor Brian Gering
+                                                </div>
+                                                <div class="church">
+                                                    <a href="${testimonialChurch1}">Church of the Cross</a>
+                                                </div>
+                                                <div class="location">
+                                                    <a href="${testimonialLocation1}">Hayward, CA</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-1 text-left">
+                                            <h3 class="fa fa-quote-right"></h3>
+                                        </div>
+                                    </div>
+                                        
+                                    </div>
+                                </li>
+                                
+                
+                                <li class="testimonial">
+                                    <div class="row">
+                                    <div class="image col-xs-3 col-xs-offset-1">
+                                        <img src="${testimonialPhoto3}" alt="Faithful user" class="img-responsive">
+                                    </div>
+                                    <div class="col-xs-1 text-right">
+                                        <h3 class="fa fa-quote-left"></h3>
+                                    </div>
+                                    <div class="col-xs-5 col-sm-7 text-left">
+                                        <div class="h5">
+                                            I was thrilled to find Of A Feather when searching for a new church! It&apos;s your one-stop shop for finding a church that will meet all of your needs.
+                                        </div>
+                                        <div class="user-info">
+                                            <div class="name">
+                                                Laurie Paddock
+                                            </div>
+                                            <div class="church">
+                                            </div>
+                                            <div class="location">
+                                                <a href="${testimonialLocation3}">San Lorenzo, CA</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-1 text-left">
+                                        <h3 class="fa fa-quote-right"></h3>
+                                    </div>
+                                        
+                                    </div>
+                                </li>
+                                </ul>
+                            </div>
                         </div>
-                    </form>    
-                    <!-- a href="${addYourChurchLink}" class="btn btn-primary">Add Your Church!</a -->
-                </div>
-
-                <div class="header-label">
-                    <p class="church-name"></p>
-                    <p class="church-info"></p>
-                    <p class="photographer-credit"></p>
-                </div>
-
-            </div>
-
-            <div class="container features-nav-container">
-                <ul class="nav nav-tabs features-nav">
-                    <li class="active"><a href="#featuredChurchesTab" data-toggle="tab">Featured Churches</a><br /><div class="arrow-up"></div></li>
-                    <li><a href="#testimonialsTab" data-toggle="tab">Testimonials</a><br /><div class="arrow-up"></div></li>
-                    <li><a href="#featuredEventsTab" data-toggle="tab">Featured Events</a><br /><div class="arrow-up"></div></li>
-                </ul>
-            </div>
-            <div class="features">
-                <div class="container">
-                    <div class="tab-content">
-                        <div class="tab-pane active fade in" id="featuredChurchesTab">
-
-                            <div id="featuredChurchesCarousel" class="carousel carousel-front-page slide">
-                                <a class="left carousel-control" href="#featuredChurchesCarousel" data-slide="prev">
-                                    <span class="icon-prev"></span>
-                                </a>
-                                <!-- Wrapper for slides -->
-                                <div class="carousel-inner">
-                                    <div class="item active">
-
-                                        <div class="featured-church">
-                                            <a href="#">
-                                                <div class="featured-church-image-wrapper">
-                                                    <div class="featured-church-image">
-                                                        <img class="img-responsive" src="${featuredChurchImage1}" />
-                                                    </div>
-                                                </div>
-                                                <div class="featured-church-info">
-                                                    <span class="featured-church-name">Calvary Baptist Church</span>
-                                                    <span class="featured-church-denomination">Southern Baptist</span>
-                                                    <span class="featured-church-location">Hayward, CA</span>
-                                                </div>
-                                            </a>
-                                        </div>
-
-                                        <div class="featured-church">
-                                            <a href="#">
-                                                <div class="featured-church-image-wrapper">
-                                                    <div class="featured-church-image">
-                                                        <img class="img-responsive" src="${featuredChurchImage2}" />
-                                                    </div>
-                                                </div>
-                                                <div class="featured-church-info">
-                                                    <span class="featured-church-name">Community Church of Hayward</span>
-                                                    <span class="featured-church-denomination">American Baptist</span>
-                                                    <span class="featured-church-location">Hayward, CA</span>
-                                                </div>
-                                            </a>
-                                        </div>
-
-                                        <div class="featured-church">
-                                            <a href="#">
-                                                <div class="featured-church-image-wrapper">
-                                                    <div class="featured-church-image">
-                                                        <img class="img-responsive" src="${featuredChurchImage3}" />
-                                                    </div>
-                                                </div>
-                                                <div class="featured-church-info">
-                                                    <span class="featured-church-name">Crosswalk Church</span>
-                                                    <span class="featured-church-denomination">Non-denominational</span>
-                                                    <span class="featured-church-location">Sunnyvale, CA</span>
-                                                </div>
-                                            </a>
-                                        </div>
-
-                                    </div>
-
-                                    <div class="item">
-
-                                        <div class="featured-church">
-                                            <a href="#">
-                                                <div class="featured-church-image-wrapper">
-                                                    <div class="featured-church-image">
-                                                        <img class="img-responsive" src="${featuredChurchImage4}" />
-                                                    </div>
-                                                </div>
-                                                <div class="featured-church-info">
-                                                    <span class="featured-church-name">Hillcrest Baptist Church</span>
-                                                    <span class="featured-church-denomination">Southern Baptist</span>
-                                                    <span class="featured-church-location">Richmond, CA</span>
-                                                </div>
-                                            </a>
-                                        </div>
-
-                                        <div class="featured-church">
-                                            <a href="#">
-                                                <div class="featured-church-image-wrapper">
-                                                    <div class="featured-church-image">
-                                                        <img class="img-responsive" src="${featuredChurchImage5}" />
-                                                    </div>
-                                                </div>
-                                                <div class="featured-church-info">
-                                                    <span class="featured-church-name">Hillside Church</span>
-                                                    <span class="featured-church-denomination">Non-denominational</span>
-                                                    <span class="featured-church-location">Antioch, CA</span>
-                                                </div>
-                                            </a>
-                                        </div>
-
-                                        <div class="featured-church">
-                                            <a href="#">
-                                                <div class="featured-church-image-wrapper">
-                                                    <div class="featured-church-image">
-                                                        <img class="img-responsive" src="${featuredChurchImage6}" />
-                                                    </div>
-                                                </div>
-                                                <div class="featured-church-info">
-                                                    <span class="featured-church-name">Shiloh Church</span>
-                                                    <span class="featured-church-denomination">Non-denominational</span>
-                                                    <span class="featured-church-location">Oakland, CA</span>
-                                                </div>
-                                            </a>
-                                        </div>
-
-
-
-                                    </div>
-                                    <div class="item">
-
-                                        <div class="featured-church">
-                                            <a href="#">
-                                                <div class="featured-church-image-wrapper">
-                                                    <div class="featured-church-image">
-                                                        <img class="img-responsive" src="${featuredChurchImage7}" />
-                                                    </div>
-                                                </div>
-                                                <div class="featured-church-info">
-                                                    <span class="featured-church-name">Valley Baptist Church</span>
-                                                    <span class="featured-church-denomination">Southern Baptist</span>
-                                                    <span class="featured-church-location">Castro Valley, CA</span>
-                                                </div>
-                                            </a>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <!-- Controls -->
-
-                                <a class="right carousel-control" href="#featuredChurchesCarousel" data-slide="next">
-                                    <span class="icon-next"></span>
-                                </a>
-                            </div>
-
-                        </div><!-- end featured churches tab content -->
-                        <div class="tab-pane fade" id="featuredEventsTab">
-
-                            <div id="featuredEventsCarousel" class="carousel carousel-front-page slide">
-
-                                <!-- Wrapper for slides -->
-                                <div class="carousel-inner-no-nav">
-                                    <div class="item active">
-                                        <div class="carousel-caption large-caption">
-                                            Coming Soon!
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                        </div><!-- end featured events tab content -->
-                        <div class="tab-pane fade" id="testimonialsTab">
-
-                            <div id="testimonialsCarousel" class="carousel carousel-front-page slide">
-                                <a class="left carousel-control" href="#testimonialsCarousel" data-slide="prev">
-                                    <span class="icon-prev"></span>
-                                </a>
-
-                                <!-- Wrapper for slides -->
-                                <div class="carousel-inner">
-
-                                    <div class="item active">
-
-                                        <div class="testimonial">
-
-                                            <p class="testimonial-text"><br />
-                                                &quot;This is a great tool to connect searching people to your church&quot;
-                                            </p>
-
-                                            <div class="testimonial-content">
-
-
-                                                <p class="testimonial-info">
-                                                    <span class="testimonial-name">Pastor Brian Gering</span>
-                                                    <span class="testimonial-church">Church of the Cross</span>
-                                                    <span class="testimonial-church-location">Hayward, CA</span>
-
-                                                </p>
-
-                                                <div class="testimonial-image">
-                                                    <img class="img-responsive" src="${testimonialPhoto1}" />
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item">
-                                        <div class="testimonial">
-
-                                            <p class="testimonial-text">
-                                                &quot;I encourage every pastor to check out this inventive way for churches to get their names out on the internet. I believe this will enhance your ministry and those who are looking to join your church. Who knows, a new member may be one click away!&quot;
-                                            </p>
-
-                                            <div class="testimonial-content">
-                                                <p class="testimonial-info">
-                                                    <span class="testimonial-name">Pastor Tim Hines, Phd</span>
-                                                    <span class="testimonial-church">First Southern Baptist Church</span>
-                                                    <span class="testimonial-church-location">San Lorenzo, CA</span>
-                                                </p>
-
-                                                <div class="testimonial-image">
-                                                    <img class="img-responsive" src="${testimonialPhoto2}" />
-                                                </div>
-                                            </div>
-
-                                        </div>    
-                                    </div>
-                                    <div class="item">
-
-                                        <div class="testimonial">
-
-                                            <p class="testimonial-text"><br />
-                                                &quot;I was thrilled to find Of A Feather when searching for a new church! It&apos;s your one-stop shop for finding a church that will meet all of your needs.&quot;
-                                            </p>
-
-                                            <div class="testimonial-content">
-
-                                                <p class="testimonial-info">
-                                                    <span class="testimonial-name">Laurie Paddock</span>
-
-                                                    <span class="testimonial-church-location">Fremont CA</span>
-                                                </p>
-
-                                                <div class="testimonial-image">
-                                                    <img class="img-responsive" src="${testimonialPhoto3}" />
-                                                </div>
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Right Control -->
-
-                                <a class="right carousel-control" href="#testimonialsCarousel" data-slide="next">
-                                    <span class="icon-next"></span>
-                                </a>
-                            </div>
-
-                        </div><!-- end testimonials tab content -->
                     </div>
                 </div>
-            </div>
-
+	        <%@ include file="/WEB-INF/jsp/partials/siteFooter.jsp"%>
         </div>
-        <%@ include file="/WEB-INF/jsp/partials/siteFooter.jsp"%>
-
     </body>
 </html>

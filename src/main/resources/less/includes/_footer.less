@@ -1,0 +1,35 @@
+div.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: @footer-height;
+    .make-row();
+    z-index: 1001;
+    padding: @standard-margin;
+    background-color: @colorGrayDark;
+    margin: 0px;
+    .footer-content {
+        .make-sm-column(12);
+        
+        color: @colorGrayLight;
+        
+        
+        margin: 0px;
+        margin-top: @standard-margin;
+        text-align: center;
+        .links, .copyright, .social-media {
+            margin: 10px 0px;
+        }
+        .social-media {
+            font-size: 4em;
+        }
+    }
+    a {
+        color: lighten(@colorGrayLight, 10%);
+        padding: (@standard-margin / 2);
+        font-weight: normal;
+        &:hover {
+            color: darken(@colorGrayLight, 10%);
+        }
+    }
+}

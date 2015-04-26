@@ -31,7 +31,7 @@ public class AtmosphereImpl implements Atmosphere
     }
             
     public AtmosphereImpl(CongregationSize congregationSize, Set<ServiceDetailsImpl> services, 
-            boolean gayAffirming, boolean homeChurch, int durationInMinutes)
+            boolean gayAffirming, boolean homeChurch)
     {
         super();
         

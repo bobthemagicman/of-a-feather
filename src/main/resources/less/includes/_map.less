@@ -1,0 +1,53 @@
+.collapseMap {
+    margin-bottom: 0px;
+}
+
+.map-panel {
+    margin-bottom: 10px;
+    panel {
+        margin-bottom: 0px !important;
+    }
+}
+
+.map-container {
+    margin: 0px;
+    display: block;
+    #map-canvas {
+        height: 250px;
+        z-index: 1001;
+    }
+    border: none;
+    .rounded-corners(6px);
+    z-index: 1000;
+}
+
+.map-container-outer.fixed {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+}
+
+.map-container-outer {
+    z-index: 1000;
+    margin-bottom: 10px;
+    border: none;
+    position: relative;
+    .rounded-corners(6px);
+    .map-buttons {
+        .transition-effects;
+        width: auto;
+        height: auto;
+        position: absolute;
+        right: 0px;
+        top: 142px;
+        cursor: pointer;
+        z-index: 2000;
+    }
+}   
+
+.map-container-outer.map-expanded {
+    position: fixed;
+    top: 65px;
+    //left: 0px;
+}
+

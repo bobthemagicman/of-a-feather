@@ -1,0 +1,335 @@
+
+.profile-bottom {
+
+    margin-top: 75px;
+
+    .details-nav-container {
+        margin-bottom: -5px;
+        text-align: center;
+        white-space: nowrap;
+    }
+
+    ul.nav-tabs.details-nav {
+        display: inline-block;
+        margin: @standard-margin (2 * @standard-margin) 0px (2 * @standard-margin);
+        background: none;
+        border: none;
+        li {
+            .transition-effects;
+  
+            text-align: center;
+            a {
+                padding: 5px 12px;
+    
+                white-space: nowrap;
+                display: inline-block;
+                margin: auto;
+                text-align: center;
+                
+                background: none;
+                border: none !important;
+                img {
+                    height: 32px;
+                }
+                &:hover {
+
+                    background: none;
+           
+                }
+            }
+            .arrow-up {
+                width: 0; 
+                height: 0; 
+                border-left: 20px solid transparent;
+                border-right: 20px solid transparent;
+                border-bottom: 20px solid @alt-dark-gray-color;
+                display: none;
+                margin: auto;
+
+            }
+        }
+        li.active {
+            a {
+                
+                background: none;
+            }
+            .arrow-up {
+                display: block;
+            }
+        }
+
+    }
+
+    .details {
+        background-color: @alt-dark-gray-color;
+        
+        .tab-content {
+            padding: 40px 120px;
+        }
+
+        h2 {
+            color: @colorBeige;
+            font-size: @header2-font-size;
+            margin: 0px 0px 10px 0px;
+        }
+        h3 {
+            color: @colorWhite;
+            font-size: 1em;
+            margin: 10px 0px;
+        }
+        ul > li {
+            font-size: 1em;
+            color: @colorWhite;
+        }
+        p .label {
+            color: @colorGray;
+            font-size: 1em;
+            padding: 0px;
+        }
+        hr {
+            background-color: #5f5f5f;
+            border: 0px;
+            height: 1px;
+            margin: 10px 0px;
+        }
+        p {
+            color: @colorWhite;
+        }
+        .pastor-info-container {
+            .make-row();
+        }
+        .pastor-photo {
+            .make-sm-column(3);
+            img {
+                .img-responsive;
+                .rounded-corners;
+                margin-bottom: 10px;
+            }
+        }
+        .pastor-info {
+            .make-sm-column(9);
+        }
+        .service-atmosphere {
+            .make-row();
+            h1 {
+                font-size: @header2-font-size;
+                color: @colorWhite;
+            }
+            h2 {
+                color: @colorWhite;
+                font-size: 1em;
+                text-align: right;
+            }
+
+            .slider-container {
+                .make-row();
+
+                padding: 15px;
+
+                &:first-child {
+                    margin-top: 15px;
+                }
+
+                h2 {
+                    .make-xs-column(4);
+                }
+
+                .slider-labels {
+                    .make-row();
+                    margin: -1.5em -1.5em 0px -1.5em;
+                    white-space: nowrap;
+                    font-size: 0.6em;
+                    letter-spacing: -0.5px;
+                    color: @colorGrayLight;
+                    div:last-child {
+                        text-align: right;
+                    }
+                    .slider-label-container {
+                        .make-xs-column(4);
+                        padding: 0px;
+                    }
+                }
+
+                .slider-description {
+                    .make-row();
+                    font-size: 0.8em;
+                    color: @colorGray;
+                    margin-top: 1.3em;
+                    text-align: center;
+                }
+
+                .slider {
+                    .make-xs-column(8);
+
+                    &.ui-state-disabled {
+                        .translucent(100) !important;
+                    }
+                    
+                    &.ui-widget-content {
+                        background: none;
+                        border: none;
+                        background-color: #8d8d8d;
+                    }
+
+                    .ui-slider-handle {
+                        height: 100%;
+                        width: 1.6em;
+                        left: -0.8em;
+                        top: 0px;
+                        background: none;
+                        background-color: @colorWhite;
+                        border: none;
+                        .rounded-corners(10px);
+                        outline: none;
+                    }
+                }
+            }
+
+            .general-atmosphere {
+                .make-row();
+                border: 1px solid @alt-gray-color;
+                border-left: 0px;
+                border-right: 0px;
+
+                h1 {
+                    .make-xs-column(4);
+                }
+                .general-atmosphere-container {
+                    .make-xs-column(9);
+                    margin-bottom: 20px;
+                }
+            }
+
+            .atmosphere-details-container {
+                .make-row();
+
+                .left-atmosphere-details-container {
+                    .make-sm-column(7);
+                    .make-xs-column(12);
+                    border-right: 1px solid @alt-gray-color;
+                }
+                .right-atmosphere-details-container {
+                    .make-sm-column(5);
+                    .make-xs-column(12);
+
+                    .musical-instruments-container {
+                        .make-row();
+                        margin-top: 75px;
+                        margin-left: 10px;
+                        .musical-instrument {
+                            height: 50px;
+                            width: 50px;
+                            display: inline-block;
+                            background-repeat: no-repeat;
+                            
+                            background-position: center bottom; 
+                            &.choir {
+                                background-image: url("http://www.ofafeather.org/static/images/site/choir_icon.png");
+                            }
+                            &.piano {
+                                background-image: url("http://www.ofafeather.org/static/images/site/piano_icon.png");
+                            }
+                            &.organ {
+                                background-image: url("http://www.ofafeather.org/static/images/site/organ_icon.png");
+                            }
+                            &.violin {
+                                background-image: url("http://www.ofafeather.org/static/images/site/violin_icon.png");
+                            }
+                            &.electric-guitar {
+                                background-image: url("http://www.ofafeather.org/static/images/site/electric_guitar_icon.png");
+                            }
+                            &.acoustic-guitar {
+                                background-image: url("http://www.ofafeather.org/static/images/site/guitar_icon.png");
+                            }
+                            &.drums {
+                                background-image: url("http://www.ofafeather.org/static/images/site/drums_icon.png");
+                            }
+                            &.horns {
+                                background-image: url("http://www.ofafeather.org/static/images/site/saxophone_icon.png");
+                            }
+                        }
+                    }
+
+                }
+            }
+
+        }
+
+        .programs-ministries {
+           
+
+            .programs-left-column {
+                .make-sm-column(6);
+                border-right: 1px solid @alt-gray-color;
+                padding: 0px;
+                margin-bottom: 25px;
+            }
+
+            .programs-right-column {
+                .make-sm-column(6);
+                padding: 0px;
+                margin-bottom: 25px;
+                .programs-category .program-heading h1 {
+                    padding-left: 15px;
+                }
+                .programs-category .program-listing ul {
+                    padding-left: 55px;
+                }
+            }
+
+            .programs-category {
+                .program-heading {
+                    h1 {
+                        font-size: 1.1em;
+                        color: @colorGray;
+                        text-align: left;
+                        border: 1px solid @alt-gray-color;
+                        border-width: 1px 0px;
+                        padding: 15px 0px;
+                        margin-top: 0px;
+                    }
+                }
+
+                .program-listing {
+                    margin-bottom: 25px;
+
+                    ul {
+                        li {
+                            font-size: 1em;
+                            list-item-type: none;
+                            list-style-image: url("http://www.ofafeather.org/static/images/site/small_checkmark.png");
+                            padding: 5px 0px;
+                            &.negative {
+                                list-style-image: none;
+                                list-style-type: square;
+                                color: darken(@colorGray,15%);
+                            }
+                        }
+                    }
+                }
+
+            }
+
+        }       
+
+    }
+
+}
+
+.plain-text {
+    h1 {
+        font-size: 2em;
+        color: @darkest-gray-color;
+        text-align: center;
+        margin: 30px 0px 20px 0px;
+    }
+    h2 {
+        font-size: 1.5em;
+        color: @darkest-gray-color;
+        text-align: left;
+    }
+    p {
+        font-size: 1em;
+        color: @colorGrayDark;
+    }
+}

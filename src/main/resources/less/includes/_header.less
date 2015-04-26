@@ -1,0 +1,157 @@
+.header {
+    display: table;
+    position: relative;
+    min-height: @header-height;
+    margin: 0;
+    padding: 0 0 2em 0;
+    text-align: center;
+    background-color: @colorWhite;
+    // overflow: hidden;
+    z-index: 0;
+   
+    #comingSoonImage {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+     }
+
+    [class$=fade-left] {
+        position: absolute;   
+    }
+
+    img {
+        position: relative;
+        left: -2.5%;
+        width: 105%;
+        z-index: -2;
+        .translucent(0);
+        &.active-image {
+            z-index: -1;
+            .translucent(100);
+        }
+    }
+}
+
+.header-image-container {
+    display: table-row;
+}
+
+.header-search {
+    position: absolute;
+    height: @header-search-height;
+    top: (@header-height / 2);
+
+    @media (min-height: 700px) {
+        top: (((@header-height + 2 * @header-height-adjust) / 2) - (@header-search-height / 2) + 50);
+    }
+    @media (min-height: 800px) {
+        top: (((@header-height + 3 * @header-height-adjust) / 2) - (@header-search-height / 2) + 50);
+    }
+    @media (min-height: 900px) {
+        top: (((@header-height + 4 * @header-height-adjust) / 2) - (@header-search-height / 2) + 50);
+    }
+    width: 100%;
+    //min-width: 400px;
+    left: 0;
+    box-sizing: content-box;
+    z-index: 3;
+    form {
+        max-width: 1000px;
+        margin: auto;
+    }
+    .input-group {
+        width: 80%;
+        max-width: 800px;
+        margin: auto;
+    }
+    input.form-control {
+        height: @header-search-height;
+        font-size: 1.25em;
+        .rounded-corners-top-left(10px) !important;
+        .rounded-corners-bottom-left(10px) !important;
+        //padding: 22px;
+        background-color: #e2e2e2;
+    }
+    .input-group-btn button {
+        height: @header-search-height;
+        width: 10em;
+        padding: 0px;
+        border: none;
+        .transition-effects;
+        .rounded-corners-top-right(10px) !important;
+        .rounded-corners-bottom-right(10px) !important;
+        span {
+            line-height: @header-search-height;
+        }   
+    }
+    .header-text {
+        font-size: 1.5em;
+        color: @colorWhite;
+        
+    }
+    div.blur {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 17em;
+        
+        z-index: -1;
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+    
+    a.btn {
+        display: inline-block;
+        margin: 20px auto;
+        font-size: 2em;
+        width: auto;
+        font-weight: 900;
+        .transition-effects;
+    }
+    
+    @media screen and (max-width: 768px) {
+        top: @header-height / 4;
+        .header-text {
+            font-size: 1em;
+        } 
+    }
+}
+
+.header-label {
+    position: absolute;
+    bottom: 100px;
+    right: 15px;
+    font-size: 1.5em;
+    @media(max-width: 800px) {
+        font-size: 1em;
+    }
+    @media(max-height: 800px) {
+        font-size: 1em;
+    }
+    color: #ffffff;
+    text-shadow: 2px 2px #444444;
+    z-index: 2;
+    padding: 15px;
+   
+    p {
+        margin: 2px;
+    }
+    .photographer-credit {
+        font-size: 0.75em;
+        color: darken(@colorGrayLight, 10%);
+    }
+}
+
+.next-section-label {
+    position: absolute;
+    bottom: 4em;
+    width: 100%;
+    height: 180px;
+    z-index: 2;
+
+    color: @colorGreen;
+    h1 { margin-top: 10rem; }
+}
