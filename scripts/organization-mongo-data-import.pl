@@ -67,8 +67,8 @@ GetOptions(
     'username=s'    => \$mongo_user,
     'password=s'    => \$mongo_pass,
     'dry-run|d'     => \$dry_run,           ### Don't send anything to the database
-    'skip-latlng'   => \$skip_latlng,     ### Don't do the costly (time) lat/long lookup. Dev option.
-    'row=s'         => \$row_limiter,           ### just work on this one row
+    'skip-latlng'   => \$skip_latlng,       ### Don't do the costly (time) lat/long lookup. Dev option.
+    'row=s'         => \$row_limiter,       ### just work on this one row
 );
 die 'Please define --input_file on command line' if ( !defined($csv_file) );
 
@@ -77,15 +77,15 @@ $mongo_port = 27017 unless defined($mongo_port);
 
 my $KEY = 'Fmjtd%7Cluub250rnq%2C85%3Do5-9u8wq0';
 die 'You need to set your MaqQuest API key on line 57' if ( $KEY eq '<Set your key here>' );
-my $API    = 'http://www.mapquestapi.com/geocoding/v1/address';
+my $API    = 'http://open.mapquestapi.com/geocoding/v1/address';
 my $client = REST::Client->new;
 my $mongo_connection = MongoDB::Connection->new(host => $mongo_host, port => $mongo_port);
 if (defined($mongo_user) && defined($mongo_pass)) {
-    # $mongo_connection->authenticate('of-a-feather-test', $mongo_user, $mongo_pass);
-    $mongo_connection->authenticate('of-a-feather', $mongo_user, $mongo_pass);
+    $mongo_connection->authenticate('of-a-feather-test', $mongo_user, $mongo_pass);
+    # $mongo_connection->authenticate('of-a-feather', $mongo_user, $mongo_pass);
 }
-# my $db = $mongo_connection->get_database('of-a-feather-test');
-my $db = $mongo_connection->get_database('of-a-feather');
+my $db = $mongo_connection->get_database('of-a-feather-test');
+# my $db = $mongo_connection->get_database('of-a-feather');
 my $collection = $db->get_collection( 'organizations');
 
 parse_csv_and_insert_to_mongo($csv_file, $collection);
@@ -119,11 +119,13 @@ sub parse_csv_and_insert_to_mongo {
         my $org = transform($row);
         my $orgName = $org->{'name'};
 
+        printf("\rReading church with name %s \b ", $orgName);
+
         next unless ($orgName);
 
         eval {
-           $collection->insert($org) unless ($dry_run);
-           # print Dumper($org);
+            #print Dumper($org);
+            $collection->insert($org) unless ($dry_run);
         };
         if ($@) {
             print "\nError while attempting to insert record on line $tracker, for organization called $orgName \n";
