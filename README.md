@@ -43,4 +43,3 @@ Active Contributors:
 
 ## License
 
-There is no licensing available for this project. Copyright held by FlockSpring Inc. 2015. All rights reserved.
