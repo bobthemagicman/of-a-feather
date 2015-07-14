@@ -27,7 +27,7 @@ Version 1.3.0
 
 =cut
 
-our $VERSION = '1.3.0';
+our $VERSION = '1.3.1';
 
 =head1 AUTHOR
 
@@ -86,7 +86,7 @@ if (defined($mongo_user) && defined($mongo_pass)) {
 }
 my $db = $mongo_connection->get_database('of-a-feather-test');
 # my $db = $mongo_connection->get_database('of-a-feather');
-my $collection = $db->get_collection( 'organizations');
+my $collection = $db->get_collection('organizations');
 
 parse_csv_and_insert_to_mongo($csv_file, $collection);
 
@@ -292,7 +292,7 @@ sub transform {
             durationInMinutes => _conv_dur_time( $data->{ $_ . ' Duration'} ),
             serviceName       => '',
             timeAndDay        => {
-                startTime        => $dt->datetime(), #"ISODate('0000-12-30T" . $data->{ $_ . '-StartTime' } . "Z')",
+                startTime        => 'ISODate(\''. $dt->datetime() .'\')', #"ISODate('0000-12-30T" . $data->{ $_ . '-StartTime' } . "Z')",
                 serviceDay       => $service_day,
                 serviceTimeRange => $time_range,
             },
